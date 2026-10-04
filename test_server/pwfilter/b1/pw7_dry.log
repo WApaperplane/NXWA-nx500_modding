@@ -1,0 +1,7 @@
+=== PW7 via yccmixer ===
+apply=0 pat=00010101
+OK dlopen
+ycc=b6d0b488 sreg=b6d106a8 mcbase=b6d39740
+dry run: nothing written
+MC_BASE=00000000
+DONE

@@ -32,3 +32,15 @@ test_server/filmsim/
 .DS_Store
 Thumbs.db
 *.swp
+# 今天新增的临时/诊断文件，不入库
+test_server/_*.sh
+test_server/_*.txt
+test_server/pwfilter/_*.sh
+test_server/pwfilter/*.log
+test_server/pwfilter/*.txt
+test_server/pwfilter/odd3l/*.bin
+test_server/pwfilter/odd3l/*.so
+test_server/pwfilter/odd3l/di-camera-app
+test_server/pwfilter/sysroot/
+test_server/pwfilter/b1/out/
+backup/

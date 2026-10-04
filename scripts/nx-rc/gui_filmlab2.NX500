@@ -1,0 +1,19 @@
+#=====================================================================
+# gui_filmlab2.NX500 —— FilmLab 第二页：预设槽管理
+#=====================================================================
+# 「预设」= 把配方写进 3 个可见槽，此后机身 UI 上直接选自定义1/2/3
+#         切换只做一次 setusr，零写入、毫秒级
+#
+# ★ 标签一律 ≤6 全角字符（mod_gui 2列网格超长会静默截断成"一 键..."）
+#   预设一/二/三 → 机身 UI 的自定义1/2/3
+#=====================================================================
+
+button|预设一 自定1|/opt/usr/nx-ks/filmlab.sh preset portra400
+button|预设二 自定2|/opt/usr/nx-ks/filmlab.sh preset velvia50
+button|预设三 自定3|/opt/usr/nx-ks/filmlab.sh preset trix400
+#★ 不提供 slot 12（CUSTOM_4）预设：UI 不可见，写进去只会变成查不到的残留
+
+button|诊断|@/opt/usr/nx-ks/gui_filmlab3.NX500
+
+button|返回|@/opt/usr/nx-ks/gui_filmlab.NX500
+button|取消|/opt/usr/nx-ks/gui_exit.sh

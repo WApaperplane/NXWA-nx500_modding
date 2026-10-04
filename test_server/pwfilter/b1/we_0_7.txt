@@ -1,0 +1,5 @@
+e=0 id=0x060000 set=[set] get=[WB_AUTO (0x60000)]
+e=1 id=0x060001 set=[set] get=[WB_AUTO_TUNGSTEN (0x60001)]
+e=2 id=0x060002 set=[set] get=[WB_DAYLIGHT (0x60002)]
+e=3 id=0x060003 set=[set] get=[WB_CLOUDY (0x60003)]
+e=4 id=0x060004 set=[set] get=[WB_FLUORESCENTW (0x60004)]

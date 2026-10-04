@@ -1,0 +1,15 @@
+#=====================================================================
+# gui_filmlab3.NX500 —— FilmLab 第三页：诊断与状态
+#=====================================================================
+# 全部为只读操作，安全
+#=====================================================================
+
+button|配方列表|/opt/usr/nx-ks/filmlab.sh list
+button|当前槽位状态|/opt/usr/nx-ks/filmlab.sh dump
+button|槽位映射说明|/opt/usr/nx-ks/filmlab.sh slots
+button|白平衡状态(只读)|/opt/usr/nx-ks/filmlab.sh wbdump
+
+button|——— 白平衡实验 ———|@/opt/usr/nx-ks/gui_filmlab4.NX500
+
+button|返回|@/opt/usr/nx-ks/gui_filmlab2.NX500
+button|取消|/opt/usr/nx-ks/gui_exit.sh

@@ -1,0 +1,30 @@
+=== gui_tpl.NX500 模板内容 ===
+button|M-eM-;M-6M-fM-^WM-6M-fM-^QM-^DM-eM-=M-1|@/opt/usr/nx-ks/gui_tl.NX500
+button|M-eM-.M-^^M-gM-^TM-(M-eM-^JM-^_M-hM-^CM-=|@/opt/usr/nx-ks/gui_func.NX500
+
+button|M-eM-/M-9M-gM-^DM-& & M-iM-^EM-^MM-gM-=M-.M-fM-^VM-^GM-dM-;M-6|@/opt/usr/nx-ks/gui_focus.NX500
+button|M-gM-3M-;M-gM-;M-^_M-hM-.M->M-gM-=M-.|@/opt/usr/nx-ks/gui_settings.NX500
+
+button|M-dM-<M-^QM-gM-^\M- |hibernate.sh
+checkbox|M-hM-?M-^\M-gM-(M-^KM-fM-^NM-'M-eM-^HM-6|nx-rc.sh
+
+button|IP: %%IP%% [%%TN%%]|telnet_toggle.sh
+
+=== gen_menu.sh 尾部 ===
+[ -z "$IP" ] && IP="WiFi未开"
+
+# Telnet 状态
+if ps -w 2>/dev/null | grep telnetd | grep -qv grep; then
+    TN="Telnet开"
+else
+    TN="Telnet关"
+fi
+
+sed -e "s/%%IP%%/$IP/g" -e "s/%%TN%%/$TN/g" "$TPL" > "$DST.tmp" \
+    && mv -f "$DST.tmp" "$DST"
+exit 0
+
+=== gui_tpl.NX1 是否存在 ===
+-rwxr-xr-x 1 root root 303 Sep  6 11:56 /opt/usr/nx-ks/gui_tpl.NX1
+-rwxr-xr-x 1 root root 321 Sep  6 11:56 /opt/usr/nx-ks/gui_tpl.NX500
+TPL_DONE

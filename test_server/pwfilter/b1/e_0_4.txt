@@ -1,0 +1,6 @@
+e=0 id=0x140000 set=[set] get=[PW_STANDARD (0x140000)]
+e=1 id=0x140001 set=[set] get=[PW_VIVID (0x140001)]
+e=2 id=0x140002 set=[set] get=[PW_PORTRAIT (0x140002)]
+e=3 id=0x140003 set=[set] get=[PW_LANDSCAPE (0x140003)]
+e=4 id=0x140004 set=[set] get=[PW_FOREST (0x140004)]
+ENUM_DONE

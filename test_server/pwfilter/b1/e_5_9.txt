@@ -1,0 +1,6 @@
+e=5 id=0x140005 set=[set] get=[PW_RETRO (0x140005)]
+e=6 id=0x140006 set=[set] get=[PW_COOL (0x140006)]
+e=7 id=0x140007 set=[set] get=[PW_CALM (0x140007)]
+e=8 id=0x140008 set=[set] get=[PW_CLASSIC (0x140008)]
+e=9 id=0x140009 set=[set] get=[PW_CUSTOM1 (0x140009)]
+ENUM_DONE

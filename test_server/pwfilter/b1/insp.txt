@@ -1,0 +1,162 @@
+=== loadgui.sh 全文 ===
+#!/bin/bash
+#renice -n -15 -p $$  &> /dev/null &
+if [ $(/bin/grep ^NX500$ /etc/version.info) = "NX500" -a $(/bin/grep ^1.12$ /etc/version.info) = "1.12" ]; then
+	to=$(prefman get 0 0x0000a690  b);  to=( $to )
+	to=${to[5]}
+	[[ "$to" = "0" ]] &&  prefman set 0 0x0000a690 b 1
+elif [  $(/bin/grep   ^NX1$   /etc/version.info) = "NX1" -a $(/bin/grep ^1.41$ /etc/version.info) = "1.41" ]; then
+	to=$(prefman get 0 0x00000658  b);  to=( $to )
+	to=${to[5]}
+	[[ "$to" = "0" ]] && prefman set 0 0x00000658 b 1
+
+fi
+#
+if [[  "$to" = "0"  ]]; then
+	dm=$(st cap capdtm getusr DIALMODE);  dm=( $dm )
+	dm=${dm[2]}
+	case "$dm" in
+	"DIALMODE_SMARTAUTO") st app mode auto 
+	    ;;
+	"DIALMODE_APERTURE") st app mode a
+	    ;;
+	"DIALMODE_SHUTTERSPEED") st app mode s 
+	  ;;
+	"DIALMODE_MANUAL") st app mode m  
+	   ;;
+	"DIALMODE_SMARTPRO") st app mode smart-pro
+	   ;;
+	*) 
+	st app mode p
+	;;
+	esac 
+fi
+#
+# 动态生成主菜单(IP/Telnet 状态写入标签), 失败不影响菜单启动
+/opt/usr/nx-ks/gen_menu.sh 2>/dev/null
+nice -n +15 /opt/usr/nx-ks/mod_gui /opt/usr/nx-ks/gui_ini & nice -n +19 /opt/usr/nx-ks/br_menu.sh &
+
+=== gui_*.NX500 清单 ===
+  -rwxr-xr-x 1 root root 1133 Oct  4 15:56 /opt/usr/nx-ks/gui_filmlab.NX500
+  -rwxr-xr-x 1 root root 1033 Oct  4 15:56 /opt/usr/nx-ks/gui_filmlab1b.NX500
+  -rwxr-xr-x 1 root root  828 Oct  4 15:56 /opt/usr/nx-ks/gui_filmlab2.NX500
+  -rwxr-xr-x 1 root root  711 Oct  4 15:56 /opt/usr/nx-ks/gui_filmlab3.NX500
+  -rwxr-xr-x 1 root root  355 Jul 14 10:34 /opt/usr/nx-ks/gui_focus.NX500
+  -rwxr-xr-x 1 root root  358 Jul 14 10:34 /opt/usr/nx-ks/gui_func.NX500
+  -rw-r--r-- 1 root root  328 Oct  4 16:33 /opt/usr/nx-ks/gui_ini.NX500
+  -rwxr-xr-x 1 root root  290 Jul 14 10:34 /opt/usr/nx-ks/gui_profiles.NX500
+  -rwxr-xr-x 1 root root  394 Jul 14 10:34 /opt/usr/nx-ks/gui_res.NX500
+  -rwxr-xr-x 1 root root  372 Jul 14 10:34 /opt/usr/nx-ks/gui_settings.NX500
+  -rwxr-xr-x 1 root root  212 Jul 14 10:34 /opt/usr/nx-ks/gui_tl.NX500
+  -rwxr-xr-x 1 root root  321 Sep  6 11:56 /opt/usr/nx-ks/gui_tpl.NX500
+
+=== 我的 filmlab 菜单在不在 ===
+-rwxr-xr-x 1 root root 1133 Oct  4 15:56 /opt/usr/nx-ks/gui_filmlab.NX500
+-rwxr-xr-x 1 root root 1033 Oct  4 15:56 /opt/usr/nx-ks/gui_filmlab1b.NX500
+-rwxr-xr-x 1 root root  828 Oct  4 15:56 /opt/usr/nx-ks/gui_filmlab2.NX500
+-rwxr-xr-x 1 root root  711 Oct  4 15:56 /opt/usr/nx-ks/gui_filmlab3.NX500
+
+=== version.info ===
+1.12
+NX500
+NX500GLU0APC1
+DSP_NX500GLU0APC1_SR1
+BABF43A
+
+=== 有没有 info/install 类脚本 ===
+  /opt/usr/nx-ks/1HDR.sh
+  /opt/usr/nx-ks/EV_AEL.sh
+  /opt/usr/nx-ks/EV_DOWN.sh
+  /opt/usr/nx-ks/EV_EV.sh
+  /opt/usr/nx-ks/EV_FLAB.sh
+  /opt/usr/nx-ks/EV_LEFT.sh
+  /opt/usr/nx-ks/EV_MOBILE.sh
+  /opt/usr/nx-ks/EV_OK.sh
+  /opt/usr/nx-ks/EV_RIGHT.sh
+  /opt/usr/nx-ks/EV_S1.sh
+  /opt/usr/nx-ks/EV_UP.sh
+  /opt/usr/nx-ks/FullLoad.sh
+  /opt/usr/nx-ks/FullLoadNX1.sh
+  /opt/usr/nx-ks/FullSave.sh
+  /opt/usr/nx-ks/FullSaveNX1.sh
+  /opt/usr/nx-ks/br_current.sh
+  /opt/usr/nx-ks/br_menu.sh
+  /opt/usr/nx-ks/br_set.sh
+  /opt/usr/nx-ks/br_up.sh
+  /opt/usr/nx-ks/brb.sh
+  /opt/usr/nx-ks/brec.sh
+  /opt/usr/nx-ks/bt.sh
+  /opt/usr/nx-ks/cButton.sh
+  /opt/usr/nx-ks/cCheckbox.sh
+  /opt/usr/nx-ks/camcorder_mode.sh
+  /opt/usr/nx-ks/filmlab.sh
+  /opt/usr/nx-ks/flab_ui.sh
+  /opt/usr/nx-ks/fpspeed.sh
+  /opt/usr/nx-ks/fstack.sh
+  /opt/usr/nx-ks/gen_menu.sh
+  /opt/usr/nx-ks/gui_exit.sh
+  /opt/usr/nx-ks/hibernate.sh
+  /opt/usr/nx-ks/init.sh
+  /opt/usr/nx-ks/loader.sh
+  /opt/usr/nx-ks/loadgui.sh
+  /opt/usr/nx-ks/menu.sh
+  /opt/usr/nx-ks/nolens.sh
+  /opt/usr/nx-ks/nrec.sh
+  /opt/usr/nx-ks/nx-rc.sh
+  /opt/usr/nx-ks/off_bt.sh
+  /opt/usr/nx-ks/off_cCheckbox.sh
+  /opt/usr/nx-ks/off_camcorder_mode.sh
+  /opt/usr/nx-ks/off_nolens.sh
+  /opt/usr/nx-ks/off_nx-rc.sh
+  /opt/usr/nx-ks/off_ov.sh
+  /opt/usr/nx-ks/off_peak.sh
+  /opt/usr/nx-ks/off_performance.sh
+  /opt/usr/nx-ks/off_r-limit.sh
+  /opt/usr/nx-ks/off_refocus.sh
+  /opt/usr/nx-ks/off_rem.sh
+  /opt/usr/nx-ks/off_res_DC2K.sh
+  /opt/usr/nx-ks/off_res_DCHD.sh
+  /opt/usr/nx-ks/off_res_DCUHD.sh
+  /opt/usr/nx-ks/off_res_HDUHD.sh
+  /opt/usr/nx-ks/off_res_UHD2K.sh
+  /opt/usr/nx-ks/off_res_UHDDC.sh
+  /opt/usr/nx-ks/off_res_UHDHD.sh
+  /opt/usr/nx-ks/off_res_VGA2K.sh
+  /opt/usr/nx-ks/off_res_VGADC.sh
+  /opt/usr/nx-ks/off_res_VGAUHD.sh
+  /opt/usr/nx-ks/off_rolling_shutter.sh
+  /opt/usr/nx-ks/off_swap.sh
+  /opt/usr/nx-ks/off_z_button.sh
+  /opt/usr/nx-ks/ov.sh
+  /opt/usr/nx-ks/peak.sh
+  /opt/usr/nx-ks/performance.sh
+  /opt/usr/nx-ks/r-limit.sh
+  /opt/usr/nx-ks/ramping.sh
+  /opt/usr/nx-ks/reboot.sh
+  /opt/usr/nx-ks/refocus.sh
+  /opt/usr/nx-ks/rem.sh
+  /opt/usr/nx-ks/rem_set.sh
+  /opt/usr/nx-ks/rem_start.sh
+  /opt/usr/nx-ks/res_DC2K.sh
+  /opt/usr/nx-ks/res_DCHD.sh
+  /opt/usr/nx-ks/res_DCUHD.sh
+  /opt/usr/nx-ks/res_HDUHD.sh
+  /opt/usr/nx-ks/res_UHD2K.sh
+  /opt/usr/nx-ks/res_UHDDC.sh
+  /opt/usr/nx-ks/res_UHDHD.sh
+  /opt/usr/nx-ks/res_VGA2K.sh
+  /opt/usr/nx-ks/res_VGADC.sh
+  /opt/usr/nx-ks/res_VGAUHD.sh
+  /opt/usr/nx-ks/rolling_shutter.sh
+  /opt/usr/nx-ks/save_DOWN.sh
+  /opt/usr/nx-ks/save_UP.sh
+  /opt/usr/nx-ks/sleep.sh
+  /opt/usr/nx-ks/swap.sh
+  /opt/usr/nx-ks/telnet_toggle.sh
+  /opt/usr/nx-ks/uninstall.sh
+  /opt/usr/nx-ks/update_nxrc.sh
+  /opt/usr/nx-ks/ver.sh
+  /opt/usr/nx-ks/wakelapse.sh
+  /opt/usr/nx-ks/z_button.sh
+  /opt/usr/nx-ks/zoomzoom.sh
+INSP_DONE

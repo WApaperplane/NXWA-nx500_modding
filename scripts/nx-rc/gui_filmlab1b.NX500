@@ -1,0 +1,18 @@
+#=====================================================================
+# gui_filmlab1b.NX500 —— FilmLab 一键配方（8 个）
+#=====================================================================
+# 每个按钮 = 写 1 个 prefman 槽 + 切 1 次 setusr，约 1 秒实时生效
+# ★ 白平衡不在这里控制（v2 起由用户在机身 UI 上自行调整）
+#=====================================================================
+
+button|  Portra 400|/opt/usr/nx-ks/filmlab.sh apply portra400
+button|  Velvia 50|/opt/usr/nx-ks/filmlab.sh apply velvia50
+button|  TriX 400|/opt/usr/nx-ks/filmlab.sh apply trix400
+button|  Ektachrome|/opt/usr/nx-ks/filmlab.sh apply ektachrome
+button|  HP5 Plus|/opt/usr/nx-ks/filmlab.sh apply hp5
+button|  Superia 400|/opt/usr/nx-ks/filmlab.sh apply superia400
+button|  MonoWarm 暖黑白|/opt/usr/nx-ks/filmlab.sh apply monowarm
+button|  Ektachrome Cyan|/opt/usr/nx-ks/filmlab.sh apply ektachrome_cyan
+
+button|返回|@/opt/usr/nx-ks/gui_filmlab.NX500
+button|取消|/opt/usr/nx-ks/gui_exit.sh

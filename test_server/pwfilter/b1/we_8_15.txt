@@ -1,0 +1,5 @@
+e=8 id=0x060008 set=[set] get=[WB_FLASH (0x60008)]
+e=9 id=0x060009 set=[set] get=[WB_CUSTOM (0x60009)]
+e=10 id=0x06000a set=[set] get=[WB_MANUAL (0x6000a)]
+e=11 id=0x06000b set=[not set  -1] get=[WB_MANUAL (0x6000a)]
+e=12 id=0x06000c set=[not set  -1] get=[WB_MANUAL (0x6000a)]
