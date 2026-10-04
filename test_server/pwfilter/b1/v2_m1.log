@@ -1,6 +1,0 @@
-=== PW7 v2 (init first) ===
-mode=0 pat=00010101 sig=00000000
-OK dlopen
-noginit=b6dac070 noisegen=b6d9c5f0 ycc=b6db5488
-dry run, nothing called
-DONE

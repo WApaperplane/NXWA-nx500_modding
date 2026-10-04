@@ -1,1 +1,0 @@
-nxflab start, recipes=/mnt/mmc/filmlab/recipes.txt idle_limit=60OK display 720x480 screen=0loaded 8 recipeswindow created and mappedfont probe 6x13 -> 0x63128 (NOT used, we draw glyphs manually)quit by signalbye

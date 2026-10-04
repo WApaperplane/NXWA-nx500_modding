@@ -1,8 +1,0 @@
-OK filmlab.sh (17083 bytes)
-OK EV_FLAB.sh
-backed up EV_S1.sh
-hooked into EV_S1.sh
-
-=== cycle test x3 ===
-[2/8] Velvia 50  (key=velvia50)
-[3/8] TriX 400  (key=trix400)

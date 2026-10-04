@@ -44,3 +44,7 @@ test_server/pwfilter/odd3l/di-camera-app
 test_server/pwfilter/sysroot/
 test_server/pwfilter/b1/out/
 backup/
+# b1 目录下的临时探测输出
+test_server/pwfilter/b1/*.txt
+test_server/pwfilter/b1/*.log
+test_server/pwfilter/b1/base_before.txt
