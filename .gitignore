@@ -52,3 +52,8 @@ test_server/pwfilter/b1/base_before.txt
 # 第八批 EP 实验原始输出（含 77 份 dump，每份 33KB）
 test_server/sysarch/raw7/
 test_server/sysarch/*.arm
+
+# 第九批：固件层整体框架爬取（89 份实机输出 798KB + 真机 libudd5.so 320KB）
+# 结论已提炼进 docs/NX500_FIRMWARE_FRAMEWORK_2026-10-05.md，原始输出不入库
+# ★ 注意：raw8/ 在仓库根目录，不在 test_server/sysarch/ 下（爬取时用相对路径输出）
+raw8/

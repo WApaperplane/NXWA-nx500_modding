@@ -75,6 +75,8 @@ scripts/                          <- 整个目录(模块母本, 会被同步到�
 
 - [`docs/CONSOLIDATED_REPORT_2026-10-05.md`](docs/CONSOLIDATED_REPORT_2026-10-05.md) — ★ **10-04 + 10-05 综合成果报告（中英双语）**：handle墙绕道、双核三通道实测、FilmLab、方法论铁律、避坑清单
 - [`docs/NX500_ARCHITECTURE.md`](docs/NX500_ARCHITECTURE.md) — 完整系统架构（677 行，含 EP 寄存器 dump 全表；**第 14 章 = handle墙绕道实证**）
+- [`docs/NX500_FIRMWARE_FRAMEWORK_2026-10-05.md`](docs/NX500_FIRMWARE_FRAMEWORK_2026-10-05.md) / [EN](docs/NX500_FIRMWARE_FRAMEWORK_2026-10-05_EN.md) — ★ **固件层整体框架**（89 份实机抓取）：存储拓扑、进程/库全景、内核层、**eMMC 分区 uImage 扫描 → ISP 固件定位**
+- [`docs/ISP_NOG_ENTRY_2026-10-05.md`](docs/ISP_NOG_ENTRY_2026-10-05.md) / [EN](docs/ISP_NOG_ENTRY_2026-10-05_EN.md) — ★ **ISP 核 / DSP_NX500GLU 入口追踪**：libudd5.so 反汇编解出 NOG 硬件颗粒发生器寄存器偏移
 - [`docs/LUT_OPEN_SOURCE_EVAL.md`](docs/LUT_OPEN_SOURCE_EVAL.md) — 开源 LUT 资产可用性评估（CC0 实测 + 松下专利核查）
 - [`docs/SHARING_COPY.md`](docs/SHARING_COPY.md) — 分享文案：Reddit / 小红书 / 通用短版，可直接复制
 - [`SYNC.md`](SYNC.md) — 安装 / 增量同步 / WiFi push / 回滚（双语）

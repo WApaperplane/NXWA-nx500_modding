@@ -89,6 +89,14 @@ if [ "$IS_NX1" = "1" ]; then
     [ -f /opt/usr/nx-ks/keyscan1 ]  && cp -f /opt/usr/nx-ks/keyscan1 /opt/usr/nx-ks/keyscan
 fi
 
+# ---- 补可执行位 (2026-10-05) ----
+# SD 卡上的文件来自 PC 拷贝, FAT/NTFS 挂载常丢可执行位 -> cp -ar 会原样保留 0644,
+# 结果脚本在相机上直接 "Permission denied"。这里统一兜底, 幂等可重复执行。
+for _f in /opt/usr/nx-ks/*.sh /opt/usr/nx-ks/nx-rc/*.sh /opt/usr/nx-ks/nx-rc/thumb/*.sh; do
+    [ -f "$_f" ] && chmod +x "$_f" 2>/dev/null
+done
+unset _f
+
 # ---- 清理 SD 卡根触发文件(防止忘拔卡导致下次开机重复执行); scripts/ 与 odt 文档保留 ----
 killall dfmsd 2>/dev/null
 rm -f /mnt/mmc/info.tg
