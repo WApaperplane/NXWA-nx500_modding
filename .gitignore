@@ -48,3 +48,7 @@ backup/
 test_server/pwfilter/b1/*.txt
 test_server/pwfilter/b1/*.log
 test_server/pwfilter/b1/base_before.txt
+
+# 第八批 EP 实验原始输出（含 77 份 dump，每份 33KB）
+test_server/sysarch/raw7/
+test_server/sysarch/*.arm
