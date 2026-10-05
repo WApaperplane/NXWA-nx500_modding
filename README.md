@@ -71,23 +71,45 @@ scripts/                          <- 整个目录(模块母本, 会被同步到�
 
 ## 文档 / Docs
 
-**English (international communities)**
+**主文档 / Main documents**
 
-- [`docs/DEVELOPMENT_REPORT_EN.md`](docs/DEVELOPMENT_REPORT_EN.md) — FilmLab + system-level RE progress report
-- [`docs/SYSTEM_LAYER_FINDINGS_EN.md`](docs/SYSTEM_LAYER_FINDINGS_EN.md) — ISP internals, 3D LUT control chain, hardware constraints, tooling
-- [`docs/FORUM_POST_EN.md`](docs/FORUM_POST_EN.md) — ready-to-post summary (long / short / two-paragraph versions)
+- [`docs/CONSOLIDATED_REPORT_2026-10-05.md`](docs/CONSOLIDATED_REPORT_2026-10-05.md) — ★ **10-04 + 10-05 综合成果报告（中英双语）**：handle墙绕道、双核三通道实测、FilmLab、方法论铁律、避坑清单
+- [`docs/NX500_ARCHITECTURE.md`](docs/NX500_ARCHITECTURE.md) — 完整系统架构（677 行，含 EP 寄存器 dump 全表；**第 14 章 = handle墙绕道实证**）
+- [`docs/LUT_OPEN_SOURCE_EVAL.md`](docs/LUT_OPEN_SOURCE_EVAL.md) — 开源 LUT 资产可用性评估（CC0 实测 + 松下专利核查）
+- [`docs/SHARING_COPY.md`](docs/SHARING_COPY.md) — 分享文案：Reddit / 小红书 / 通用短版，可直接复制
+- [`SYNC.md`](SYNC.md) — 安装 / 增量同步 / WiFi push / 回滚（双语）
 
-**中文**
+**FilmLab 子专题 / FilmLab sub-topics**
 
-- [`docs/DEVELOPMENT_REPORT_2026-10-05.md`](docs/DEVELOPMENT_REPORT_2026-10-05.md) — 双语开发进展报告
-- [`docs/SYSTEM_LAYER_FINDINGS_2026-10-04.md`](docs/SYSTEM_LAYER_FINDINGS_2026-10-04.md) — 系统层结论（中文详版）
-- [`docs/FORUM_POST.md`](docs/FORUM_POST.md) — 论坛分享文案（详细 / 精简 / 英文三版）
-- `SYNC.md` — 安装 / 增量同步 / WiFi push / 回滚（双语）
+- [`docs/FILMLAB_ONEKEY_UI.md`](docs/FILMLAB_ONEKEY_UI.md) — 一键 UI 需求裁决（三个需求，两个撞硬墙）
+- [`docs/FILMLAB_WIFI_JOG.md`](docs/FILMLAB_WIFI_JOG.md) — WiFi 键直达 + 波轮 UI 可行性
+- [`docs/FILMLAB_ONEKEY_VERIFY.md`](docs/FILMLAB_ONEKEY_VERIFY.md) — `pw_force_reload()` 验证清单
+
+**模块文档 / Module docs**
+
 - `scripts/nx-rc/thumb/README.md` — 缩略图模块部署（双语）
 - `scripts/nx-rc/push/README.md` — WiFi push 用法（双语）
 
+---
+
+## ★ 逆向成果速览 / Reverse engineering highlights
+
+2026-10-05 实测推翻了三个框架级判断（详见综合报告 §0）：
+
+| 早先判断 | 实测结论 |
+|---|---|
+| `d5_ipcc` 是主要跨核通道 | ❌ **空壳**：ioctl 返回 0 但不回填；`size=8` 编码直接 SIGILL |
+| 双核隔离，无法通信 | ❌ `drime5_ep` 中断 **149 万次**；`d5_sma` 有 144MB 共享区 @ `0x94000000` |
+| 3D LUT 硬件未初始化 | ❌ 寄存器在 Linux 侧 **mmap 可读**，里面装着 **identity LUT**（`0x13020619` × 8 @ `0x2082b000`） |
+| handle 墙不可破 | ⚠️ 只对厂商库成立。直接 mmap 硬件**绕过 handle**（**读已实测，写不测且不测**） |
+
+> **为什么绝不写 EP 寄存器**：不可中断写入 + ISP 固件实时驱动 ⇒ 位域错乱；
+> 且 `di-camera-app` 杀不掉（`launchpad_preloading_preinitializing_daemon` 会拉起）⇒ **只能拔电池**。
+> **⇒ 绕道换来的真实收益是「可观测」，不是「可写」。**
+
 > 胶片仿真探索（recipe + .cube LUT + capdtm ISP）在独立仓库  
 > [nx500-filmsim](https://github.com/WApaperplane/nx500-filmsim)。
->
-> **Found dead ends?** See §10 of the English findings doc — 7 refuted paths that are easy to lose hours on.  
-> **已经走过的弯路？** 见中文详版 §10 —— 7 条已证伪路线，都是很容易浪费几小时的坑。
+
+**已经走过的弯路？** 见综合报告 **§7 方法论铁律** 与 **§9.3 已排除的路径**
+（9 条已证伪路线 + 13 条硬件/交叉编译约束，都是很容易浪费几小时的坑）。
+**English:** see §7 and §9.3 of the consolidated report.
