@@ -172,8 +172,13 @@ unsigned *q = (unsigned *)((char *)p + offs);
 这不是保守，是事实约束：
 
 - 写 EP 寄存器是**不可中断操作**
-- EP 由 ISP 固件 `DSP_NX500GLU0APC1_SR1` **实时驱动**
-- liveview 期间改 3DLUT 会被 ISP 同时读取 ⇒ **位域错乱**
+- ★ **2026-10-05 21:20 修正**：早先写的"EP 由 ISP 固件实时驱动"**无证据，已降级为假设**——
+  冷启动 dmesg 里 `request_firmware`/`uImage`/`rom.bin`/`devicem4.bin`/`srp` **全零命中**，
+  且 libudd5.so 503 个符号**零 ISP 引用**。EP 走标准 UDD 模型（ioctl + **用户态自己 mmap**，
+  `ep.h` 顶部 `#define EP_TOP_VIRT_ADDR`）⇒ EP 是**独立图像引擎，由 Linux 用户态直接驱动**。
+  真正风险不是"被 ISP 同时读"，而是**改了 3DLUT 没走
+  `d5_ep_top_update_sreg(D5_EP_3DLUT_SHADOW_UPDATE)` 导致影子寄存器不提交**（待实机验证）。
+- 并发读风险仍在 ⇒ **位域错乱**
 - 后果：画面损坏、EP 卡死，且 `di-camera-app` **杀不掉**
   （`launchpad_preloading_preinitializing_daemon` 会重新拉起）⇒ **只能拔电池**
 
@@ -611,7 +616,7 @@ vtable   = 基址 + 0xb0010   (_ZTV17CCapVirtualAddrIf ✓)
 | task dispatch 劫持 | ❌ | 同上 |
 | 任意代码注入相机进程 | ⚠️ 部分 | `poker` 写 `.data` 可行、无 NX 位，但 `.text` 不可写、3D LUT 无 GOT 槽 |
 | 读 ISP 寄存器 | ✅ | **本项目已实现**（§1） |
-| 写 ISP 寄存器 | ⚠️ 理论可行 | 不可中断 + ISP 实时驱动 ⇒ 只能拔电池 |
+| 写 ISP 寄存器 | ⚠️ 理论可行 | 不可中断 + 并发读风险 ⇒ 只能拔电池（★ 2026-10-05 修正：风险源不是"被 ISP 同时读"而是**未提交影子寄存器**，见 §1.5） |
 | 相机控制（曝光/白平衡） | ✅ | `prefman` + `setusr` 已完整掌握 |
 
 **结论**：NX-KS 路线的天花板在**"调用厂商 API"这一层**。
@@ -1233,7 +1238,7 @@ line**, which showed it was inside **the code that prints the ioctl encoding** �
 | task dispatch hijack | ❌ | same |
 | arbitrary code injection into the camera process | ⚠️ partial | `poker` can write `.data`, and there is no NX bit — but `.text` is immutable and 3D LUT has no GOT slot |
 | reading ISP registers | ✅ | **implemented in this project** (§E1) |
-| writing ISP registers | ⚠️ theoretically possible | non-interruptible + actively driven by ISP ⇒ battery pull only |
+| writing ISP registers | ⚠️ theoretically possible | non-interruptible + concurrent-read risk ⇒ battery pull only (**2026-10-05 correction: the risk is *not* "the ISP reads it concurrently" but **failing to commit the shadow register** — see §1.5**) |
 | camera control (exposure / white balance) | ✅ | `prefman` + `setusr` fully understood |
 
 **Conclusion**: the NX-KS route tops out at the *"call vendor APIs"* layer.

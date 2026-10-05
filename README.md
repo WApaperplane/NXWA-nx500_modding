@@ -105,9 +105,15 @@ scripts/                          <- 整个目录(模块母本, 会被同步到�
 | 3D LUT 硬件未初始化 | ❌ 寄存器在 Linux 侧 **mmap 可读**，里面装着 **identity LUT**（`0x13020619` × 8 @ `0x2082b000`） |
 | handle 墙不可破 | ⚠️ 只对厂商库成立。直接 mmap 硬件**绕过 handle**（**读已实测，写不测且不测**） |
 
-> **为什么绝不写 EP 寄存器**：不可中断写入 + ISP 固件实时驱动 ⇒ 位域错乱；
+> **为什么绝不写 EP 寄存器**：不可中断写入 + 并发读风险 ⇒ 位域错乱；
 > 且 `di-camera-app` 杀不掉（`launchpad_preloading_preinitializing_daemon` 会拉起）⇒ **只能拔电池**。
 > **⇒ 绕道换来的真实收益是「可观测」，不是「可写」。**
+>
+> **2026-10-05 21:20 修正**：早先写的"EP 由 ISP 固件实时驱动"**无证据，已降级为假设**——
+> 冷启动 dmesg 里 `request_firmware`/`uImage`/`rom.bin`/`devicem4.bin`/`srp` 全零命中，
+> 且 libudd5.so 503 个符号零 ISP 引用。EP 走标准 UDD 模型（ioctl + **用户态自己 mmap**）。
+> ⇒ 更可能：EP 是**独立图像引擎，由 Linux 用户态直接驱动**；真正风险不是"被 ISP 同时读"，
+> 而是**改了 3DLUT 没走 `d5_ep_top_update_sreg(3DLUT_SHADOW_UPDATE)` 导致影子寄存器不提交**（待实机验证）。
 
 > 胶片仿真探索（recipe + .cube LUT + capdtm ISP）在独立仓库  
 > [nx500-filmsim](https://github.com/WApaperplane/nx500-filmsim)。

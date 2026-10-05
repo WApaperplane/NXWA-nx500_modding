@@ -596,10 +596,17 @@ dump 3DLUT 寄存器窗口尾部（`0x2082b000` + `0x0000..0x00ff`）：
 
 > ### ⚠️⚠️ 为什么本项目不测「写」
 >
-> 写EP 寄存器是**不可中断操作**。EP 由 ISP 固件（`DSP_NX500GLU0APC1_SR1`）实时驱动，
-> 在 liveview 期间改3DLUT 会同时被 ISP 读取 ⇒ 结果是**寄存器位域错乱**，
+> 写EP 寄存器是**不可中断操作**，且存在**并发读风险** ⇒ 结果是**寄存器位域错乱**，
 > 后果为**画面损坏、EP 卡死、只能拔电池**（相机 app 杀不掉，
 > `launchpad_preloading_preinitializing_daemon` 会拉起）。
+>
+> ★ **2026-10-05 21:20 修正**：本节早先写的"EP 由 ISP 固件（`DSP_NX500GLU0APC1_SR1`）
+> 实时驱动"**无证据，已降级为假设**——冷启动 dmesg 里
+> `request_firmware`/`uImage`/`rom.bin`/`devicem4.bin`/`srp` **全零命中**，
+> libudd5.so 503 个符号**零 ISP 引用**；EP 走标准 UDD（ioctl + **用户态自己 mmap**）。
+> ⇒ 更可能：EP 是**独立图像引擎，由 Linux 用户态直接驱动**。
+> **真正风险不是"被 ISP 同时读"，而是改了 3DLUT 没走
+> `d5_ep_top_update_sreg(D5_EP_3DLUT_SHADOW_UPDATE)` 导致影子寄存器不提交**（待实机验证）。
 >
 > **这不是保守，是这条路上的事实约束。** 见 `topics/deadlock.md` 里
 > 「单核相机上做 A/B 对照实验 = 大概率复现死机」。
