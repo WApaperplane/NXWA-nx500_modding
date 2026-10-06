@@ -137,3 +137,9 @@ test_server/filmlab/x11probe.b64
 scripts/discovery/_*.tsv
 scripts/discovery/_*.txt
 scripts/discovery/_*.json
+
+# ===== 2026-10-06 清理：pref 分区 dump 改为 zlib 无损压缩（10MB → 11KB）=====
+raw8/pref/*.raw
+raw8/pref/*.raw.z
+# 清理清单（备份性质，量小可入库）
+!backup/cleanup_2026-06*/
