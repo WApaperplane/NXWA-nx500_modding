@@ -47,7 +47,7 @@ done
 
 # ---- 2b. ★ 复制 ARM 工具（编译产物在 sysarch/）----
 SYS=/mnt/mmc/scripts/sysarch
-for f in lutload.arm; do
+for f in lutload.arm lutapi.arm cmapick.arm epapi.arm v2p.arm; do
   if [ -f "$SYS/$f" ]; then
     cp "$SYS/$f" "$DST/$f"
     chmod +x "$DST/$f"
@@ -56,8 +56,20 @@ for f in lutload.arm; do
     cp "$SRC/$f" "$DST/$f"; chmod +x "$DST/$f"
     echo "  [ARM ] $f（来自 nx-rc）"
   else
-    echo "  [缺失] ★ $f —— LUT 导入功能不可用"
-    echo "          需先编译：cd test_server/sysarch && zig cc -O0 -o lutload.arm lutload.c"
+    echo "  [缺失] ★ $f"
+    case "$f" in
+      lutapi.arm)  echo "          编译：cd test_server/sysarch && zig cc -target arm-linux-gnueabi.2.15 -O0 -o lutapi.arm lutapi.c -ldl" ;;
+      lutload.arm) echo "          编译：cd test_server/sysarch && zig cc -target arm-linux-gnueabi.2.15 -O0 -o lutload.arm lutload.c" ;;
+      *)           echo "          该工具为可选（调试用），缺失不影响主流程" ;;
+    esac
+  fi
+done
+
+# ---- 2b-2. ★ lutapi 上手脚本 ----
+for f in lutapi_help.sh lutapi_probe.sh; do
+  if [ -f "$SRC/$f" ]; then
+    cp "$SRC/$f" "$DST/$f"; chmod +x "$DST/$f"
+    echo "  [脚本] $f"
   fi
 done
 

@@ -143,3 +143,17 @@ raw8/pref/*.raw
 raw8/pref/*.raw.z
 # 清理清单（备份性质，量小可入库）
 !backup/cleanup_2026-06*/
+
+# —— 实验中间产物（2026-10-06）——
+# verify/ 里是判别实验的临时表（1.1MB），可由脚本重新生成，不入库
+test_server/sysarch/verify/
+# 转换产物（可由 cube2nx17.py 重新生成）
+test_server/filmsim/*_17.bin
+# 实机读回的 dump
+test_server/ssh/*.bin
+test_server/ssh/*_c[0-3].bin
+test_server/ssh/dump_*.bin
+test_server/ssh/factory_*.bin
+test_server/ssh/id9248.bin
+test_server/ssh/id3ch_*.bin
+test_server/ssh/sig*.bin
