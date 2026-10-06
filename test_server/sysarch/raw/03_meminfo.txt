@@ -1,0 +1,7 @@
+===== 03_meminfo.txt =====
+MemTotal:         511580 kB
+MemFree:            4756 kB
+Buffers:            2304 kB
+Cached:            75344 kB
+SwapCached:            0 kB
+=== mtd ===

@@ -1,0 +1,14 @@
+===== j06_dvfs =====
+usage: st dvfs [command]
+       st dvfs help
+               display help.
+       st dvfs show
+               show out all dvfs informations.
+       st dvfs set a9 <on | off>
+               set a9 dvfs.
+       st dvfs set isp <on | off>
+               set isp dvfs.
+       st dvfs vol show 
+               show d5 core voltage.
+       st dvfs vol set <vddi | a9 | isp> <770 ~ 1100 mV>
+               set d5 core voltage.

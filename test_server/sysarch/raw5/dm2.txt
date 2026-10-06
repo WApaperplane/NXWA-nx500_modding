@@ -1,0 +1,10 @@
+=== cmd ===
+[ 1: 1536.801898] I/KERNEL       (K1169): [<c0014fb0>] (do_page_fault+0x190/0x254) from [<c0008498>] (do_DataAbort+0x38/0x98)
+[ 1: 1536.801919] I/KERNEL       (K1169): [<c0008498>] (do_DataAbort+0x38/0x98) from [<c000e874>] (__dabt_usr+0x34/0x40)
+[ 1: 1536.801928] I/KERNEL       (K1169): Exception stack(0xc86a7fb0 to 0xc86a7ff8)
+[ 1: 1536.801938] I/KERNEL       (K1169): 7fa0:                                     00000000 8b8b8b8a bef73894 00000000
+[ 1: 1536.801950] I/KERNEL       (K1169): 7fc0: b6e37640 bef778ec 00000064 bef80358 00000000 00000005 b6fb2e14 b6fbb9c4
+[ 1: 1536.801960] I/KERNEL       (K1169): 7fe0: b6e23bc8 bef73888 b6e23ff4 b6e23bd4 60000010 ffffffff
+=== 相机存活? ===
+di-camera-app
+=== exit=0 ===

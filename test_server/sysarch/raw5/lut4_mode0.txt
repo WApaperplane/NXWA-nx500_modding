@@ -1,0 +1,14 @@
+=== run ===
+open: d5_sma=3 drime5_ep=4  ★
+3dlut @0x2082b000 = 0xb6fb2000
+
+--- 当前 16 槽 +0x0c ---
+  slot  0 = 0x81115200
+  slot  1 = 0x81115200
+  slot  2 = 0x81115200
+  slot  3 = 0x81115200
+
+SMA_ALLOC(size=0x100) ...
+  ★ SMA_ALLOC 失败: Bad address
+  ⇒ CMA 区可能已耗尽，或需要 CAP_SYS_ADMIN
+EXIT=0

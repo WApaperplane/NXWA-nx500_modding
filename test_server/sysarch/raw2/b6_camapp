@@ -1,0 +1,11 @@
+===== b6_camapp =====
+total 32
+-rwxr--r-- 1 root root 12046 Mar 29  2016 author-signature.xml
+drwxr-xr-x 2 root root  4096 Mar 30  2016 bin
+drwxr-xr-x 4 root root  4096 Mar 30  2016 res
+-rwxr--r-- 1 root root 12164 Mar 29  2016 signature1.xml
+[bin]
+total 4664
+-rwxr-xr-x 1 root root 4773516 Mar 29  2016 di-camera-app
+[lib]
+ls: cannot access /usr/apps/com.samsung.di-camera-app/lib/: No such file or directory

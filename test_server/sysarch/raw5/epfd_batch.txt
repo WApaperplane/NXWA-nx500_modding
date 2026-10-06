@@ -1,0 +1,18 @@
+=== run ===
+batch: pid=247 seg=0xb0e75000 va_page=0x54000
+symbol                               st_value   value      note
+fd_ep=0x5556c                        0x0005556c  0xffffffff  -1 uninit
+g_d5_dev_ctx=0x57528                 0x00057528  0x00000015  int 21
+g_dev_id=0x57524                     0x00057524  0x00000000  NULL
+ep_3dlut_reg_base=0x57730            0x00057730  0x00000000  NULL
+ep_nog_reg_base=0x57724              0x00057724  0x00000000  NULL
+rgb2ycbcr_mtx_fd=0x55be4             0x00055be4  0x0000005d  int 93
+ycbcr2rgb_mtx_fd_udd=0x55c18         0x00055c18  0x00000200  int 512
+premovie_HD=0x55c6c                  0x00055c6c  0x00000254  int 596
+premovie_SD=0x55c90                  0x00055c90  0x00000254  int 596
+ep_mc_default_config=0x557a8         0x000557a8  0x00000007  int 7
+path_ep_cs0=0x55ea8                  0x00055ea8  0x00000000  NULL
+fd_neighbor=0x55570                  0x00055570  0x00000064  int 100
+
+=== end: pure read ===
+EXIT=0

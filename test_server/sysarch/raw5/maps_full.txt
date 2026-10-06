@@ -1,0 +1,11 @@
+=== cmd ===
+b0e21000-b0e6e000 r-xp 00000000 b3:0a 108        /usr/lib/libudd5.so
+b0e6e000-b0e75000 ---p 0004d000 b3:0a 108        /usr/lib/libudd5.so
+b0e75000-b0e77000 rw-p 0004c000 b3:0a 108        /usr/lib/libudd5.so
+=== 段与文件偏移对应 ===
+b0e20000-b0e21000 rw-p 00005000 b3:0a 11889      /usr/lib/libappsvc.so.0.1.0
+b0e21000-b0e6e000 r-xp 00000000 b3:0a 108        /usr/lib/libudd5.so
+b0e6e000-b0e75000 ---p 0004d000 b3:0a 108        /usr/lib/libudd5.so
+b0e75000-b0e77000 rw-p 0004c000 b3:0a 108        /usr/lib/libudd5.so
+b0e77000-b0e7a000 rw-p 00000000 00:00 0 
+=== exit=0 ===

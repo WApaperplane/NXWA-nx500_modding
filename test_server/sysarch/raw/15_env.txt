@@ -1,0 +1,33 @@
+===== 15_env.txt =====
+DISPLAY=:0
+ECORE_IMF_MODULE=isf
+ECORE_INPUT_FIX=1
+ECORE_INPUT_TIMEOUT_FIX=0
+EINA_LOG_DLOG_ENABLE=1
+EINA_LOG_LEVEL=1
+EINA_LOG_LEVELS=ecore_x:4,evas_main:1
+EINA_LOG_SYSLOG_ENABLE=0
+ELM_MODULES=ctxpopup_copypasteUI>entry/api:datetime_input_button>datetime/api:object_dump>win/api:access_output_tts>access/api
+ELM_PROFILE=mobile
+EVAS_FONT_DPI=72
+EVAS_GL_NO_BLACKLIST=1
+GTK_IM_MODULE=scim
+GTK_IM_MODULE_FILE=/opt/etc/gtk-2.0/gtk.immodules
+HIB=a
+HISTSIZE=1000
+HOME=/root
+HUSHLOGIN=FALSE
+LD_LIBRARY_PATH=:/usr/lib:/usr/lib/driver
+LOGNAME=root
+MULTISENSE_SND_PLAYER=tizen_snd_player
+PATH=/usr/share/scripts:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/usr/devel/usr/sbin:/opt/usr/devel/usr/bin:/opt/usr/devel/sbin:/opt/usr/devel/bin
+PS1=[\u@\h \W]\$ 
+PWD=/root
+SCIM_MODULE_PATH=/opt/apps/scim/lib/scim-1.0
+SHELL=/bin/sh
+SHLVL=1
+TERM=vt102
+USER=root
+XDG_CACHE_HOME=/tmp/.cache
+XMODIFIERS=@im=SCIM
+_=/opt/usr/nx-ks/busybox

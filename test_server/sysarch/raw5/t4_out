@@ -1,0 +1,13 @@
+=== run ===
+T4 start (inline syscall ioctl)
+dev /dev/null open=3 -> syscall ioctl...CA9 user fault(t4.arm, pid=2607, tid=2607, signal=4). 
+
+Callstack Information (PID:2607)
+Call Stack Count: 4
+ 0: one + 0xc0 (0x24304) [/mnt/mmc/_xfer/t4.arm] + 0x24304
+ 1: main + 0x30 (0x23fc4) [/mnt/mmc/_xfer/t4.arm] + 0x23fc4
+ 2: __libc_start_main + 0x114 (0xb6ded82c) [/lib/libc.so.6] + 0xb6ded82c
+ 3: (0x23f5c) [/mnt/mmc/_xfer/t4.arm] + 0x23f5c
+End of Call Stack
+
+arc = 5, optind = 5 ,Kb 0, rotate 4

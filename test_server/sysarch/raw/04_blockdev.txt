@@ -1,0 +1,39 @@
+===== 04_blockdev.txt =====
+major minor  #blocks  name
+
+   7        0      21528 loop0
+ 254        0      51200 zram0
+ 179        0    3866624 mmcblk0
+ 179        1      20479 mmcblk0p1
+ 179        2      10240 mmcblk0p2
+ 179        3      30720 mmcblk0p3
+ 179        4          1 mmcblk0p4
+ 179        5      20479 mmcblk0p5
+ 179        6      10239 mmcblk0p6
+ 179        7      30719 mmcblk0p7
+ 179        8      51199 mmcblk0p8
+ 179        9     153599 mmcblk0p9
+ 179       10    1048575 mmcblk0p10
+ 179       11     102399 mmcblk0p11
+ 179       12       5119 mmcblk0p12
+ 179       13      10239 mmcblk0p13
+ 179       14    2372607 mmcblk0p14
+ 179       30       4096 mmcblk0boot1
+ 179       15       4096 mmcblk0boot0
+ 179       45   60832768 mmcblk1
+ 179       46   60816384 mmcblk1p1
+=== df ===
+Filesystem            Size  Used Avail Use% Mounted on
+rootfs                507M  480M   23M  96% /
+/dev/root             507M  480M   23M  96% /
+devtmpfs               70M     0   70M   0% /dev
+tmpfs                 250M   28K  250M   1% /dev/shm
+tmpfs                 250M  856K  249M   1% /run
+tmpfs                 250M     0  250M   0% /sys/fs/cgroup
+tmpfs                 250M  2.2M  248M   1% /tmp
+tmpfs                 250M  2.2M  248M   1% /var/log
+tmpfs                 250M  2.2M  248M   1% /var/run
+/dev/loop0             22M   22M     0 100% /usr/share/locale
+/dev/mmcblk0p11        74M   35M   39M  48% /opt
+/dev/mmcblk0p14       2.3G  112M  2.1G   6% /opt/usr
+/dev/mmcblk1p1         58G  116M   58G   1% /opt/storage/sdcard

@@ -1,0 +1,434 @@
+=== EP / 色彩 API 全表（libudd5.so 静态导出）===
+  0x00b794 ARM  _udd_ep_bitb_ctrl_blkcpy
+  0x00b8b8 ARM  _udd_ep_bitb_ctrl_fmtconv
+  0x00b9ec ARM  _udd_ep_bitb_get_intr_status
+  0x00ba28 ARM  _udd_ep_bitb_intr_enable
+  0x00bab0 ARM  d5_ep_srsz_op_init
+  0x00baf8 ARM  d5_ep_srsz_enable_cs_mode
+  0x00bb28 ARM  d5_ep_srsz_check_group_avail
+  0x00bb50 ARM  d5_ep_srsz_get_ringpixel
+  0x00bb94 ARM  d5_ep_srsz_calc_ringpixel
+  0x00bbd8 ARM  d5_ep_srsz_op_deinit_inport
+  0x00bc0c ARM  d5_ep_srsz_op_deinit
+  0x00bc3c ARM  d5_ep_srsz_op_close
+  0x00dd38 ARM  _udd_ep_mc_rpath4_ctrl
+  0x00dfac ARM  _udd_ep_srsz_reg_mutex_create
+  0x00dfc0 ARM  _udd_ep_srsz_reg_mutex_delete
+  0x00dffc ARM  _udd_ep_srsz_reg_set_tileinfo
+  0x00e604 ARM  _udd_ep_srsz_reg_set_hlpf
+  0x00e9e8 ARM  _udd_ep_srsz_reg_set_vlpf
+  0x00f0fc ARM  _udd_ep_srsz_reg_set_hrsz
+  0x00f1b8 ARM  _udd_ep_srsz_reg_set_vrsz
+  0x00f274 ARM  _udd_ep_srsz_reg_set_hadd
+  0x00f480 ARM  _udd_ep_srsz_reg_set_vadd
+  0x00f794 ARM  _udd_ep_srsz_reg_set_sram
+  0x00f9f4 ARM  _udd_ep_srsz_reg_set_outport
+  0x00fbdc ARM  _udd_ep_srsz_reg_set_outdir
+  0x00fd10 ARM  _udd_ep_srsz_reg_set_indir
+  0x00fe68 ARM  _udd_ep_srsz_reg_set_inout_con
+  0x00ff8c ARM  _udd_ep_srsz_reg_set_rptdir_in0
+  0x010048 ARM  _udd_ep_srsz_reg_set_rptdir_in1
+  0x010160 ARM  _udd_ep_srsz_reg_set_int_duration
+  0x0101d8 ARM  _udd_ep_srsz_reg_set_muxcon
+  0x01049c ARM  _udd_ep_srsz_reg_set_ms
+  0x01050c ARM  _udd_ep_srsz_reg_set_cspace
+  0x01060c ARM  _udd_ep_srsz_reg_set_cs_switch
+  0x01075c ARM  _udd_ep_srsz_reg_set_frame_start
+  0x01087c ARM  _udd_ep_srsz_reg_set_startsel0
+  0x010934 ARM  _udd_ep_srsz_reg_set_startsel1
+  0x011ec8 ARM  _udd_ep_mc_get_default_param2
+  0x011f10 ARM  d5_ep_nog_set_bypass
+  0x011f34 ARM  d5_ep_nog_set_noisegen
+  0x012024 ARM  _udd_ep_srsz_block_set_outport
+  0x0120c0 ARM  _udd_ep_srsz_block_set_inout_con
+  0x012218 ARM  _udd_ep_srsz_group_calc_ringpix
+  0x0122cc ARM  _udd_ep_srsz_block_set_hrsz
+  0x0123f8 ARM  _udd_ep_srsz_block_set_vrsz
+  0x0128f8 ARM  _udd_ep_srsz_block_set_hlpf
+  0x012a68 ARM  _udd_ep_srsz_block_set_vlpf
+  0x012bf8 ARM  _udd_ep_srsz_block_set_hadd
+  0x012cb8 ARM  _udd_ep_srsz_block_set_vadd
+  0x012d78 ARM  _udd_ep_srsz_block_get_sram_line
+  0x012dfc ARM  _udd_ep_srsz_block_set_sram
+  0x012f58 ARM  _udd_ep_srsz_block_set_tileinfo
+  0x013004 ARM  _udd_ep_srsz_block_set_modes
+  0x013090 ARM  _udd_ep_srsz_block_set_frame_start
+  0x013b64 ARM  _udd_ep_srsz_group_config_rszgrp0
+  0x013d08 ARM  _udd_ep_srsz_group_config_rszgrp1
+  0x013eb0 ARM  _udd_ep_srsz_group_config_rszgrp2
+  0x014058 ARM  _udd_ep_srsz_group_config_rszgrp3
+  0x014740 ARM  _udd_ep_srsz_group_check_addgrp
+  0x014d1c ARM  _udd_ep_srsz_group_check_sram
+  0x015124 ARM  _udd_ep_srsz_group_insert_sram
+  0x015338 ARM  _udd_ep_srsz_group_set_in2out_con
+  0x015400 ARM  _udd_ep_srsz_group_check_output
+  0x01638c ARM  _udd_ep_srsz_group_ringpxl_set
+  0x0166a8 ARM  _udd_ep_srsz_group_set_tileinfo
+  0x016780 ARM  _udd_ep_srsz_mux_init_params
+  0x0167c8 ARM  _udd_ep_srsz_mux_reset_in
+  0x0167fc ARM  _udd_ep_srsz_mux_reset_in_out
+  0x016854 ARM  _udd_ep_srsz_mux_reset_out
+  0x0168ac ARM  _udd_ep_srsz_mux_reset_out_new
+  0x016948 ARM  _udd_ep_srsz_mux_reset_1ch
+  0x01697c ARM  _udd_ep_srsz_mux_reset_2ch
+  0x0169bc ARM  _udd_ep_srsz_mux_reset_4ch
+  0x016a14 ARM  _udd_ep_srsz_mux_reset
+  0x016d68 ARM  _udd_ep_srsz_mux_set_indir
+  0x016e7c ARM  _udd_ep_srsz_mux_set_outdir
+  0x0184bc ARM  _udd_ep_srsz_conn_set_all
+  0x018858 ARM  _udd_ep_srsz_conn_find_nextgroup
+  0x018a20 ARM  _udd_ep_srsz_conn_group
+  0x018aec ARM  _udd_ep_srsz_conn_init_params
+  0x018b50 ARM  d5_ep_ldc_op_init
+  0x018ef4 ARM  d5_ep_ldc_update_ldc_info
+  0x018f24 ARM  d5_ep_ldc_calc_ldc_lut
+  0x018f68 ARM  d5_ep_ldc_dzoom_change_ratio
+  0x018f98 ARM  d5_ep_ldc_vs_update_info
+  0x019050 ARM  d5_ep_ldc_calc_recti_mat
+  0x019080 ARM  d5_ep_3dlut_op_init
+  0x019164 ARM  d5_ep_3dl_load_lut
+  0x019268 ARM  d5_ep_3dl_save_lut
+  0x01937c ARM  d5_ep_fd_op_init
+  0x019424 ARM  d5_ep_fd_op_start
+  0x01944c ARM  d5_ep_fd_change_inbuf
+  0x019488 ARM  d5_ep_fd_change_outbuf
+  0x0199d0 ARM  _udd_ep_fd_ctrl_set_outbuf_manual
+  0x019a1c ARM  _udd_ep_fd_ctrl_set_outbuf_auto
+  0x019a70 ARM  _udd_ep_fd_ctrl_set_inbuf
+  0x019b74 ARM  _udd_ep_fd_ctrl_init
+  0x019d68 ARM  _udd_ep_fd_ctrl_start
+  0x019de8 ARM  _udd_ep_lvr_reg_GetReg
+  0x019e10 ARM  _udd_ep_lvr_reg_SetReg
+  0x019e3c ARM  _udd_ep_lvr_reg_regInit
+  0x019ed4 ARM  _udd_ep_lvr_reg_ChannelInit
+  0x019ff4 ARM  _udd_ep_lvr_reg_ChannelStart
+  0x01a108 ARM  _udd_ep_lvr_reg_SetIntPulseWidth
+  0x01a188 ARM  _udd_ep_lvr_reg_vid_SetOpMode
+  0x01a20c ARM  _udd_ep_lvr_reg_vid_SetStartMode
+  0x01a290 ARM  _udd_ep_lvr_reg_vid_SetReadDirection
+  0x01a314 ARM  _udd_ep_lvr_reg_vid_SetYccFormat
+  0x01a398 ARM  _udd_ep_lvr_reg_vid_SetFlipMode
+  0x01a41c ARM  _udd_ep_lvr_reg_vid_SetRotationMode
+  0x01a4a0 ARM  _udd_ep_lvr_reg_vid_SetImageSize
+  0x01a52c ARM  _udd_ep_lvr_reg_vid_SetYStride
+  0x01a590 ARM  _udd_ep_lvr_reg_vid_SetCStride
+  0x01a5f4 ARM  _udd_ep_lvr_reg_vid_SetReadAddress
+  0x01a678 ARM  _udd_ep_lvr_reg_vid_SetWriteAddress
+  0x01a6fc ARM  _udd_ep_lvr_reg_grp_SetBitWidth
+  0x01a780 ARM  _udd_ep_lvr_reg_grp_SetFlipMode
+  0x01a804 ARM  _udd_ep_lvr_reg_grp_SetRotationMode
+  0x01a888 ARM  _udd_ep_lvr_reg_grp_SetImageSize
+  0x01a914 ARM  _udd_ep_lvr_reg_grp_SetStride
+  0x01a978 ARM  _udd_ep_lvr_reg_grp_SetReadAddress
+  0x01a9cc ARM  _udd_ep_lvr_reg_grp_SetWriteAddress
+  0x01aa20 ARM  _udd_ep_core_a_int_enable
+  0x01aa98 ARM  _udd_ep_core_b_int_enable
+  0x01ab10 ARM  _udd_ep_dma_h_int_enable
+  0x01ab88 ARM  _udd_ep_dma_l_int_enable
+  0x01ac00 ARM  _udd_ep_acc_int_enable
+  0x01ac70 ARM  _udd_ep_core_a_int_disable
+  0x01acec ARM  _udd_ep_core_b_int_disable
+  0x01ad68 ARM  _udd_ep_dma_h_int_disable
+  0x01ade4 ARM  _udd_ep_dma_l_int_disable
+  0x01ae60 ARM  _udd_ep_acc_int_disable
+  0x01aed4 ARM  d5_ep_bitb_block_copy
+  0x01af48 ARM  d5_ep_bitb_format_convert
+  0x01afc4 ARM  d5_ep_bitb_format_convert_manual
+  0x01b050 ARM  d5_ep_bitb_intr_enable
+  0x01b078 ARM  d5_ep_bitb_get_intr_status
+  0x01b090 ARM  _udd_ep_rdma_check_empty
+  0x01b1d0 ARM  _udd_ep_wdma_check_empty
+  0x01b278 ARM  _udd_ep_rdma_get_empty
+  0x01b2dc ARM  _udd_ep_wdma_get_empty
+  0x01b340 ARM  _udd_ep_mux_wdma
+  0x01b404 ARM  _udd_ep_mux_ldc_rdxi
+  0x01b5b8 ARM  _udd_ep_mux_3dlut_rdxi
+  0x01b7ec ARM  _udd_ep_mux_nog_rdxi
+  0x01ba30 ARM  _udd_ep_mux_mc_otf_in
+  0x01bc64 ARM  _udd_ep_mux_mc_rdxi_1
+  0x01be4c ARM  _udd_ep_mux_mc_rdxi_2
+  0x01c034 ARM  _udd_ep_mux_rsz_rdxi_0
+  0x01c308 ARM  _udd_ep_mux_rsz_rdxi_1
+  0x01c5d8 ARM  _udd_ep_mux_rsz_rdxi_2
+  0x01c8a8 ARM  _udd_ep_mux_ldc_wdxi
+  0x01c9d0 ARM  _udd_ep_mux_3dlut_wdxi
+  0x01caf8 ARM  _udd_ep_mux_nog_wdxi
+  0x01cc20 ARM  _udd_ep_mux_mc_otf
+  0x01cd48 ARM  _udd_ep_mux_mc_wdxi
+  0x01ce70 ARM  _udd_ep_mux_rsz_wdxi_1
+  0x01d0cc ARM  _udd_ep_mux_rsz_wdxi_2
+  0x01d300 ARM  _udd_ep_mux_rsz_wdxi_3
+  0x01d55c ARM  _udd_ep_mux_rsz_wdxi_4
+  0x01d7b8 ARM  _udd_ep_demux_ldc_rdxi
+  0x01d844 ARM  _udd_ep_demux_3dlut_rdxi
+  0x01d8d0 ARM  _udd_ep_demux_mc_otf_in
+  0x01d95c ARM  _udd_ep_demux_mc_rdxi_1
+  0x01d9e8 ARM  _udd_ep_demux_mc_rdxi_2
+  0x01da74 ARM  _udd_ep_demux_rsz_rdxi_0
+  0x01db00 ARM  _udd_ep_demux_rsz_rdxi_1
+  0x01db8c ARM  _udd_ep_demux_rsz_rdxi_2
+  0x01dc18 ARM  _udd_ep_demux_nog_rdxi
+  0x01dca4 ARM  _udd_ep_demux_ldc_wdxi
+  0x01ddc4 ARM  _udd_ep_demux_3dlut_wdxi
+  0x01dee4 ARM  _udd_ep_demux_mc_otf
+  0x01e004 ARM  _udd_ep_demux_mc_wdxi
+  0x01e124 ARM  _udd_ep_demux_rsz_wdxi_1
+  0x01e244 ARM  _udd_ep_demux_rsz_wdxi_2
+  0x01e364 ARM  _udd_ep_demux_rsz_wdxi_3
+  0x01e484 ARM  _udd_ep_demux_rsz_wdxi_4
+  0x01e5a4 ARM  _udd_ep_demux_nog_wdxi
+  0x01e6c4 ARM  _udd_ep_sreg_set_update_mode
+  0x01e790 ARM  _udd_ep_sreg_set_default_update_mode
+  0x01e7e0 ARM  _udd_ep_sreg_hold_all
+  0x01e92c ARM  _udd_ep_top_update_sreg
+  0x01e98c ARM  _udd_ep_top_start_trg
+  0x01ea08 ARM  _udd_ep_start_rdma_fsm
+  0x01eae8 ARM  _udd_ep_stop_rdma_fsm
+  0x01ebc8 ARM  _udd_ep_start_wdma_fsm
+  0x01ecac ARM  _udd_ep_stop_wdma_fsm
+  0x01ed90 ARM  _udd_ep_top_enable_dma_fsm
+  0x01ee64 ARM  _udd_ep_top_disable_dma_fsm
+  0x01eea4 ARM  _udd_ep_set_timeout_rdma_start_fsm
+  0x01eef4 ARM  _udd_ep_set_timeout_wdma_start_fsm
+  0x01ef44 ARM  _udd_ep_mux_path_input
+  0x01f0c0 ARM  _udd_ep_demux_path_input
+  0x01f178 ARM  _udd_ep_mux_path_wdma
+  0x01f2ac ARM  _udd_ep_demux_path_wdma
+  0x01f334 ARM  _udd_ep_mux_path_rsz_wdma
+  0x01f3fc ARM  _udd_ep_demux_path_rsz_wdma
+  0x01f4a4 ARM  _udd_ep_get_wdma_start_trg_val
+  0x01f4e8 ARM  _udd_ep_get_rdma_start_trg_val
+  0x01f52c ARM  _udd_ep_get_module_start_trg_val
+  0x01f6f0 ARM  _udd_ep_get_module_auto_start_val
+  0x01f840 ARM  _udd_ep_set_update_mode_auto_start
+  0x01f930 ARM  _udd_ep_restore_update_mode_auto_start
+  0x01fa20 ARM  _udd_ep_3dl_reg_GetReg
+  0x01fa48 ARM  _udd_ep_3dl_reg_SetReg
+  0x01fa74 ARM  _udd_ep_3dl_reg_OnOff
+  0x01fafc ARM  _udd_ep_3dl_reg_SelCbCr_ch
+  0x01fb80 ARM  _udd_ep_3dl_reg_SelLUT
+  0x01fc04 ARM  _udd_ep_3dl_reg_SetColorFormat_LUT0
+  0x01fc88 ARM  _udd_ep_3dl_reg_SetColorFormat_LUT1
+  0x01fd0c ARM  _udd_ep_3dl_reg_Acc_OnOff
+  0x01fd9c ARM  _udd_ep_3dl_reg_rw_Start
+  0x01fea4 ARM  _udd_ep_3dl_reg_SetAddress
+  0x021008 ARM  _udd_ep_mc_rpath1_ctrl
+  0x02175c ARM  d5_ep_sma_virt_to_phys
+  0x0217ec ARM  d5_ep_open
+  0x02190c ARM  d5_ep_close
+  0x0219c0 ARM  d5_ep_udd_set_clk_rate
+  0x021a88 ARM  ep_get_udd_open_count
+  0x021aa4 ARM  ep_force_udd_close
+  0x021ab8 ARM  ep_print_udd_open_list
+  0x021bbc ARM  d5_ep_udd_core_intr_wait
+  0x021cb4 ARM  d5_ep_udd_core_intr_init_wait_queue
+  0x021e9c ARM  d5_ep_udd_dma_h_intr_wait
+  0x021f94 ARM  d5_ep_udd_dma_h_intr_init_wait_queue
+  0x02217c ARM  d5_ep_udd_dma_l_intr_wait
+  0x022274 ARM  d5_ep_udd_dma_l_intr_init_wait_queue
+  0x02246c ARM  d5_ep_udd_acc_intr_wait
+  0x02255c ARM  d5_ep_udd_acc_intr_init_wait_queue
+  0x022ed4 ARM  _udd_ep_mc_rpath3_ctrl
+  0x022fe0 ARM  _udd_ep_ldc_set_order
+  0x02312c ARM  _udd_ep_ldc_conf_top
+  0x0237e4 ARM  _udd_ep_ldc_set_addgen
+  0x023a3c ARM  _udd_ep_ldc_set_bypass
+  0x023aa8 ARM  _udd_ep_ldc_set_int_duration
+  0x023b10 ARM  _udd_ep_ldc_set_ldc_param
+  0x023d6c ARM  _udd_ep_ldc_calc_ldc_lut
+  0x023d9c ARM  _udd_ep_ldc_set_vs_readout_pos
+  0x023e90 ARM  _udd_ep_ldc_init_vs_readout_pos
+  0x023f5c ARM  _udd_ep_ldc_config_roll
+  0x02414c ARM  _udd_ep_ldc_init_roll
+  0x024248 ARM  _udd_ep_ldc_set_rect_center_pos
+  0x02432c ARM  _udd_ep_ldc_set_rect_min
+  0x024410 ARM  _udd_ep_ldc_set_rect_coeff
+  0x0246c8 ARM  _udd_ep_ldc_init_rect_info
+  0x0248e4 ARM  _udd_ep_ldc_dzoom_calc_n_set_param
+  0x024bcc ARM  _udd_ep_ldc_set_debug_cycle
+  0x024c58 ARM  _udd_ep_ldc_calc_recti_mat
+  0x024c80 ARM  _udd_ep_ldc_print_debug_info
+  0x024ec4 ARM  _udd_ep_nog_reg_struct_init
+  0x024fbc ARM  _udd_ep_nog_set_random_seed
+  0x0250a4 ARM  _udd_ep_nog_seed_load_switch
+  0x025154 ARM  _udd_ep_nog_select_rv_type
+  0x025204 ARM  _udd_ep_nog_set_std_sigma
+  0x0253b4 ARM  _udd_ep_nog_set_gamma
+  0x025660 ARM  _udd_ep_nog_set_bypass
+  0x025750 ARM  d5_ep_srsz_direct_test_case502
+  0x026334 ARM  d5_ep_srsz_direct_test_case501
+  0x026ef0 ARM  d5_ep_srsz_direct_test_case500
+  0x027abc ARM  d5_ep_srsz_direct_test_case_D07
+  0x0286c0 ARM  d5_ep_srsz_direct_test_case_D08
+  0x029304 ARM  d5_ep_srsz_direct_test_case_D06
+  0x029f58 ARM  d5_ep_srsz_direct_test_case_D04
+  0x02ab7c ARM  d5_ep_srsz_direct_test_case_D05
+  0x02b7b8 ARM  d5_ep_srsz_direct_test_case_D12
+  0x02c3cc ARM  d5_ep_srsz_direct_test_case_D12_org_working
+  0x02d37c ARM  _udd_ep_mc_get_default_param3
+  0x02d3c4 ARM  d5_ep_mc_set_path
+  0x02d4dc ARM  d5_ep_mc_get_ring_pixel
+  0x02d664 ARM  d5_ep_mc_set_ring_pixel
+  0x02d7d8 ARM  d5_ep_mc_set_overlap_margin
+  0x02d8bc ARM  d5_ep_mc_get_default_param
+  0x02d9b0 ARM  d5_ep_mc_set_default_config
+  0x02db40 ARM  d5_ep_mc_get_default_config
+  0x02dccc ARM  d5_ep_mc_registration_init
+  0x02dd8c ARM  d5_ep_mc_registration_param
+  0x02ded0 ARM  d5_ep_mc_registration_set
+  0x02e08c ARM  d5_ep_mc_registration_get
+  0x02e198 ARM  d5_ep_mc_set_tnr_frame
+  0x02e238 ARM  d5_ep_mc_set_tnr_bypass
+  0x02e2dc ARM  d5_ep_mc_set_custom_param_yccmixer
+  0x030ad0 ARM  _udd_ep_srsz_ctrl_main
+  0x030b00 ARM  _udd_ep_srsz_ctrl_set_cs
+  0x030b90 ARM  _udd_ep_srsz_ctrl_check_group_avail
+  0x03168c ARM  _udd_ep_srsz_ctrl_deinit_inport
+  0x031c2c ARM  _udd_ep_srsz_ctrl_deinit
+  0x031dc0 ARM  _udd_ep_srsz_ctrl_op_close
+  0x031ef4 ARM  _udd_ep_srsz_ctrl_get_ringpixel
+  0x031fb0 ARM  _udd_ep_srsz_ctrl_calc_ringpixel
+  0x0328b8 ARM  _udd_ep_jpeg_ctrl_intr_clr
+  0x0329dc ARM  _udd_ep_jpeg_ctrl_start
+  0x032ac0 ARM  _udd_ep_jpeg_ctrl_reset
+  0x032b98 ARM  _udd_ep_jpeg_ctrl_encoder
+  0x03300c ARM  _udd_ep_jpeg_ctrl_get_streamcount
+  0x03304c ARM  _udd_ep_jpeg_ctrl_decoder
+  0x0333a0 ARM  _udd_ep_jpeg_ctrl_get_dri_status
+  0x033abc ARM  _udd_ep_mc_get_default_param1
+  0x0344c8 ARM  _udd_ep_mc_ring_size_set
+  0x03485c ARM  _udd_ep_mc_common_reg_set
+  0x034fc4 ARM  d5_ep_top_udd_open
+  0x034fe4 ARM  d5_ep_top_clock_onoff
+  0x035530 ARM  d5_ep_top_sw_reset
+  0x035814 ARM  d5_ep_top_dma_sw_reset
+  0x035890 ARM  d5_ep_top_set_rdma_ctrl
+  0x035ef0 ARM  d5_ep_top_set_wdma_ctrl
+  0x0364d8 ARM  d5_ep_top_change_rdma_addr
+  0x036690 ARM  d5_ep_top_change_wdma_addr
+  0x036850 ARM  d5_ep_top_mux_rdma
+  0x0369dc ARM  d5_ep_top_mux_wdma
+  0x036b30 ARM  d5_ep_top_demux_rdma
+  0x036bf8 ARM  d5_ep_top_demux_wdma
+  0x036cc0 ARM  d5_ep_set_wdma5_mux
+  0x036d88 ARM  d5_ep_top_core_intr_en
+  0x036e2c ARM  d5_ep_top_core_intr_dis
+  0x036ec8 ARM  d5_ep_top_dma_h_intr_en
+  0x036f64 ARM  d5_ep_top_dma_h_intr_dis
+  0x037000 ARM  d5_ep_top_dma_l_intr_en
+  0x03709c ARM  d5_ep_top_dma_l_intr_dis
+  0x037138 ARM  d5_ep_top_acc_intr_en
+  0x0371d4 ARM  d5_ep_top_acc_intr_dis
+  0x037270 ARM  d5_ep_top_update_sreg
+  0x037290 ARM  d5_ep_top_set_sreg_update_mode
+  0x0372b8 ARM  d5_ep_top_start_standalone
+  0x037408 ARM  d5_ep_top_start_auto
+  0x03757c ARM  d5_ep_top_stop_auto
+  0x0376d0 ARM  d5_ep_top_open_path
+  0x037ac4 ARM  d5_ep_top_close_path
+  0x037c80 ARM  d5_ep_top_start_path_single_frame
+  0x037d14 ARM  d5_ep_top_start_path_otf_frame
+  0x037d80 ARM  d5_ep_top_stop_path_otf_frame
+  0x037dec ARM  d5_ep_top_cs_sel
+  0x037e74 ARM  d5_ep_top_cs_ready
+  0x037fd4 ARM  d5_ep_top_cs_start
+  0x03802c ARM  d5_ep_top_cs_1frame_start
+  0x038104 ARM  d5_ep_top_cs_sim_start
+  0x0381a4 ARM  d5_ep_top_cs_sim_stop
+  0x038208 ARM  d5_ep_top_cs_off
+  0x03a6d8 ARM  _udd_ep_mc_rpath2_ctrl
+  0x03ab38 ARM  _udd_ep_3dl_ctrl_ConfigBypassMode
+  0x03ab60 ARM  _udd_ep_3dl_ctrl_ConfigAccessMode
+  0x03abb4 ARM  _udd_ep_3dl_ctrl_ConfigProcessMode
+  0x03ac28 ARM  d5_ep_lvr_vid_op_init
+  0x03ad04 ARM  d5_ep_lvr_grp_op_init
+  0x03adb8 ARM  d5_ep_lvr_set_rotation_angle
+  0x03ae2c ARM  d5_ep_lvr_set_flip
+  0x03aea0 ARM  d5_ep_lvr_vid_set_input_buf
+  0x03aef4 ARM  d5_ep_lvr_vid_set_output_buf
+  0x03af48 ARM  d5_ep_lvr_grp_set_input_buf
+  0x03af9c ARM  d5_ep_lvr_grp_set_output_buf
+  0x03aff0 ARM  d5_ep_lvr_channel_init
+  0x03b050 ARM  d5_ep_lvr_opstart
+  0x03bb70 ARM  _udd_ep_mc_get_default_param4
+  0x03bbb8 ARM  _udd_ep_lvr_validate_params
+  0x03bc5c ARM  _udd_ep_lvr_ctrl_rot_angle
+  0x03bca0 ARM  _udd_ep_lvr_ctrl_flip_axis
+  0x03bce4 ARM  _udd_ep_lvr_vid_ctrl_input_addr
+  0x03bd20 ARM  _udd_ep_lvr_vid_ctrl_output_addr
+  0x03bd5c ARM  _udd_ep_lvr_grp_ctrl_input_addr
+  0x03bd84 ARM  _udd_ep_lvr_grp_ctrl_output_addr
+  0x03bdac ARM  _udd_ep_lvr_ctrl_ch_init
+  0x03bdd4 ARM  _udd_ep_lvr_ctrl_ch_start
+  0x03bdfc ARM  _udd_ep_lvr_vid_ctrl_oper
+  0x03bf34 ARM  _udd_ep_lvr_grp_ctrl_oper
+  0x03bff4 ARM  d5_ep_jpeg_encoder
+  0x03c0d4 ARM  d5_ep_jpeg_get_stream_count
+  0x03c0ec ARM  d5_ep_jpeg_intr_clr
+  0x03c114 ARM  d5_ep_jpeg_decoder
+  0x03c1e8 ARM  d5_ep_jpeg_reset
+  0x03c230 ARM  d5_ep_jpeg_get_dri_status
+
+共 369 条 FUNC
+
+--- EP 全局数据（寄存器基址/表基址）---
+  0x04a850 4      .dynsym    rgb2ycbcr_offset_y_fd_udd
+  0x04a854 4      .dynsym    rgb2ycbcr_offset_cb_fd_udd
+  0x04a858 4      .dynsym    rgb2ycbcr_offset_cr_fd_udd
+  0x04a85c 4      .dynsym    rgb2ycbcr_overflow_fd_udd
+  0x04a860 36     .dynsym    ycbcr2rgb_mtx_fd_udd
+  0x04a884 36     .dynsym    ycbcr2rgb_mtx_fd_udd_adobe
+  0x04a8a8 4      .dynsym    ycbcr2rgb_offset_cb_fd_udd
+  0x04a8ac 4      .dynsym    ycbcr2rgb_offset_cr_fd_udd
+  0x04a8b0 4      .dynsym    ycbcr2rgb_overflow_fd_udd
+  0x04a8b4 36     .dynsym    ycbcr2rgb_mtx_fd_udd_premovie_HD
+  0x04a8d8 36     .dynsym    ycbcr2rgb_mtx_fd_udd_premovie_SD
+  0x04a8fc 4      .dynsym    ycbcr2rgb_offset_y_fd_udd_premovie
+  0x04a900 4      .dynsym    ycbcr2rgb_offset_cb_fd_udd_premovie
+  0x04a904 4      .dynsym    ycbcr2rgb_offset_cr_fd_udd_premovie
+  0x04a908 4      .dynsym    ycbcr2rgb_overflow_fd_udd_premovie
+  0x04b0e8 4      .dynsym    fd_ep
+  0x04b320 52     .dynsym    ep_mc_default_config
+  0x04bd00 4      .dynsym    rgb2ycbcr_underflow_fd_udd
+  0x04bd04 4      .dynsym    ycbcr2rgb_offset_y_fd_udd
+  0x04bd08 4      .dynsym    ycbcr2rgb_underflow_fd_udd
+  0x04bd0c 4      .dynsym    ycbcr2rgb_underflow_fd_udd_premovie
+  0x04ceac 116    .dynsym    path_ep_cs0
+  0x04cf20 116    .dynsym    path_ep_cs1
+  0x04d640 4      .dynsym    ep_top_reg_base
+  0x04d644 4      .dynsym    ep_nog_reg_base
+  0x04d648 4      .dynsym    ep_ldc_reg_base
+  0x04d64c 4      .dynsym    ep_bblt_reg_base
+  0x04d650 4      .dynsym    ep_3dlut_reg_base
+  0x04d654 4      .dynsym    ep_fd_reg_base
+  0x04d658 4      .dynsym    ep_jpeg_reg_base
+  0x04d65c 4      .dynsym    ep_rsz_reg_base
+  0x04d660 4      .dynsym    ep_mc_reg_base
+  0x04d664 4      .dynsym    ep_lvr_reg_base
+  0x04d668 32     .dynsym    _udd_ep_nog_regset1
+  0x04d688 32     .dynsym    _udd_ep_nog_regset0
+  0x04d6a8 4      .dynsym    mrkdetect_count_jpeg
+
+--- 非 EP 但关键的基础设施 ---
+  0x04a82c 36     .dynsym    rgb2ycbcr_mtx_fd
+  0x04a850 4      .dynsym    rgb2ycbcr_offset_y_fd_udd
+  0x04a854 4      .dynsym    rgb2ycbcr_offset_cb_fd_udd
+  0x04a858 4      .dynsym    rgb2ycbcr_offset_cr_fd_udd
+  0x04a85c 4      .dynsym    rgb2ycbcr_overflow_fd_udd
+  0x04a860 36     .dynsym    ycbcr2rgb_mtx_fd_udd
+  0x04a884 36     .dynsym    ycbcr2rgb_mtx_fd_udd_adobe
+  0x04a8a8 4      .dynsym    ycbcr2rgb_offset_cb_fd_udd
+  0x04a8ac 4      .dynsym    ycbcr2rgb_offset_cr_fd_udd
+  0x04a8b0 4      .dynsym    ycbcr2rgb_overflow_fd_udd
+  0x04a8b4 36     .dynsym    ycbcr2rgb_mtx_fd_udd_premovie_HD
+  0x04a8d8 36     .dynsym    ycbcr2rgb_mtx_fd_udd_premovie_SD
+  0x04a8fc 4      .dynsym    ycbcr2rgb_offset_y_fd_udd_premovie
+  0x04a900 4      .dynsym    ycbcr2rgb_offset_cb_fd_udd_premovie
+  0x04a904 4      .dynsym    ycbcr2rgb_offset_cr_fd_udd_premovie
+  0x04a908 4      .dynsym    ycbcr2rgb_overflow_fd_udd_premovie
+  0x04b0e8 4      .dynsym    fd_ep
+  0x04bd00 4      .dynsym    rgb2ycbcr_underflow_fd_udd
+  0x04bd04 4      .dynsym    ycbcr2rgb_offset_y_fd_udd
+  0x04bd08 4      .dynsym    ycbcr2rgb_underflow_fd_udd
+  0x04bd0c 4      .dynsym    ycbcr2rgb_underflow_fd_udd_premovie
+  0x04d654 4      .dynsym    ep_fd_reg_base

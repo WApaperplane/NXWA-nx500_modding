@@ -1,0 +1,18 @@
+===== b8_d5dev =====
+crw------- 1 root root 10, 110 Sep  6  2023 /dev/d5_cmdq
+crw------- 1 root root 10, 107 Sep  6  2023 /dev/d5_hevc
+crw------- 1 root root 10, 111 Sep  6  2023 /dev/d5_ipcc
+crw------- 1 root root 10, 109 Sep  6  2023 /dev/d5_lock
+crw------- 1 root root 10, 106 Sep  6  2023 /dev/d5_mipi_csidsi
+crw------- 1 root root 10, 105 Sep  6  2023 /dev/d5_mipi_csim
+crw------- 1 root root 10, 104 Sep  6  2023 /dev/d5_mipi_csim_dma
+crw------- 1 root root 10, 103 Sep  6  2023 /dev/d5_mipi_csis
+crw------- 1 root root 10, 102 Sep  6  2023 /dev/d5_mipi_csis_dma
+crw------- 1 root root 10, 101 Sep  6  2023 /dev/d5_mipi_dsim0
+crw------- 1 root root 10, 100 Sep  6  2023 /dev/d5_mipi_dsim1
+crw------- 1 root root 10, 108 Sep  6  2023 /dev/d5_mptop
+crw------- 1 root root 10, 112 Sep  6  2023 /dev/d5_sma
+---
+ls: cannot access /sys/class/isp: No such file or directory
+---
+ls: cannot access /sys/devices/platform/d5_ep.0/: No such file or directory

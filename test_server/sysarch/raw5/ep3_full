@@ -1,0 +1,67 @@
+=== run ===
+NX500 EP/SMA/IPCC read-only probe v3 (precomputed ioctl consts)
+mode=normal
+EP magic='h' nr=100 | SMA magic='s' | IPCC magic='t'
+
+===== 1. EP  /dev/drime5_ep=====
+open /dev/drime5_ep
+  fd=3
+  EP nr=100 size=80 (NX1 spec) cmd=0x80506864 r=0
+  --- 10 sub-blocks ---
+  top : start=0x20820000  size=0x00001c00  (7168)
+  ldc : start=0x20823000  size=0x00001000  (4096)
+  mc : start=0x20824000  size=0x00002000  (8192)
+  rsz : start=0x20826000  size=0x00001000  (4096)
+  lvr : start=0x20827000  size=0x00001000  (4096)
+  bblt : start=0x20828000  size=0x00001000  (4096)
+  fd : start=0x20829000  size=0x00001000  (4096)
+  jpeg : start=0x2082a000  size=0x00001000  (4096)
+  3DLUT : start=0x2082b000  size=0x00001000  (4096)
+  NOG : start=0x20821c00  size=0x00000100  (256)
+  non-zero: 10/10
+  EP nr=100 size=44 cmd=0x802c6864 r=0
+  EP nr=100 size=40 cmd=0x80286864 r=0
+  EP nr=100 size=72 cmd=0x80486864 r=0
+
+===== 2. SMA /dev/d5_sma =====
+open /dev/d5_sma
+  fd=3
+  SMA_GET_REGION_SIZE          cmd=0x80047301 r=0
+      -> 0x09000000  (150994944)
+  SMA_GET_REGION_START_ADDR    cmd=0x80047304 r=0
+      -> 0x94000000
+  SMA_GET_ALLOCATED_SIZE       cmd=0x80047308 r=0
+      -> 0x12000000  (301989888)
+  SMA_VIRT_TO_PHYS(2) / ALLOC(5) : SKIPPED (IOWR, 有副作用)
+
+===== 3. IPCC /dev/d5_ipcc=====
+open /dev/d5_ipcc
+  fd=3
+  cmds(sz4): W=0xc0047403 R=0xc0047404 L=0xc0047405
+  nr=3 core=0 r=0 ret=-1515870811  buf[0..3]= 00000000 a5a5a5a5 a5a5a5a5 a5a5a5a5  CHANGED
+  nr=3 core=1 r=0 ret=-1515870811  buf[0..3]= 00000001 a5a5a5a5 a5a5a5a5 a5a5a5a5  CHANGED
+  nr=3 core=2 r=0 ret=-1515870811  buf[0..3]= 00000002 a5a5a5a5 a5a5a5a5 a5a5a5a5  CHANGED
+  nr=3 core=3 r=0 ret=-1515870811  buf[0..3]= 00000003 a5a5a5a5 a5a5a5a5 a5a5a5a5  CHANGED
+  nr=3 core=4 r=0 ret=-1515870811  buf[0..3]= 00000004 a5a5a5a5 a5a5a5a5 a5a5a5a5  CHANGED
+  nr=3 core=5 r=0 ret=-1515870811  buf[0..3]= 00000005 a5a5a5a5 a5a5a5a5 a5a5a5a5  CHANGED
+  nr=3 core=6 r=0 ret=-1515870811  buf[0..3]= 00000006 a5a5a5a5 a5a5a5a5 a5a5a5a5  CHANGED
+  nr=3 core=7 r=0 ret=-1515870811  buf[0..3]= 00000007 a5a5a5a5 a5a5a5a5 a5a5a5a5  CHANGED
+  nr=4 core=0 r=0 ret=-1515870811  buf[0..3]= 00000000 a5a5a5a5 a5a5a5a5 a5a5a5a5  CHANGED
+  nr=4 core=1 r=0 ret=-1515870811  buf[0..3]= 00000001 a5a5a5a5 a5a5a5a5 a5a5a5a5  CHANGED
+  nr=4 core=2 r=0 ret=-1515870811  buf[0..3]= 00000002 a5a5a5a5 a5a5a5a5 a5a5a5a5  CHANGED
+  nr=4 core=3 r=0 ret=-1515870811  buf[0..3]= 00000003 a5a5a5a5 a5a5a5a5 a5a5a5a5  CHANGED
+  nr=4 core=4 r=0 ret=-1515870811  buf[0..3]= 00000004 a5a5a5a5 a5a5a5a5 a5a5a5a5  CHANGED
+  nr=4 core=5 r=0 ret=-1515870811  buf[0..3]= 00000005 a5a5a5a5 a5a5a5a5 a5a5a5a5  CHANGED
+  nr=4 core=6 r=0 ret=-1515870811  buf[0..3]= 00000006 a5a5a5a5 a5a5a5a5 a5a5a5a5  CHANGED
+  nr=4 core=7 r=0 ret=-1515870811  buf[0..3]= 00000007 a5a5a5a5 a5a5a5a5 a5a5a5a5  CHANGED
+  nr=5 core=0 r=0 ret=-1515870811  buf[0..3]= 00000000 a5a5a5a5 a5a5a5a5 a5a5a5a5  CHANGED
+  nr=5 core=1 r=0 ret=-1515870811  buf[0..3]= 00000001 a5a5a5a5 a5a5a5a5 a5a5a5a5  CHANGED
+  nr=5 core=2 r=0 ret=-1515870811  buf[0..3]= 00000002 a5a5a5a5 a5a5a5a5 a5a5a5a5  CHANGED
+  nr=5 core=3 r=0 ret=-1515870811  buf[0..3]= 00000003 a5a5a5a5 a5a5a5a5 a5a5a5a5  CHANGED
+  nr=5 core=4 r=0 ret=-1515870811  buf[0..3]= 00000004 a5a5a5a5 a5a5a5a5 a5a5a5a5  CHANGED
+  nr=5 core=5 r=0 ret=-1515870811  buf[0..3]= 00000005 a5a5a5a5 a5a5a5a5 a5a5a5a5  CHANGED
+  nr=5 core=6 r=0 ret=-1515870811  buf[0..3]= 00000006 a5a5a5a5 a5a5a5a5 a5a5a5a5  CHANGED
+  nr=5 core=7 r=0 ret=-1515870811  buf[0..3]= 00000007 a5a5a5a5 a5a5a5a5 a5a5a5a5  CHANGED
+
+===== done =====
+EXIT=0

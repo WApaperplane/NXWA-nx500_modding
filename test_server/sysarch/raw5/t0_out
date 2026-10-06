@@ -1,0 +1,5 @@
+=== run ===
+T0-OK
+open fd=3
+T0-DONE
+EXIT=0

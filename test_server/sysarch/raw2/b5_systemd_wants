@@ -1,0 +1,9 @@
+===== b5_systemd_wants =====
+[multi-user]
+nx-on-wake.service
+
+[graphical]
+ls: cannot access /etc/systemd/system/graphical.target.wants/: No such file or directory
+
+[basic]
+ls: cannot access /etc/systemd/system/basic.target.wants/: No such file or directory

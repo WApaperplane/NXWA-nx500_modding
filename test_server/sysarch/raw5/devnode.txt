@@ -1,0 +1,6 @@
+=== cmd ===
+crw------- 1 root root 10, 116 Mar 30  2016 /dev/drime5-thermister
+crw------- 1 root root 10, 124 Mar 30  2016 /dev/drime5_cec
+crw------- 1 root root 10, 126 Mar 30  2016 /dev/drime5_ep
+=== 驱动模块 ===
+=== exit=0 ===

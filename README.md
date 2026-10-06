@@ -38,7 +38,7 @@ PC 端排障工具：`test_server/telnet_run.py <相机IP> '命令'`（非交互
 ## 快速开始 / Quick start
 
 把以下文件放 SD 卡根目录，插入相机即自动执行（相机固件触发链，  
-`info.tg` → `nx_cs.adj` → 自动运行 `install.sh`）：
+`info.tg` → `nx_cs.adj` → 自动运行 `install.sh`），安装完成后，在设置中开启蓝牙，即开始初始化：
 
 ```
 info.tg  nx_cs.adj  install.sh   <- 仓库根(智能引导器: 未装=全量安装, 已装=增量同步)
@@ -94,30 +94,123 @@ scripts/                          <- 整个目录(模块母本, 会被同步到�
 
 ---
 
+## ★★ 3D LUT / EP 通路（2026-10-06 实测突破）
+
+★ **用户态3D LUT 寄存器写入已实机打通**：写入后画面确实变化（用户目视确认）。
+
+### 已彻底解决
+
+| # | 能力            | 验证                                                 |
+| - | ------------- | -------------------------------------------------- |
+| 1 | EP 10 块权威物理地址 | `ioctl(fd, _IOR('h',100,...))` → **10/10 与历史实测吻合** |
+| 2 | EP 寄存器读写      | `mmap(phys, PROT_WRITE, /dev/drime5_ep)`           |
+| 3 | CMA 内存读写      | `mmap(phys, PROT_WRITE, /dev/d5_sma)`              |
+| 4 | p7 权威 6 步写入序列 | 复现后**画面确实变了**                                      |
+
+### p7 固件的 3D LUT 权威寄存器定义
+
+```
++0x000 bit0      OnOff 总开关      FUN_004cf3d4
++0x004 bits[1:0] SelCbCr          FUN_004cf3fc
++0x004 bits[5:4] SelLUT 通道      FUN_004cf414
++0x004 bit8      LUT0 数据源      FUN_004cf42c
++0x004 bit12     LUT1 数据源      FUN_004cf444
++0x008 bit0      写启动脉冲★     FUN_004cf45c
++0x008 bit8/bit4 读侧清理         FUN_004cf484
++0x00c           LUT0 数据地址    FUN_004cf4b4
++0x010           LUT1 数据地址
+```
+
+★ **完整 6 步序列，一步都不能少**（②⑥ 漏掉则完全无效）：
+
+```c
+b[0x000] |= 1;  b[0x008] &= ~1UL;  b[0x008] |= 1UL;
+b[0x00c] = lut_phys;  b[0x004] &= 0xffffffcfUL;  b[0x008] &= ~0x100UL;
+```
+
+★ 客观判据：**执行后 `+0x008` 保持 1= 硬件接受了启动**。  
+★ 硬约束：**LUT 物理地址必须 256 字节对齐**（`(addr & 0xff) == 0`）。
+
+### ★ 三星内置的 4 套 LUT 方案（已读出内容）
+
+| 缓冲           | 特征     | 方案          |
+| ------------ | ------ | ----------- |
+| `0x81101e00` | 完美线性   | ★纯 identity |
+| `0x81115200` | R↑ G↓  | ★ 暖色调 / 肤色  |
+| `0x810fd100` | 非单调    | 风格化曲线       |
+| `0x81106b00` | 同第 1 个 | 同上          |
+
+LUT 格式 = **17³ 三维 LUT，16-bit 三通道交织**（R 从 `0x0001` 递增、G/B 同步递减）。
+
+### ⇒★★ 魔灯的最终实现路径：改 P7 固件
+
+★ 那4 个 LUT 缓冲在 `0x81xxxxxx`，**超出 Linux `mem=512M`，p7 页表也只覆盖  
+`0x80000000..0x80ffffff`** ⇒ **Linux 用户态永远无法读写它们。**  
+⇒ 这不是"写入者在 p7"，而是"**LUT 数据缓冲本身就在 p7 的地址空间里**"。  
+⇒ ★ 切入点已锁定：`FUN_0009a3e8`（从 4 个常量选一个返回的地方）。
+
+### ★★ 零风险立即可用：4 档色彩切换
+
+★ **不需要改固件** —— 把 3DLUT 的 `+0x0c` 写成 `0x810fd100` / `0x81106b00` /  
+`0x81115200` / `0x81101e00` 之一，即可在 4 套内置方案间切换。
+
+**文档 / Docs**
+
+- [`docs/WORK_REPORT_2026-10-06.md`](docs/WORK_REPORT_2026-10-06.md) / [EN](docs/WORK_REPORT_2026-10-06_EN.md) — ★ 当日工作报告（打通过程 + 7 个自我修正 + 9 条铁律）
+- [`docs/EP_3DLUT_WRITE_EXPERIMENTS_2026-10-06.md`](docs/EP_3DLUT_WRITE_EXPERIMENTS_2026-10-06.md) — ★ 11 次写入实验全记录
+- [`docs/EP_PATH_OPEN_2026-10-06.md`](docs/EP_PATH_OPEN_2026-10-06.md) — 内核 ioctl + mmap 通路
+- [`docs/LIBUDD5_EP_API_MAP_2026-10-06.md`](docs/LIBUDD5_EP_API_MAP_2026-10-06.md) / [EN](docs/LIBUDD5_EP_API_MAP_2026-10-06_EN.md) — libudd5 API 图谱
+
+**English summary**
+
+Verified on a real NX500: **userspace 3D LUT register writes work and visibly change the image.**
+All 10 EP block addresses come authoritatively from the kernel
+(`ioctl(fd, _IOR('h',100,...))`, 10/10 matching earlier `/dev/mem` measurements), and the
+6-step write sequence was reproduced from the P7 firmware's own decompilation — steps ② and ⑥
+(clear pulse bit, clear read-side flag) were the reason the first five attempts did nothing.
+**Objective success criterion: after the sequence, `+0x008` stays at 1** (hardware accepted the start).
+
+Then the decisive finding: P7 holds **four preset LUT buffers**
+(`0x810fd100` / `0x81106b00` / `0x81115200` / `0x81101e00`) which read out as Samsung's four
+built-in colour profiles (identity / warm-skin / stylised curves), format = **17³ 3D LUT,
+16-bit × 3 channels interleaved**. Those addresses sit above the Linux 512MB limit and outside
+the P7 page table, so **Linux userspace can never read or write them** ⇒ Magic Lantern must
+patch P7 — not because "the writer is in P7", but because **the LUT buffers themselves live in
+P7's address space**.
+
+★ **Shippable today with zero risk**: writing one of those four addresses into 3DLUT's `+0x00c`
+switches between the four built-in profiles — no firmware patch required.
+
+**工具 / Tools**（`test_server/isp/` + `test_server/sysarch/`）
+
+- `udd5.py` — 自研 ELF+Capstone 反汇编器（pyelftools 16/16 交叉验证）
+- `regmap.py` — EP 寄存器偏移自动提取 · `crosscheck.py` — 对照验证
+- `epinfo` / `epdump2` / `epwr` / `eplut10` / `rd` — 只读与写入探针（ARM）
+
+---
+
 ## ★ 逆向成果速览 / Reverse engineering highlights
 
-2026-10-05 实测推翻了三个框架级判断（详见综合报告 §0）：
+2026-10-05 实测推翻了三个框架级判断（2026-10-06 追加修正见上）：
 
-| 早先判断 | 实测结论 |
-|---|---|
-| `d5_ipcc` 是主要跨核通道 | ❌ **空壳**：ioctl 返回 0 但不回填；`size=8` 编码直接 SIGILL |
-| 双核隔离，无法通信 | ❌ `drime5_ep` 中断 **149 万次**；`d5_sma` 有 144MB 共享区 @ `0x94000000` |
-| 3D LUT 硬件未初始化 | ❌ 寄存器在 Linux 侧 **mmap 可读**，里面装着 **identity LUT**（`0x13020619` × 8 @ `0x2082b000`） |
-| handle 墙不可破 | ⚠️ 只对厂商库成立。直接 mmap 硬件**绕过 handle**（**读已实测，写不测且不测**） |
+| 早先判断              | 实测结论                                                            |
+| ----------------- | --------------------------------------------------------------- |
+| `d5_ipcc` 是主要跨核通道 | ❌ **空壳**：ioctl 返回 0 但不回填；`size=8` 编码直接 SIGILL                   |
+| 双核隔离，无法通信         | ❌ `drime5_ep` 中断 **149 万次**；`d5_sma` 有 144MB 共享区 @ `0x94000000` |
+| 3D LUT 硬件未初始化     | ❌ **OnOff 实测 = 1（开着）**；且**寄存器写入已实机验证会改变画面**                     |
+| handle 墙不可破       | ⚠️ 只对厂商库成立。直接 mmap 硬件**绕过 handle**（**读+写均已实测**）                 |
 
-> **为什么绝不写 EP 寄存器**：不可中断写入 + 并发读风险 ⇒ 位域错乱；
-> 且 `di-camera-app` 杀不掉（`launchpad_preloading_preinitializing_daemon` 会拉起）⇒ **只能拔电池**。
-> **⇒ 绕道换来的真实收益是「可观测」，不是「可写」。**
+> ★★ **2026-10-06 重大修正**：早先写的"**绝不写 EP 寄存器**/只能拔电池"  
+> **已被实测证伪**。真相是：
 >
-> **2026-10-05 21:20 修正**：早先写的"EP 由 ISP 固件实时驱动"**无证据，已降级为假设**——
-> 冷启动 dmesg 里 `request_firmware`/`uImage`/`rom.bin`/`devicem4.bin`/`srp` 全零命中，
-> 且 libudd5.so 503 个符号零 ISP 引用。EP 走标准 UDD 模型（ioctl + **用户态自己 mmap**）。
-> ⇒ 更可能：EP 是**独立图像引擎，由 Linux 用户态直接驱动**；真正风险不是"被 ISP 同时读"，
-> 而是**改了 3DLUT 没走 `d5_ep_top_update_sreg(3DLUT_SHADOW_UPDATE)` 导致影子寄存器不提交**（待实机验证）。
+> - EP 块是 `/dev/drime5_ep` 的纯 mmap 设备，`open` **零硬件初始化**（源码证实）
+> - 按p7 固件的 6 步序列写入，用户目视确认**画面确实变化**
+> - 风险远低于预想：**LUT 是软状态，触屏/对焦后即自动恢复**
+> - ⚠️ 但"用户态写 LUT **数据**"不可行 —— 缓冲在 p7 地址空间（详见上文）
 
 > 胶片仿真探索（recipe + .cube LUT + capdtm ISP）在独立仓库  
 > [nx500-filmsim](https://github.com/WApaperplane/nx500-filmsim)。
 
-**已经走过的弯路？** 见综合报告 **§7 方法论铁律** 与 **§9.3 已排除的路径**
-（9 条已证伪路线 + 13 条硬件/交叉编译约束，都是很容易浪费几小时的坑）。
+**已经走过的弯路？** 见综合报告 **§7 方法论铁律** 与 **§9.3 已排除的路径**  
+（9 条已证伪路线 + 13 条硬件/交叉编译约束，都是很容易浪费几小时的坑）。  
 **English:** see §7 and §9.3 of the consolidated report.

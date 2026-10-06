@@ -1,0 +1,4 @@
+===== h06_usrbin_st =====
+lrwxrwxrwx 1 root root              3 Mar 30  2016 captoinfo -> tic
+lrwxrwxrwx 1 root root              3 Mar 30  2016 infotocap -> tic
+-rwxr-xr-x 1 root root           4680 Mar  4  2015 st

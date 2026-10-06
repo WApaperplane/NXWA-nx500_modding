@@ -1,0 +1,7 @@
+=== cmd ===
+b0e21000-b0e6e000 r-xp 00000000 b3:0a 108        /usr/lib/libudd5.so
+b0e6e000-b0e75000 ---p 0004d000 b3:0a 108        /usr/lib/libudd5.so
+b0e75000-b0e77000 rw-p 0004c000 b3:0a 108        /usr/lib/libudd5.so
+=== libudd5 是否已加载 ===
+3
+=== exit=0 ===

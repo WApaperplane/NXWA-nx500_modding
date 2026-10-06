@@ -1,0 +1,98 @@
+===== 06_ps.txt =====
+USER      PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root        1  0.1  0.2   4684  1396 ?        Ss   17:32   0:01 /sbin/init
+root        2  0.0  0.0      0     0 ?        S    17:32   0:00 [kthreadd]
+root        3  0.0  0.0      0     0 ?        S    17:32   0:00 [ksoftirqd/0]
+root        6  0.0  0.0      0     0 ?        S    17:32   0:00 [rcu_kthread]
+root        7  0.0  0.0      0     0 ?        S<   17:32   0:00 [khelper]
+root        8  0.0  0.0      0     0 ?        S    17:32   0:00 [kdevtmpfs]
+root        9  0.0  0.0      0     0 ?        S    17:32   0:00 [kworker/0:1]
+root       10  0.0  0.0      0     0 ?        S<   17:32   0:00 [kblockd]
+root       15  0.0  0.0      0     0 ?        S<   17:32   0:00 [display-workque]
+root       16  0.0  0.0      0     0 ?        S    17:32   0:00 [sync_supers]
+root       17  0.0  0.0      0     0 ?        S    17:32   0:00 [bdi-default]
+root       18  0.0  0.0      0     0 ?        S    17:32   0:00 [khubd]
+root       19  0.0  0.0      0     0 ?        S    17:32   0:00 [cfinteractive]
+root       20  0.0  0.0      0     0 ?        S    17:32   0:00 [kswapd0]
+root       21  0.0  0.0      0     0 ?        S    17:32   0:00 [fsnotify_mark]
+root       22  0.0  0.0      0     0 ?        S<   17:32   0:00 [crypto]
+root       28  0.0  0.0      0     0 ?        S<   17:32   0:00 [drd_switch]
+root       30  0.0  0.0      0     0 ?        S    17:32   0:00 [file-storage]
+root       31  0.0  0.0      0     0 ?        S    17:32   0:00 [irq/243-mms_ts]
+root       32  0.0  0.0      0     0 ?        S<   17:32   0:00 [dw-mci-card]
+root       33  0.0  0.0      0     0 ?        S<   17:32   0:00 [dw-mci-card]
+root       34  0.0  0.0      0     0 ?        S<   17:32   0:00 [dw-mci-card]
+root       36  0.0  0.0      0     0 ?        S    17:32   0:00 [kworker/u:3]
+root       37  0.2  0.0      0     0 ?        S    17:32   0:02 [mmcqd/0]
+root       38  0.0  0.0      0     0 ?        S    17:32   0:00 [mmcqd/0boot0]
+root       39  0.0  0.0      0     0 ?        S    17:32   0:00 [mmcqd/0boot1]
+root       40  0.0  0.0      0     0 ?        S<   17:32   0:00 [krfcommd]
+root       41  0.0  0.0      0     0 ?        S<   17:32   0:00 [deferwq]
+root       42  0.0  0.0      0     0 ?        S    17:32   0:00 [jbd2/mmcblk0p10]
+root       43  0.0  0.0      0     0 ?        S<   17:32   0:00 [ext4-dio-unwrit]
+root       55  0.0  0.8  29432  4312 ?        Ss   17:32   0:00 /usr/lib/systemd/systemd-journald
+root      106  0.0  0.0      0     0 ?        S<   17:32   0:00 [loop0]
+root      119  0.0  0.0   5492   328 ?        Ss   17:32   0:00 /sbin/syslogd -b 5 -B 99
+root      128  0.0  0.0   5464   344 ?        Ss   17:32   0:00 /sbin/klogd
+root      139  1.7  0.6   9632  3528 tty2     S<s+ 17:32   0:20 /usr/bin/Xorg :0 -logfile /var/log/Xorg.0.log -ac -noreset +accessx 0 +dpmsphone -nolisten tcp -config /etc/X11/xorg.conf -configdir /etc/X11/xorg.conf.d
+root      149  0.0  0.2   3064  1156 ?        Ss   17:32   0:00 /usr/bin/dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation
+root      150  0.0  0.0  12340   468 ?        Ss   17:32   0:00 /usr/bin/scim -d
+root      154  0.0  0.0   1980   176 ?        Ss   17:32   0:00 /usr/local/bin/nx-on-wake
+root      167  0.0  0.0   5276   100 ttyAMA0  Ss+  17:32   0:00 /sbin/agetty --keep-baud ttyAMA0 115200 38400 9600
+root      174  0.0  0.4  62044  2460 ?        Ssl  17:32   0:00 /usr/bin/amd
+root      175  0.0  0.3  52356  1860 ?        Ss   17:32   0:00 /usr/bin/launchpad_preloading_preinitializing_daemon                                                                                                                                                                                                          
+root      186  0.0  0.2 104968  1044 ?        S<l  17:32   0:00 /usr/bin/pulseaudio
+root      192  0.0  0.2 182576  1124 ?        Ssl  17:32   0:00 /usr/bin/sound_server -S
+root      193  0.0  0.3  23832  1800 ?        Ss   17:32   0:00 /usr/bin/deviced
+app       197  1.9  1.5  73564  7936 ?        Sl   17:32   0:23 /usr/bin/enlightenment -profile samsung -i-really-know-what-i-am-doing-and-accept-full-responsibility-for-it
+app       205  0.0  0.0   3088   152 ?        S    17:32   0:00 dbus-launch --exit-with-session /usr/bin/enlightenment -profile samsung -i-really-know-what-i-am-doing-and-accept-full-responsibility-for-it
+app       206  0.0  0.0   2640   212 ?        Ss   17:32   0:00 /usr/bin/dbus-daemon --fork --print-pid 4 --print-address 6 --session
+root      252 50.9  3.7 303396 19192 ?        S<sl 17:32  10:18 /usr/apps/com.samsung.di-camera-app/bin/di-camera-app
+app       253  0.0  0.0   9736   348 ?        Ss   17:32   0:00 /usr/lib/scim-1.0/scim-launcher -d -c simple -e hangul,ise-engine-default,ise-engine-sunpinyin,table,ise-default -f socket
+app       259  0.0  0.5  66360  2636 ?        Ssl  17:32   0:00 /usr/bin/isf-panel-efl -c socket -d
+app       260  0.0  0.8  69672  4376 ?        S    17:32   0:00 /usr/lib/scim-1.0/scim-helper-launcher --daemon --config socket --display :0 ise-default 12aa3425-f88d-45f4-a509-cee8dfe904e3
+root      272  0.0  0.0      0     0 ?        S    17:32   0:00 [irq/274-jog1]
+root      273  0.0  0.0      0     0 ?        S    17:32   0:00 [irq/275-jog1]
+root      274  0.0  0.0      0     0 ?        S    17:32   0:00 [irq/270-jog2]
+root      275  0.0  0.0      0     0 ?        S    17:32   0:00 [irq/271-jog2]
+root      278  0.0  0.0      0     0 ?        S    17:32   0:00 [jbd2/mmcblk0p11]
+root      279  0.0  0.0      0     0 ?        S<   17:32   0:00 [ext4-dio-unwrit]
+root      280  0.0  0.0      0     0 ?        S    17:32   0:00 [jbd2/mmcblk0p14]
+root      281  0.0  0.0      0     0 ?        S<   17:32   0:00 [ext4-dio-unwrit]
+root      285  0.0  0.0      0     0 ?        S    17:32   0:00 [mmcqd/2]
+root      290  0.3  2.1 151608 10896 ?        Ssl  17:32   0:03 /usr/apps/com.samsung.ap-setting-app/bin/ap-setting-app `zaybxcwdveuftgsh` __AUL_STARTTIME__ NAAAAAEEAAASAAAAX19BVUxfU1RBUlRUSU1FX18AEgAAADE3OTExODkxNzcvMzYxMTk5AA== __AUL_CALLER_PID__ JwAAAAEEAAATAAAAX19BVUxfQ0FMTEVSX1BJRF9fAAQAAAAyNTIA __AUL_CALLER_APPID__ PwAAAAEEAAAVAAAAX19BVUxfQ0FMTEVSX0FQUElEX18AGgAAAGNvbS5zYW1zdW5nLmRpLWNhbWVyYS1hcHAA
+app       294  0.0  0.4  39408  2192 ?        S    17:32   0:00 /usr/bin/bt-service
+app       305  0.0  0.1   3164   568 ?        S    17:32   0:00 dbus-launch --autolaunch 51a46634149c43adafa1ef23bfb735d3 --binary-syntax --close-stderr
+app       306  0.0  0.1   2640   644 ?        Ss   17:32   0:00 /usr/bin/dbus-daemon --fork --print-pid 5 --print-address 7 --session
+root      307  0.0  0.5  68924  2848 ?        Ssl  17:32   0:00 /usr/bin/sap-server
+root      309  0.0  0.2   4860  1160 ?        S    17:32   0:00 /usr/bin/bt-core
+root      325  0.0  0.0      0     0 ?        S    17:33   0:00 [bt_main_service]
+root      326  0.3  0.0      0     0 ?        S    17:33   0:04 [ksdioirqd/mmc1]
+root      327  0.0  0.0      0     0 ?        S<   17:33   0:00 [hci0]
+root      328  0.0  0.0      0     0 ?        S<   17:33   0:00 [hci0]
+root      338  0.0  0.0   9076   148 ?        SNl  17:33   0:00 /opt/usr/nx-ks/keyscan /dev/event0 /dev/event1 /opt/usr/nx-ks/
+root      361  0.0  0.8  48972  4388 ?        S<   17:33   0:00 /opt/usr/nx-ks/onscreen_ks
+root      370  0.0  0.2   3556  1052 ?        SNs  17:33   0:00 /usr/sbin/bluetoothd.orig
+root      372  0.0  0.2   3884  1476 ?        Ss   17:33   0:00 /usr/sbin/connmand
+root      379  0.0  0.2  33192  1532 ?        Ss   17:33   0:00 /usr/sbin/net-config
+root      403  0.0  0.0   3332   260 ?        SNs  17:33   0:00 /opt/usr/nx-ks/busybox httpd -p 8080 -h /opt/usr/nx-ks/nx-rc/capdtm/www
+root      418  0.3  0.7  38012  3732 ?        SNl  17:33   0:04 /opt/usr/nx-ks/nx-rc/nx-remote-controller-daemon
+root      430  0.0  0.1   3904   732 ?        SN   17:33   0:00 nx-input-injector
+root      461  0.0  0.1   4236   852 ?        SN   17:33   0:00 xev-nx -p -id 14680066
+root      739  0.0  0.2   6084  1172 ?        Ss   17:34   0:00 /usr/sbin/wpa_supplicant -u -t -B -d -Dnl80211 -e /opt/var/lib/wifi/entropy.bin
+root      757  0.0  0.0      0     0 ?        S<   17:34   0:00 [cfg80211]
+root      760  0.0  0.0      0     0 ?        S<   17:34   0:00 [MOAL_HANG_WORK_]
+root      761  0.0  0.0      0     0 ?        S<   17:34   0:00 [MOAL_WORK_QUEUE]
+root      762  0.0  0.0      0     0 ?        S<   17:34   0:00 [MOAL_RX_WORK_QU]
+root      763  0.0  0.0      0     0 ?        S    17:34   0:00 [woal_reassoc_se]
+root     1336  0.0  0.0      0     0 ?        S    17:39   0:00 [kworker/u:2]
+root     1340  0.0  0.0      0     0 ?        S    17:39   0:00 [kworker/0:0]
+root     1407  0.0  0.1   3332   680 ?        SN   17:39   0:00 /opt/usr/nx-ks/busybox tcpsvd -u root -vE 0.0.0.0 21 /opt/usr/nx-ks/busybox ftpd -w -v /opt/storage/sdcard
+root     1415  0.0  0.1   4696   760 ?        SNs  17:39   0:00 /opt/usr/nx-ks/telnetd
+root     1451  0.5  2.2  74036 11288 ?        SNl  17:48   0:01 /opt/usr/nx-ks/mod_gui /opt/usr/nx-ks/gui_ini
+root     1466  0.0  0.0      0     0 ?        S    17:48   0:00 [flush-179:0]
+root     1467  0.0  0.0      0     0 ?        S    17:48   0:00 [flush-179:45]
+root     1486  0.0  0.0      0     0 ?        S    17:52   0:00 [kworker/0:2]
+root     1489  0.0  0.2   2768  1488 pts/0    SNs  17:52   0:00 -sh
+root     1493  0.0  0.1   3332   628 pts/0    SN+  17:52   0:00 /opt/usr/nx-ks/busybox sh /mnt/mmc/_xfer/_probe.sh
+root     1507  1.0  0.1   2664   900 pts/0    RN+  17:52   0:00 ps aux

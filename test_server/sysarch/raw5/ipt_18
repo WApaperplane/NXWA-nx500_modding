@@ -1,0 +1,6 @@
+IPCC probe nr=81
+cmd=c0087402
+r=0 errno=0
+buf=aaaaaaaa aaaaaaaa aaaaaaaa aaaaaaaa aaaaaaaa aaaaaaaa aaaaaaaa aaaaaaaa 
+SURVIVED
+EXIT=0

@@ -1,0 +1,9 @@
+=== run ===
+NX500 EP register read-only probe
+mmap PROT_READ only, no writes, no register config
+arg  addr=0xbbaea500 len=0x1000
+  /dev/mem opened RO
+  mmap FAILED: Invalid argument
+
+===== done =====
+EXIT=0

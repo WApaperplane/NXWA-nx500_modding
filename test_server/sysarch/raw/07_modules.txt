@@ -1,0 +1,7 @@
+===== 07_modules.txt =====
+sd8xxx 459501 1 - Live 0xbf185000
+mlan 391219 1 sd8xxx, Live 0xbf118000
+cfg80211 172035 1 sd8xxx, Live 0xbf0e0000
+bt8887 722073 1 - Live 0xbf028000
+exfat_fs 27976 1 - Live 0xbf01d000 (O)
+exfat_core 96435 1 exfat_fs, Live 0xbf000000 (O)

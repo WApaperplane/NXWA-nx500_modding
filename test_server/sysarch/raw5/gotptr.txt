@@ -1,0 +1,13 @@
+=== run ===
+batch: pid=247 seg=0xb0e75000 va_page=0x54000
+symbol                               st_value   value      note
+p1=0x830d4                           0x000830d4  0xe51f1990  ptr
+p2=0x8e480                           0x0008e480  0xe34b2a2e  ptr
+p3=0x8c9d8                           0x0008c9d8  0xe26b4ffa  ptr
+s1=0x8e408                           0x0008e408  0xe59dc00c  ptr
+s2=0x8e3f0                           0x0008e3f0  0xe59d0010  ptr
+s3=0x8e3d8                           0x0008e3d8  0xebff9515  ptr
+s4=0x8e3b4                           0x0008e3b4  0xe59d200c  ptr
+
+=== end: pure read ===
+EXIT=0

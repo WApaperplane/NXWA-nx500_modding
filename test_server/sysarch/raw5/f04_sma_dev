@@ -1,0 +1,5 @@
+===== f04_sma_dev =====
+crw------- 1 root root 10, 111 Sep  6  2023 /dev/d5_ipcc
+crw------- 1 root root 10, 109 Sep  6  2023 /dev/d5_lock
+crw------- 1 root root 10, 108 Sep  6  2023 /dev/d5_mptop
+crw------- 1 root root 10, 112 Sep  6  2023 /dev/d5_sma

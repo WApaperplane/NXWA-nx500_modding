@@ -1,0 +1,12 @@
+=== cmd ===
+--- zImage? ---
+--- dmesg 尾部 ---
+[ 1: 1416.727781] I/KERNEL       (K1146): [<c0013784>] (unwind_backtrace+0x0/0xfc) from [<c0014d98>] (__do_user_fault+0xc4/0xc8)
+[ 1: 1416.727798] I/KERNEL       (K1146): [<c0014d98>] (__do_user_fault+0xc4/0xc8) from [<c0014fb0>] (do_page_fault+0x190/0x254)
+[ 1: 1416.727812] I/KERNEL       (K1146): [<c0014fb0>] (do_page_fault+0x190/0x254) from [<c0008498>] (do_DataAbort+0x38/0x98)
+[ 1: 1416.727832] I/KERNEL       (K1146): [<c0008498>] (do_DataAbort+0x38/0x98) from [<c000e874>] (__dabt_usr+0x34/0x40)
+[ 1: 1416.727841] I/KERNEL       (K1146): Exception stack(0xc87ebfb0 to 0xc87ebff8)
+[ 1: 1416.727852] I/KERNEL       (K1146): bfa0:                                     00000000 92929191 bef1b854 00000000
+[ 1: 1416.727864] I/KERNEL       (K1146): bfc0: b6db7640 bef1f8ac 00000064 bef28318 00000000 00000005 b6f32e14 b6f3b9c4
+[ 1: 1416.727874] I/KERNEL       (K1146): bfe0: b6da3bc8 bef1b848 b6da3ff4 b6da3bd4 60000010 ffffffff
+=== exit=0 ===

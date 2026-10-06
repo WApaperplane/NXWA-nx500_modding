@@ -1,0 +1,2 @@
+===== d17_dvfs_touch =====
+cat: /sys/devices/platform/drime5-ispfreq/scen/*: Not a directory

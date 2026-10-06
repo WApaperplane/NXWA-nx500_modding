@@ -1,0 +1,27 @@
+===== d10_gpiochip_dirs =====
+/sys/class/gpio/gpiochip0/
+/sys/class/gpio/gpiochip104/
+/sys/class/gpio/gpiochip112/
+/sys/class/gpio/gpiochip120/
+/sys/class/gpio/gpiochip128/
+/sys/class/gpio/gpiochip136/
+/sys/class/gpio/gpiochip144/
+/sys/class/gpio/gpiochip152/
+/sys/class/gpio/gpiochip16/
+/sys/class/gpio/gpiochip160/
+/sys/class/gpio/gpiochip168/
+/sys/class/gpio/gpiochip176/
+/sys/class/gpio/gpiochip184/
+/sys/class/gpio/gpiochip192/
+/sys/class/gpio/gpiochip200/
+/sys/class/gpio/gpiochip24/
+/sys/class/gpio/gpiochip32/
+/sys/class/gpio/gpiochip40/
+/sys/class/gpio/gpiochip48/
+/sys/class/gpio/gpiochip56/
+/sys/class/gpio/gpiochip64/
+/sys/class/gpio/gpiochip72/
+/sys/class/gpio/gpiochip8/
+/sys/class/gpio/gpiochip80/
+/sys/class/gpio/gpiochip88/
+/sys/class/gpio/gpiochip96/

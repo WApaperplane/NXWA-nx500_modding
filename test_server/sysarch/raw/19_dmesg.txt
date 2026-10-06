@@ -1,0 +1,201 @@
+===== 19_dmesg.txt =====
+[ 1:    1.113647] I/KERNEL       (K 252): PM: Error 1 creating hibernation image
+[ 1:    1.113653] I/KERNEL       (K 252): start restore_processor_state
+[ 1:    1.113655] I/KERNEL       (K 252): start __restore_processor_state
+[ 1:    1.113659] I/KERNEL       (K 252): end __restore_processor_state
+[ 1:    1.113661] I/KERNEL       (K 252): end restore_processor_state
+[ 1:    1.113705] I/KERNEL       (K 252): DRIME5: Adaptive Support Voltage init
+[ 1:    1.113725] I/KERNEL       (K 252): DRIME5: IDS : 31(ISP), 57(ARM) PROMISE : 97 RESULT : 8
+[ 1:    1.113727] I/KERNEL       (K 252): DRIME5 ASV : 8 Group
+[ 1:    1.114304] I/KERNEL       (K 252): PM: noirq restore of devices complete after 0.400 msecs
+[ 1:    1.114550] I/KERNEL       (K 252): PM: early restore of devices complete after 0.001 msecs
+[ 1:    1.134641] I/SYS_BTLOG    (K 252): dpm_resume start!
+[ 1:    1.134740] I/KERNEL       (K 252): read time 2026.10.05 08:32:54
+[ 1:    1.134768] I/KERNEL       (K 252): drime5-rtc drime5-rtc: resume(): set sys-clock to 2026-10-05 08:32:54 UTC (1791189174)
+[ 1:    1.134900] I/KERNEL       (K 252): pwm resueme:4
+[ 1:    1.134905] I/KERNEL       (K 252): pwm resueme:5
+[ 1:    1.134911] I/KERNEL       (K 252): pwm resueme:10
+[ 1:    1.134979] I/KERNEL       (K 252): display_control_resume started
+[ 1:    1.134997] I/KERNEL       (K 252): display send message 12 0
+[ 1:    1.135053] I/KERNEL       (K 252): hdmi hot plug event occur! [0] 
+[ 1:    1.135059] I/KERNEL       (K 252): d5_pmu_ip_power_on_off: started[0]
+[ 1:    1.136055] I/KERNEL       (K 252): Registered led device: af
+[ 1:    1.136126] I/KERNEL       (K 252): Registered led device: card
+[ 1:    1.136164] I/KERNEL       (K 252): d5_pmu_ip_power_on_off: started[0]
+[ 1:    1.149185] I/SYS_BTLOG    (K 252): dpm_resume!(bma_2XX)(10ms)
+[ 1:    1.149363] I/KERNEL       (K 252): nau8822_resume. 
+[ 1:    1.172974] I/KERNEL       (K 252): trying SW reset 
+[ 1:    1.212869] I/SYS_BTLOG    (K 252): dpm_resume!(2-001a)(70ms)
+[ 1:    1.249078] I/SYS_BTLOG    (K 252): dpm_resume!(3-0025)(30ms)
+[ 1:    1.256203] I/KERNEL       (K 252): mmc_host mmc0: current voltage : 3.3v
+[ 1:    1.256221] I/KERNEL       (K 252): mmc_host mmc0: Bus speed (slot 0) = 12500000Hz (slot req 400000Hz, actual 390625HZ div = 16)
+[ 1:    1.365861] I/KERNEL       (K 252): mmc0: BKOPS_EN bit is not set
+[ 1:    1.372679] I/KERNEL       (K 252): mmc_host mmc0: current voltage : 1.8v
+[ 1:    1.376709] I/KERNEL       (K 252): mmc_host mmc0: Bus speed (slot 0) = 200000000Hz (slot req 400000Hz, actual 400000HZ div = 250)
+[ 1:    1.376722] I/KERNEL       (K 252): mmc_host mmc0: Bus speed (slot 0) = 200000000Hz (slot req 200000000Hz, actual 200000000HZ div = 0)
+[ 1:    1.377095] I/KERNEL       (K 252): dw_mmc_emmc dw_mmc_emmc.0: execute tuning sample phase : 0, 1, 0
+[ 1:    1.378043] I/SYS_BTLOG    (K 252): dpm_resume!(mmc0:0001)(130ms)
+[ 1:    1.378205] I/SYS_BTLOG    (K 252): dpm_resume end!
+[ 1:    1.378214] I/KERNEL       (K 252): PM: restore of devices complete after 243.600 msecs
+[ 1:    1.442810] I/KERNEL       (K  59): [d5-keys] (      mode_a) key disabled
+[ 1:    1.442832] I/KERNEL       (K  59): [d5-keys] (      mode_a) key disabled
+[ 1:    1.443651] I/KERNEL       (K 252): Restarting tasks ... done.
+[ 1:    1.472791] I/KERNEL       (K  59): d5_pmu_ip_power_on_off: started[0]
+[ 1:    1.472856] I/KERNEL       (K  59): m4_off_work_handler M4 Off 
+[ 1:    1.572970] I/KERNEL       (K 252): EXT4-fs (mmcblk0p11): warning: mounting unchecked fs, running e2fsck is recommended
+[ 1:    1.573696] I/KERNEL       (K 252): EXT4-fs (mmcblk0p11): recovery complete
+[ 1:    1.574454] I/KERNEL       (K 252): EXT4-fs (mmcblk0p11): mounted filesystem with ordered data mode. Opts: (null)
+[ 1:    1.584156] I/KERNEL       (K 252): EXT4-fs (mmcblk0p14): warning: maximal mount count reached, running e2fsck is recommended
+[ 1:    1.594287] I/KERNEL       (K 252): EXT4-fs (mmcblk0p14): recovery complete
+[ 1:    1.594870] I/KERNEL       (K 252): EXT4-fs (mmcblk0p14): mounted filesystem with ordered data mode. Opts: (null)
+[ 1:    1.981907] I/KERNEL       (K  59): dw_mmc_sdcard dw_mmc_sdcard.0: generate sdcard insert event [inserted]
+[ 1:    1.987472] I/KERNEL       (K  29): mmc_host mmc2: current voltage : 3.3v
+[ 1:    1.987508] I/KERNEL       (K  29): mmc_host mmc2: Bus speed (slot 0) = 12500000Hz (slot req 400000Hz, actual 390625HZ div = 16)
+[ 1:    1.999799] I/KERNEL       (K 268): display send message 10 0
+[ 1:    1.999859] I/KERNEL       (K  36): ignore flip:0 command when receive same flip state
+[ 1:    2.060309] I/KERNEL       (K 252): nau8822_write. reg[f] value[f9]
+[ 1:    2.060706] I/KERNEL       (K 252): nau8822_write. reg[10] value[f9]
+[ 1:    2.063121] I/KERNEL       (K 252): display send message 7 458759
+[ 1:    2.222784] I/KERNEL       (K  59): [d5-keys] (shutter1_key) key disabled
+[ 1:    2.222807] I/SYS_BTLOG    (K  59): s1 key push!(ipcc raw int[a7_2:0])
+[ 1:    2.245959] I/KERNEL       (K  29): mmc2: cannot verify signal voltage switch
+[ 1:    2.253400] I/KERNEL       (K  29): mmc_host mmc2: current voltage : 1.8v
+[ 1:    2.352780] I/KERNEL       (K  36): mipi_dsim0_rd_data: res=0x1c rx_data=0x3500081c
+[ 1:    2.431086] I/KERNEL       (K  29): mmc_host mmc2: Bus speed (slot 0) = 162000000Hz (slot req 400000Hz, actual 399014HZ div = 203)
+[ 1:    2.431116] I/KERNEL       (K  29): mmc_host mmc2: Bus speed (slot 0) = 162000000Hz (slot req 162000000Hz, actual 162000000HZ div = 0)
+[ 1:    2.483475] I/KERNEL       (K  29): dw_mmc_sdcard dw_mmc_sdcard.0: execute tuning sample phase : 0, 2, 90
+[ 1:    2.542943] I/KERNEL       (K  29): mmc2: new ultra high speed SDR104 SDXC card at SD64G 0x9f 0x5449 0x0 0x5048 0x7407800 162000000, 2025-10
+[ 1:    2.562944] I/KERNEL       (K  29): mmcblk1: mmc2:5048 SD64G 58.0 GiB 
+[ 1:    2.582794] I/KERNEL       (K  36): mipi_dsim0_rd_data: res=0x1c rx_data=0x3500081c
+[ 1:    2.592330] I/KERNEL       (K  29):  mmcblk1: p1
+[ 1:    2.752771] I/KERNEL       (K  59): [d5-keys] (shutter1_key) key disabled
+[ 1:    2.752802] I/SYS_BTLOG    (K  59): s1 key push!(ipcc raw int[a7_2:0])
+[ 1:    2.763992] I/KERNEL       (K  59): [d5-keys] (shutter1_key) key disabled
+[ 1:    3.428399] I/KERNEL       (K 287): [EXFAT] trying to mount...
+[ 1:    3.478960] I/KERNEL       (K 252): display send message 11 2
+[ 1:    3.479330] I/KERNEL       (K  36): :: d5_dp_mlcd_opu1_r2y_mode ( 553 ) : All matrices are set! 
+[ 1:    3.479344] I/KERNEL       (K  36): :: d5_dp_mlcd_opu1_r2y_mode ( 556 ) : All offsets are set! 
+[ 1:    3.479351] I/KERNEL       (K  36): :: d5_dp_mlcd_opu1_r2y_mode ( 559 ) : All ranges are set! 
+[ 1:    3.510639] I/KERNEL       (K 252): display send message 6 1
+[ 1:    3.510746] I/KERNEL       (K 252): display send message 3 3
+[ 1:    3.607313] I/KERNEL       (K 252): == change_hdmi_store 80 hdmi_connect_state:0 ==
+[ 1:    3.728848] I/KERNEL       (K 252): wdt disabled. 
+[ 1:    4.162780] I/SYS_BTLOG    (K  59): s1 key push!
+[ 1:    4.297373] I/KERNEL       (K 252): display send message 6 1
+[ 1:    4.297492] I/KERNEL       (K 252): display send message 3 5
+[ 1:    4.672810] I/SYS_BTLOG    (K  59): s1 key release!
+[ 1:    4.756863] I/KERNEL       (K 270): [sound/soc/drime/drime4-nau8822.c, fn:d4_nau8822_hw_params_dai0, 235] pll_out[12288000]
+[ 1:    4.954204] I/SYS_BTLOG    (K  59): s1 key push!
+[ 1:    5.479089] I/KERNEL       (K 270): [sound/soc/drime/drime4-nau8822.c, fn:d4_nau8822_hw_params_dai0, 235] pll_out[12288000]
+[ 1:    5.792832] I/SYS_BTLOG    (K  59): s1 key release!
+[ 1:    7.096579] I/KERNEL       (K 252): display send message 6 1
+[ 1:    7.096681] I/KERNEL       (K 252): display send message 3 3
+[ 1:    7.304615] I/KERNEL       (K 313): dw_mmc_sdio dw_mmc_sdio.0: store_sdio_node() ---------- 1
+[ 1:    7.304615] I/KERNEL       (K 313): 
+[ 1:    7.330398] I/KERNEL       (K  36): mmc_host mmc1: current voltage : 3.3v
+[ 1:    7.342806] I/KERNEL       (K  36): mmc_host mmc1: Bus speed (slot 0) = 12500000Hz (slot req 400000Hz, actual 390625HZ div = 16)
+[ 1:    7.367867] I/KERNEL       (K  36): mmc1: cannot verify signal voltage switch
+[ 1:    7.378966] I/KERNEL       (K  36): mmc_host mmc1: current voltage : 1.8v
+[ 1:    7.437271] I/KERNEL       (K  36): mmc_host mmc1: Bus speed (slot 0) = 100000000Hz (slot req 400000Hz, actual 400000HZ div = 125)
+[ 1:    7.437300] I/KERNEL       (K  36): mmc_host mmc1: Bus speed (slot 0) = 100000000Hz (slot req 100000000Hz, actual 100000000HZ div = 0)
+[ 1:    7.437316] I/KERNEL       (K  36): dw_mmc_sdio dw_mmc_sdio.0: sdio tuning: sample 180 degree
+[ 1:    7.447203] I/KERNEL       (K  36): mmc1: new ultra high speed SDR50 SDIO card at  0x0 0x0 0x0 0x2 0x0 100000000, 0-0
+[ 1:    7.579252] I/KERNEL       (K 324): BT: Loading driver
+[ 1:    7.997280] I/KERNEL       (K 252): display send message 6 1
+[ 1:    7.997382] I/KERNEL       (K 252): display send message 3 5
+[ 1:    8.714091] I/KERNEL       (K 324): BT: FW download over, size 653112 bytes
+[ 1:    9.172849] I/KERNEL       (K 324): BT: firmware is activated(checked 9 times)
+[ 1:    9.343278] I/KERNEL       (K 324): BT: Driver loaded successfully
+[ 1:    9.951589] I/KERNEL       (K 252): display send message 6 1
+[ 1:    9.951693] I/KERNEL       (K 252): display send message 3 3
+[ 1:   13.548129] I/KERNEL       (K 422): netlink: 20 bytes leftover after parsing attributes.
+[ 1:   13.548155] I/KERNEL       (K 422): netlink: 20 bytes leftover after parsing attributes.
+[ 1:   13.548236] I/KERNEL       (K 422): netlink: 20 bytes leftover after parsing attributes.
+[ 1:   37.998626] I/KERNEL       (K 252): display send message 2 0
+[ 1:   46.182791] I/SYS_BTLOG    (K   9): s1 key push!
+[ 1:   46.187878] I/KERNEL       (K 252): display send message 2 1
+[ 1:   46.382839] I/SYS_BTLOG    (K   9): s1 key release!
+[ 1:   47.109072] I/KERNEL       (K 628): [sound/soc/drime/drime4-nau8822.c, fn:d4_nau8822_hw_params_dai0, 235] pll_out[12288000]
+[ 1:   48.411353] I/KERNEL       (K 252): [sound/soc/drime/drime4-nau8822.c, fn:d4_nau8822_hw_params_dai0, 235] pll_out[12288000]
+[ 1:   48.800070] I/KERNEL       (K 252): [sound/soc/drime/drime4-nau8822.c, fn:d4_nau8822_hw_params_dai0, 235] pll_out[12288000]
+[ 1:   48.966727] I/KERNEL       (K 252): [sound/soc/drime/drime4-nau8822.c, fn:d4_nau8822_hw_params_dai0, 235] pll_out[12288000]
+[ 1:   49.131171] I/KERNEL       (K 252): [sound/soc/drime/drime4-nau8822.c, fn:d4_nau8822_hw_params_dai0, 235] pll_out[12288000]
+[ 1:   49.390072] I/KERNEL       (K 651): [sound/soc/drime/drime4-nau8822.c, fn:d4_nau8822_hw_params_dai0, 235] pll_out[12288000]
+[ 1:   50.556255] I/KERNEL       (K 656): [sound/soc/drime/drime4-nau8822.c, fn:d4_nau8822_hw_params_dai0, 235] pll_out[12288000]
+[ 1:   52.409908] I/KERNEL       (K 252): [sound/soc/drime/drime4-nau8822.c, fn:d4_nau8822_hw_params_dai0, 235] pll_out[12288000]
+[ 1:   53.320957] I/KERNEL       (K 252): [sound/soc/drime/drime4-nau8822.c, fn:d4_nau8822_hw_params_dai0, 235] pll_out[12288000]
+[ 1:   55.607282] I/KERNEL       (K 252): [sound/soc/drime/drime4-nau8822.c, fn:d4_nau8822_hw_params_dai0, 235] pll_out[12288000]
+[ 1:   56.976881] I/KERNEL       (K 252): [sound/soc/drime/drime4-nau8822.c, fn:d4_nau8822_hw_params_dai0, 235] pll_out[12288000]
+[ 1:   69.171116] I/KERNEL       (K 252): [sound/soc/drime/drime4-nau8822.c, fn:d4_nau8822_hw_params_dai0, 235] pll_out[12288000]
+[ 1:   70.053784] I/KERNEL       (K 252): [sound/soc/drime/drime4-nau8822.c, fn:d4_nau8822_hw_params_dai0, 235] pll_out[12288000]
+[ 1:   70.697856] I/KERNEL       (K 290): setting wifi chip pid with signal
+[ 1:   70.697881] I/KERNEL       (K 290): wifi_chip_pid = 290
+[ 1:   71.300600] I/KERNEL       (K   9): cfg80211: Calling CRDA to update world regulatory domain
+[ 1:   71.300673] I/KERNEL       (K   9): cfg80211: World regulatory domain updated:
+[ 1:   71.300683] I/KERNEL       (K   9): cfg80211:   (start_freq - end_freq @ bandwidth), (max_antenna_gain, max_eirp)
+[ 1:   71.300693] I/KERNEL       (K   9): cfg80211:   (2402000 KHz - 2472000 KHz @ 40000 KHz), (2000 mBi, 0 mBm)
+[ 1:   71.300702] I/KERNEL       (K   9): cfg80211:   (2457000 KHz - 2482000 KHz @ 40000 KHz), (2000 mBi, 0 mBm)
+[ 1:   71.300709] I/KERNEL       (K   9): cfg80211:   (2474000 KHz - 2494000 KHz @ 20000 KHz), (2000 mBi, 0 mBm)
+[ 1:   71.301033] I/KERNEL       (K   9): cfg80211: Calling CRDA for country: CN
+[ 1:   71.301100] I/KERNEL       (K   9): cfg80211: Regulatory domain changed to country: CN
+[ 1:   71.301108] I/KERNEL       (K   9): cfg80211:   (start_freq - end_freq @ bandwidth), (max_antenna_gain, max_eirp)
+[ 1:   71.301117] I/KERNEL       (K   9): cfg80211:   (2402000 KHz - 2482000 KHz @ 40000 KHz), (2000 mBi, 0 mBm)
+[ 1:   71.413310] I/KERNEL       (K 759): wlan: Loading MWLAN driver
+[ 1:   71.432917] I/KERNEL       (K 759): vendor=0x02DF device=0x9135 class=0 function=1
+[ 1:   71.442333] I/KERNEL       (K 759): SDIO: max_segs=1024 max_seg_size=4096
+[ 1:   71.462749] I/KERNEL       (K 759): rx_work=0 cpu_num=1
+[ 1:   71.503711] I/KERNEL       (K 759): WLAN FW already running! Skip FW download
+[ 1:   71.503762] I/KERNEL       (K 759): WLAN FW is active
+[ 1:   71.528814] I/KERNEL       (K 326): fw_cap_info=0xff0b, dev_cap_mask=0xffffcbff
+[ 1:   71.536480] I/KERNEL       (K   9): cfg80211: Calling CRDA for country: CN
+[ 1:   71.549108] I/KERNEL       (K 759): wlan: Driver loaded successfully
+[ 1:   71.703462] I/KERNEL       (K 739): wlan: mlan0 START SCAN
+[ 1:   71.819624] I/KERNEL       (K 326): wlan: SCAN COMPLETED: scanned AP count=1
+[ 1:   72.879905] I/KERNEL       (K 739): wlan: Connected to bssid 60:XX:XX:XX:40:19 successfully
+[ 1:   72.891480] I/KERNEL       (K 326): WMM get status: Error in processing  TLV buffer
+[ 1:   76.282458] I/KERNEL       (K 252): display send message 6 1
+[ 1:   76.282584] I/KERNEL       (K 252): display send message 3 3
+[ 1:  104.806616] I/KERNEL       (K 252): display send message 2 0
+[ 1:  112.908648] I/KERNEL       (K 252): display send message 2 1
+[ 1:  142.910225] I/KERNEL       (K 252): display send message 2 0
+[ 1:  154.715446] I/KERNEL       (K 252): display send message 2 1
+[ 1:  171.866742] I/KERNEL       (K 252): display send message 6 1
+[ 1:  171.866829] I/KERNEL       (K 252): display send message 3 3
+[ 1:  171.876526] I/KERNEL       (K  37): dw_mmc_emmc dw_mmc_emmc.0: change emmc clock 50MHz
+[ 1:  172.296526] I/KERNEL       (K 252): d4-i2c drime5-i2c.1: i2c_drime5_irq_nextbyte: called in STATE_STOP
+[ 1:  172.297435] I/KERNEL       (K 252): ISP DVFS set 15 
+[ 1:  173.141719] I/KERNEL       (K 252): display send message 11 2
+[ 1:  173.141775] I/KERNEL       (K  29): :: d5_dp_mlcd_opu1_r2y_mode ( 553 ) : All matrices are set! 
+[ 1:  173.141784] I/KERNEL       (K  29): :: d5_dp_mlcd_opu1_r2y_mode ( 556 ) : All offsets are set! 
+[ 1:  173.141793] I/KERNEL       (K  29): :: d5_dp_mlcd_opu1_r2y_mode ( 559 ) : All ranges are set! 
+[ 1:  177.132867] I/SYS_BTLOG    (K  59): s1 key push!
+[ 1:  177.181912] I/KERNEL       (K  37): dw_mmc_emmc dw_mmc_emmc.0: change emmc clock 200MHz
+[ 1:  177.203343] I/KERNEL       (K 252): display send message 11 2
+[ 1:  177.208223] I/KERNEL       (K  29): :: d5_dp_mlcd_opu1_r2y_mode ( 553 ) : All matrices are set! 
+[ 1:  177.208242] I/KERNEL       (K  29): :: d5_dp_mlcd_opu1_r2y_mode ( 556 ) : All offsets are set! 
+[ 1:  177.208251] I/KERNEL       (K  29): :: d5_dp_mlcd_opu1_r2y_mode ( 559 ) : All ranges are set! 
+[ 1:  177.211532] I/KERNEL       (K 252): ISP DVFS set 22 
+[ 1:  177.292732] I/SYS_BTLOG    (K  59): s1 key release!
+[ 1:  177.303253] I/SYS_BTLOG    (K  59): s1 key release!
+[ 1:  177.851922] I/KERNEL       (K 252): display send message 6 1
+[ 1:  177.852016] I/KERNEL       (K 252): display send message 3 3
+[ 1:  203.818101] I/KERNEL       (K 813): netlink: 20 bytes leftover after parsing attributes.
+[ 1:  203.818128] I/KERNEL       (K 813): netlink: 20 bytes leftover after parsing attributes.
+[ 1:  203.818220] I/KERNEL       (K 813): netlink: 20 bytes leftover after parsing attributes.
+[ 1:  209.384106] I/KERNEL       (K 858): [sound/soc/drime/drime4-nau8822.c, fn:d4_nau8822_hw_params_dai0, 235] pll_out[12288000]
+[ 1:  396.787260] I/KERNEL       (K1334): [sound/soc/drime/drime4-nau8822.c, fn:d4_nau8822_hw_params_dai0, 235] pll_out[12288000]
+[ 1:  397.470128] I/KERNEL       (K1337): [sound/soc/drime/drime4-nau8822.c, fn:d4_nau8822_hw_params_dai0, 235] pll_out[12288000]
+[ 1:  397.894752] I/KERNEL       (K1338): [sound/soc/drime/drime4-nau8822.c, fn:d4_nau8822_hw_params_dai0, 235] pll_out[12288000]
+[ 1:  398.727271] I/KERNEL       (K1339): [sound/soc/drime/drime4-nau8822.c, fn:d4_nau8822_hw_params_dai0, 235] pll_out[12288000]
+[ 1:  399.443094] I/SYS_BTLOG    (K  59): s1 key push!
+[ 1:  399.572793] I/SYS_BTLOG    (K  59): s1 key push!
+[ 1:  399.583267] I/SYS_BTLOG    (K  59): s1 key release!
+[ 1:  400.831498] I/KERNEL       (K1363): netlink: 20 bytes leftover after parsing attributes.
+[ 1:  400.831525] I/KERNEL       (K1363): netlink: 20 bytes leftover after parsing attributes.
+[ 1:  400.831613] I/KERNEL       (K1363): netlink: 20 bytes leftover after parsing attributes.
+[ 1:  423.707048] I/KERNEL       (K1409): netlink: 20 bytes leftover after parsing attributes.
+[ 1:  423.707074] I/KERNEL       (K1409): netlink: 20 bytes leftover after parsing attributes.
+[ 1:  423.707157] I/KERNEL       (K1409): netlink: 20 bytes leftover after parsing attributes.
+[ 1:  957.031057] I/KERNEL       (K1441): netlink: 20 bytes leftover after parsing attributes.
+[ 1:  957.031084] I/KERNEL       (K1441): netlink: 20 bytes leftover after parsing attributes.
+[ 1:  957.031172] I/KERNEL       (K1441): netlink: 20 bytes leftover after parsing attributes.

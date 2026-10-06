@@ -1,0 +1,5 @@
+=== cmd ===
+--- iqr lines ---
+1
+--- 3dlut 当前 OnOff ---
+=== exit=0 ===

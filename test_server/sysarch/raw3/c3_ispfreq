@@ -1,0 +1,5 @@
+===== c3_ispfreq =====
+cat: /sys/devices/platform/drime5-ispfreq/cur_freq: No such file or directory
+cat: /sys/devices/platform/drime5-ispfreq/target_freq: No such file or directory
+cat: /sys/devices/platform/drime5-ispfreq/min_freq: No such file or directory
+cat: /sys/devices/platform/drime5-ispfreq/max_freq: No such file or directory

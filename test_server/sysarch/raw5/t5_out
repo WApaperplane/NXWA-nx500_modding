@@ -1,0 +1,7 @@
+=== run ===
+A start
+B opened
+0
+C errno-before=D no ioctl here, just exit
+E done
+EXIT=0

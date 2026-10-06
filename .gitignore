@@ -57,3 +57,9 @@ test_server/sysarch/*.arm
 # 结论已提炼进 docs/NX500_FIRMWARE_FRAMEWORK_2026-10-05.md，原始输出不入库
 # ★ 注意：raw8/ 在仓库根目录，不在 test_server/sysarch/ 下（爬取时用相对路径输出）
 raw8/
+
+# 2026-10-06：逆向产物里不该入库的
+__pycache__/
+*.pyc
+test_server/isp/*.so
+test_server/isp/libudd5_real.so

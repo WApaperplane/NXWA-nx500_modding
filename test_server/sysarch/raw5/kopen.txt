@@ -1,0 +1,11 @@
+=== run ===
+CA9 user fault(kread.arm, pid=1234, tid=1234, signal=7). 
+
+Callstack Information (PID:1234)
+Call Stack Count: 3
+ 0: main + 0x520 (0x2457c) [/mnt/mmc/_xfer/kread.arm] + 0x2457c
+ 1: __libc_start_main + 0x114 (0xb6e0782c) [/lib/libc.so.6] + 0xb6e0782c
+ 2: (0x24024) [/mnt/mmc/_xfer/kread.arm] + 0x24024
+End of Call Stack
+
+arc = 5, optind = 5 ,Kb 0, rotate 4

@@ -1,0 +1,9 @@
+===== d5_ddrfreq_vals =====
+700000000
+cat: /sys/devices/platform/drime5-ddrfreq/driver: Is a directory
+platform:drime5-ddrfreq
+cat: /sys/devices/platform/drime5-ddrfreq/power: Is a directory
+cat: /sys/devices/platform/drime5-ddrfreq/qos: Input/output error
+cat: /sys/devices/platform/drime5-ddrfreq/subsystem: Is a directory
+DRIVER=drime5-ddrfreq
+MODALIAS=platform:drime5-ddrfreq

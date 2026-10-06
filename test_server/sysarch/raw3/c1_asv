@@ -1,0 +1,20 @@
+===== c1_asv =====
+[asv]
+8
+
+[dmu_freq]
+100 
+
+[dmu_ro]
+cat: /sys/devices/platform/d5_promise/dmu_ro: Is a directory
+
+[dmu_tdc]
+cat: /sys/devices/platform/d5_promise/dmu_tdc: Is a directory
+
+[sec_ro]
+cat: /sys/devices/platform/d5_promise/sec_ro: Is a directory
+
+[tmcb]
+cat: /sys/devices/platform/d5_promise/tmcb: Is a directory
+
+[avs_test]

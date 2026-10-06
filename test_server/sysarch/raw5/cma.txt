@@ -1,0 +1,3 @@
+=== cmd ===
+--- current cma ---
+=== exit=1 ===

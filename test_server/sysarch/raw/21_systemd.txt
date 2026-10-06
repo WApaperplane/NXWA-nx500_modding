@@ -1,0 +1,56 @@
+===== 21_systemd.txt =====
+total 856
+-rw-r--r--  1 root root   403 Sep  3  2014 -.slice
+drwxr-xr-x 13 root root 12288 Mar 30  2016 .
+drwxr-xr-x  9 root root  4096 Mar 30  2016 ..
+-rw-r--r--  1 root root   326 Jun  5  2014 ac.service
+-rw-r--r--  1 root root   142 Feb 24  2014 alarm-server.service
+-rw-r--r--  1 root root   153 Apr 12  2014 allshare-dms.service
+lrwxrwxrwx  1 root root    14 Mar 30  2016 autovt@.service -> getty@.service
+-rw-r--r--  1 root root   546 Sep  3  2014 basic.target
+drwxr-xr-x  2 root root  4096 Mar 30  2016 basic.target.wants
+-rw-r--r--  1 root root   172 Apr  8  2015 bluetooth-frwk.service
+-rw-r--r--  1 root root   379 Sep  3  2014 bluetooth.target
+-rw-r--r--  1 root root   141 Apr 25  2014 browser-provider.service
+-rw-r--r--  1 root root   215 Apr 25  2014 browser-provider.socket
+-rw-r--r--  1 root root   300 May 22  2015 connman.service
+-rw-r--r--  1 root root   699 Sep  3  2014 console-getty.service
+-rw-r--r--  1 root root   722 Sep  3  2014 console-shell.service
+lrwxrwxrwx  1 root root    13 Mar 30  2016 ctrl-alt-del.target -> reboot.target
+lrwxrwxrwx  1 root root    22 Mar 30  2016 dbus-org.freedesktop.login1.service -> systemd-logind.service
+-rw-r--r--  1 root root   353 Feb 24  2014 dbus.service
+-rw-r--r--  1 root root   141 Feb 24  2014 dbus.socket
+drwxr-xr-x  2 root root  4096 Sep  3  2014 dbus.target.wants
+-rw-r--r--  1 root root   978 Sep  3  2014 debug-shell.service
+lrwxrwxrwx  1 root root    16 Mar 30  2016 default.target -> graphical.target
+drwxr-xr-x  2 root root  4096 Mar 30  2016 default.target.wants
+-rw-r--r--  1 root root   636 Sep  3  2014 dev-hugepages.mount
+-rw-r--r--  1 root root   590 Sep  3  2014 dev-mqueue.mount
+-rw-r--r--  1 root root   145 Jun  4  2015 deviced-pre.service
+-rw-r--r--  1 root root   332 Jun  4  2015 deviced.service
+-rw-r--r--  1 root root   321 Mar 29  2016 di-camera-app.service
+-rw-r--r--  1 root root   193 Sep 30  2014 dlog_logger.service
+-rw-r--r--  1 root root   940 Sep  3  2014 emergency.service
+-rw-r--r--  1 root root   431 Sep  3  2014 emergency.target
+-rw-r--r--  1 root root   440 Sep  3  2014 final.target
+-rw-r--r--  1 root root   104 May 26  2015 firmware-upgrade-display.path
+-rw-r--r--  1 root root   190 May 26  2015 firmware-upgrade-display.service
+-rw-r--r--  1 root root   460 Sep  3  2014 getty.target
+-rw-r--r--  1 root root  1489 Sep  3  2014 getty@.service
+-rw-r--r--  1 root root   523 Sep  3  2014 graphical.target
+drwxr-xr-x  2 root root  4096 Mar 30  2016 graphical.target.wants
+-rw-r--r--  1 root root   358 Feb 24  2014 gstreamer-registry.service
+-rw-r--r--  1 root root   487 Sep  3  2014 halt.target
+-rw-r--r--  1 root root   142 Jan  6  2015 hib_post.path
+-rw-r--r--  1 root root   239 Jan  6  2015 hib_post.service
+-rw-r--r--  1 root root   458 Jan  6  2015 hib_tmp.service
+-rw-r--r--  1 root root   447 Sep  3  2014 hibernate.target
+-rw-r--r--  1 root root   670 Jan  6  2015 hibernation.service
+-rw-r--r--  1 root root   468 Sep  3  2014 hybrid-sleep.target
+-rw-r--r--  1 root root   596 Sep  3  2014 initrd-cleanup.service
+-rw-r--r--  1 root root   536 Sep  3  2014 initrd-fs.target
+=== multi-user.target.wants ===
+total 8
+drwxr-xr-x 2 root root 4096 Sep  6  2023 .
+drwxr-xr-x 4 root root 4096 Sep  6  2023 ..
+lrwxrwxrwx 1 root root   38 Sep  6  2023 nx-on-wake.service -> /etc/systemd/system/nx-on-wake.service

@@ -1,0 +1,10 @@
+===== i01_st_bare =====
+usage: st [command] [param]
+Supported bult-in commands
+	help		readl		writel		dump	
+	gpio		hdmi		log		lcd	
+	cap		pmu		clk		thread	
+	key		firmware	util		app	
+	leak		devman		stlcd		bat	
+	rtc		tbm		micom		misc	
+	oic		dvfs		adc	

@@ -1,0 +1,3 @@
+=== run ===
+usage: epdump <addr_hex> <words>
+EXIT=1

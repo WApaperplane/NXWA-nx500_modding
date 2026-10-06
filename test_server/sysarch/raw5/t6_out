@@ -1,0 +1,7 @@
+=== run ===
+1 start
+32 fd=
+-1523 ioctl r= errno=
+-104 ioctl2 r= v=
+5 done
+EXIT=0

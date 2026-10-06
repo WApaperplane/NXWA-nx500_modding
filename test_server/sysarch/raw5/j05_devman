@@ -1,0 +1,3 @@
+===== j05_devman =====
+usage: st devman set [device node] [property] [value]
+usage: st devman get [device node] [property]

@@ -1,0 +1,3 @@
+===== e27_ep_uevent =====
+DRIVER=drime5_ep
+MODALIAS=platform:drime5_ep

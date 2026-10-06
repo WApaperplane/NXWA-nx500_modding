@@ -1,0 +1,8 @@
+===== k06_pmu =====
+usage: st pmu [command]
+       st pmu help
+               display help.
+       st pmu show
+               show out all pmu informations.
+       st pmu set <ip name> <on | off>
+               set pmu configuration.

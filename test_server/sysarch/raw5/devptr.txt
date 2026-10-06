@@ -1,0 +1,8 @@
+=== run ===
+batch: pid=247 seg=0xb0e75000 va_page=0x54000
+symbol                               st_value   value      note
+devpath_ptr=0x4aa68                  0x0004aa68  0x00006563  int 25955
+p2_0x55e04=0x55e04                   0x00055e04  0x00000000  NULL
+
+=== end: pure read ===
+EXIT=0

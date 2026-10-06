@@ -1,0 +1,21 @@
+===== l04_bin =====
+total 2660
+dr-xr-xr-x  2 root root   4096 Mar 30  2016 .
+dr-xr-xr-x 23 root root   4096 Mar 30  2016 ..
+lrwxrwxrwx  1 root root      4 Mar 30  2016 awk -> gawk
+-rwxr-xr-x  1 root root 576644 Feb  5  2014 bash
+-rwxr-xr-x  1 root root  14588 Feb 24  2014 cat
+-rwxr-xr-x  1 root root  30748 Feb 24  2014 chgrp
+-rwxr-xr-x  1 root root  26604 Feb 24  2014 chmod
+-rwxr-xr-x  1 root root  32108 Feb 24  2014 chown
+-rwxr-xr-x  1 root root  43668 Feb 24  2014 cp
+lrwxrwxrwx  1 root root     15 Mar 30  2016 cpio -> ../usr/bin/cpio
+-rwxr-xr-x  1 root root  35524 Feb 24  2014 date
+-rwxr-xr-x  1 root root  31940 Feb 24  2014 dd
+-rwxr-xr-x  1 root root  27636 Feb 24  2014 df
+-rwxr-xr-x  1 root root  16284 Feb  6  2014 dmesg
+lrwxrwxrwx  1 root root      8 Mar 30  2016 dnsdomainname -> hostname
+lrwxrwxrwx  1 root root      8 Mar 30  2016 domainname -> hostname
+-rwxr-xr-x  1 root root  12280 Feb 24  2014 echo
+lrwxrwxrwx  1 root root      4 Mar 30  2016 egrep -> grep
+lrwxrwxrwx  1 root root      2 Mar 30  2016 ex -> vi

@@ -1,0 +1,9 @@
+=== cmd ===
+0
+--- iqr 有无输出 ---
+1
+--- NOG 块现状 ---
+-rw-r--r-- 1 root root 0 Mar 30  2016 /proc/1/comm
+-rw-r--r-- 1 root root 0 Oct  6 15:34 /proc/10/comm
+-rw-r--r-- 1 root root 0 Oct  6 15:34 /proc/106/comm
+=== exit=0 ===

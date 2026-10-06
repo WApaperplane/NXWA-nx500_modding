@@ -1,0 +1,8 @@
+===== l05_pref =====
+total 108
+drwxr-xr-x  5 root root  4096 Oct  4 08:54 .
+drwxr-xr-x 15 root root  4096 Aug 18  2022 ..
+drwxr-xr-x  2 root root  4096 Jun 15  2015 active
+drwxr-xr-x  2 root root  4096 Mar 30  2016 default
+-rw-rw-rw-  1 root root 67340 Oct  4 20:22 pref_app.bin
+drwxr-xr-x  2 root root  4096 Jun 15  2015 recovery

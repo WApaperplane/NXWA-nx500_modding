@@ -1,0 +1,17 @@
+=== cmd ===
+ 15:30:36 up 1 min,  1 user,  load average: 1.65, 0.52, 0.18
+--- ftpd ---
+--- nx-ks---
+1HDR.sh
+EV_AEL.sh
+EV_DOWN.sh
+EV_EV.sh
+EV_LEFT.sh
+EV_MOBILE.sh
+EV_OK.sh
+EV_RIGHT.sh
+EV_S1.sh
+EV_UP.sh
+FullLoad.sh
+FullLoadNX1.sh
+=== exit=0 ===

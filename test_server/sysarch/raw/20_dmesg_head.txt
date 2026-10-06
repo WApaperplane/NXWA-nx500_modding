@@ -1,0 +1,121 @@
+===== 20_dmesg_head.txt =====
+[ 0:    0.000000] I/KERNEL       (K   0): Booting Linux on physical CPU 0
+[ 0:    0.000000] I/KERNEL       (K   0): Initializing cgroup subsys cpu
+[ 0:    0.000000] I/KERNEL       (K   0): Linux version 3.5.0 (hs2704.sung@SWDA7604) (gcc version 4.4.1 (Sourcery G++ Lite 2010q1-202) ) #7 PREEMPT Wed Jun 3 14:40:29 KST 2015
+[ 0:    0.000000] I/KERNEL       (K   0): CPU: ARMv7 Processor [414fc091] revision 1 (ARMv7), cr=10c53c7d
+[ 0:    0.000000] I/KERNEL       (K   0): CPU: PIPT / VIPT nonaliasing data cache, VIPT aliasing instruction cache
+[ 0:    0.000000] I/KERNEL       (K   0): Machine: Samsung-DRIMe5-ES
+[ 0:    0.000000] I/KERNEL       (K   0): cma: CMA: reserved 288 MiB at 94000000
+[ 0:    0.000000] I/KERNEL       (K   0): cma: CMA: reserved 72 MiB at 8f800000
+[ 0:    0.000000] I/KERNEL       (K   0): Memory policy: ECC disabled, Data cache writeback
+[ 0:    1.045717] I/KERNEL       (K   0): On node 0 totalpages: 131072
+[ 0:    1.055881] I/KERNEL       (K   0): free_area_init_node: node 0, pgdat c0726dc0, node_mem_map c075a000
+[ 0:    1.055891] I/KERNEL       (K   0):   Normal zone: 1024 pages used for memmap
+[ 0:    1.055900] I/KERNEL       (K   0):   Normal zone: 0 pages reserved
+[ 0:    1.055908] I/KERNEL       (K   0):   Normal zone: 130048 pages, LIFO batch:31
+[ 0:    1.097890] I/KERNEL       (K   0): L310 cache controller enabled
+[ 0:    1.097905] I/KERNEL       (K   0): l2x0: 16 ways, CACHE_ID 0x4100fcc8, AUX_CTRL 0x40030001, Cache size: 262144 B
+[ 0:    1.098003] I/KERNEL       (K   0): pcpu-alloc: s0 r0 d32768 u32768 alloc=1*32768
+[ 0:    1.098014] I/KERNEL       (K   0): pcpu-alloc: [0] 0 
+[ 0:    1.098030] I/KERNEL       (K   0): Built 1 zonelists in Zone order, mobility grouping on.  Total pages: 130048
+[ 0:    1.098039] I/KERNEL       (K   0): Kernel command line: console=ttyAMA0,115200n8 mem=512M hibernate=nocompress root=/dev/mmcblk0p10 rw rootfstype=ext4 rootwait  noresume user_debug=255
+[ 0:    1.098194] I/KERNEL       (K   0): PID hash table entries: 2048 (order: 1, 8192 bytes)
+[ 0:    1.098652] I/KERNEL       (K   0): Dentry cache hash table entries: 65536 (order: 6, 262144 bytes)
+[ 0:    1.099313] I/KERNEL       (K   0): Inode-cache hash table entries: 32768 (order: 5, 131072 bytes)
+[ 0:    1.123272] I/KERNEL       (K   0): Memory: 512MB = 512MB total
+[ 0:    1.123279] I/KERNEL       (K   0): Memory: 142828k/142828k available, 381460k reserved, 0K highmem
+[ 0:    1.123309] I/KERNEL       (K   0): Virtual kernel memory layout:
+[ 0:    1.123309] I/KERNEL       (K   0):     vector  : 0xffff0000 - 0xffff1000   (   4 kB)
+[ 0:    1.123309] I/KERNEL       (K   0):     fixmap  : 0xfff00000 - 0xfffe0000   ( 896 kB)
+[ 0:    1.123309] I/KERNEL       (K   0):     vmalloc : 0xe0800000 - 0xff000000   ( 488 MB)
+[ 0:    1.123309] I/KERNEL       (K   0):     lowmem  : 0xc0000000 - 0xe0000000   ( 512 MB)
+[ 0:    1.123309] I/KERNEL       (K   0):     modules : 0xbf000000 - 0xc0000000   (  16 MB)
+[ 0:    1.123309] I/KERNEL       (K   0):       .text : 0xc0008000 - 0xc06c3fb8   (6896 kB)
+[ 0:    1.123309] I/KERNEL       (K   0):       .init : 0xc06c4000 - 0xc06e0d2c   ( 116 kB)
+[ 0:    1.123309] I/KERNEL       (K   0):       .data : 0xc06e2000 - 0xc0728b98   ( 283 kB)
+[ 0:    1.123309] I/KERNEL       (K   0):        .bss : 0xc0728bbc - 0xc0759850   ( 196 kB)
+[ 0:    1.123446] I/KERNEL       (K   0): SLUB: Genslabs=11, HWalign=64, Order=0-3, MinObjects=0, CPUs=1, Nodes=1
+[ 0:    1.123525] I/KERNEL       (K   0): NR_IRQS:368
+[ 0:    1.125349] I/KERNEL       (K   0): sched_clock: 16 bits at 2kHz, resolution 400000ns, wraps every 26214ms
+[ 0:    1.125460] I/KERNEL       (K   0): Console: colour dummy device 80x30
+[ 0:    1.215413] I/KERNEL       (K   0): Calibrating delay loop... 1594.16 BogoMIPS (lpj=7970816)
+[ 0:    1.215419] I/KERNEL       (K   0): pid_max: default: 4096 minimum: 301
+[ 0:    1.215556] I/KERNEL       (K   0): Security Framework initialized
+[ 0:    1.215602] I/KERNEL       (K   0): Mount-cache hash table entries: 512
+[ 0:    1.216085] I/KERNEL       (K   0): Initializing cgroup subsys cpuacct
+[ 0:    1.216101] I/KERNEL       (K   0): Initializing cgroup subsys devices
+[ 0:    1.216110] I/KERNEL       (K   0): Initializing cgroup subsys freezer
+[ 0:    1.216117] I/KERNEL       (K   0): Initializing cgroup subsys blkio
+[ 0:    1.216184] I/KERNEL       (K   0): CPU: Testing write buffer coherency: ok
+[ 0:    1.216350] I/KERNEL       (K   1): Setting up static identity map for 0x8640a110 - 0x8640a168
+[ 0:    1.216960] I/KERNEL       (K   1): devtmpfs: initialized
+[ 0:    1.218268] I/KERNEL       (K   1): dummy: 
+[ 0:    1.240472] I/KERNEL       (K   1): NET: Registered protocol family 16
+[ 0:    1.242607] I/KERNEL       (K   1): DMA: preallocated 256 KiB pool for atomic coherent allocations
+[ 0:    1.243065] I/KERNEL       (K   1): drime5_es_init() 
+[ 0:    1.243271] I/KERNEL       (K   1): DRIMeV Power Management
+[ 0:    1.244414] I/KERNEL       (K   1): [arch/arm/mach-drime5/board-d5_nx500.c, fn:drime5_es_init, 1745] nau8822
+[ 0:    1.245606] I/KERNEL       (K   1): DRIME5: Adaptive Support Voltage init
+[ 0:    1.245633] I/KERNEL       (K   1): DRIME5: IDS : 31(ISP), 57(ARM) PROMISE : 97 RESULT : 8
+[ 0:    1.245640] I/KERNEL       (K   1): DRIME5 ASV : 8 Group
+[ 0:    1.246124] I/KERNEL       (K   1): Serial: AMBA PL011 UART driver
+[ 0:    1.246199] I/KERNEL       (K   1): uart0: ttyAMA0 at MMIO 0x10038000 (irq = 97) is a PL011 rev3
+[ 0:    1.251973] I/KERNEL       (K   1): console [ttyAMA0] enabled
+[ 0:    1.252193] I/KERNEL       (K   1): uart1: ttyAMA1 at MMIO 0x10039000 (irq = 98) is a PL011 rev3
+[ 0:    1.252456] I/KERNEL       (K   1): bio: create slab <bio-0> at 0
+[ 0:    1.255303] I/KERNEL       (K   1): input: Drime5 GPIO Keyboard as /devices/virtual/input/input0
+[ 0:    1.255499] I/KERNEL       (K   1): input: Drime5 ADC Keyboard as /devices/platform/d5-keys/input/input1
+[ 0:    1.255539] I/KERNEL       (K   1): [d5-keys] (      mode_m) key disabled
+[ 0:    1.255547] I/KERNEL       (K   1): [d5-keys] (     mode_c1) key disabled
+[ 0:    1.255553] I/KERNEL       (K   1): [d5-keys] (    mode_sas) key disabled
+[ 0:    1.255559] I/KERNEL       (K   1): [d5-keys] (  mode_smart) key disabled
+[ 0:    1.255565] I/KERNEL       (K   1): [d5-keys] (   mode_auto) key disabled
+[ 0:    1.255570] I/KERNEL       (K   1): [d5-keys] (      mode_p) key disabled
+[ 0:    1.255575] I/KERNEL       (K   1): [d5-keys] (      mode_a) key disabled
+[ 0:    1.255580] I/KERNEL       (K   1): [d5-keys] (      mode_s) key disabled
+[ 0:    1.255586] I/KERNEL       (K   1): [d5-keys] (          up) key disabled
+[ 0:    1.255591] I/KERNEL       (K   1): [d5-keys] (       right) key disabled
+[ 0:    1.255597] I/KERNEL       (K   1): [d5-keys] (        down) key disabled
+[ 0:    1.255602] I/KERNEL       (K   1): [d5-keys] (        left) key disabled
+[ 0:    1.255608] I/KERNEL       (K   1): [d5-keys] (          ok) key disabled
+[ 0:    1.255613] I/KERNEL       (K   1): [d5-keys] (        menu) key disabled
+[ 0:    1.255618] I/KERNEL       (K   1): [d5-keys] (          ev) key disabled
+[ 0:    1.255624] I/KERNEL       (K   1): [d5-keys] (         rec) key disabled
+[ 0:    1.255629] I/KERNEL       (K   1): [d5-keys] (          fn) key disabled
+[ 0:    1.255634] I/KERNEL       (K   1): [d5-keys] (         del) key disabled
+[ 0:    1.255639] I/KERNEL       (K   1): [d5-keys] (        play) key disabled
+[ 0:    1.261254] I/KERNEL       (K   1): io scheduler cfq registered (default)
+[ 0:    1.261771] I/KERNEL       (K   1): Registered led device: af
+[ 0:    1.261834] I/KERNEL       (K   1): Registered led device: card
+[ 0:    1.262041] I/KERNEL       (K   1): VFP support v0.3: implementor 41 architecture 3 part 30 variant 9 rev 4
+[ 0:    1.262114] I/KERNEL       (K   1): [drm] Initialized drm 1.1.0 20060810
+[ 0:    1.262689] I/KERNEL       (K   1): i2c i2c-0: attached drime5_ddc into i2c adapter successfully
+[ 0:    1.262736] I/KERNEL       (K   1): 
+[ 0:    1.262736] I/KERNEL       (K   1): HDMI DD Probe Success!
+[ 0:    1.262758] I/KERNEL       (K   1): hdmi hot plug event occur! [0] 
+[ 0:    1.262772] I/KERNEL       (K   1): d5_hdmi_probe: probe done
+[ 0:    1.262931] I/KERNEL       (K   1): drime5_hdmi_cec_probe: probe done
+[ 0:    1.262989] I/KERNEL       (K   1): drime5_drm_hdmi_probe: started
+[ 0:    1.263011] I/KERNEL       (K   1): drime5_drm_hdmi_probe: probe done
+[ 0:    1.263554] I/KERNEL       (K   1): [drm] Supports vblank timestamp caching Rev 1 (10.10.2010).
+[ 0:    1.263568] I/KERNEL       (K   1): [drm] No driver support for vblank timestamp query.
+[ 0:    1.266651] I/KERNEL       (K   1): PM: Registered nosave memory: 000000008f900000 - 0000000090b7c000
+[ 0:    1.269072] I/KERNEL       (K   1): PM: Registered nosave memory: 0000000090c00000 - 0000000091a10000
+[ 0:    1.272539] I/KERNEL       (K   1): PM: Registered nosave memory: 0000000091b00000 - 0000000092c94000
+[ 0:    1.273696] I/KERNEL       (K   1): fb0:  frame buffer device
+[ 0:    1.273712] I/KERNEL       (K   1): drm: registered panic notifier
+[ 0:    1.273730] I/KERNEL       (K   1): [drm] Initialized drime5 1.0.0 20140226 on minor 0
+[ 0:    1.273800] I/KERNEL       (K   1): Register CMA nosave region
+[ 0:    1.273814] I/KERNEL       (K   1): PM: Registered nosave memory: 0000000094000000 - 00000000a6000000
+[ 0:    1.273820] I/KERNEL       (K   1): Register text nosave region
+[ 0:    1.278069] I/KERNEL       (K   1): VDD_ISP: 770 <--> 1400 mV at 860 mV 
+[ 0:    1.280229] I/KERNEL       (K   1): VDD_TOP: 770 <--> 1400 mV at 1020 mV 
+[ 0:    1.283066] I/KERNEL       (K   1): VDD_APSYS: 770 <--> 1400 mV at 1040 mV 
+[ 0:    1.283565] I/KERNEL       (K   1): i2c-core: driver [tps62360] using legacy suspend method
+[ 0:    1.283574] I/KERNEL       (K   1): i2c-core: driver [tps62360] using legacy resume method
+[ 0:    1.283933] I/KERNEL       (K   1): usbcore: registered new interface driver usbfs
+[ 0:    1.283980] I/KERNEL       (K   1): usbcore: registered new interface driver hub
+[ 0:    1.284101] I/KERNEL       (K   1): usbcore: registered new device driver usb
+[ 0:    1.284310] I/KERNEL       (K   1): Advanced Linux Sound Architecture Driver Version 1.0.25.
+[ 0:    1.284666] I/KERNEL       (K   1): Bluetooth: Core ver 2.17
+[ 0:    1.284713] I/KERNEL       (K   1): NET: Registered protocol family 31

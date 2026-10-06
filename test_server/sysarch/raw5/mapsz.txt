@@ -1,0 +1,7 @@
+=== cmd ===
+-rwxr-xr-x 1 root root 320216 Jan 27  2015 /usr/lib/libudd5.so
+=== maps 全量(带权限) ===
+b0e21000-b0e6e000 r-xp 00000000 b3:0a 108        /usr/lib/libudd5.so
+b0e6e000-b0e75000 ---p 0004d000 b3:0a 108        /usr/lib/libudd5.so
+b0e75000-b0e77000 rw-p 0004c000 b3:0a 108        /usr/lib/libudd5.so
+=== exit=0 ===

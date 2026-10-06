@@ -1,0 +1,3 @@
+===== e20_dmesg_m4 =====
+[ 1:    1.472856] I/KERNEL       (K  59): m4_off_work_handler M4 Off 
+[ 1:    9.172849] I/KERNEL       (K 324): BT: firmware is activated(checked 9 times)

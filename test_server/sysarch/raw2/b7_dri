@@ -1,0 +1,12 @@
+===== b7_dri =====
+bufs
+clients
+gem_info
+gem_names
+name
+pre_alloc_info
+queues
+vm
+vma
+---
+drime5-drm drime5-drm.0

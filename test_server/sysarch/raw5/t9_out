@@ -1,0 +1,12 @@
+=== run ===
+1 start
+2 opened
+CA9 user fault(t9.arm, pid=2641, tid=2641, signal=4). 
+
+Callstack Information (PID:2641)
+Call Stack Count: 3
+ 0: main + 0x84 (0x23fe8) [/mnt/mmc/_xfer/t9.arm] + 0x23fe8
+ 1: __libc_start_main + 0x114 (0xb6e3a82c) [/lib/libc.so.6] + 0xb6e3a82c
+ 2: (0x23f2c) [/mnt/mmc/_xfer/t9.arm] + 0x23f2c
+End of Call Stack
+

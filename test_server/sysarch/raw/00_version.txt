@@ -1,0 +1,12 @@
+===== 00_version.txt =====
+1.12
+NX500
+NX500GLU0APC1
+DSP_NX500GLU0APC1_SR1
+BABF43A
+
+NAME="Tizen"
+VERSION="2.2.0, Magnolia"
+ID=tizen
+PRETTY_NAME="Tizen Magnolia (2.2.0)"
+VERSION_ID="2.2.0"

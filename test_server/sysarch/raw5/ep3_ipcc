@@ -1,0 +1,12 @@
+=== run ===
+NX500 EP/SMA/IPCC read-only probe v3 (precomputed ioctl consts)
+mode=ipcc
+EP magic='h' nr=100 | SMA magic='s' | IPCC magic='t'
+
+===== 3. IPCC /dev/d5_ipcc=====
+open /dev/d5_ipcc
+  fd=3
+  W=0xc0087403 R=0xc0087404 L=0xc0087405
+  core=0 write_avail: r=0 ret=593
+  core=0 read_avail : r=0 ret=0
+  core=0 pkt_len    : r=0 ret=0

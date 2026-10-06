@@ -1,0 +1,6 @@
+=== run ===
+=== dump 0x81115200  len=8192 ===
+  mmap 0x81115200 失败: Invalid argument
+
+非零页数 = 0 / 2
+EXIT=0

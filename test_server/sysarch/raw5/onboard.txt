@@ -1,0 +1,10 @@
+=== cmd ===
+-rwxr-xr-x 1 root root 3469 Oct  6 01:23 /opt/usr/nx-ks/onboard.sh
+3:# NX-KS2 onboard —— 装机后无条件拉起 telnet + ftpd
+20:#   - ftpd 用 busybox tcpsvd -u root -vE 0.0.0.0 21转发
+54:killall -q ftpd   2>/dev/null
+60:# ---- ftpd (21) —— busybox tcpsvd 转发到 ftpd，根目录 = SD 卡 ----
+63:	"$BB" ftpd -w -v "$SDCARD" >>"$LOG" 2>&1 &
+70:	ps -w 2>/dev/null | grep -E 'telnetd|tcpsvd|ftpd' | grep -v grep
+--- inetd conf ---
+=== exit=0 ===

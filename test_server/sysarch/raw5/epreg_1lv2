@@ -1,0 +1,11 @@
+=== run ===
+NX500 EP register read-only probe
+mmap PROT_READ only, no writes, no register config
+arg  addr=0xbbaea500 len=0x1000
+  /dev/mem opened RO
+  page_off=0x0500  mmap OK -> base 0xb6f66000  (+0x0500)
+  [+0x00] 0xebebebeb   [+0x04] 0xebebebeb   [+0x08] 0xececebeb   [+0x0c] 0xecebebec
+  first256 words: nonZeroNonAllF=256  allFF=0  allZero=0
+
+===== done =====
+EXIT=0

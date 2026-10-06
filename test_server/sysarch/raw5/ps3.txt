@@ -1,0 +1,30 @@
+=== cmd ===
+systemd
+
+--- 试着找 camera ---
+1:systemd
+
+10:kblockd
+
+106:loop0
+
+118:syslogd
+
+135:klogd
+
+141:Xorg
+
+149:dbus-daemon
+
+15:display-workque
+
+150:scim
+
+16:sync_supers
+
+164:agetty
+
+17:bdi-default
+
+170:amd
+=== exit=0 ===

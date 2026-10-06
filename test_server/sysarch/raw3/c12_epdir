@@ -1,0 +1,8 @@
+===== c12_epdir =====
+ls: cannot access /sys/devices/platform/d5_ep.0/: No such file or directory
+/sys/devices/platform/drime5_ep.0/:
+driver
+modalias
+power
+subsystem
+uevent

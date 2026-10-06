@@ -1,0 +1,7 @@
+===== f05_ep_dev =====
+ls: cannot access /dev/d5_ep: No such file or directory
+ls: cannot access /dev/d5_ep*: No such file or directory
+lrwxrwxrwx 1 root root 0 Oct  5 17:56 d5_lock -> ../../devices/virtual/misc/d5_lock
+lrwxrwxrwx 1 root root 0 Oct  5 17:56 d5_mptop -> ../../devices/virtual/misc/d5_mptop
+lrwxrwxrwx 1 root root 0 Oct  5 17:56 d5_sma -> ../../devices/virtual/misc/d5_sma
+lrwxrwxrwx 1 root root 0 Oct  5 17:56 drime5_ep -> ../../devices/virtual/misc/drime5_ep

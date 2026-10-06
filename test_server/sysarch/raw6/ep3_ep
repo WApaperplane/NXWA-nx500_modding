@@ -1,0 +1,27 @@
+=== run ===
+NX500 EP/SMA/IPCC read-only probe v3 (precomputed ioctl consts)
+mode=ep
+EP magic='h' nr=100 | SMA magic='s' | IPCC magic='t'
+
+===== 1. EP  /dev/drime5_ep=====
+open /dev/drime5_ep
+  fd=3
+  EP nr=100 size=80 (NX1 spec) cmd=0x80506864 r=0
+  --- 10 sub-blocks ---
+  top : start=0x20820000  size=0x00001c00  (8617)
+  ldc : start=0x20823000  size=0x00001000  (6904)
+  mc : start=0x20824000  size=0x00002000  (2918)
+  rsz : start=0x20826000  size=0x00001000  (6904)
+  lvr : start=0x20827000  size=0x00001000  (6904)
+  bblt : start=0x20828000  size=0x00001000  (6904)
+  fd : start=0x20829000  size=0x00001000  (6904)
+  jpeg : start=0x2082a000  size=0x00001000  (6904)
+  3DLUT : start=0x2082b000  size=0x00001000  (6904)
+  NOG : start=0x20821c00  size=0x00000100  (652)
+  non-zero: 01/10
+  EP nr=100 size=44 cmd=0x802c6864 r=0
+  EP nr=100 size=40 cmd=0x80286864 r=0
+  EP nr=100 size=72 cmd=0x80486864 r=0
+
+===== done =====
+EXIT=0

@@ -1,0 +1,11 @@
+===== e19_dmesg_sec =====
+[ 0:    0.000000] I/KERNEL       (K   0): Booting Linux on physical CPU 0
+[ 0:    1.215556] I/KERNEL       (K   0): Security Framework initialized
+[ 0:    2.305194] I/KERNEL       (K   1): Synopsys Designware Multimedia Card Interface Driver
+[ 0:    2.421656] I/KERNEL       (K  29): mmcblk0boot0: mmc0:0001 H4G2a\x11 partition 1 4.00 MiB
+[ 0:    2.421798] I/KERNEL       (K  29): mmcblk0boot1: mmc0:0001 H4G2a\x11 partition 2 4.00 MiB
+[ 0:    2.431596] I/KERNEL       (K  29):  mmcblk0boot1: unknown partition table
+[ 0:    2.435302] I/KERNEL       (K  29):  mmcblk0boot0: unknown partition table
+[ 1:    2.245959] I/KERNEL       (K  29): mmc2: cannot verify signal voltage switch
+[ 1:    7.367867] I/KERNEL       (K  36): mmc1: cannot verify signal voltage switch
+[ 1:   70.697856] I/KERNEL       (K 290): setting wifi chip pid with signal

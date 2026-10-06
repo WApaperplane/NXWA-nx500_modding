@@ -1,0 +1,13 @@
+=== run ===
+open: d5_sma=3 drime5_ep=4  ★
+3dlut @0x2082b000 = 0xb6f81000
+
+--- CMA / SMA 区---
+  region start = 0x94000000
+  region size  = 0x09000000 (150994944 bytes)
+  allocated    = 0x12000000 (301989888 bytes)
+  free         = 0xf7000000
+
+  ★ 对比 3DLUT 现有 LUT 地址 0x81115200
+    在区内? ★ 否（证实是残留值）
+EXIT=0

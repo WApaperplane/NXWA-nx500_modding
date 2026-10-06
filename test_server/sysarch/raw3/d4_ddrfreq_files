@@ -1,0 +1,9 @@
+===== d4_ddrfreq_files =====
+total 0
+-rw-rw-r-- 1 root root 4096 Oct  5 18:01 ch_a
+lrwxrwxrwx 1 root root    0 Oct  5 18:01 driver -> ../../../bus/platform/drivers/drime5-ddrfreq
+-r--r--r-- 1 root root 4096 Oct  5 18:01 modalias
+drwxr-xr-x 2 root root    0 Oct  5 17:52 power
+-rw-rw-r-- 1 root root 4096 Oct  5 18:01 qos
+lrwxrwxrwx 1 root root    0 Oct  5 18:01 subsystem -> ../../../bus/platform
+-rw-r--r-- 1 root root 4096 Oct  5 18:01 uevent

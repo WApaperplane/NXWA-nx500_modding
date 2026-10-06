@@ -1,0 +1,14 @@
+===== k07_micom =====
+usage: st micom thread [flag]
+usage: st micom ver  
+usage: st micom release  
+usage: st micom chg [flag]
+usage: st micom chg_led [flag]  
+usage: st micom bat [kernel/ioctl/prop/vconf]
+usage: st micom sel [flag(1:body, 2:vgrip)] 
+usage: st micom event [flag] 
+usage: st micom stlcd [value]
+usage: st micom status  
+usage: st micom watchdog [time(sec)] 
+usage: st micom qstart [flag(1:body, 2:vgrip, 3:both)] 
+usage: st micom dump [flag(1:body, 2:vgrip)] 

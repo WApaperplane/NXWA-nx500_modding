@@ -1,0 +1,19 @@
+===== e25_d5_dir =====
+d5-adc-battery
+d5-keys
+d5_cmdq
+d5_hevc
+d5_ipcc
+d5_lock
+d5_mipi_csidsi
+d5_mipi_csim
+d5_mipi_csim_dma
+d5_mipi_csis
+d5_mipi_csis_dma
+d5_mipi_dsim0
+d5_mipi_dsim1
+d5_mptop
+d5_promise
+d5_sma
+d5_tsu
+drime5_ep.0

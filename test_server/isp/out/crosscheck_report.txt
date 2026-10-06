@@ -1,0 +1,40 @@
+========================================================================
+对照验证：udd5.py  vs  pyelftools libudd5.so
+========================================================================
+
+(1) FUNC 符号表
+     pyelftools FUNC 485 = 本库定义 453 + libc 导入 32(SHN_UNDEF)
+  [OK ] 已定义 FUNC 数量                        mine=453  pyelftools=453
+  [OK ] 已定义 FUNC 集合一致                      mine=True  pyelftools=True
+
+(2) OBJECT 符号（★ 我曾漏掉 399 条 R_ARM_RELATIVE）
+  [OK ] dynsym OBJECT 数量                   mine=43  pyelftools=43
+  [OK ] OBJECT fd_ep                       mine=307432  pyelftools=307432
+  [OK ] OBJECT g_d5_dev_ctx                mine=316488  pyelftools=316488
+  [OK ] OBJECT ep_3dlut_reg_base           mine=317008  pyelftools=317008
+  [OK ] OBJECT g_dev_id                    mine=316484  pyelftools=316484
+
+(3) .rel.dyn 重定位
+  [OK ] rel.dyn 条目总数                       mine=436  pyelftools=436
+
+(4) PLT 桩地址映射（★ 我的推断：base=plt+20, 步长 12）
+  .rel.plt 306 条 / .plt 0x00008100+0xe6c (头 20B, 每条 12B -> 可容 306 条)
+  [OK ] .rel.plt 条数 <= PLT 可容条数            mine=True  pyelftools=True
+  [OK ] 全部 306 个 PLT 桩名匹配                  mine=0  pyelftools=0
+
+(5) _GLOBAL_OFFSET_TABLE_ 基准推断
+  [OK ] .got 段起始 == 我的 got_base()          mine=303808  pyelftools=303808
+     首个 .rel.plt 的 GOT 槽 = 0x0004a2cc（比 .got 起始大 12）
+
+(6) ioctl 0xc0047302 独立解码（★ 不调自己的 decode_ioc，避免自证）
+     手算: READ|WRITE nr=2 type='s' size=4
+     =>  _IOWR('s', 2, u32)  == 0xc0047302
+  [OK ] 方向                                 mine=READ|WRITE  pyelftools=READ|WRITE
+  [OK ] type ('s'=Samsung SMA)             mine=s  pyelftools=s
+  [OK ] nr                                 mine=2  pyelftools=2
+  [OK ] size                               mine=4  pyelftools=4
+  [OK ] decode_ioc 与手算一致                   mine=(2, 's', 4, 'READ|WRITE')  pyelftools=(2, 's', 4, 'READ|WRITE')
+
+========================================================================
+结果：16 项一致，0 项不一致
+========================================================================

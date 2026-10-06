@@ -1,0 +1,51 @@
+=== run ===
+=== NX-KS2 EP 块物理地址权威查询（只读）===
+
+open(/dev/drime5_ep) = fd 3  ★成功
+  源码保证：open 只做 d5_kdd_open(KDD_EP) 电源计数，**零硬件初始化**
+
+ioctl(_IOR('h',100, struct ep_reg_info))...
+  请求号 = 0x80506864  sizeof(struct ep_reg_info) = 80
+
+ioctl 成功 ★★
+
+--- EP 10 个子块（内核权威）---
+block   phys_start   size       end       
+top     0x20820000   0x00001c00   0x20821c00
+ldc     0x20823000   0x00001000   0x20824000
+mc      0x20824000   0x00002000   0x20826000
+rsz     0x20826000   0x00001000   0x20827000
+lvr     0x20827000   0x00001000   0x20828000
+bblt    0x20828000   0x00001000   0x20829000
+fd      0x20829000   0x00001000   0x2082a000
+jpeg    0x2082a000   0x00001000   0x2082b000
+3dlut   0x2082b000   0x00001000   0x2082c000
+nog     0x20821c00   0x00000100   0x20821d00
+
+--- 与 /dev/mem 读侧历史实测交叉验证 ---
+  top     kernel=0x20820000  mem侧=0x20820000  ✓ 一致
+  ldc     kernel=0x20823000  mem侧=0x20823000  ✓ 一致
+  mc      kernel=0x20824000  mem侧=0x20824000  ✓ 一致
+  rsz     kernel=0x20826000  mem侧=0x20826000  ✓ 一致
+  lvr     kernel=0x20827000  mem侧=0x20827000  ✓ 一致
+  bblt    kernel=0x20828000  mem侧=0x20828000  ✓ 一致
+  fd      kernel=0x20829000  mem侧=0x20829000  ✓ 一致
+  jpeg    kernel=0x2082a000  mem侧=0x2082a000  ✓ 一致
+  3dlut   kernel=0x2082b000  mem侧=0x2082b000  ✓ 一致
+  nog     kernel=0x20821c00  mem侧=0x20821c00  ✓ 一致
+
+  => 10/10 一致
+  ★★★ 内核与 /dev/mem 双向闭环成立，地址权威可信
+
+--- 3DLUT 块（魔灯目标）---
+  phys_start = 0x2082b000
+  size       = 0x00001000 (4096 bytes)
+
+  下一步（步骤 2b，只读 mmap 验证）将用：
+    fd  = open("/dev/drime5_ep", O_RDONLY);
+    p   = mmap(NULL, 0x1000, PROT_READ, MAP_SHARED, fd, 0x2082b);
+  ★ offset = reg_start_addr >> 12（页帧号）
+  ★ 只需 PROT_READ 先 dump 现有值，零风险
+
+=== 结束：只做 open+ioctl+读，未 mmap，未写任何寄存器 ===
+EXIT=0

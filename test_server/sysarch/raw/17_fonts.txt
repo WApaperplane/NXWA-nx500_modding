@@ -1,0 +1,10 @@
+===== 17_fonts.txt =====
+/usr/share/fonts/TizenSansKhmerRegular.ttf
+/usr/share/fonts/TizenSansMalayalamRegular.ttf
+/usr/share/fonts/TizenSansLaoRegular.ttf
+/usr/share/fonts/TizenSansOriyaRegular.ttf
+/usr/share/fonts/TizenSansSinhalaRegular.ttf
+/usr/share/fonts/ZawgyiOne2008.ttf
+/usr/share/fonts/SDIC_GP_US_20120720.ttf
+/usr/share/fonts/TizenSansKannadaRegular.ttf
+/usr/share/fonts/TizenSansGujaratiRegular.ttf

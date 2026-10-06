@@ -1,0 +1,29 @@
+===== k04_m4file =====
+ls: cannot access /usr/share/firmware/: No such file or directory
+ls: cannot access /opt/usr/share/: No such file or directory
+---
+bin
+boot
+csa
+dev
+etc
+home
+initrd
+lib
+lost+found
+media
+mnt
+network
+opt
+pref
+proc
+root
+run
+sbin
+sdcard
+smack
+srv
+sys
+tmp
+usr
+var

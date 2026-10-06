@@ -1,0 +1,11 @@
+=== run ===
+A: open=3
+B: mmap RO=0xb6f55000
+C: read 00000000 02020101 03030302 05040404
+D: munmap ok
+E: mmap RW=0xb6f55000
+F: memcpy 256...
+G: memcpy ok, p[0]=03020100
+H: munmap
+DONE
+EXIT=0

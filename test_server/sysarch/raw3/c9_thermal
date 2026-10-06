@@ -1,0 +1,3 @@
+===== c9_thermal =====
+cat: /sys/class/thermal/thermal_zone0/temp: No such file or directory
+cat: /sys/class/thermal/thermal_zone1/temp: No such file or directory

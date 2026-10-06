@@ -1,0 +1,55 @@
+===== b2_interrupts =====
+           CPU0       
+ 33:    2279101       GIC  CLOCK_EVENT_DEV_TIMER1
+ 46:    1490995       GIC  drime5_ep
+ 47:          0       GIC  drime5_ep
+ 48:          0       GIC  drime5_ep
+ 50:         57       GIC  drime5_ep
+ 51:      65853       GIC  drime5_lcd, drime5_tv
+ 53:      16422       GIC  mali_pp_irq_handlers
+ 56:          0       GIC  d5_mipi_csis
+ 57:          0       GIC  d5_mipi_csim
+ 58:          0       GIC  d5_mipi_csim_dma
+ 59:          0       GIC  d5_mipi_csis_dma
+ 60:         37       GIC  d5_mipi_dsim0
+ 61:          0       GIC  d5_mipi_dsim1
+ 63:        119       GIC  dma-pl330.0
+ 69:          0       GIC  drime5-i2c.0
+ 70:         56       GIC  drime5-i2c.1
+ 71:       9080       GIC  drime5-i2c.2
+ 72:        115       GIC  drime5-i2c.3
+ 73:      61853       GIC  drime5-i2c.4
+ 74:          0       GIC  drime5-i2c.5
+ 75:          0       GIC  drimex-ss-udc.0
+ 77:          2       GIC  drime5_cec, HDMI
+ 81:          0       GIC  drime5_spi
+ 97:        771       GIC  uart-pl011
+101:     123501       GIC  dw-mci
+102:      29019       GIC  dw-mci
+107:          0       GIC  drime5-pwm
+108:          0       GIC  drime5-pwm
+113:          0       GIC  drime5-pwm
+141:          0       GIC  drime5-adc
+142:         67       GIC  d5_ipcc
+143:          0       GIC  d5_ipcc
+144:          0       GIC  d5_lock
+155:       1898       GIC  dw-mci
+159:        207       GIC  d5_cmdq
+165:          1  gpio-pl061  BMA2XX Interrupt
+179:          0  gpio-pl061  wifi
+183:          0  gpio-pl061  sh2_muic
+184:          0  gpio-pl061  sh1_muic
+185:          1  gpio-pl061  tsu6111a_interrunpt
+187:          0  gpio-pl061  shutter2_key
+190:          0  gpio-pl061  extcon-gpio
+191:          0  gpio-pl061  ael
+218:          0  gpio-pl061  power_key
+219:         65  gpio-pl061  shutter1_key
+242:          0  gpio-pl061  extcon-gpio
+243:        602  gpio-pl061  mms_ts
+270:          0  gpio-pl061  jog2
+271:          0  gpio-pl061  jog2
+274:          0  gpio-pl061  jog1
+275:          0  gpio-pl061  jog1
+364:          0  gpio-pl061  drd_switch_vbus
+Err:          0

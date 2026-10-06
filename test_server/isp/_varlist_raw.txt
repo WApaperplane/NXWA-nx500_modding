@@ -1,0 +1,5 @@
+st cap capdtm varlist 2>&1
+[MCB       ] [31mCFrame::Send() return fail(-1)[m
+[SHELL     ] [31mcmd = st cap capdtm varlist [m
+[SHELL     ] [31mCann't execute capture command over MCB![m
+[root@drime5 ~]# 

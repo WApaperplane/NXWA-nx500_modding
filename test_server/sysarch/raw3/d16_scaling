@@ -1,0 +1,15 @@
+===== d16_scaling =====
+affected_cpus
+cpuinfo_cur_freq
+cpuinfo_max_freq
+cpuinfo_min_freq
+cpuinfo_transition_latency
+related_cpus
+scaling_available_governors
+scaling_cur_freq
+scaling_driver
+scaling_governor
+scaling_max_freq
+scaling_min_freq
+scaling_setspeed
+stats

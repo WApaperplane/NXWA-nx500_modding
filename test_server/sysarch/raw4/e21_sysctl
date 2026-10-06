@@ -1,0 +1,9 @@
+===== e21_sysctl =====
+debug
+dev
+fs
+kernel
+net
+vm
+---
+0

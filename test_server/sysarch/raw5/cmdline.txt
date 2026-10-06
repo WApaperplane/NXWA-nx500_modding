@@ -1,0 +1,4 @@
+=== cmd ===
+console=ttyAMA0,115200n8 mem=512M hibernate=nocompress root=/dev/mmcblk0p10 rw rootfstype=ext4 rootwait  noresume user_debug=255
+--- CMA---
+=== exit=1 ===

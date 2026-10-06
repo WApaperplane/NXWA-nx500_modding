@@ -1,0 +1,12 @@
+===== b14_dlog =====
+total 172
+-rw-r--r-- 1 root root    67 Oct  5 17:33 8887_bt.log
+-rw-r--r-- 1 root root 14827 Oct  5 17:32 Xorg.0.log
+-rw-r--r-- 1 root root   666 Oct  5 17:32 Xorg.0.log2
+-rw------- 1 root utmp     0 Sep  6  2023 btmp
+-rw------- 1 root root 57344 Oct  5 17:34 connman.log
+-rwxr-xr-x 1 root root   133 Sep  6  2023 hib.txt
+-rw-r--r-- 1 root root 63781 Oct  5 17:34 messages
+-rw------- 1 root root 12288 Oct  5 17:49 netconfig.log
+-rw------- 1 root root   122 Oct  5 17:34 wlanplug_log
+-rw-rw-r-- 1 root utmp  5760 Oct  5 17:56 wtmp

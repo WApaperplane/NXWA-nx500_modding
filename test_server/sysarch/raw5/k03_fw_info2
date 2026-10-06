@@ -1,0 +1,16 @@
+===== k03_fw_info2 =====
+[fw_get_meta_header():00543] fw_get_meta_header(): open error! (/mnt/mmc/devicem4.bin) 
+[fw_get_ver_proj():00619] fw_get_ver_proj(): fw_get_meta_header() failed 
+[fw_get_meta_header():00543] fw_get_meta_header(): open error! (/mnt/mmc/devicem4.bin) 
+[fw_get_ver_full():00570] fw_get_ver_full(): fw_get_meta_header() failed 
+[fw_get_meta_header():00543] fw_get_meta_header(): open error! (/mnt/mmc/devicem4.bin) 
+[fw_get_ver_user():00596] fw_get_ver_user(): fw_get_meta_header() failed 
+[fw_get_meta_header():00543] fw_get_meta_header(): open error! (/mnt/mmc/devicem4.bin) 
+[fw_get_ver_date():00642] fw_get_ver_date(): fw_get_meta_header() failed 
+firmware informations.
+file name = devicem4.bin
+----------------------------------------
+project name = 
+version full = 
+version user = 
+version date = 

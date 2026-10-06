@@ -1,0 +1,25 @@
+=== run ===
+open(/dev/drime5_ep) = 3, open(/dev/d5_sma) = 4  ★
+3dlut @0x2082b000 mmap=0xb6fb0000  ★
+
+已备份 16 个槽地址 -> lut_bak.txt
+
+buffer vaddr = 0x68100  (%256 = 0)
+LUT 已生成 (mode=0: identity 恒等)
+★ 已 mmap DMA 区 0x81115200（不依赖 virt2phys）
+  已写入 256 字节 LUT 数据
+  读回校验: 一致 ✓
+  ★ 若上面有 fail，直接用 put 的 fallback：把DMA 区映射过来再试
+
+--- 发启动脉冲 ---
+  +0x08 已写 0x100，读回 = 0x00000100
+
+★★ 请看取景器：画面有变化吗？（mode=0）
+   恢复：/mnt/mmc/_xfer/eplut3.arm restore
+CA9 user fault(eplut3.arm, pid=1055, tid=1055, signal=6). 
+
+Callstack Information (PID:1055)
+Call Stack Count: 1
+ 0: gsignal + 0x3c (0xb6e5b9e8) [/lib/libc.so.6] + 0xb6e5b9e8
+End of Call Stack
+

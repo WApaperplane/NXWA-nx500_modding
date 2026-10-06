@@ -1,0 +1,23 @@
+=== run ===
+open(/dev/drime5_ep) = 3, open(/dev/d5_sma) = 4  ★
+3dlut @0x2082b000 mmap=0xb6f05000  ★
+
+--- 恢复出厂 ---
+  slot  0: +0x00c <- 0x81115200
+  slot  1: +0x10c <- 0x81115200
+  slot  2: +0x20c <- 0x81115200
+  slot  3: +0x30c <- 0x81115200
+  slot  4: +0x40c <- 0x81115200
+  slot  5: +0x50c <- 0x81115200
+  slot  6: +0x60c <- 0x81115200
+  slot  7: +0x70c <- 0x81115200
+  slot  8: +0x80c <- 0x81115200
+  slot  9: +0x90c <- 0x81115200
+  slot 10: +0xa0c <- 0x81115200
+  slot 11: +0xb0c <- 0x81115200
+  slot 12: +0xc0c <- 0x81115200
+  slot 13: +0xd0c <- 0x81115200
+  slot 14: +0xe0c <- 0x81115200
+  slot 15: +0xf0c <- 0x81115200
+  已发启动脉冲
+EXIT=0

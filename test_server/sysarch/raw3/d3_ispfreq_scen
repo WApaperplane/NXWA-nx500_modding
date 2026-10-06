@@ -1,0 +1,3 @@
+===== d3_ispfreq_scen =====
+ls: cannot access /sys/devices/platform/drime5-ispfreq/scen/: Not a directory
+cat: /sys/devices/platform/drime5-ispfreq/scen/*: Not a directory

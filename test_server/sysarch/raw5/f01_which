@@ -1,0 +1,8 @@
+===== f01_which =====
+total 176
+drwxr-xr-x 3 root root   4096 Oct  4 22:59 capdtm
+-rwxr-xr-x 1 root root 157261 Oct  9  2016 nx-remote-controller-daemon
+drwxr-xr-x 2 root root   4096 Oct  4 22:59 push
+drwxr-xr-x 2 root root   4096 Oct  4 22:59 thumb
+drwxr-xr-x 4 root root   4096 Oct  4 22:59 tools
+drwxr-xr-x 6 root root   4096 Oct  4 22:59 web_root

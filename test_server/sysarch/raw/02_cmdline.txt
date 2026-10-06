@@ -1,0 +1,28 @@
+===== 02_cmdline.txt =====
+console=ttyAMA0,115200n8 mem=512M hibernate=nocompress root=/dev/mmcblk0p10 rw rootfstype=ext4 rootwait  noresume user_debug=255
+
+=== mount ===
+rootfs / rootfs rw 0 0
+/dev/root / ext4 ro,relatime,data=ordered 0 0
+devtmpfs /dev devtmpfs rw,relatime,size=71412k,nr_inodes=17853,mode=755 0 0
+proc /proc proc rw,nosuid,nodev,noexec,relatime 0 0
+sysfs /sys sysfs rw,nosuid,nodev,noexec,relatime 0 0
+tmpfs /dev/shm tmpfs rw,nosuid,nodev 0 0
+devpts /dev/pts devpts rw,nosuid,noexec,relatime,gid=5,mode=620 0 0
+tmpfs /run tmpfs rw,nosuid,nodev,mode=755 0 0
+tmpfs /sys/fs/cgroup tmpfs rw,nosuid,nodev,noexec,mode=755 0 0
+cgroup /sys/fs/cgroup/systemd cgroup rw,nosuid,nodev,noexec,relatime,release_agent=/usr/lib/systemd/systemd-cgroups-agent,name=systemd 0 0
+cgroup /sys/fs/cgroup/cpu,cpuacct cgroup rw,nosuid,nodev,noexec,relatime,cpuacct,cpu 0 0
+cgroup /sys/fs/cgroup/devices cgroup rw,nosuid,nodev,noexec,relatime,devices 0 0
+cgroup /sys/fs/cgroup/freezer cgroup rw,nosuid,nodev,noexec,relatime,freezer 0 0
+cgroup /sys/fs/cgroup/blkio cgroup rw,nosuid,nodev,noexec,relatime,blkio 0 0
+debugfs /sys/kernel/debug debugfs rw,relatime 0 0
+mqueue /dev/mqueue mqueue rw,relatime 0 0
+tmpfs /tmp tmpfs rw 0 0
+tmpfs /var/log tmpfs rw 0 0
+tmpfs /var/run tmpfs rw 0 0
+/dev/loop0 /usr/share/locale squashfs ro,relatime 0 0
+daemon_mgr /sys/fs/cgroup/mgr cgroup rw,nosuid,nodev,noexec,relatime,release_agent=/usr/bin/daemon-manager-release-agent,name=daemon_mgr 0 0
+/dev/mmcblk0p11 /opt ext4 rw,noatime,nodiratime,data=ordered 0 0
+/dev/mmcblk0p14 /opt/usr ext4 rw,noatime,nodiratime,data=ordered 0 0
+/dev/mmcblk1p1 /opt/storage/sdcard exfat rw,nosuid,nodev,noatime,nodiratime,fmask=0022,dmask=0022,allow_utime=0020,codepage=cp437,iocharset=utf8,namecase=0,errors=remount-ro 0 0

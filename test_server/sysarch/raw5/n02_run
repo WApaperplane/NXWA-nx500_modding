@@ -1,0 +1,15 @@
+NX500 EP/SMA/IPCC read-only probe v2
+mode=sma
+EP magic='h' nr=100 | SMA magic='s' | IPCC magic='t'
+sizeof(ep_phys)=8% x10=808 sizeof(ipcc_available_info)=8%
+CA9 user fault(epinfo.arm, pid=2547, tid=2547, signal=4). 
+
+Callstack Information (PID:2547)
+Call Stack Count: 4
+ 0: probe_sma + 0x114 (0x25c04) [/mnt/mmc/_xfer/epinfo.arm] + 0x25c04
+ 1: main + 0x314 (0x24798) [/mnt/mmc/_xfer/epinfo.arm] + 0x24798
+ 2: __libc_start_main + 0x114 (0xb6e5d82c) [/lib/libc.so.6] + 0xb6e5d82c
+ 3: (0x2444c) [/mnt/mmc/_xfer/epinfo.arm] + 0x2444c
+End of Call Stack
+
+arc = 5, optind = 5 ,Kb 0, rotate 4

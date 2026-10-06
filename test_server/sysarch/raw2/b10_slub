@@ -1,0 +1,15 @@
+===== b10_slub =====
+head: cannot open `/proc/slabinfo' for reading: No such file or directory
+---
+nr_free_pages 933
+nr_inactive_anon 4085
+nr_active_anon 9313
+nr_inactive_file 11498
+nr_active_file 6976
+nr_unevictable 3
+nr_mlock 0
+nr_anon_pages 12628
+nr_mapped 4516
+nr_file_pages 19251
+nr_dirty 14
+nr_writeback 0

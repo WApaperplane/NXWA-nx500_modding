@@ -1,0 +1,36 @@
+=== run ===
+NX500 EP/SMA/IPCC read-only probe v3 (precomputed ioctl consts)
+mode=ipcc
+EP magic='h' nr=100 | SMA magic='s' | IPCC magic='t'
+
+===== 3. IPCC /dev/d5_ipcc=====
+open /dev/d5_ipcc
+  fd=3
+  cmds(sz4): W=0xc0047403 R=0xc0047404 L=0xc0047405
+  nr=3 core=0 r=0 ret=-1515870811  buf[0..3]= 00000000 a5a5a5a5 a5a5a5a5 a5a5a5a5  CHANGED
+  nr=3 core=1 r=0 ret=-1515870811  buf[0..3]= 00000001 a5a5a5a5 a5a5a5a5 a5a5a5a5  CHANGED
+  nr=3 core=2 r=0 ret=-1515870811  buf[0..3]= 00000002 a5a5a5a5 a5a5a5a5 a5a5a5a5  CHANGED
+  nr=3 core=3 r=0 ret=-1515870811  buf[0..3]= 00000003 a5a5a5a5 a5a5a5a5 a5a5a5a5  CHANGED
+  nr=3 core=4 r=0 ret=-1515870811  buf[0..3]= 00000004 a5a5a5a5 a5a5a5a5 a5a5a5a5  CHANGED
+  nr=3 core=5 r=0 ret=-1515870811  buf[0..3]= 00000005 a5a5a5a5 a5a5a5a5 a5a5a5a5  CHANGED
+  nr=3 core=6 r=0 ret=-1515870811  buf[0..3]= 00000006 a5a5a5a5 a5a5a5a5 a5a5a5a5  CHANGED
+  nr=3 core=7 r=0 ret=-1515870811  buf[0..3]= 00000007 a5a5a5a5 a5a5a5a5 a5a5a5a5  CHANGED
+  nr=4 core=0 r=0 ret=-1515870811  buf[0..3]= 00000000 a5a5a5a5 a5a5a5a5 a5a5a5a5  CHANGED
+  nr=4 core=1 r=0 ret=-1515870811  buf[0..3]= 00000001 a5a5a5a5 a5a5a5a5 a5a5a5a5  CHANGED
+  nr=4 core=2 r=0 ret=-1515870811  buf[0..3]= 00000002 a5a5a5a5 a5a5a5a5 a5a5a5a5  CHANGED
+  nr=4 core=3 r=0 ret=-1515870811  buf[0..3]= 00000003 a5a5a5a5 a5a5a5a5 a5a5a5a5  CHANGED
+  nr=4 core=4 r=0 ret=-1515870811  buf[0..3]= 00000004 a5a5a5a5 a5a5a5a5 a5a5a5a5  CHANGED
+  nr=4 core=5 r=0 ret=-1515870811  buf[0..3]= 00000005 a5a5a5a5 a5a5a5a5 a5a5a5a5  CHANGED
+  nr=4 core=6 r=0 ret=-1515870811  buf[0..3]= 00000006 a5a5a5a5 a5a5a5a5 a5a5a5a5  CHANGED
+  nr=4 core=7 r=0 ret=-1515870811  buf[0..3]= 00000007 a5a5a5a5 a5a5a5a5 a5a5a5a5  CHANGED
+  nr=5 core=0 r=0 ret=-1515870811  buf[0..3]= 00000000 a5a5a5a5 a5a5a5a5 a5a5a5a5  CHANGED
+  nr=5 core=1 r=0 ret=-1515870811  buf[0..3]= 00000001 a5a5a5a5 a5a5a5a5 a5a5a5a5  CHANGED
+  nr=5 core=2 r=0 ret=-1515870811  buf[0..3]= 00000002 a5a5a5a5 a5a5a5a5 a5a5a5a5  CHANGED
+  nr=5 core=3 r=0 ret=-1515870811  buf[0..3]= 00000003 a5a5a5a5 a5a5a5a5 a5a5a5a5  CHANGED
+  nr=5 core=4 r=0 ret=-1515870811  buf[0..3]= 00000004 a5a5a5a5 a5a5a5a5 a5a5a5a5  CHANGED
+  nr=5 core=5 r=0 ret=-1515870811  buf[0..3]= 00000005 a5a5a5a5 a5a5a5a5 a5a5a5a5  CHANGED
+  nr=5 core=6 r=0 ret=-1515870811  buf[0..3]= 00000006 a5a5a5a5 a5a5a5a5 a5a5a5a5  CHANGED
+  nr=5 core=7 r=0 ret=-1515870811  buf[0..3]= 00000007 a5a5a5a5 a5a5a5a5 a5a5a5a5  CHANGED
+
+===== done =====
+EXIT=0

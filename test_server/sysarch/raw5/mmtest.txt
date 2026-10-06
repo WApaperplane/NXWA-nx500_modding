@@ -1,0 +1,4 @@
+=== run ===
+O_RDWR         mmap=0xb6fd2000  read[0]=00000000  write OK -> 12345678
+O_RDWR|O_SYNC  mmap=0xb6fd2000  read[0]=00000000  write OK -> 12345678
+EXIT=0

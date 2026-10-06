@@ -1,0 +1,10 @@
+=== run ===
+sizeof(struct ep_reg_info)=80
+A: open=3
+B: mmap RO=0xb6fea000
+C: read 00 00 00 00
+E: mmap RW=0xb6fea000
+F: memcpy...
+G: ok, p[0..3]=00 01 02 03
+DONE
+EXIT=0

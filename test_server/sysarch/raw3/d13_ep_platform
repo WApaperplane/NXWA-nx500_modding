@@ -1,0 +1,7 @@
+===== d13_ep_platform =====
+total 0
+lrwxrwxrwx 1 root root    0 Oct  5 18:02 driver -> ../../../bus/platform/drivers/drime5_ep
+-r--r--r-- 1 root root 4096 Oct  5 18:02 modalias
+drwxr-xr-x 2 root root    0 Oct  5 17:52 power
+lrwxrwxrwx 1 root root    0 Oct  5 18:02 subsystem -> ../../../bus/platform
+-rw-r--r-- 1 root root 4096 Oct  5 18:02 uevent

@@ -1,0 +1,15 @@
+===== 01_cpu.txt =====
+Processor	: ARMv7 Processor rev 1 (v7l)
+BogoMIPS	: 1594.16
+Features	: swp half thumb fastmult vfp edsp neon vfpv3 tls 
+CPU implementer	: 0x41
+CPU architecture: 7
+CPU variant	: 0x4
+CPU part	: 0xc09
+CPU revision	: 1
+
+Hardware	: Samsung-DRIMe5-ES
+Revision	: 0000
+Serial		: 0000000000000000
+=== uname ===
+Linux drime5 3.5.0 #7 PREEMPT Wed Jun 3 14:40:29 KST 2015 armv7l GNU/Linux

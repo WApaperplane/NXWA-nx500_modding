@@ -1,0 +1,11 @@
+=== cmd ===
+uid=0(root) gid=0(root) groups=0(root),29(audio)
+--- ptrace_scope ---
+no yama
+--- 247 status ---
+State:	S (sleeping)
+Uid:	0	0	0	0
+--- mem 可读? ---
+ 64 64 3a 20 72 65 61 64 69 6e 67 20 60 2f 70 72
+ 6f 63 2f 32 34 37 2f 6d 65 6d 27 3a 20 49 6e 70
+=== exit=0 ===

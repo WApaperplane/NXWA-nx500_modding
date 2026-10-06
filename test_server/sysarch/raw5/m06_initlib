@@ -1,0 +1,15 @@
+===== m06_initlib =====
+total 2044
+drwxr-xr-x  2 root root    4096 Mar 30  2016 .
+drwxr-xr-x 12 root root    4096 Mar 30  2016 ..
+-rwxr-xr-x  1 root root  122148 Mar 30  2016 ld-linux.so.3
+-rwxr-xr-x  1 root root 1171712 Mar 30  2016 libc.so.6
+-rwxr-xr-x  1 root root    7628 Mar 30  2016 libcom_err.so.2
+-rwxr-xr-x  1 root root    9820 Mar 30  2016 libdl.so.2
+-rwxr-xr-x  1 root root   33472 Mar 30  2016 libgcc_s.so.1
+-rwxr-xr-x  1 root root  431872 Mar 30  2016 libm.so.6
+-rwxr-xr-x  1 root root   44368 Mar 30  2016 libproc-3.2.8.so
+-rwxr-xr-x  1 root root   84028 Mar 30  2016 libpthread.so.0
+-rwxr-xr-x  1 root root   26636 Mar 30  2016 librt.so.1
+-rwxr-xr-x  1 root root   43664 Mar 30  2016 libunwind.so.8
+-rwxr-xr-x  1 root root   88760 Mar 30  2016 libz.so.1

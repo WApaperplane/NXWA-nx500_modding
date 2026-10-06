@@ -1,0 +1,10 @@
+=== cmd ===
+=== 相机当前状态 ===
+1.12
+NX500
+NX500GLU0APC1
+DSP_NX500GLU0APC1_SR1
+BABF43A
+=== di-camera-app 打开的 EP 设备 ===
+lrwx------ 1 root root 64 Mar 30  2016 28 -> /dev/drime5-thermister
+=== 全系统谁持有 drime5_ep ===

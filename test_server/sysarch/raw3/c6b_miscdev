@@ -1,0 +1,14 @@
+===== c6b_miscdev =====
+/sys/class/misc/d5_cmdq/dev:10:110
+/sys/class/misc/d5_hevc/dev:10:107
+/sys/class/misc/d5_ipcc/dev:10:111
+/sys/class/misc/d5_lock/dev:10:109
+/sys/class/misc/d5_mipi_csidsi/dev:10:106
+/sys/class/misc/d5_mipi_csim/dev:10:105
+/sys/class/misc/d5_mipi_csim_dma/dev:10:104
+/sys/class/misc/d5_mipi_csis/dev:10:103
+/sys/class/misc/d5_mipi_csis_dma/dev:10:102
+/sys/class/misc/d5_mipi_dsim0/dev:10:101
+/sys/class/misc/d5_mipi_dsim1/dev:10:100
+/sys/class/misc/d5_mptop/dev:10:108
+/sys/class/misc/d5_sma/dev:10:112

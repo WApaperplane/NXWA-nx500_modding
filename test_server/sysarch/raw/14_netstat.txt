@@ -1,0 +1,8 @@
+===== 14_netstat.txt =====
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address               Foreign Address             State       PID/Program name   
+tcp        0      0 0.0.0.0:80                  0.0.0.0:*                   LISTEN      418/nx-remote-contr 
+tcp        0      0 0.0.0.0:8080                0.0.0.0:*                   LISTEN      403/busybox         
+tcp        0      0 0.0.0.0:21                  0.0.0.0:*                   LISTEN      1407/busybox        
+tcp        0      0 0.0.0.0:53                  0.0.0.0:*                   LISTEN      372/connmand        
+tcp        0      0 0.0.0.0:23                  0.0.0.0:*                   LISTEN      1415/telnetd        

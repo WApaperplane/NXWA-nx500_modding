@@ -1,0 +1,14 @@
+===== 08_apps.txt =====
+total 44
+drwxr-xr-x 11 root root 4096 Mar 30  2016 .
+drwxr-xr-x 15 root root 4096 Mar 30  2016 ..
+drwxr-xr-x  4 root root 4096 Mar 30  2016 com.samsung.ap-setting-app
+drwxr-xr-x  3 root root 4096 Mar 30  2016 com.samsung.app-selector
+drwxr-xr-x  4 root root 4096 Mar 30  2016 com.samsung.bluetooth-testmode
+drwxr-xr-x  4 root root 4096 Mar 30  2016 com.samsung.di-camera-app
+drwxr-xr-x  4 root root 4096 Mar 30  2016 com.samsung.di-thumbnail
+drwxr-xr-x  3 root root 4096 Mar 30  2016 com.samsung.help
+drwxr-xr-x  4 root root 4096 Mar 30  2016 com.samsung.smart-wifi-app
+drwxr-xr-x  7 root root 4096 Mar 30  2016 org.tizen.browser
+drwxr-xr-x  2 root root 4096 Mar 30  2016 org.tizen.policy
+=== app 内部结构 ===

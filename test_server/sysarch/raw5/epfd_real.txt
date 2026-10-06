@@ -1,0 +1,10 @@
+=== run ===
+pread: Invalid argument
+map_base     = 0xb0e75000
+static_slot  = 0x0005556c
+seg_file_off = 0x00054000
+runtime_addr = 0xb0e7656c
+
+/proc/247/mem 已打开（O_RDONLY）
+=> 读失败（可能地址不在映射内，static_slot 猜错）
+EXIT=4

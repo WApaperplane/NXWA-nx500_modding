@@ -1,0 +1,12 @@
+===== d1_ispfreq_files =====
+total 0
+-rw-rw-r-- 1 root root 4096 Oct  5 17:32 bus_boost
+-rw-rw-r-- 1 root root 4096 Oct  5 18:01 dram_boost
+lrwxrwxrwx 1 root root    0 Oct  5 18:01 driver -> ../../../bus/platform/drivers/drime5-ispfreq
+-rw-rw-r-- 1 root root 4096 Oct  5 17:35 dvfs_use
+-rw-rw-r-- 1 root root 4096 Oct  5 18:01 ep_lock
+-r--r--r-- 1 root root 4096 Oct  5 18:01 modalias
+drwxr-xr-x 2 root root    0 Oct  5 17:52 power
+-rw-rw-r-- 1 root root 4096 Oct  5 17:35 scen
+lrwxrwxrwx 1 root root    0 Oct  5 18:01 subsystem -> ../../../bus/platform
+-rw-r--r-- 1 root root 4096 Oct  5 18:01 uevent

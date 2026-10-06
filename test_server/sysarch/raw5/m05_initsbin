@@ -1,0 +1,7 @@
+===== m05_initsbin =====
+total 240
+drwxr-xr-x  2 root root   4096 Mar 30  2016 .
+drwxr-xr-x 12 root root   4096 Mar 30  2016 ..
+-rwx------  1 root root   3108 Feb 24  2014 init
+-rwxr-xr-x  1 root root 222872 Mar 30  2016 reboot
+-rwxr-xr-x  1 root root   6472 Mar 30  2016 switch_root

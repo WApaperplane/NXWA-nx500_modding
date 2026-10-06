@@ -1,0 +1,15 @@
+=== run ===
+T3 start
+dev /dev/null open=3
+  pre-ioctl alive, now calling IOR('Z',77,4)...
+CA9 user fault(t3.arm, pid=2594, tid=2594, signal=4). 
+
+Callstack Information (PID:2594)
+Call Stack Count: 4
+ 0: one + 0xc0 (0x24334) [/mnt/mmc/_xfer/t3.arm] + 0x24334
+ 1: main + 0x30 (0x23fe4) [/mnt/mmc/_xfer/t3.arm] + 0x23fe4
+ 2: __libc_start_main + 0x114 (0xb6dba82c) [/lib/libc.so.6] + 0xb6dba82c
+ 3: (0x23f7c) [/mnt/mmc/_xfer/t3.arm] + 0x23f7c
+End of Call Stack
+
+arc = 5, optind = 5 ,Kb 0, rotate 4

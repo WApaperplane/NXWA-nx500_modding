@@ -1,0 +1,10 @@
+===== j08_firmware =====
+usage: st firmware [command]
+       st firmware help
+               display help.
+       st firmware info [filename]
+               display firmware info
+       st firmware up [filename] [filename] ...
+               upgrade firmware.
+               support : uImage, rom.bin, devicem4.bin
+       st firmware merge : merge f/w file with pcache.list and snapshot.img

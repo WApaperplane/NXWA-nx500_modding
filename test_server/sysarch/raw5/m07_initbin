@@ -1,0 +1,16 @@
+===== m07_initbin =====
+total 912
+drwxr-xr-x  2 root root   4096 Mar 30  2016 .
+drwxr-xr-x 12 root root   4096 Mar 30  2016 ..
+-rwxr-xr-x  1 root root 576644 Mar 30  2016 bash
+-rwxr-xr-x  1 root root  14588 Mar 30  2016 cat
+-rwxr-xr-x  1 root root  12280 Mar 30  2016 echo
+-rwxr-xr-x  1 root root  59528 Mar 30  2016 grep
+-rwxr-xr-x  1 root root  19676 Mar 30  2016 ln
+-rwxr-xr-x  1 root root  61008 Mar 30  2016 ls
+-rwxr-xr-x  1 root root  57996 Mar 30  2016 mount
+-rwxr-xr-x  1 root root  27348 Mar 30  2016 rm
+lrwxrwxrwx  1 root root      6 Mar 30  2016 sh -> ./bash
+-rwxr-xr-x  1 root root  11768 Mar 30  2016 sleep
+-rwxr-xr-x  1 root root  10416 Mar 30  2016 sync
+-rwxr-xr-x  1 root root  57996 Mar 30  2016 umount

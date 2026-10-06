@@ -1,0 +1,19 @@
+=== cmd ===
+c02cc3d0 t drime5_ep_resume
+c02cc3d8 t drime5_ep_remove
+c02cc3e0 t drime5_ep_suspend
+c02cc3e8 t drime5_ep_register
+c02cc400 t drime5_ep_unregister
+c02cd30c t drime5_ep_open
+c02cd324 t drime5_ep_release
+c02cd37c T drime5_ep_ioctl
+c04060e8 t drime5_ep_probe
+c0589228 R drime5_ep_ops
+c06e0974 t __initcall_drime5_ep_registerfast_dev
+c06fb1a0 d drime5_ep_dma_mask
+c06fb1a8 d drime5_ep_resource
+c071d7a8 d drime5_ep_driver
+c071d7f8 d drime5_ep_miscdev
+=== count ===
+1466
+=== exit=0 ===

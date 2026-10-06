@@ -1,0 +1,4 @@
+=== cmd ===
+--- iqr check ---
+--- AF/MODE ---
+=== exit=0 ===

@@ -1,0 +1,12 @@
+=== run ===
+T1 start
+fd=3
+CA9 user fault(t1.arm, pid=2569, tid=2569, signal=4). 
+
+Callstack Information (PID:2569)
+Call Stack Count: 3
+ 0: main + 0xbc (0x24098) [/mnt/mmc/_xfer/t1.arm] + 0x24098
+ 1: __libc_start_main + 0x114 (0xb6e7882c) [/lib/libc.so.6] + 0xb6e7882c
+ 2: (0x23fa4) [/mnt/mmc/_xfer/t1.arm] + 0x23fa4
+End of Call Stack
+

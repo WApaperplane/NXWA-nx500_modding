@@ -1,0 +1,173 @@
+==============================================================================
+EP 寄存器偏移全表（35 个 reg 层函数）
+==============================================================================
+
+--- _udd_ep_lvr_reg_GetReg @0x019de8 (40 B)
+    偏移   : -0x8 -0x4
+    立即数 : 0
+
+--- _udd_ep_lvr_reg_SetReg @0x019e10 (44 B)
+    偏移   : -0xc -0x8 -0x4
+    立即数 : 0
+
+--- _udd_ep_lvr_reg_regInit @0x019e3c (152 B)
+    调用   : _udd_ep_lvr_reg_GetReg, _udd_ep_lvr_reg_SetReg
+    偏移   : -0x10 +0x24 +0x4c +0x78 +0x7c
+    立即数 : 0 4 8 16
+
+--- _udd_ep_lvr_reg_ChannelInit @0x019ed4 (288 B)
+    调用   : _udd_ep_lvr_reg_GetReg, _udd_ep_lvr_reg_SetReg
+    偏移   : -0x18 -0x10 +0x24 +0x4c +0x78 +0x9c +0xc4 +0xf0 +0x100
+    立即数 : 0 1 4 8 52
+
+--- _udd_ep_lvr_reg_ChannelStart @0x019ff4 (276 B)
+    调用   : _udd_ep_lvr_reg_GetReg, _udd_ep_lvr_reg_SetReg
+    偏移   : -0x18 -0x10 +0x24 +0x4c +0x78 +0x98 +0xbc +0xe4 +0xf4
+    立即数 : 0 1 8 48
+
+--- _udd_ep_lvr_reg_SetIntPulseWidth @0x01a108 (128 B)
+    调用   : _udd_ep_lvr_reg_SetReg
+    偏移   : -0x9 -0x8 +0x24 +0x48 +0x58
+    立即数 : 4 40 76
+
+--- _udd_ep_lvr_reg_vid_SetOpMode @0x01a188 (132 B)
+    调用   : _udd_ep_lvr_reg_GetReg, _udd_ep_lvr_reg_SetReg
+    偏移   : -0x18 -0x10 +0x24 +0x60 +0x64
+    立即数 : 1 8 24
+
+--- _udd_ep_lvr_reg_vid_SetStartMode @0x01a20c (132 B)
+    调用   : _udd_ep_lvr_reg_GetReg, _udd_ep_lvr_reg_SetReg
+    偏移   : -0x18 -0x10 +0x24 +0x60 +0x64
+    立即数 : 1 8 20
+
+--- _udd_ep_lvr_reg_vid_SetReadDirection @0x01a290 (132 B)
+    调用   : _udd_ep_lvr_reg_GetReg, _udd_ep_lvr_reg_SetReg
+    偏移   : -0x18 -0x10 +0x24 +0x60 +0x64
+    立即数 : 1 8 16
+
+--- _udd_ep_lvr_reg_vid_SetYccFormat @0x01a314 (132 B)
+    调用   : _udd_ep_lvr_reg_GetReg, _udd_ep_lvr_reg_SetReg
+    偏移   : -0x18 -0x10 +0x24 +0x60 +0x64
+    立即数 : 2 3 8
+
+--- _udd_ep_lvr_reg_vid_SetFlipMode @0x01a398 (132 B)
+    调用   : _udd_ep_lvr_reg_GetReg, _udd_ep_lvr_reg_SetReg
+    偏移   : -0x18 -0x10 +0x24 +0x60 +0x64
+    立即数 : 2 3 4 8
+
+--- _udd_ep_lvr_reg_vid_SetRotationMode @0x01a41c (132 B)
+    调用   : _udd_ep_lvr_reg_GetReg, _udd_ep_lvr_reg_SetReg
+    偏移   : -0x18 -0x10 +0x24 +0x60 +0x64
+    立即数 : 0 2 3 8
+
+--- _udd_ep_lvr_reg_vid_SetImageSize @0x01a4a0 (140 B)
+    调用   : _udd_ep_lvr_reg_SetReg
+    偏移   : -0x14 -0x10 -0x8 +0x24 +0x68
+    立即数 : 0 4 12 14 16
+
+--- _udd_ep_lvr_reg_vid_SetYStride @0x01a52c (100 B)
+    调用   : _udd_ep_lvr_reg_SetReg
+    偏移   : -0x14 -0x10 -0x8 +0x24 +0x40
+    立即数 : 4 16
+
+--- _udd_ep_lvr_reg_vid_SetCStride @0x01a590 (100 B)
+    调用   : _udd_ep_lvr_reg_SetReg
+    偏移   : -0x14 -0x10 -0x8 +0x24 +0x40
+    立即数 : 4 20
+
+--- _udd_ep_lvr_reg_vid_SetReadAddress @0x01a5f4 (132 B)
+    调用   : _udd_ep_lvr_reg_SetReg, d5_ep_sma_virt_to_phys
+    偏移   : -0x1c -0x18 -0x10 +0x20 +0x4c +0x60
+    立即数 : 8 24 28
+
+--- _udd_ep_lvr_reg_vid_SetWriteAddress @0x01a678 (132 B)
+    调用   : _udd_ep_lvr_reg_SetReg, d5_ep_sma_virt_to_phys
+    偏移   : -0x1c -0x18 -0x10 +0x20 +0x4c +0x60
+    立即数 : 8 32 36
+
+--- _udd_ep_lvr_reg_grp_SetBitWidth @0x01a6fc (132 B)
+    调用   : _udd_ep_lvr_reg_GetReg, _udd_ep_lvr_reg_SetReg
+    偏移   : -0x18 -0x10 +0x24 +0x60 +0x64
+    立即数 : 2 3 8 56
+
+--- _udd_ep_lvr_reg_grp_SetFlipMode @0x01a780 (132 B)
+    调用   : _udd_ep_lvr_reg_GetReg, _udd_ep_lvr_reg_SetReg
+    偏移   : -0x18 -0x10 +0x24 +0x60 +0x64
+    立即数 : 2 3 4 8 56
+
+--- _udd_ep_lvr_reg_grp_SetRotationMode @0x01a804 (132 B)
+    调用   : _udd_ep_lvr_reg_GetReg, _udd_ep_lvr_reg_SetReg
+    偏移   : -0x18 -0x10 +0x24 +0x60 +0x64
+    立即数 : 0 2 3 8 56
+
+--- _udd_ep_lvr_reg_grp_SetImageSize @0x01a888 (140 B)
+    调用   : _udd_ep_lvr_reg_SetReg
+    偏移   : -0x14 -0x10 -0x8 +0x24 +0x68
+    立即数 : 0 4 14 16 60
+
+--- _udd_ep_lvr_reg_grp_SetStride @0x01a914 (100 B)
+    调用   : _udd_ep_lvr_reg_SetReg
+    偏移   : -0x14 -0x10 -0x8 +0x24 +0x40
+    立即数 : 4 64
+
+--- _udd_ep_lvr_reg_grp_SetReadAddress @0x01a978 (84 B)
+    调用   : _udd_ep_lvr_reg_SetReg, d5_ep_sma_virt_to_phys
+    偏移   : -0x18 -0x10 +0x20 +0x34
+    立即数 : 8 68
+
+--- _udd_ep_lvr_reg_grp_SetWriteAddress @0x01a9cc (84 B)
+    调用   : _udd_ep_lvr_reg_SetReg, d5_ep_sma_virt_to_phys
+    偏移   : -0x18 -0x10 +0x20 +0x34
+    立即数 : 8 72
+
+--- _udd_ep_3dl_reg_GetReg @0x01fa20 (40 B)
+    偏移   : -0x8 -0x4
+    立即数 : 0
+
+--- _udd_ep_3dl_reg_SetReg @0x01fa48 (44 B)
+    偏移   : -0xc -0x8 -0x4
+    立即数 : 0
+
+--- _udd_ep_3dl_reg_OnOff @0x01fa74 (136 B)
+    调用   : _udd_ep_3dl_reg_GetReg, _udd_ep_3dl_reg_SetReg
+    偏移   : -0x18 -0x10 +0x20 +0x64 +0x68
+    立即数 : 0 1 8
+
+--- _udd_ep_3dl_reg_SelCbCr_ch @0x01fafc (132 B)
+    调用   : _udd_ep_3dl_reg_GetReg, _udd_ep_3dl_reg_SetReg
+    偏移   : -0x18 -0x10 +0x24 +0x60 +0x64
+    立即数 : 0 2 3 4 8
+
+--- _udd_ep_3dl_reg_SelLUT @0x01fb80 (132 B)
+    调用   : _udd_ep_3dl_reg_GetReg, _udd_ep_3dl_reg_SetReg
+    偏移   : -0x18 -0x10 +0x24 +0x60 +0x64
+    立即数 : 2 3 4 8
+
+--- _udd_ep_3dl_reg_SetColorFormat_LUT0 @0x01fc04 (132 B)
+    调用   : _udd_ep_3dl_reg_GetReg, _udd_ep_3dl_reg_SetReg
+    偏移   : -0x18 -0x10 +0x24 +0x60 +0x64
+    立即数 : 1 4 8
+
+--- _udd_ep_3dl_reg_SetColorFormat_LUT1 @0x01fc88 (132 B)
+    调用   : _udd_ep_3dl_reg_GetReg, _udd_ep_3dl_reg_SetReg
+    偏移   : -0x18 -0x10 +0x24 +0x60 +0x64
+    立即数 : 1 4 8 12
+
+--- _udd_ep_3dl_reg_Acc_OnOff @0x01fd0c (144 B)
+    调用   : _udd_ep_3dl_reg_GetReg, _udd_ep_3dl_reg_SetReg
+    偏移   : -0x18 -0x10 +0x24 +0x6c +0x70
+    立即数 : 0 1 8
+
+--- _udd_ep_3dl_reg_rw_Start @0x01fd9c (264 B)
+    调用   : _udd_ep_3dl_reg_GetReg, _udd_ep_3dl_reg_SetReg
+    偏移   : -0x18 -0x10 +0x24 +0x50 +0x80 +0xac +0xe4 +0xe8
+    立即数 : 1 4 8 16 256
+
+--- _udd_ep_3dl_reg_SetAddress @0x01fea4 (140 B)
+    调用   : _udd_ep_3dl_reg_SetReg
+    偏移   : -0x10 -0xc -0x8 +0x24 +0x54 +0x64
+    立即数 : 4 12 16
+
+--- _udd_ep_nog_reg_struct_init @0x024ec4 (248 B)
+    偏移   : -0x4 +0x74 +0xd8 +0xdc
+    立即数 : 0 4

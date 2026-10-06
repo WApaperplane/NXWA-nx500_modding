@@ -1,0 +1,4 @@
+=== cmd ===
+=== 3DLUT 块当前寄存器值(读侧,已验证可行) ===
+crw-r----- 1 root kmem 1, 1 Mar 30  2016 /dev/mem
+=== exit=0 ===

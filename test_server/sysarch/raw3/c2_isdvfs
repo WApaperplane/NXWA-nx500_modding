@@ -1,0 +1,11 @@
+===== c2_isdvfs =====
+bus_boost
+dram_boost
+driver
+dvfs_use
+ep_lock
+modalias
+power
+scen
+subsystem
+uevent
