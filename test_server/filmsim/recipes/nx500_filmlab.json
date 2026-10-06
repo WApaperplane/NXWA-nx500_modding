@@ -1,0 +1,157 @@
+# FilmLab 配方定义 — NX500 原生维度
+#
+# 依据（全部实机确认，见 DIMENSIONS.md / SETUSER_SYNTAX.md）：
+#   PW 14 槽 × 7 维   prefman 0x0a3ec 步进52（参数）/ 4（风格）· 中性 R/G/B=100, HUE/SAT/SHARP/CONTRAST=10
+#   PW_TYPE          setusr 20 0x14000N
+#   Smart Filter     setusr 62 0x3e000N + 强度 setusr 63 0x3f000N
+#   WB K 值          prefman 0x0a394（真实 Kelvin，2500-10000，100K/挡）
+#   WB tint 二维     prefman 0x0a398-0x0a3c0  打包= (A<<16)|B，中性 0x070007
+#   SMARTRANGE       setusr 21 0x15000N
+#   FACETONE         setusr 25 0x19000N
+#   SMARTART         setusr 27 0x1b000N  + 强度 28 0x1c000N
+#
+# ★ 编码规则（关键）：
+#   SAT=0 → 纯黑白。机身没有 MONO 维度，但 SAT 归零即达黑白效果。
+#   胶片色偏靠 R/G/B 增益相对差实现（比 HUE 更可控、更贴近真实胶片行为）。
+#   K 值表达"该胶片的固有色温倾向"，tint 表达"胶片的染色偏移"（暖=偏红黄）。
+#
+# 槽位分配：4 槽轮转（10=C1 / 11=C2 / 12=C3 / 13=C4），避免反复写同一槽
+# CUSTOM_1 基址 R=0x0a41c  G=0x0a450  B=0x0a484
+#           HUE=0x0a4b8  SAT=0x0a4ec  SHARP=0x0a520  CONTRAST=0x0a554
+
+{
+  "version": 1,
+  "neutral": {
+    "pw": { "r": 100, "g": 100, "b": 100, "hue": 10, "sat": 10, "sharp": 10, "contrast": 10 },
+    "k": 6300,
+    "tint": 458759,
+    "smart_filter": 0,
+    "smart_filter_size": 0
+  },
+
+  "recipes": [
+    {
+      "id": "portra400",
+      "name": "Portra 400",
+      "tag": "人像暖调",
+      "slot": 9,
+      "pw": { "r": 106, "g": 100, "b": 93, "hue": 11, "sat": 9, "sharp": 9, "contrast": 8 },
+      "k": 5900,
+      "tint_a": 9,
+      "tint_b": 4,
+      "smart_filter": 0,
+      "smart_filter_size": 0,
+      "smart_range": 1,
+      "note": "R 抬 B 压= 暖肤色；对比 8 低于中性= 柔和过渡（负片特征）"
+    },
+    {
+      "id": "velvia50",
+      "name": "Velvia 50",
+      "tag": "风光高饱和",
+      "slot": 10,
+      "pw": { "r": 102, "g": 110, "b": 109, "hue": 10, "sat": 14, "sharp": 11, "contrast": 13 },
+      "k": 5500,
+      "tint_a": 5,
+      "tint_b": 6,
+      "smart_filter": 0,
+      "smart_filter_size": 0,
+      "smart_range": 1,
+      "note": "G/B 双抬 + SAT 14 + 对比 13 = 通透反转片；这是机内能达到的最鲜艳组合"
+    },
+    {
+      "id": "trix400",
+      "name": "TriX 400",
+      "tag": "黑白粗颗粒",
+      "slot": 11,
+      "pw": { "r": 100, "g": 100, "b": 100, "hue": 10, "sat": 0, "sharp": 13, "contrast": 12 },
+      "k": 6300,
+      "tint_a": 7,
+      "tint_b": 7,
+      "smart_filter": 0,
+      "smart_filter_size": 0,
+      "smart_range": 0,
+      "note": "SAT=0 纯黑白；SHARP 13 高锐= 粗颗粒胶片感（机身无颗粒维度，用锐度近似）"
+    },
+    {
+      "id": "ektachrome",
+      "name": "Ektachrome",
+      "tag": "反转片冷调",
+      "slot": 12,
+      "pw": { "r": 96, "g": 105, "b": 108, "hue": 12, "sat": 13, "sharp": 10, "contrast": 11 },
+      "k": 7100,
+      "tint_a": 4,
+      "tint_b": 8,
+      "smart_filter": 0,
+      "smart_filter_size": 0,
+      "smart_range": 1,
+      "note": "R 压 + B 抬 + K 7100 高 = 冷调；反转片特征是高 K 低对比并存"
+    },
+    {
+      "id": "hp5",
+      "name": "HP5 Plus",
+      "tag": "黑白中颗粒",
+      "slot": 9,
+      "pw": { "r": 100, "g": 100, "b": 100, "hue": 10, "sat": 0, "sharp": 11, "contrast": 10 },
+      "k": 6300,
+      "tint_a": 7,
+      "tint_b": 7,
+      "smart_filter": 0,
+      "smart_filter_size": 0,
+      "smart_range": 0,
+      "note": "中等锐度黑白；与 TriX 共用 SAT=0，靠 SHARP 区分颗粒感"
+    },
+    {
+      "id": "superia400",
+      "name": "Superia 400",
+      "tag": "民用负片",
+      "slot": 10,
+      "pw": { "r": 103, "g": 99, "b": 104, "hue": 13, "sat": 11, "sharp": 9, "contrast": 9 },
+      "k": 6100,
+      "tint_a": 8,
+      "tint_b": 5,
+      "smart_filter": 0,
+      "smart_filter_size": 0,
+      "smart_range": 1,
+      "note": "略偏洋红的中性民用负片；HUE 13 给出与Portra 的色相差异"
+    },
+    {
+      "id": "monowarm",
+      "name": "Mono Warm",
+      "tag": "暖调黑白",
+      "slot": 11,
+      "pw": { "r": 108, "g": 100, "b": 92, "hue": 10, "sat": 0, "sharp": 10, "contrast": 11 },
+      "k": 5000,
+      "tint_a": 12,
+      "tint_b": 2,
+      "smart_filter": 0,
+      "smart_filter_size": 0,
+      "smart_range": 0,
+      "note": "★ 机身独有能力：SAT=0 但保留 R/B 增益差 =暖调黑白（sepia 家族）。PC 端引擎做不到（matrix 归一化后必然是纯灰）"
+    },
+    {
+      "id": "vignette",
+      "name": "Vignette ND",
+      "tag": "暗角",
+      "slot": 12,
+      "pw": { "r": 100, "g": 100, "b": 100, "hue": 10, "sat": 11, "sharp": 10, "contrast": 10 },
+      "k": 6300,
+      "tint_a": 7,
+      "tint_b": 7,
+      "smart_filter": 1,
+      "smart_filter_size": 1,
+      "smart_range": 0,
+      "note": "叠加 Smart Filter 暗角（SIZE 可调），演示多维叠加：PW 底色 +独立效果线"
+    }
+  ],
+
+  "notes": {
+    "tint_encoding": "tint = (tint_a << 16) | tint_b，中性 458759 = 0x070007",
+    "k_range": "2500-10000，100K 一挡（prefman 不裁剪，范围需自行夹紧）",
+    "k_meaning": "K 值表达该胶片的固有色温倾向；与 tint 叠加后得到最终白平衡",
+    "slot_rotation": "4 槽轮转（prefman 风格索引 9-12 = CUSTOM_1-4，DATA ID = 0x140000+N），配方切换时不必重写全部 14 槽",
+    "bw_technique": "SAT=0 得黑白；保留 R/B 增益差得暖调/冷调黑白（机身独有）",
+    "grain_approx": "机身无颗粒维度，TriX/HP5 的颗粒感用 SHARP 近似",
+    "enum_name_bug": "getusr 回显枚举名 CUSTOM 段有重复（N=10/11 都显 CUSTOM2，N=12/13 都显 CUSTOM4），槽位本身可用，以 prefman 读回为准",
+    "not_tone_curve": "全部为逐像素同值的全局向量，做不出高光滚降/分区曝光。Recipe Lab 同级"
+  }
+}

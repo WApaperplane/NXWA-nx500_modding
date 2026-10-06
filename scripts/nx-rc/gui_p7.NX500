@@ -1,0 +1,10 @@
+button|固件状态|/opt/usr/nx-ks/p7_status.sh
+button|备份校验|/opt/usr/nx-ks/p7_verify.sh
+
+button|色彩方案|@/opt/usr/nx-ks/gui_p7color.NX500
+button|刷写固件|@/opt/usr/nx-ks/gui_p7flash.NX500
+
+button|开发诊断|@/opt/usr/nx-ks/gui_p7dev.NX500
+
+button|返回|@/opt/usr/nx-ks/gui_ini.NX500
+button|取消|/opt/usr/nx-ks/gui_exit.sh

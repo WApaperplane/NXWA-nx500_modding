@@ -1,0 +1,8 @@
+button|通道 0|3dlut_ch.sh 0
+button|通道 1|3dlut_ch.sh 1
+
+button|通道 2|3dlut_ch.sh 2
+button|通道 3|3dlut_ch.sh 3
+
+button|返回|@/opt/usr/nx-ks/gui_p7color.NX500
+button|取消|/opt/usr/nx-ks/gui_exit.sh

@@ -1,0 +1,241 @@
+# -*- coding: utf-8 -*-
+"""
+cube2nxks.py —把 .cube 3D LUT 转成 NX500/NX1 的 3D LUT 二进制
+
+=====================================================================
+★ 为什么需要这个
+---------------------------------------------------------------------
+社区 film仿真引擎处理 .cube（Adobe/Resolve 标准），
+但相机 3D LUT 要的是**16-bit 二进制**，且布局完全不同。
+
+=====================================================================
+★ NXKS LUT 格式（2026-10-06 从 p7 的 0x81115200 缓冲逆向确认）
+---------------------------------------------------------------------
+    · 17 级/通道（0..16），不是 33/65
+    · 16-bit，每通道 34 字节（17×2）
+    · 三通道交织
+    · 总长= 17 × 34 = 578 字节/通道组 × 3 = **1734 字节**？
+      ⇒ 实测缓冲是 4913 字节，见下方格式说明
+    · LUT[3] 前32 words 实测（LE 拆16-bit）：
+        0001 00ff  02fd fe00  00fc 0300  0500 fb04  f906 00fa
+        00f8 0700  0900 f708  f50a 00f6  00f4 0b00  0d00 f30c  f10e
+      R 从 0x0001 递增 → G/B 从 0xffff 递减 = identity 基底
+    ⇒ **格式 = 16-bit 三通道交织；实际字长以实测缓冲长度为准**
+
+=====================================================================
+★ 长度自适配（★关键：不要硬编码）
+---------------------------------------------------------------------
+实测缓冲 4913 字节 = 17³ × 1（8-bit 时）或
+                  = 17² × 17 ... 不整除
+⇒ 4913 = 17 × 17 × 17 - 24 = 4913-24；不是干净的三次方。
+★ 因此本工具【按实测长度 4913】输出 16-bit 交织布局，
+  并提供 --size 允许改级数，由调用方在实机校验后定案。
+  已知候选：32³=32768（8-bit）、17³=4913、16³=4096
+
+=====================================================================
+用法：
+    python cube2nxks.py <in.cube> [out.bin] [--size 17] [--layout hex|planar]
+
+layout:
+    hex    = 0xXXXX 十六进制文本（★ p7 调试最可能的形式，默认）
+    planar = 裸16-bit LE 二进制
+=====================================================================
+"""
+
+import sys
+import os
+import struct
+
+# ================================================================
+# 实测常量
+# ================================================================
+NXKS_LUT_BYTES = 4913          # ★ 实测缓冲长度
+NXKS_LEVELS = 17# ★ 每通道级数（从 identity 切片反推）
+
+
+def parse_cube(path):
+    """读 .cube，返回 (levels, data) ；data 是 [R][G][B] 的 float 列表。
+
+    支持：
+      · TITLE / DOMAIN_MIN / DOMAIN_MAX / LUT_3D_SIZE / LUT_1D_SIZE
+      ·注释 # 行
+    """
+    size = None
+    dmin = [0.0, 0.0, 0.0]
+    dmax = [1.0, 1.0, 1.0]
+    rows = []
+    with open(path, "r", encoding="utf-8", errors="replace") as f:
+        for raw in f:
+            line = raw.strip()
+            if not line or line.startswith("#"):
+                continue
+            up = line.upper()
+            if up.startswith("TITLE"):
+                continue
+            if up.startswith("LUT_3D_SIZE"):
+                size = int(line.split()[-1])
+                continue
+            if up.startswith("LUT_1D_SIZE"):
+                # 1D LUT 与本工具无关，跳过其数据
+                continue
+            if up.startswith("DOMAIN_MIN"):
+                dmin = [float(x) for x in line.split()[1:4]]
+                continue
+            if up.startswith("DOMAIN_MAX"):
+                dmax = [float(x) for x in line.split()[1:4]]
+                continue
+            parts = line.split()
+            if len(parts) >= 3:
+                try:
+                    rows.append([float(parts[0]), float(parts[1]), float(parts[2])])
+                except ValueError:
+                    pass
+
+    if size is None:
+        n = round(len(rows) ** (1.0 / 3.0))
+        if n * n * n == len(rows):
+            size = n
+        else:
+            raise ValueError("无法推断 LUT_3D_SIZE：读到 %d 行" % len(rows))
+    if len(rows) != size * size * size:
+        raise ValueError("数据行数 %d != %d³" % (len(rows), size))
+
+    # 归一化到 0..1（按 DOMAIN 换算）
+    out = []
+    for r, g, b in rows:
+        out.append([
+            (r - dmin[0]) / (dmax[0] - dmin[0]) if dmax[0] != dmin[0] else r,
+            (g - dmin[1]) / (dmax[1] - dmin[1]) if dmax[1] != dmin[1] else g,
+            (b - dmin[2]) / (dmax[2] - dmin[2]) if dmax[2] != dmin[2] else b,
+        ])
+    return size, out
+
+
+def sample(cube, src_size, levels, r, g, b):
+    """从 cube 三线性插值取样，返回 (R,G,B) ∈ 0..1
+
+    ★ .cube 的存储顺序是 R 外层、G 中层、B 内层（b 变化最快）
+    ★ src_size = 源 cube 的级数（不是目标 levels）
+    """
+    n = src_size - 1
+    x = r * n
+    y = g * n
+    z = b * n
+    x0 = int(x)
+    y0 = int(y)
+    z0 = int(z)
+    # ★ 关键：r,g,b 恰为 1.0 时 x==n，x0==n 会越界 ⇒ 必须夹到 n-1
+    if x0 > n:
+        x0 = n
+    if y0 > n:
+        y0 = n
+    if z0 > n:
+        z0 = n
+    x1 = x0 + 1 if x0 < n else n
+    y1 = y0 + 1 if y0 < n else n
+    z1 = z0 + 1 if z0 < n else n
+    fx = x - x0
+    fy = y - y0
+    fz = z - z0
+
+    def at(i, j, k):
+        # ★ 双保险：调用方已夹过，这里再夹一次（浮点边界最容易漏）
+        if i > n:
+            i = n
+        if j > n:
+            j = n
+        if k > n:
+            k = n
+        return cube[(i * src_size + j) * src_size + k]
+
+    out = []
+    for c in range(3):
+        v = 0.0
+        for di, wx in ((0, 1.0 - fx), (1, fx)):
+            for dj, wy in ((0, 1.0 - fy), (1, fy)):
+                for dk, wz in ((0, 1.0 - fz), (1, fz)):
+                    v += at(x0 + di, y0 + dj, z0 + dk)[c] * wx * wy * wz
+        out.append(v)
+    return out
+
+
+def to_u16(v):
+    if v < 0.0:
+        v = 0.0
+    if v > 1.0:
+        v = 1.0
+    return int(v * 65535.0 + 0.5)
+
+
+def build(cube, src_size, levels):
+    """重采样到 levels 级，返回 16-bit 交织的整数列表（R,G,B 交替）"""
+    vals = []
+    for ri in range(levels):
+        r = ri / (levels - 1.0)
+        for gi in range(levels):
+            g = gi / (levels - 1.0)
+            for bi in range(levels):
+                b = bi / (levels - 1.0)
+                rr, gg, bb = sample(cube, src_size, levels, r, g, b)
+                vals.append(to_u16(rr))
+                vals.append(to_u16(gg))
+                vals.append(to_u16(bb))
+    return vals
+
+
+def emit(vals, layout, path):
+    if layout == "planar":
+        with open(path, "wb") as f:
+            f.write(struct.pack("<%dH" % len(vals), *vals))
+    else:
+        # 十六进制文本，每行 8 个 0xXXXX
+        with open(path, "w", encoding="utf-8") as f:
+            f.write("# NXKS 3D LUT\n")
+            f.write("# levels=17  16-bit  3-channel interleaved\n")
+            f.write("# values=%d\n" % len(vals))
+            for i in range(0, len(vals), 8):
+                f.write(" ".join("0x%04X" % v for v in vals[i:i + 8]) + "\n")
+    return len(vals)
+
+
+def main():
+    if len(sys.argv) < 2:
+        print(__doc__)
+        print("用法: python cube2nxks.py <in.cube> [out.bin] [--size 17] [--layout hex|planar]")
+        return 1
+
+    inp = sys.argv[1]
+    out = sys.argv[2] if len(sys.argv) > 2 and not sys.argv[2].startswith("--") \
+        else os.path.splitext(inp)[0] + ".nxks.bin"
+    levels = NXKS_LEVELS
+    layout = "hex"
+    for i, a in enumerate(sys.argv):
+        if a == "--size" and i + 1 < len(sys.argv):
+            levels = int(sys.argv[i + 1])
+        if a == "--layout" and i + 1 < len(sys.argv):
+            layout = sys.argv[i + 1]
+
+    if not os.path.isfile(inp):
+        print("找不到文件: %s" % inp)
+        return 1
+
+    src_size, cube = parse_cube(inp)
+    vals = build(cube, src_size, levels)
+    n = emit(vals, layout, out)
+
+    print("源.cube : %s（%d 级）" % (os.path.basename(inp), src_size))
+    print("输出    : %s" % out)
+    print("级数    : %d" % levels)
+    print("值数量  : %d（= %d³ × 3）" % (n, levels))
+    print("字节(planar): %d" % (n * 2))
+    print("★ 实测目标缓冲 = %d 字节 —— 若差异很大，需在实机校验后调整级数/精度"
+          % NXKS_LUT_BYTES)
+    if levels == 17:
+        print("  17 级 × 3 通道 × 2 字节 = %d 字节/通道组" % (17 * 3 * 2))
+        print("  ★ 若目标是 %d 字节，级数 N 满足 3×N×2 = %d → N = %d"
+              % (NXKS_LUT_BYTES, NXKS_LUT_BYTES, NXKS_LUT_BYTES // 6))
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

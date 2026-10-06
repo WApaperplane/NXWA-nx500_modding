@@ -1,0 +1,219 @@
+{
+  "_comment": "FilmLab 配方库 v2 —— SD 卡 /mnt/mmc/filmlab/recipes.json",
+  "_note": "由 mod_gui / X11 / telnet 调用。配方数量不限，槽位只是'当前选中项'。\n★ v2 变更：白平衡【不由配方控制】，全程保持相机自动白平衡。\n  理由：WB_TYPE 决定 K 是否生效，而相机端 UI 不会随prefman 写入自动刷新，\n  导致'写入了但看不出变化'的不可验证状态。改为由用户在机身 UI 上自行调整。\n  配方只负责 Picture Wizard 7 维 + 风格切换 —— 这已覆盖绝大部分胶片观感。",
+  "_layout": {
+    "_prefman": "slot N 基址 = 41964 + N*4（7维步进 52）",
+    "_dims": [
+      "R_COLOR",
+      "G_COLOR",
+      "B_COLOR",
+      "HUE",
+      "SATURATION",
+      "SHARPNESS",
+      "CONTRAST"
+    ],
+    "_neutral": {
+      "R_COLOR": 100,
+      "G_COLOR": 100,
+      "B_COLOR": 100,
+      "HUE": 10,
+      "SATURATION": 10,
+      "SHARPNESS": 10,
+      "CONTRAST": 10
+    },
+    "_slot2enum": {
+      "9": 9,
+      "10": 10,
+      "11": 12
+    },
+    "_enum2slot": {
+      "9": 9,
+      "10": 10,
+      "12": 11
+    },
+    "_hidden_slot": 12,
+    "_wb": {
+      "K": 42004,
+      "BA": 42076
+    },
+    "_rules": [
+      "prefman set 之后立即生效，不需要 save",
+      "prefman load -a 0 会覆盖刚 set 的值，绝对不要用",
+      "prefman save 只在需要持久化（开机保留）时用",
+      "setusr 20 <enum> 切风格，实时",
+      "★ UI 上只有 3 个自定义槽；CUSTOM_4(slot12) 在 prefman 里存在但 UI 不显示",
+      "★ v2：配方不写白平衡，相机保持自动 WB",
+      "★ 只用 CUSTOM_1/2/3（slot 9/10/11）；厂商槽 0/3 的 HUE 存的是垃圾字节，不可碰"
+    ],
+    "wb": {
+      "_status": "★ v2 起不由配方写入（见_note）",
+      "_保留原因": "若将来实机验证通过（拍图对比 R/B 均值），可重新启用",
+      "WB_TYPE": 41872,
+      "WB_K": 41876,
+      "WB_CUSTOM_BA": 41916,
+      "WB_MANUAL_BA": 41920,
+      "tint_encoding": "(A<<16)|B，中性=0x00070007"
+    }
+  },
+  "recipes": {
+    "portra400": {
+      "label": "Portra 400",
+      "note": "人像暖调。R 抬、B 压、SAT 略降。",
+      "R_COLOR": 106,
+      "G_COLOR": 100,
+      "B_COLOR": 93,
+      "HUE": 11,
+      "SATURATION": 9,
+      "SHARPNESS": 9,
+      "CONTRAST": 8,
+      "_wb_ref": {
+        "_note": "仅供参考，v2 不写入",
+        "K": 5900,
+        "tint_a": 9,
+        "tint_b": 4
+      }
+    },
+    "velvia50": {
+      "label": "Velvia 50",
+      "note": "风光高饱和反转片。SAT/CONTRA 双高。",
+      "R_COLOR": 102,
+      "G_COLOR": 110,
+      "B_COLOR": 109,
+      "HUE": 10,
+      "SATURATION": 14,
+      "SHARPNESS": 11,
+      "CONTRAST": 13,
+      "_wb_ref": {
+        "_note": "仅供参考，v2 不写入",
+        "K": 5500,
+        "tint_a": 5,
+        "tint_b": 6
+      }
+    },
+    "trix400": {
+      "label": "TriX 400",
+      "note": "黑白粗颗粒。SAT=0 纯黑白 + SHARP 高=粗颗粒近似。",
+      "R_COLOR": 100,
+      "G_COLOR": 100,
+      "B_COLOR": 100,
+      "HUE": 10,
+      "SATURATION": 0,
+      "SHARPNESS": 13,
+      "CONTRAST": 12,
+      "_wb_ref": {
+        "_note": "仅供参考，v2 不写入",
+        "K": 6300,
+        "tint_a": 7,
+        "tint_b": 7
+      }
+    },
+    "ektachrome": {
+      "label": "Kodak Ektachrome",
+      "note": "反转片冷调。G/B 抬、CONTRA 高。",
+      "R_COLOR": 96,
+      "G_COLOR": 105,
+      "B_COLOR": 108,
+      "HUE": 12,
+      "SATURATION": 13,
+      "SHARPNESS": 10,
+      "CONTRAST": 11,
+      "_wb_ref": {
+        "_note": "仅供参考，v2 不写入",
+        "K": 7100,
+        "tint_a": 4,
+        "tint_b": 8
+      }
+    },
+    "hp5": {
+      "label": "HP5 Plus",
+      "note": "黑白中颗粒。",
+      "R_COLOR": 100,
+      "G_COLOR": 100,
+      "B_COLOR": 100,
+      "HUE": 10,
+      "SATURATION": 0,
+      "SHARPNESS": 11,
+      "CONTRAST": 10,
+      "_wb_ref": {
+        "_note": "仅供参考，v2 不写入",
+        "K": 6300,
+        "tint_a": 7,
+        "tint_b": 7
+      }
+    },
+    "superia400": {
+      "label": "Superia X-TRA400",
+      "note": "民用负片。轻微青绿shift。",
+      "R_COLOR": 103,
+      "G_COLOR": 99,
+      "B_COLOR": 104,
+      "HUE": 13,
+      "SATURATION": 11,
+      "SHARPNESS": 9,
+      "CONTRAST": 9,
+      "_wb_ref": {
+        "_note": "仅供参考，v2 不写入",
+        "K": 6100,
+        "tint_a": 8,
+        "tint_b": 5
+      }
+    },
+    "monowarm": {
+      "label": "MonoWarm 暖调黑白",
+      "note": "★机身独有能力：SAT=0（纯黑白）+ 保留 R/B 增益差 = 暖调黑白。PC 矩阵引擎做不到。",
+      "R_COLOR": 108,
+      "G_COLOR": 100,
+      "B_COLOR": 92,
+      "HUE": 10,
+      "SATURATION": 0,
+      "SHARPNESS": 10,
+      "CONTRAST": 11,
+      "_wb_ref": {
+        "_note": "仅供参考，v2 不写入",
+        "K": 5000,
+        "tint_a": 12,
+        "tint_b": 2
+      }
+    },
+    "ektachrome_cyan": {
+      "label": "Ektachrome Cyan 冷调反转",
+      "note": "★ 演示用：极端参数，验证 SAT/HUE/CONTRA 组合空间。",
+      "R_COLOR": 88,
+      "G_COLOR": 112,
+      "B_COLOR": 125,
+      "HUE": 13,
+      "SATURATION": 15,
+      "SHARPNESS": 12,
+      "CONTRAST": 14,
+      "_wb_ref": {
+        "_note": "仅供参考，v2 不写入",
+        "K": 7500,
+        "tint_a": 2,
+        "tint_b": 14
+      }
+    },
+    "cine_teal": {
+      "label": "Cine Teal 青橙电影感",
+      "note": "第 9 个配方，用来验证『加配方不改编菜单』。Teal&Orange 是电影调色标准套路：肤色偏暖、阴影偏青。",
+      "R_COLOR": 104,
+      "G_COLOR": 100,
+      "B_COLOR": 96,
+      "HUE": 11,
+      "SATURATION": 12,
+      "SHARPNESS": 11,
+      "CONTRAST": 13,
+      "_wb_ref": {
+        "_note": "仅供参考，v2 不写入",
+        "K": 5600,
+        "tint_a": 10,
+        "tint_b": 4
+      }
+    }
+  },
+  "presets": {
+    "_note": "开机预写进 3 个可见槽，UI 上直接选，零延迟",
+    "slot9": "portra400",
+    "slot10": "velvia50",
+    "slot11": "trix400"
+  }
+}

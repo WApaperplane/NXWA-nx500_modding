@@ -1,0 +1,13 @@
+button|延时摄影|@/opt/usr/nx-ks/gui_tl.NX500
+button|实用功能|@/opt/usr/nx-ks/gui_func.NX500
+
+button|对焦 & 配置文件|@/opt/usr/nx-ks/gui_focus.NX500
+button|系统设置|@/opt/usr/nx-ks/gui_settings.NX500
+
+button|胶片配方|@/opt/usr/nx-ks/gui_filmlab.NX500
+button|P7 固件|@/opt/usr/nx-ks/gui_p7.NX500
+
+button|休眠|hibernate.sh
+checkbox|远程控制|nx-rc.sh
+
+button|IP: %%IP%% [%%TN%%]|telnet_toggle.sh

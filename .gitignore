@@ -24,9 +24,10 @@ backup_original/
 .uploads/
 .workbuddy/
 
-# ===== 胶片仿真探索(独立仓库 nx500-filmsim, 含 ARM 交叉编译产物) =====
-test_server/filmsim/
-*.arm
+# ===== 胶片仿真(独立仓库 nx500-filmsim)=====
+# ★ 只排除编译产物，源码入库（cube2nxks.py 是本次格式定案的产物）
+test_server/filmsim/_luttest/
+test_server/filmsim/*.arm
 
 # ===== 编辑器 / 系统 =====
 .DS_Store
@@ -63,3 +64,76 @@ __pycache__/
 *.pyc
 test_server/isp/*.so
 test_server/isp/libudd5_real.so
+
+# ===== 安全：SSH 私钥与凭据（★ 绝不入库）=====
+*.pem
+id_rsa*
+id_ed25519*
+nx500_key
+nx500_key.pub
+*.ppk
+known_hosts
+
+# ===== 安全：相机端凭据/备份中的密码类文件 =====
+*.passwd
+shadow*
+passwd.bak
+
+# ===== 2026-10-06：SSH 工作目录（★ 含私钥与固件二进制，只入库 .sh/.py 脚本）=====
+test_server/ssh/*.bin
+test_server/ssh/dropbear
+test_server/ssh/dbclient
+test_server/ssh/scp
+test_server/ssh/sftp-server
+test_server/ssh/nx500_key*
+
+# ===== 2026-10-06：LUT 实验产物（★ 表内容是逆向结论，不入库）=====
+test_server/filmsim/_luttest/
+docs/discovery/tools/*.pyc
+
+# ===== 2026-10-06：入库体积治理（★ RAW/TIFF/交叉编译产物一律不入库）=====
+# ★ 原则：源码 + 文档 + 小工具入库；固件镜像 / RAW / 编译产物 / 第三方二进制不入库
+# —— 交叉编译产物 ——
+*.arm
+*.o
+*.pdb
+test_server/**/out/
+test_server/**/deploy_nx500/
+test_server/filmlab/src/*.pdb
+test_server/filmsim/arm/out/
+test_server/filmsim/deploy_nx500/
+deploy/**/*.arm
+
+# —— 原始影像（★ 单个 RAW 36-56MB）——
+*.tiff
+*.tif
+*.SRW
+*.ppm
+*.nef
+*.cr2
+*.nef
+test_server/filmsim/raw/
+test_server/filmlab/grab/
+test_server/**/raw/
+*.x3f
+
+# —— 大型 LUT 素材（★ 1MB+ .cube，需保留小的 Kodak 预设则例外）——
+test_server/filmsim/luts/
+*.cube
+
+# —— 第三方二进制（capstone.dll 等）——
+test_server/pwfilter/capstone/
+test_server/pwfilter/libudd5*
+test_server/appprobe/di-camera-app
+test_server/pwfilter/di-camera-app
+test_server/**/*.dll
+test_server/**/*.so
+
+# —— 大型 b64 探针输出 ——
+*.b64
+test_server/filmlab/x11probe.b64
+
+# —— 临时分析产物 ——
+scripts/discovery/_*.tsv
+scripts/discovery/_*.txt
+scripts/discovery/_*.json

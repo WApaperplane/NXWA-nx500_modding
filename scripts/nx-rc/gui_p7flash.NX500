@@ -1,0 +1,8 @@
+button|查镜像|/opt/usr/nx-ks/p7_checkimg.sh
+button|备份 p7|/opt/usr/nx-ks/p7_backup.sh
+
+button|刷写 SLP|/opt/usr/nx-ks/p7_flash_slp.sh
+button|官方恢复|/opt/usr/nx-ks/p7_recover_official.sh
+
+button|返回|@/opt/usr/nx-ks/gui_p7.NX500
+button|取消|/opt/usr/nx-ks/gui_exit.sh

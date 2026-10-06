@@ -45,6 +45,9 @@ fi
 
 POPUP=/mnt/mmc/scripts/popup_timeout
 [ -x "$POPUP" ] || POPUP=/opt/usr/nx-ks/popup_timeout
+# ★ popup_timeout 不是 .sh 文件, 上面的 *.sh chmod 兜底覆盖不到它
+#   而 SD 卡 FAT 挂载常丢可执行位 -> 这里单独补, 否则后面所有弹窗静默失败
+chmod +x "$POPUP" 2>/dev/null
 
 if [ ! -x /usr/sbin/bluetoothd.orig ]; then
     # ================= 全量安装(仅首次装机) =================
@@ -89,13 +92,31 @@ if [ "$IS_NX1" = "1" ]; then
     [ -f /opt/usr/nx-ks/keyscan1 ]  && cp -f /opt/usr/nx-ks/keyscan1 /opt/usr/nx-ks/keyscan
 fi
 
-# ---- 补可执行位 (2026-10-05) ----
+# ---- 补可执行位 (2026-10-05, 2026-10-06 修正) ----
 # SD 卡上的文件来自 PC 拷贝, FAT/NTFS 挂载常丢可执行位 -> cp -ar 会原样保留 0644,
 # 结果脚本在相机上直接 "Permission denied"。这里统一兜底, 幂等可重复执行。
-for _f in /opt/usr/nx-ks/*.sh /opt/usr/nx-ks/nx-rc/*.sh /opt/usr/nx-ks/nx-rc/thumb/*.sh; do
+#
+# ★ 2026-10-06 修正: 原版只匹配 *.sh, 漏掉了大量【无扩展名】的可执行文件:
+#   keyscan / mod_gui / popup_timeout / capdtm / thumb-cgi / push-cgi ...
+#   这些才是装机后真正要跑的东西。漏 chmod => "装完了但没反应"。
+#   现改为对 /opt/usr/nx-ks 下所有普通文件补位(chmod +x 对普通文件无害)。
+for _f in /opt/usr/nx-ks/* /opt/usr/nx-ks/nx-rc/* /opt/usr/nx-ks/nx-rc/thumb/*; do
     [ -f "$_f" ] && chmod +x "$_f" 2>/dev/null
 done
 unset _f
+
+# ---- ★ 拉起 telnet + ftpd (2026-10-06) ----
+# ★ 必须放在上面的 chmod 兜底【之后】—— SD 卡 FAT 挂载丢可执行位时,
+#   /mnt/mmc/scripts/onboard.sh 本身也是 0644, 直接调用会 Permission denied。
+# 为什么必须有: 原来 telnet 只能从 mod 菜单的 "IP: ... [Telnet关]" 那一行开启,
+# 而那行来自 gui_ini.NX500, 由 gen_menu.sh 在【菜单启动时】现场生成
+# ⇒ 死锁: 菜单没生成 -> 没 telnet 开关 -> 连不上 -> 无法排查 -> 菜单更起不来。
+# 本行把 telnet 从"mod 功能"降级成"装机副产品", 是本项目唯一的远程排查通路。
+if [ -x /mnt/mmc/scripts/onboard.sh ]; then
+    /mnt/mmc/scripts/onboard.sh
+elif [ -x /opt/usr/nx-ks/onboard.sh ]; then
+    /opt/usr/nx-ks/onboard.sh
+fi
 
 # ---- 清理 SD 卡根触发文件(防止忘拔卡导致下次开机重复执行); scripts/ 与 odt 文档保留 ----
 killall dfmsd 2>/dev/null

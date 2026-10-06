@@ -1,0 +1,60 @@
+=====================================================================
+FilmLab 机内 UI —— 相机端部署说明
+=====================================================================
+
+【要推 4 个文件】
+
+1) /opt/usr/nx-ks/filmlab/nxfilmui.arm      ← UI 主程序（835KB，需 chmod +x）
+2) /opt/usr/nx-ks/flab_ui.sh                 ← 启动器（需 chmod +x）
+3) /opt/usr/nx-ks/filmlab.sh                ← 引擎（已带 export 命令）
+4) /opt/usr/nx-ks/EV_MOBILE.sh              ← EV+WiFi → 直达 FilmLab 页
+   /opt/usr/nx-ks/MOBILE_MOBILE.sh          ← 双击 WiFi → 零 UI 轮换
+   （这两个也可由 install.sh 从 SD 卡带下来）
+
+【推送命令】（telnet 串行，一次一条，≥10KB 走 FTP）
+
+  telnet 192.168.0.105
+  mkdir -p /mnt/mmc/_xfer
+  cd /mnt/mmc/_xfer            # FTP 的根就是 SD 卡
+  # 用 FTP 把 nxfilmui.arm / flab_ui.sh / filmlab.sh 传到 /mnt/mmc/_xfer/
+  telnet 里执行：
+    cp -f /mnt/mmc/_xfer/nxfilmui.arm  /opt/usr/nx-ks/filmlab/
+    cp -f /mnt/mmc/_xfer/flab_ui.sh    /opt/usr/nx-ks/
+    cp -f /mnt/mmc/_xfer/filmlab.sh    /opt/usr/nx-ks/
+    chmod +x /opt/usr/nx-ks/filmlab/nxfilmui.arm
+    chmod +x /opt/usr/nx-ks/flab_ui.sh
+    chmod +x /opt/usr/nx-ks/filmlab.sh
+
+【配方表】首次必须生成（UI 读不了 JSON，相机上没有 jq）
+    sh /opt/usr/nx-ks/filmlab.sh export
+    → 生成 /mnt/mmc/filmlab/recipes.txt
+
+【怎么用】
+
+  telnet:  sh /opt/usr/nx-ks/flab_ui.sh ui        起 UI（波轮/触摸选）
+           sh /opt/usr/nx-ks/flab_ui.sh cycle     零 UI 轮换下一个
+           sh /opt/usr/nx-ks/flab_ui.sh stop      关 UI
+
+  机身键:
+           EV + WiFi   → 直接打开 FilmLab 配方页（跳过主菜单三层）
+           双击 WiFi  → 零 UI 轮换配方 + 弹配方名
+
+【UI 里怎么操作】
+
+  波轮    上下滚 = 上一个/下一个配方（★ 滚动即实时应用，可来回对比）
+  触摸    直接点配方块 = 立即应用（★ 不关窗，可连点多个对比）
+  退出    方向键 Left / Esc
+
+【★ 出问题先看日志】
+  telnet:  cat /mnt/mmc/filmlab/filmui.log
+  关键字段：
+    "ecore_event_handler_add resolved @ 0x..."  → 波轮可用
+    "FATAL: ecore_event_handler_add not found"→ 波轮不可用（只有触摸）
+    "loaded N recipes"                          → 配方表 OK
+    "VERIFY-FAIL"                              → 写入没生效（别信画面，看这里）
+
+【已知限制】
+  · 零中文字体（相机 /usr/share/fonts 只有 9 个 ttf，无 CJK）
+    → UI 里含中文的配方自动降级显示成 "3. trix400" 这种序号+key
+  · 波轮能否生效取决于 ecore 收到的 keysym 名（JOG1_CW / Up / Down 三种都试了）
+  · UI 是全屏 EFL 窗口，退出才释放 CPU；别开着它拍视频

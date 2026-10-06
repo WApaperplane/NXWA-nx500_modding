@@ -1,0 +1,14 @@
+local : out\minprobe.arm  (34056 bytes)
+target: /opt/usr/nx-ks/filmlab/minprobe.arm
+b64   : 45408 bytes / 598 lines, 3 chunks of 200
+[1/3] target dir ready: /opt/usr/nx-ks/filmlab/minprobe.arm
+      200/598 lines (33%)  part=11400 bytes  expect>=10250  ok
+      400/598 lines (67%)  part=22800 bytes  expect>=20501  ok
+      598/598 lines (100%)  part=34056 bytes  expect>=30650  ok
+[2/3] base64 written
+SZ=$(wc -c < "$R".part); echo "part=$SZ expect=34056"; if [ < < "$R".part); echo "part=$SZ expect=34056"; if [ "                         $SZ" -gt 34056 ]; then /o<$SZ expect=34056"; if [ "$SZ" -gt 34056 ]; then /op                         t/usr/nx-ks/busybox dd if<SZ" -gt 34056 ]; then /opt/usr/nx-ks/busybox dd if=                         "$R".part of="$R".t bs=1 </usr/nx-ks/busybox dd if="$R".part of="$R".t bs=1 c                         ount=34056 2>/dev/null; m<$R".part of="$R".t bs=1 count=34056 2>/dev/null; mv                          "$R".t "$R"; else mv "$R<unt=34056 2>/dev/null; mv "$R".t "$R"; else mv "$R"                         .part "$R"; fi; rm -f "$R<"$R".t "$R"; else mv "$R".part "$R"; fi; rm -f "$R"                         .b64; chmod +x "$R"; ls -<part "$R"; fi; rm -f "$R".b64; chmod +x "$R"; ls -l                         a "$R"; md5sum "$R"
+part=34056 expect=34056
+[0m-rwxr-xr-x 1 root root 34056 Oct  3 22:22 [01;32m/opt/usr/nx-ks/filmlab/minprobe.arm[0m
+[m32c267e2cf57b42141947d07c009843d  /opt/usr/nx-ks/filmlab/minprobe.arm
+[root@drime5 ~]# 
+[3/3] installed

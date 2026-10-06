@@ -1,4 +1,25 @@
 # Work Report 2026-10-06: 3D LUT Write Path — From Zero to Verified
+---
+> ## ⚠️⚠️⚠️ 2026-06 晚·结论纠正声明（必读）
+>
+> **本文档中「导入 LUT 内容必须改 P7」这一结论已被推翻。**
+>
+> 当时把 `d5_ep_3dl_load_lut` 误当成"挂地址"（往 `+0x0c` 写一个地址让硬件自己去读）。
+> 复核后确认它走的是 **WDMA 硬件 DMA**：数据放在**调用者自己的 CMA 缓冲**（`/dev/d5_sma`），
+> 由硬件 DMA 搬进 3D LUT 内部 RAM ⇒ **完全不涉及 `0x81xxxxxx`** ⇒ **Linux 用户态可以导入任意 LUT**。
+>
+> | 项 | 定论 |
+> |---|---|
+> | 被推翻 | "LUT 数据缓冲在 p7 地址空间 ⇒ 必须改 P7" |
+> | 成立 | **导入 .cube LUT：用户态可做，不需要改固件** |
+> | 仍需改 P7 的唯一理由 | 要改**ISP 生成 LUT 的算法**（tone curve 能力），不是"搬数据" |
+>
+> 关键证据：`ConfigAccessMode → sub_3a888 @0x3a888`（静态函数，本次解开）
+> → `OnOff(1)→Acc(0)→Acc(1)→SetAddress(自己的 CMA 地址)→SelLUT→rw_Start(1)`，
+> 其中 `rw_Start(1)` = `+0x008 |=0x100 → &=~0x100`（write-1-clear 触发 DMA）。
+> ★ 另：`+0x0c` 写固件常量地址（4 档切换）是一条**独立通路**，与导入无关。
+>
+> 详见 `docs/LUT_IMPORT_2026-10-06.md` 与 `.workbuddy/memory/topics/ep-3dlut.md`。
 
 **Date** 2026-10-06 · **Topic** Full reverse engineering + on-device verification of the EP / 3D LUT chain
 **Output** 61 files (8 tools · 14 probes · 5 documents · 34 binaries)

@@ -1,0 +1,11 @@
+button|标准|/opt/usr/nx-ks/lutload.arm preset 0
+button|黑白|/opt/usr/nx-ks/lutload.arm preset 1
+
+button|电影|/opt/usr/nx-ks/lutload.arm preset 2
+button|肤色|/opt/usr/nx-ks/lutload.arm preset 3
+
+button|导入 LUT|@/opt/usr/nx-ks/gui_lutimport.NX500
+button|回读状态|/opt/usr/nx-ks/lutload.arm read
+
+button|返回|@/opt/usr/nx-ks/gui_p7.NX500
+button|取消|/opt/usr/nx-ks/gui_exit.sh

@@ -1,0 +1,15 @@
+# FilmLab 配方表 v2 —— X11 选择器读取格式
+# 格式： key|label|R|G|B|HUE|SAT|SHARP|CON
+# ★ 白平衡不在这里：FilmLab v2 只管 Picture Wizard 7 维，WB 由用户在机身 UI 调
+# ★ 只用 CUSTOM_1/2/3（prefman slot 9/10/11）；厂商槽 0/3 的 HUE 是垃圾字节
+#
+# 生成自 nx500_filmlab_sd.json —— 改配方请改 JSON 后重新生成本文件
+
+portra400|Portra 400|106|100|93|11|9|9|8
+velvia50|Velvia 50|102|110|109|10|14|11|13
+trix400|TriX 400|100|100|100|10|0|13|12
+ektachrome|Kodak Ektachrome|96|105|108|12|13|10|11
+hp5|HP5 Plus|100|100|100|10|0|11|10
+superia400|Superia X-TRA400|103|99|104|13|11|9|9
+monowarm|MonoWarm 暖调黑白|108|100|92|10|0|10|11
+ektachrome_cyan|Ektachrome Cyan 冷调反转|88|112|125|13|15|12|14

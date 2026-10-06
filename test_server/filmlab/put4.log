@@ -1,0 +1,13 @@
+local : out\x11probe.arm  (39668 bytes)
+target: /opt/usr/nx-ks/filmlab/x11probe.arm
+b64   : 52892 bytes / 696 lines, 4 chunks of 200
+[1/3] target dir ready: /opt/usr/nx-ks/filmlab/x11probe.arm
+      200/696 lines (29%)  part=11400 bytes  expect>=10258  ok
+      400/696 lines (57%)  part=22800 bytes  expect>=20517  ok
+      600/696 lines (86%)  part=34200 bytes  expect>=30776  ok
+      696/696 lines (100%)  part=39668 bytes  expect>=35701  ok
+[2/3] base64 written
+wc -c "$R".part; /opt/usr/nx-ks/busybox base64 -d "$R".part <.part; /opt/usr/nx-ks/busybox base64 -d "$R".part >                          "$R" && rm -f "$R".part <box base64 -d "$R".part > "$R" && rm -f "$R".part &                         & chmod +x "$R"; wc -c "$<"$R" && rm -f "$R".part && chmod +x "$R"; wc -c "$R                         "; ls -la "$R"
+39668 /opt/usr/nx-ks/filmlab/x11probe.arm.part
+
+[3/3] decoded + chmod

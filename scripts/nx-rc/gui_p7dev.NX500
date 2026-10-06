@@ -1,0 +1,8 @@
+button|读寄存器|/opt/usr/nx-ks/epreg.arm
+button|iqr 快照|/opt/usr/nx-ks/iqr_dump.sh
+
+button|SMB 探测|/opt/usr/nx-ks/cmaprobe.arm
+button|恢复基线|/opt/usr/nx-ks/p7_restore_baseline.sh
+
+button|返回|@/opt/usr/nx-ks/gui_p7.NX500
+button|取消|/opt/usr/nx-ks/gui_exit.sh

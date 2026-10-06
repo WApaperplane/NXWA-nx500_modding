@@ -1,0 +1,8 @@
+button|SD卡 LUT|/opt/usr/nx-ks/lut_scan.sh
+button|配方内置|/opt/usr/nx-ks/lut_scan.sh filmlab
+
+button|恢复出厂|/opt/usr/nx-ks/lutload.arm restore
+button|说明|/opt/usr/nx-ks/lut_help.sh
+
+button|返回|@/opt/usr/nx-ks/gui_p7color.NX500
+button|取消|/opt/usr/nx-ks/gui_exit.sh
