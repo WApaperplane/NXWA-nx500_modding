@@ -398,8 +398,11 @@ static unsigned char *file_load(const char *path, int *out_n, int stride,
     fp = fopen(path, "rb");
     if (!fp) { printf("  打不开 %s: %s\n", path, strerror(errno)); return NULL; }
     fseek(fp, 0, SEEK_END); fsz = ftell(fp); fseek(fp, 0, SEEK_SET);
-    if (fsz <= 0 || fsz > 65536) {
-        printf("  ★ 大小 %ld 不合法（1..65536）\n", fsz);
+    /* ★ 2026-10-07 上限从 64KB 放宽到 1MB：
+     *   若硬件表是 33³，需要 33³×3×u16 = 215622 字节，64KB 装不下。
+     *   CMA 第二区实测有 ~4MB 连续空闲，1MB 上限留足余量。 */
+    if (fsz <= 0 || fsz > 1048576) {
+        printf("  ★ 大小 %ld 不合法（1..1048576）\n", fsz);
         fclose(fp); return NULL;
     }
     b = (unsigned char *)malloc(fsz);
@@ -474,6 +477,190 @@ static int cmd_info(void)
 }
 
 /* ★零风险探测：只 dlsym + 试映射，不调任何会写硬件的函数 */
+/* ================================================================
+ * ★★ sweep：identity 表 × 参数组合扫描
+ * ---------------------------------------------------------------------
+ *  【为什么需要】2026-10-07 上午：
+ *    6 种轴序排列的 identity 表全部偏色 ⇒ 轴序不是根因
+ *    ⇒ ★★ 我从未系统测过官方参数 fmt 与 cbcr_ch
+ *
+ *  【原理】identity 表在【所有参数都正确】时必然产生中性画面。
+ *    ⇒ 扫参就是在找"让 identity 变中性"的那一组。
+ *    ⇒ 判据只能用画面（save_lut 读不出硬件表）
+ *
+ *  【顺带解决】每组之间自动 sleep，避免 p7 抢指针导致误判
+ *
+ *  用法: sweep <file> <phys> [sel] [size] [stride]
+ *        会遍历 sel×fmt×cbcr = 3×2×3 = 18 组，每组打印标记
+ * ================================================================ */
+static int cmd_sweep(const char *file, unsigned long phys, int sel,
+                     int size, int stride)
+{
+    int fmt, cbc;
+    printf("\n=== sweep：identity 表 × 参数组合（18 组）===\n");
+    printf("  表=%s  phys=0x%08lx  sel=%d size=%d stride=%d\n",
+           file, phys, sel, size, stride);
+    printf("  ★ 每组灌完后请看取景器，记录哪一组是【中性】的\n");
+    printf("  ★ 判据只能是画面（save_lut 读不出硬件表）\n\n");
+
+    /*先把表内容准备好（复用 file_load） */
+    {
+        int n = 0;
+        unsigned long bytes = 0;
+        unsigned char *data = file_load(file, &n, stride, &bytes);
+        if (!data) return 1;
+        free(data);
+    }
+
+    for (cbc = 0; cbc <= 2; cbc++) {
+        for (fmt = 0; fmt <= 1; fmt++) {
+            sma_buf b;
+            unsigned char *data;
+            int n = 0;
+            unsigned long bytes = 0;
+            int rc;
+
+            printf("\n---------- sel=%d fmt=%d cbcr_ch=%d ----------\n",
+                   sel, fmt, cbc);
+            data = file_load(file, &n, stride, &bytes);
+            if (!data) return 1;
+            if (sma_open(&b, phys, bytes) != 0) { free(data); return 1; }
+            memcpy(b.v, data, bytes);
+
+            /* op_init 配置通道 */
+            if (p_op_init) {
+                d5_ep_lut_op_info_st oi;
+                memset(&oi, 0, sizeof oi);
+                oi.lut_clrfmt   = (d5_ep_lut_format_et)fmt;
+                oi.cbcr_ch_sel  = (d5_ep_lut_cbcr_ch_et)cbc;
+                oi.lut_sel      = (d5_ep_lut_sellut_et)sel;
+                oi.bypass_sw    = D5_EP_OFF;
+                rc = p_op_init(&oi);
+                printf("  op_init => %d\n", rc);
+            }
+            if (p_load) {
+                rc = p_load((unsigned int *)(unsigned long)b.v,
+                            (d5_ep_lut_sellut_et)sel,
+                            (d5_ep_lut_format_et)fmt, 0u);
+                printf("  load_lut => %d\n", rc);
+            }
+            sma_release(&b);
+            free(data);
+
+            /* 打印寄存器供核对 */
+            if (p_regbase_sym) {
+                printf("  ep_3dlut_reg_base = 0x%08x（仅供确认已 init）\n",
+                       *p_regbase_sym);
+            }
+            printf("  >>> ★ 现在看取景器：这组是中性吗？\n");
+            fflush(stdout);
+            usleep(150000);   /* ★ 留时间让用户看 */
+        }
+    }
+    printf("\n=== sweep 结束===\n");
+    printf("请告诉我哪一组显示中性（或最接近中性），我据此定参数。\n");
+    return 0;
+}
+
+/* ★★★★★★ 2026-10-07 09:20 静态分析突破：必须等 DMA 中断
+ * ---------------------------------------------------------------------
+ * 【问题】`d5_ep_3dl_load_lut(virt, sel, fmt, timeout)` 的timeout 参数
+ *   【从未被使用】—— 反汇编 @0x19250：
+ *       bl _udd_ep_3dl_ctrl_ConfigAccessMode;   // 调完直接 return
+ *       pop {fp, pc};
+ *   而 ConfigAccessMode → sub_3a888 结尾是：
+ *       SelLUT(sel); rw_Start(1);   // ★ 启动 DMA 就返回，没有等待
+ *
+ * 【全库交叉引用扫描】load_lut / save_lut / intr_wait 家族
+ *   在 libudd5 内部【无任何调用者】
+ *   ⇒ ★★ 库不等人，应用程序自己等
+ *
+ * 【官方头文件给出的正确流程】
+ *   D5_EP_INT_ACC_3DLUT_RD_FINISH = 7  -- End of Load LUT from DDR
+ *   D5_EP_INT_ACC_3DLUT_WR_FINISH     -- End of Save LUT to DDR
+ *   int d5_ep_udd_acc_intr_init_wait_queue(struct ep_acc_intr_wait_info *);
+ *   int d5_ep_udd_acc_intr_wait(struct ep_acc_intr_wait_info *);
+ *
+ *   struct ep_acc_intr_wait_info { int timeout_ms; unsigned int jpeg_err; d5_ep_acc_int_sig intr; };
+ *   反汇编 init_wait_queue 内部：ioctl(g_dev, 0x400c6809, ...) = _IOWR('h',9,12)
+ *
+ * ⇒ ★★★ 我昨晚那个 settle_ms 的 usleep 是【瞎猜的】，不是官方流程
+ * ⇒ ★★★ DMA 未完成时硬件读到的是半成品表 ⇒ 正好表现为"色偏+ 色阶断裂"
+ */
+
+/* ep_acc_intr_wait_info：12 字节（int + uint + enum） */
+struct ep_acc_intr_wait_info {
+    int timeout_ms;
+    unsigned int jpeg_err;
+    int intr;              /* d5_ep_acc_int_sig */
+};
+#define D5_EP_INT_ACC_3DLUT_RD_FINISH 7
+#define D5_EP_INT_ACC_3DLUT_WR_FINISH 8
+
+typedef int(*fn_acc_intr_wait)(struct ep_acc_intr_wait_info *);
+typedef int(*fn_acc_intr_init_wq)(struct ep_acc_intr_wait_info *);
+typedef int(*fn_top_acc_intr_en)(int sig);
+
+static fn_acc_intr_wait      p_acc_intr_wait;
+static fn_acc_intr_init_wq   p_acc_intr_init_wq;
+static fn_top_acc_intr_en    p_top_acc_intr_en;
+
+/* ★ 完整的"DMA 等待"封装：注册队列 → 启动 → 等中断 */
+static int dma_load_wait(unsigned int *virt, int sel, int fmt, int tmo_ms)
+{
+    struct ep_acc_intr_wait_info wq;
+    int rc_load, rc_wq, rc_en;
+
+    /* ★★★★★★ 2026-10-07 方案 A：先使能中断，再注册队列
+     * 反汇编 d5_ep_udd_acc_intr_init_wait_queue(@0x2255c)：
+     *     ioctl(g_fd, 0x400c6809, info);   ← _IOWR('h',9,12) 只注册队列
+     *   ★★ 它【不使能中断】
+     * 而 d5_ep_top_acc_intr_en(@0x37138)：
+     *     ioctl(g_fd, 0x40046810, &sig);   ← _IOWR(4,0x10,4) 另一个命令域
+     * ⇒ 不使能 ⇒ wait 永远等不到（这正是昨晚 intr_wait 返回 -1 的原因）
+     */
+    if (p_top_acc_intr_en) {
+        rc_en = p_top_acc_intr_en(D5_EP_INT_ACC_3DLUT_RD_FINISH);
+        printf("  ⓪ top_acc_intr_en(RD_FINISH=%d) => %d  %s\n",
+               D5_EP_INT_ACC_3DLUT_RD_FINISH, rc_en,
+               rc_en == 0 ? "OK" : "★ 失败");
+    } else {
+        printf("  ⓪ ★ top_acc_intr_en 符号缺失 ⇒ 中断未使能，wait 必然失败\n");
+    }
+
+    if (p_acc_intr_init_wq) {
+        memset(&wq, 0, sizeof wq);
+        wq.timeout_ms = tmo_ms;
+        wq.intr       = D5_EP_INT_ACC_3DLUT_RD_FINISH;   /* 7 = Load 完成 */
+        rc_wq = p_acc_intr_init_wq(&wq);
+        printf("  ① intr_init_wait_queue(RD_FINISH, %dms) => %d\n",
+               tmo_ms, rc_wq);
+    } else {
+        printf("  ★ intr_init_wait_queue 符号缺失，跳过注册\n");
+    }
+
+    rc_load = p_load(virt, (d5_ep_lut_sellut_et)sel,
+                     (d5_ep_lut_format_et)fmt, 0u);
+    printf("  ② load_lut => %d（DMA 已启动，立即返回）\n", rc_load);
+
+    if (p_acc_intr_wait) {
+        memset(&wq, 0, sizeof wq);
+        wq.timeout_ms = tmo_ms;
+        wq.intr       = D5_EP_INT_ACC_3DLUT_RD_FINISH;
+        rc_wq = p_acc_intr_wait(&wq);
+        printf("  ③ intr_wait(RD_FINISH) => %d  %s\n", rc_wq,
+               rc_wq == 0 ? "★ DMA 完成，表已完整" : "★ 失败/超时");
+        if (rc_wq != 0) {
+            printf("     ⇒ DMA 可能仍在进行，表内容是半成品\n");
+            printf("     ⇒ 这正是色偏 + 色阶断裂的成因\n");
+        }
+    } else {
+        printf("  ★ intr_wait 符号缺失 ⇒ 无法确认 DMA 完成\n");
+        rc_wq = -1;
+    }
+    return rc_load;
+}
+
 static int cmd_probe(void)
 {
     sma_buf b;
@@ -562,6 +749,27 @@ static int cmd_regdump(void)
            r[R_PULSE/4], (r[R_PULSE/4] >> 8) & 1, (r[R_PULSE/4] >> 4) & 1);
     printf("  +0x00c LUT0 = 0x%08x\n", r[R_LUT0/4]);
     printf("  +0x010 LUT1 = 0x%08x\n", r[R_LUT1/4]);
+    /*★★★★★ 2026-10-07完整 dump：库里只暴露 5 个偏移，但硬件区是 4096 字节。
+     *   表深度/维度数/是否 2D 模式等配置很可能在 +0x014 之后，
+     *   而【索引只用部分维度】的现象说明那里有我还没读到的字段。*/
+    {
+        unsigned long nw = (size + 3) / 4, k;
+        printf("\n  ---- 完整 dump（%lu 个32 位寄存器）----\n", nw);
+        for (k = 0; k < nw; k++) {
+            unsigned v = r[k];
+            if (v == 0) continue;               /* 只打印非零，省眼力 */
+            printf("    +0x%03lx = 0x%08x%s", k * 4, v,
+                   (k <= 5) ? "  <= 已知" : "  ★ 未解析");
+            if (k > 5) {
+                /* 顺手把可能的字段拆出来 */
+                printf("   [b0-3=%u b4-7=%u b8-11=%u b12-15=%u hi=%u]",
+                       v & 0xf, (v >> 4) & 0xf, (v >> 8) & 0xf,
+                       (v >> 12) & 0xf, v >> 16);
+            }
+            printf("\n");
+        }
+        printf("\n  ★ 只列非零项；全零寄存器可能是未配置或只读状态位\n");
+    }
     munmap((void*)r, maplen);
     close(fd);
     return 0;
@@ -673,18 +881,20 @@ static int do_load(const char *file, unsigned long phys, int sel, int fmt,
                     : (sel == 0 ? "LUT0" : "LUT1"));
     printf("  fmt=%d %s\n", fmt, fmt == 1 ? "YCC420" : "YCC422");
     if (!p_load) { printf("  ★ 符号未解析\n"); free(data); sma_release(outb); return 1; }
-    rc = p_load((unsigned int *)(unsigned long)outb->v,
-                (d5_ep_lut_sellut_et)sel, (d5_ep_lut_format_et)fmt, 0u);
-    printf("  返回 = %d  %s\n", rc, rc == 0 ? "OK" : "★ 失败");
+    /* ★★★ 2026-10-07：改用带中断等待的版本（官方三步流程） */
+    rc = dma_load_wait((unsigned int *)(unsigned long)outb->v, sel, fmt,
+                       settle_ms > 0 ? settle_ms : 2000);
     if (rc != 0) {
         free(data);
-        printf("  ⇒ 未成功，保持缓冲映射不动，请手动重启相机\n");
+        printf("  ⇒ load 失败，保持缓冲映射不动，请手动重启相机\n");
         return 1;
     }
 
-    printf("\n=== 步骤 5：等待 DMA settle (%d ms) ===\n", settle_ms);
-    printf("  ★ 期间不清零、不 munmap（DMA 可能仍在读）\n");
-    usleep((useconds_t)settle_ms * 1000);
+    printf("\n=== 步骤 5：额外 settle (%d ms，可设 0) ===\n", settle_ms);
+    if (settle_ms > 0) {
+        printf("  ★ 不清零、不 munmap（DMA 可能仍在读）\n");
+        usleep((useconds_t)settle_ms * 1000);
+    }
 
     free(data);
     return 0;
@@ -774,9 +984,14 @@ int main(int argc, char **argv)
     p_ep_open  = (fn_ep_open) dlsym(g_h, "d5_ep_open");
     p_ep_close = (fn_ep_close)dlsym(g_h, "d5_ep_close");
     p_regbase_sym = (unsigned *)dlsym(g_h, "ep_3dlut_reg_base");
-
-    printf("phase2: 入口符号 %s\n",
-           (p_load && p_save && p_v2p) ? "全部解析" : "★ 有缺失");
+    /* ★ 2026-10-07：DMA 中断等待 API（官方三步流程的第①③步） */
+    p_acc_intr_wait   = (fn_acc_intr_wait)dlsym(g_h, "d5_ep_udd_acc_intr_wait");
+    p_acc_intr_init_wq= (fn_acc_intr_init_wq)dlsym(g_h, "d5_ep_udd_acc_intr_init_wait_queue");
+    p_top_acc_intr_en = (fn_top_acc_intr_en)dlsym(g_h, "d5_ep_top_acc_intr_en");
+    printf("phase2: 入口符号 %s｜DMA 中断等待 %s｜中断使能 %s\n",
+           (p_load && p_save && p_v2p) ? "全部解析" : "★ 有缺失",
+           (p_acc_intr_wait && p_acc_intr_init_wq) ? "可用" : "★ 缺失",
+           p_top_acc_intr_en ? "可用" : "★ 缺失");
 
     if (argc < 2) { usage(argv[0]); return 1; }
 
@@ -828,6 +1043,18 @@ int main(int argc, char **argv)
     if      (strcmp(argv[1], "info")   == 0) return cmd_info();
     else if (strcmp(argv[1], "probe")  == 0) return cmd_probe();
     else if (strcmp(argv[1], "regdump")== 0) return cmd_regdump();
+
+    else if (strcmp(argv[1], "sweep") == 0) {
+        int sel    = argc > 4 ? atoi(argv[4]) : 0;
+        int size   = argc > 5 ? atoi(argv[5]) : 17;
+        int stride = argc > 6 ? atoi(argv[6]) : 2;
+        unsigned long phys;
+        if (argc < 4) { usage(argv[0]); return 1; }
+        phys = strtoul(argv[3], NULL, 0);
+        if (!phys) { printf("★ 缺物理地址\n"); return 1; }
+        if (ensure_lib_open(1) != 0) return 6;
+        return cmd_sweep(argv[2], phys, sel, size, stride);
+    }
 
     else if (strcmp(argv[1], "opinit") == 0) {
         int sel = argc > 2 ? atoi(argv[2]) : 2;
