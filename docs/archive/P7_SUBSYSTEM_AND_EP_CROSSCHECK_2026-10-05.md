@@ -4,7 +4,7 @@
 > 数据：`raw8/p7/p7_full.bin`（12,845,056 B）
 > 规模：**421 个标识符前缀 / 67,200 个标识符**
 > 原始输出：`raw8/p7/subsystem_analysis.txt`
-> 前置：`docs/P7_ISP_FIRMWARE_ANALYSIS_2026-10-05.md`（入口定位）
+> 前置：`docs/archive/P7_ISP_FIRMWARE_ANALYSIS_2026-10-05.md`（入口定位）
 
 ---
 

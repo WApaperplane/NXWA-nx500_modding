@@ -157,7 +157,7 @@ p7 侧 3DLUT 访问函数（`ps_scan.py ep` 全表）：
 | `FUN_004cf3fc(v)` | `+0x004` | `reg = reg&~3 \| v&3` ⇒ **SelCbCr_ch = bits[1:0]** |
 | `FUN_004cf414(v)` | `+0x004` | `reg = reg&~0x30 \| (v&3)<<4` ⇒ **SelLUT = bits[5:4]** |
 
-⇒ ★★ **与 Linux 侧（`docs/3DLUT_DEEP_DIVE_2026-10-07.md`）逐位完全一致**：
+⇒ ★★ **与 Linux 侧（`docs/current/3DLUT_DEEP_DIVE_2026-10-07.md`）逐位完全一致**：
 　`+0x000 bit0 = OnOff`｜`+0x004 bits[1:0] = SelCbCr`｜`+0x004 bits[5:4] = SelLUT`。
 
 ★★★★★ **这是本项目第一次出现「同一寄存器映射由两个独立来源（Linux 反汇编 + p7 反编译）确认」。**
@@ -263,8 +263,8 @@ python veneer.py dis 0x3f3fa4 0x80   # ★ 解 veneer 分发器（需 capstone�
 ```
 
 ★ **关联文档**：
-`docs/MAGICLAMP_FEASIBILITY_2026-10-05.md`（旧版可行性，路径 A 的细节）
-`docs/Q3_EP_GAMMA_PROBE_2026-10-07.md`（EP 10 块普查）
-`docs/3DLUT_DEEP_DIVE_2026-10-07.md`（LUT 寄存器权威版）
+`docs/archive/MAGICLAMP_FEASIBILITY_2026-10-05.md`（旧版可行性，路径 A 的细节）
+`docs/current/Q3_EP_GAMMA_PROBE_2026-10-07.md`（EP 10 块普查）
+`docs/current/3DLUT_DEEP_DIVE_2026-10-07.md`（LUT 寄存器权威版）
 `.workbuddy/memory/topics/p7-isp-slp.md`（p7 静态档案，★ 本文修正其 §3）
 `.workbuddy/memory/topics/ironclad-rules.md`（铁律 86 / 92）

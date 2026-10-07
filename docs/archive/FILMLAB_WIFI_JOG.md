@@ -294,5 +294,5 @@ cp test_server/filmlab/src/out/nxfilmui.arm       /tmp/_xfer/nx-rc/
 
 ##相关文档
 
-- `docs/FILMLAB_ONEKEY_VERIFY.md` —— 真一键客观判据（A→E 五阶段）
+- `docs/archive/FILMLAB_ONEKEY_VERIFY.md` —— 真一键客观判据（A→E 五阶段）
 - `test_server/filmsim/filmlab-apply.sh` —— 引擎本体，`cycle` / `pw_force_reload`

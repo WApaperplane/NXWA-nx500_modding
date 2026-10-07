@@ -21,7 +21,7 @@
      capstone 解码确认 0x11efe0 处正是 `ldr r2,[pc,#0x3c]; str r2,[r0]` 装 vtable 的构造函数。
 
 严格约束: 指令一律 capstone 解码。
-输出: docs/discovery/02_vtables.md
+输出: docs/evidence/discovery/02_vtables.md
 复现: python scripts/discovery/t2_vtables.py
 """
 import re, os, struct

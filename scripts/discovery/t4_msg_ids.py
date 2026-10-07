@@ -18,7 +18,7 @@
     0x3f-0x45 / 0xc0-0xc1 / 0x7b-0x7f / 0xba-0xbb = IEEE754 浮点位型
     0x00000000 = 零
  保留: 0x01000000-0x2fffffff 等"高位非零且低位序号递增"的消息 ID
-输出: docs/discovery/04_msg_ids.md
+输出: docs/evidence/discovery/04_msg_ids.md
 复现: python scripts/discovery/t4_msg_ids.py
 """
 import re, os

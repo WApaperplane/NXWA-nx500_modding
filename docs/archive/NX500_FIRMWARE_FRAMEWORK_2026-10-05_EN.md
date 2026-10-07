@@ -395,9 +395,9 @@ dd if=/dev/mmcblk0p5 of=/dev/null bs=1M count=1     # confirm readability first
 
 | Topic | Document |
 |---|---|
-| EP register map, NOG offsets, 3D LUT entry chain | `docs/ISP_NOG_ENTRY_2026-10-05.md` |
-| Full system architecture, key sequence, PF/SRSZ | `docs/NX500_ARCHITECTURE.md` |
-| 10-04 + 10-05 consolidated bilingual results | `docs/CONSOLIDATED_REPORT_2026-10-05.md` |
+| EP register map, NOG offsets, 3D LUT entry chain | `docs/archive/ISP_NOG_ENTRY_2026-10-05.md` |
+| Full system architecture, key sequence, PF/SRSZ | `docs/current/NX500_ARCHITECTURE.md` |
+| 10-04 + 10-05 consolidated bilingual results | `docs/archive/CONSOLIDATED_REPORT_2026-10-05.md` |
 | Raw crawl output (89 files) | `test_server/sysarch/raw8/` |
 
 ---

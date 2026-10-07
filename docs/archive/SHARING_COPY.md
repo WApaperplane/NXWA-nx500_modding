@@ -173,7 +173,7 @@ rounds in the ISP layer because I misparsed that one clause.
 ### Repo
 
 Full write-up, all raw captures, and the ARM probe toolchain:  
-**`WApaperplane/nx500_nx1_modding`** (branch `nx-ks2`, `docs/CONSOLIDATED_REPORT_2026-10-05.md`).
+**`WApaperplane/nx500_nx1_modding`** (branch `nx-ks2`, `docs/archive/CONSOLIDATED_REPORT_2026-10-05.md`).
 
 Happy to answer questions. Corrections welcome — I've been wrong three times in  
 two days, all listed above.

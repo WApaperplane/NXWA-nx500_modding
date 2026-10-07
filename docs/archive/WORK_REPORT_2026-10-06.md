@@ -269,9 +269,9 @@ DAT_003837fc = 0x81101e00
 `mmtest`/`probe7`/`probe8`（★ 对照实验：证明 CMA 可写）
 
 ### 文档（5）
-- `docs/LIBUDD5_EP_API_MAP_2026-10-06.md` / `_EN.md` —— libudd5 API 图谱 + ioctl 协议
-- `docs/EP_DRIVER_STATUS_2026-10-06.md` / `_EN.md` —— EP 驱动用户态状态
-- `docs/EP_PATH_OPEN_2026-10-06.md` —— 通路打通
+- `docs/archive/LIBUDD5_EP_API_MAP_2026-10-06.md` / `_EN.md` —— libudd5 API 图谱 + ioctl 协议
+- `docs/archive/EP_DRIVER_STATUS_2026-10-06.md` / `_EN.md` —— EP 驱动用户态状态
+- `docs/archive/EP_PATH_OPEN_2026-10-06.md` —— 通路打通
 - `docs/EP_3DLUT_WRITE_EXPERIMENTS_2026-10-06.md` —— ★ 11 次写入实验全记录
 
 ### 分析数据

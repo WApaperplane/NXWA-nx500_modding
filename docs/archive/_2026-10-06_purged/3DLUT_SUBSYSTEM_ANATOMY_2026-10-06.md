@@ -2,7 +2,7 @@
 
 > 本文是本项目**静态资产穷尽式细读**的最终成果。
 > 全部结论来自 capstone 精确反汇编 + 二进制字面量分析，**零实验、零猜测**。
-> 子代理产出：`docs/discovery/01..05_*.md`（5 份，可复跑脚本在 `scripts/discovery/`）
+> 子代理产出：`docs/evidence/discovery/01..05_*.md`（5 份，可复跑脚本在 `scripts/discovery/`）
 
 ---
 

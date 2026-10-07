@@ -421,9 +421,9 @@ then half-press focus                  # let p7 re-load
 - `usr/include/drime5/udd/ep_type.h` — enum definitions (comments are authoritative)
 
 ### This project's docs
-- `docs/3DLUT_API_GUIDE.md` (this file)
-- `docs/p7-evidence/` — p7 disassembly evidence fragments
-- `docs/discovery/01..06` — static inventory reports
+- `docs/current/3DLUT_API_GUIDE.md` (this file)
+- `docs/evidence/p7/` — p7 disassembly evidence fragments
+- `docs/evidence/discovery/01..06` — static inventory reports
 
 ### Hardware facts
 - EP 3D LUT register base `0x2082b000`, size 4096

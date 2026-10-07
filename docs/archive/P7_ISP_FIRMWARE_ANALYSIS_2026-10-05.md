@@ -272,8 +272,8 @@ VARIABLE_PWCOLOR_B     VARIABLE_PWHUE
 > - EP ioctl 号 `0x80506864`：**0 次**
 >
 > ⇒ **「EP 由 ISP 固件驱动」在地址层面零支持。**
-> ⇒ ★ **但两者经共享内存 `0x94000000` 协作**（见 `docs/SMA_CROSSCHECK_2026-10-05.md`）。
-> ⇒ 完整修正见 `docs/P7_SUBSYSTEM_AND_EP_CROSSCHECK_2026-10-05.md` 第 6 章。
+> ⇒ ★ **但两者经共享内存 `0x94000000` 协作**（见 `docs/archive/SMA_CROSSCHECK_2026-10-05.md`）。
+> ⇒ 完整修正见 `docs/archive/P7_SUBSYSTEM_AND_EP_CROSSCHECK_2026-10-05.md` 第 6 章。
 
 ~~固件里大量引用 `0x0806xxxx` – `0x0807xxxx` 段：~~
 
@@ -296,7 +296,7 @@ VARIABLE_PWCOLOR_B     VARIABLE_PWHUE
 > EP 子块地址在固件里零出现 ⇒ **假设被推翻**。
 > ★ **替代结论**：两者经共享内存 `0x94000000` 协作（该地址在固件 `0x9FC0` 的内存段表中）。
 > ⇒ **"EP 到底是不是 ISP 固件在驱动"这个悬案已钉死**，
-> 完整推演见 `docs/P7_SUBSYSTEM_AND_EP_CROSSCHECK_2026-10-05.md` 与 `docs/SMA_CROSSCHECK_2026-10-05.md`。
+> 完整推演见 `docs/archive/P7_SUBSYSTEM_AND_EP_CROSSCHECK_2026-10-05.md` 与 `docs/archive/SMA_CROSSCHECK_2026-10-05.md`。
 
 ---
 

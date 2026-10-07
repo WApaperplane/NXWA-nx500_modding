@@ -32,7 +32,7 @@ capstone 逐条解码 `View::_load`(FUN_0011e20c, 0x8011e20c) 后确认:
   任务书给的构造函数 FUN_0011ddfc 在 02_functions.txt 与伪代码里都不存在(0 命中)。
 
 严格约束: 所有指令 capstone 解码。
-输出: docs/discovery/05_st3dlutparam.md
+输出: docs/evidence/discovery/05_st3dlutparam.md
 复现: python scripts/discovery/t5_st3dlutparam.py
 """
 import re, os, struct

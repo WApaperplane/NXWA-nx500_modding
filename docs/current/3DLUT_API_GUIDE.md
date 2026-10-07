@@ -414,9 +414,9 @@ telnet/ssh: /opt/usr/nx-ks/cmapick2.arm 1024 32
 - `usr/include/drime5/udd/ep_type.h` — 枚举定义（注释即权威）
 
 ### 本项目文档
-- `docs/3DLUT_API_GUIDE.md`（本文件）
-- `docs/p7-evidence/` — p7 反汇编证据片段
-- `docs/discovery/01..06` — 静态清点报告
+- `docs/current/3DLUT_API_GUIDE.md`（本文件）
+- `docs/evidence/p7/` — p7 反汇编证据片段
+- `docs/evidence/discovery/01..06` — 静态清点报告
 
 ### 硬件事实
 - EP 3D LUT 寄存器基址 `0x2082b000`，size 4096

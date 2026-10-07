@@ -71,21 +71,30 @@ scripts/                          <- 整个目录(模块母本, 会被同步到�
 
 ## 文档 / Docs
 
-**主文档 / Main documents**
+> ★ **文档按时效分区**：`docs/current/`（现行权威）/ `docs/archive/`（历史归档）/ `docs/evidence/`（逆向证据）。
+> 完整索引见 [`docs/README.md`](docs/README.md)。**2026-10-07 已做全面清理**：
+> 过时/错误旧文档移入 `archive/`，并逐条更正了 3 处历史错误结论。
 
-- [`docs/CONSOLIDATED_REPORT_2026-10-05.md`](docs/CONSOLIDATED_REPORT_2026-10-05.md) — ★ **10-04 + 10-05 综合成果报告（中英双语）**：handle墙绕道、双核三通道实测、FilmLab、方法论铁律、避坑清单
-- [`docs/NX500_ARCHITECTURE.md`](docs/NX500_ARCHITECTURE.md) — 完整系统架构（677 行，含 EP 寄存器 dump 全表；**第 14 章 = handle墙绕道实证**）
-- [`docs/NX500_FIRMWARE_FRAMEWORK_2026-10-05.md`](docs/NX500_FIRMWARE_FRAMEWORK_2026-10-05.md) / [EN](docs/NX500_FIRMWARE_FRAMEWORK_2026-10-05_EN.md) — ★ **固件层整体框架**（89 份实机抓取）：存储拓扑、进程/库全景、内核层、**eMMC 分区 uImage 扫描 → ISP 固件定位**
-- [`docs/ISP_NOG_ENTRY_2026-10-05.md`](docs/ISP_NOG_ENTRY_2026-10-05.md) / [EN](docs/ISP_NOG_ENTRY_2026-10-05_EN.md) — ★ **ISP 核 / DSP_NX500GLU 入口追踪**：libudd5.so 反汇编解出 NOG 硬件颗粒发生器寄存器偏移
-- [`docs/LUT_OPEN_SOURCE_EVAL.md`](docs/LUT_OPEN_SOURCE_EVAL.md) — 开源 LUT 资产可用性评估（CC0 实测 + 松下专利核查）
-- [`docs/SHARING_COPY.md`](docs/SHARING_COPY.md) — 分享文案：Reddit / 小红书 / 通用短版，可直接复制
+**现行权威 / Current（★ 先读这里）**
+
+- [`docs/current/HANDOVER_2026-10-07.md`](docs/current/HANDOVER_2026-10-07.md) — ★★★ **项目交接总纲**：现状 / 死路 / 已验证 / 阻塞 / 纪律 / 待办
+- [`docs/current/ERROR_CORRECTIONS_2026-10-07.md`](docs/current/ERROR_CORRECTIONS_2026-10-07.md) — ★★★★★ **错误结论修正报告**：mod/固件/系统三层 9 处纠错（C1~C9）
+- [`docs/current/FIRMWARE_BREAKTHROUGH_2026-10-07.md`](docs/current/FIRMWARE_BREAKTHROUGH_2026-10-07.md) — ★ 固件层突破口：ISP 参数块已解 / 魔灯三路评估
+- [`docs/current/STRATEGY_2026-10-07.md`](docs/current/STRATEGY_2026-10-07.md) — 开发策略定案
+- [`docs/current/FEATURE_MATRIX_2026-10-07.md`](docs/current/FEATURE_MATRIX_2026-10-07.md) — 功能矩阵（定案版）
+- [`docs/current/3DLUT_API_GUIDE.md`](docs/current/3DLUT_API_GUIDE.md) / [EN](docs/current/3DLUT_API_GUIDE_EN.md) — 3D LUT 操作手册
+- [`docs/current/3DLUT_DEEP_DIVE_2026-10-07.md`](docs/current/3DLUT_DEEP_DIVE_2026-10-07.md) / [EN](docs/current/3DLUT_DEEP_DIVE_2026-10-07_EN.md) — 3D LUT 深度调查档案
+- [`docs/current/NX500_ARCHITECTURE.md`](docs/current/NX500_ARCHITECTURE.md) — 完整系统架构（含 EP 寄存器 dump 全表）
 - [`SYNC.md`](SYNC.md) — 安装 / 增量同步 / WiFi push / 回滚（双语）
 
-**FilmLab 子专题 / FilmLab sub-topics**
+**历史归档 / Archive（结论可能已被取代，见 archive/README）**
 
-- [`docs/FILMLAB_ONEKEY_UI.md`](docs/FILMLAB_ONEKEY_UI.md) — 一键 UI 需求裁决（三个需求，两个撞硬墙）
-- [`docs/FILMLAB_WIFI_JOG.md`](docs/FILMLAB_WIFI_JOG.md) — WiFi 键直达 + 波轮 UI 可行性
-- [`docs/FILMLAB_ONEKEY_VERIFY.md`](docs/FILMLAB_ONEKEY_VERIFY.md) — `pw_force_reload()` 验证清单
+- [`docs/archive/`](docs/archive/) — 2026-10-05 / 10-06 阶段性报告；含已被推翻的结论（如 mod_gui「13 键」、p6/p13「主备内核」）
+
+**逆向证据 / Evidence**
+
+- [`docs/evidence/p7/`](docs/evidence/p7/) — p7 固件 Ghidra 关键片段
+- [`docs/evidence/discovery/`](docs/evidence/discovery/) — 3D LUT 发现期脚本与中间产物
 
 **模块文档 / Module docs**
 
@@ -156,10 +165,10 @@ LUT 格式 = **17³ 三维 LUT，16-bit 三通道交织**（R 从 `0x0001` 递�
 
 **文档 / Docs**
 
-- [`docs/WORK_REPORT_2026-10-06.md`](docs/WORK_REPORT_2026-10-06.md) / [EN](docs/WORK_REPORT_2026-10-06_EN.md) — ★ 当日工作报告（打通过程 + 7 个自我修正 + 9 条铁律）
-- [`docs/EP_3DLUT_WRITE_EXPERIMENTS_2026-10-06.md`](docs/EP_3DLUT_WRITE_EXPERIMENTS_2026-10-06.md) — ★ 11 次写入实验全记录
-- [`docs/EP_PATH_OPEN_2026-10-06.md`](docs/EP_PATH_OPEN_2026-10-06.md) — 内核 ioctl + mmap 通路
-- [`docs/LIBUDD5_EP_API_MAP_2026-10-06.md`](docs/LIBUDD5_EP_API_MAP_2026-10-06.md) / [EN](docs/LIBUDD5_EP_API_MAP_2026-10-06_EN.md) — libudd5 API 图谱
+- [`docs/archive/WORK_REPORT_2026-10-06.md`](docs/archive/WORK_REPORT_2026-10-06.md) / [EN](docs/archive/WORK_REPORT_2026-10-06_EN.md) — ★ 当日工作报告（打通过程 + 7 个自我修正 + 9 条铁律）
+- [`docs/archive/_2026-10-06_purged/EP_3DLUT_WRITE_EXPERIMENTS_2026-10-06.md`](docs/archive/_2026-10-06_purged/EP_3DLUT_WRITE_EXPERIMENTS_2026-10-06.md) — ★ 11 次写入实验全记录（部分结论已被 10-07 修正，见 `docs/current/ERROR_CORRECTIONS_2026-10-07.md`）
+- [`docs/archive/EP_PATH_OPEN_2026-10-06.md`](docs/archive/EP_PATH_OPEN_2026-10-06.md) — 内核 ioctl + mmap 通路
+- [`docs/archive/LIBUDD5_EP_API_MAP_2026-10-06.md`](docs/archive/LIBUDD5_EP_API_MAP_2026-10-06.md) / [EN](docs/archive/LIBUDD5_EP_API_MAP_2026-10-06_EN.md) — libudd5 API 图谱
 
 **English summary**
 

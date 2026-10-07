@@ -120,9 +120,9 @@ LUT 是软状态（触屏/对焦后自动恢复）。
 
 ## 仓库
 
-- **报告**：`docs/WORK_REPORT_2026-10-06.md`（中英双语）
+- **报告**：`docs/archive/WORK_REPORT_2026-10-06.md`（中英双语）
 - **实验全记录**：`docs/EP_3DLUT_WRITE_EXPERIMENTS_2026-10-06.md`（11 次写入实验）
-- **可核对证据**：`docs/p7-evidence/`（从 20MB Ghidra 导出里抽的 2.7KB 核心片段）
+- **可核对证据**：`docs/evidence/p7/`（从 20MB Ghidra 导出里抽的 2.7KB 核心片段）
 - **工具**：`test_server/isp/udd5.py`（自研 ELF+Capstone 反汇编器，已用 pyelftools 16/16 交叉验证）
 
 https://github.com/WApaperplane/nx500_nx1_modding/tree/nx-ks2

@@ -479,7 +479,7 @@ byte A 本身的最终取值 (`[+0x10]→+0x40`) 落在被指对象上，**该�
 
 ```bash
 PY="C:/Users/31623/.workbuddy/binaries/python/envs/default/Scripts/python.exe"
-cd D:/download/NX-KS2-88/docs/discovery/tools
+cd D:/download/NX-KS2-88/docs/evidence/discovery/tools
 
 # 任务1: dynamic_cast 语义
 $PY -c "import sys;sys.path.insert(0,'.');from armcap import*;show(0x80524194,0x128)"

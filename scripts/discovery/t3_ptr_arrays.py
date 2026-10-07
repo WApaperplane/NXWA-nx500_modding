@@ -17,7 +17,7 @@ v2 改为: 先把连续 4 字节槽位聚成"槽位组", 再对组内**指针值
   3. 对每组按**值**排序, 算相邻值差, 找等距子段(run-length on value gaps)
   4. 重点间距 0x4D00 及0x100/0x1000/0x4000/0x40000; 同时报告全部
   5. 交叉参考 DAT_003837f0-fc / DAT_00383a24-80
-输出: docs/discovery/03_ptr_arrays.md
+输出: docs/evidence/discovery/03_ptr_arrays.md
 复现: python scripts/discovery/t3_ptr_arrays.py
 """
 import re, os, struct

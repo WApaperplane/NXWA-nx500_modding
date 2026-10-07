@@ -278,10 +278,10 @@ not *"the writer is in p7"* but *"**the LUT data buffers themselves live in p7's
 `mmtest`/`probe7`/`probe8` (★ control experiments proving CMA is writable)
 
 ### Documents (5)
-- `docs/WORK_REPORT_2026-10-06.md` — ★ this report
+- `docs/archive/WORK_REPORT_2026-10-06.md` — ★ this report
 - `docs/EP_3DLUT_WRITE_EXPERIMENTS_2026-10-06.md` — ★ all 11 write experiments
-- `docs/EP_PATH_OPEN_2026-10-06.md` — kernel ioctl + mmap path
-- `docs/LIBUDD5_EP_API_MAP_2026-10-06.md` / `_EN.md` — libudd5 API map + ioctl protocol
+- `docs/archive/EP_PATH_OPEN_2026-10-06.md` — kernel ioctl + mmap path
+- `docs/archive/LIBUDD5_EP_API_MAP_2026-10-06.md` / `_EN.md` — libudd5 API map + ioctl protocol
 
 ### Analysis data
 - `test_server/isp/libudd5_real.so` — ★ **the real on-device library** (320216 B)

@@ -13,7 +13,7 @@ v2 相对 v1 的修正:
       v1 的 ^C[A-Za-z0-9_]+ 正则因此漏掉全部 CMaterial_* 类名 -> 改为
       ^\d{1,3}C[A-Za-z0-9_]+ 并剥离前缀
   (c) 类名去重后要保留全部出现位置
-输出: docs/discovery/01_3dlut_strings.md
+输出: docs/evidence/discovery/01_3dlut_strings.md
 复现: python scripts/discovery/t1_strings.py
 """
 import re, os

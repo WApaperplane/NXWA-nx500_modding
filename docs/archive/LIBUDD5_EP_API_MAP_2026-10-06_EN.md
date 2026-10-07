@@ -1,6 +1,6 @@
 # libudd5.so EP 色彩 API 静态分析
 
-**导出** 2026-10-06 · **详情** `docs/LIBUDD5_EP_API_MAP_2026-10-06.md`
+**导出** 2026-10-06 · **详情** `docs/archive/LIBUDD5_EP_API_MAP_2026-10-06.md`
 **工具** `test_server/isp/udd5.py`（自研 ELF+Capstone，零 binutils 依赖）、`regmap.py`
 
 ---
