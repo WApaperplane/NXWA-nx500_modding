@@ -1,13 +1,17 @@
 /*
  * nxfilmui.c — FilmLab 配方选择器（EFL 版，NX500/NX1 机内）
  *
- * 为什么重写而不用 mod_gui（2026-10-05 从 mod_gui.c 源码查证）：
- *   mod_gui 的 key_down_callback 只认 13 个键：
- *     F6~F10 / KP_Home / Scroll_Lock / XF86PowerOff
- *     Hiragana / Muhenkan / Control_R / Alt_R / Katakana
- *     XF86Reload / XF86WWW / KP_Enter
- *   ★ 方向键 Up/Down/Left/Right 与 JOG1_CW/JOG1_CCW 全都落进 else 分支
- *     → quit_app() 直接退出。⇒ mod_gui 层「波轮切换」无解，必须自己写。
+ * 为什么重写而不用 mod_gui（2026-10-07 用 capstone 复核二进制后修正注释）：
+ *   ★ 更正：项目里唯一的 mod_gui（md5 e4453d552e3604fd8e6bcbb81ad8008c）的
+ *     键处理实际【只认 4 个 X11 keysym】：Super_L / Super_R / Menu / XF86PowerOff
+ *     （rodata 0xa9f8/0xaa00/0xaa08/0xaa10，8 字节等距 = 硬编码比较数组）。
+ *   ★ 旧注释写的"13 个键（F6~F10/KP_Home/Scroll_Lock/Hiragana…）"是【错误】的：
+ *     那串键名出自 backup_original/nx-rc/web_root/js/keyinput.js（Web 遥控键表，共 58 项），
+ *     被跨文件误植到 mod_gui 头上。详见 docs/ERROR_CORRECTIONS_2026-10-07.md。
+ *   ★ 波轮（JOG）是否发 Super_L/Super_R 事件【尚未实测】——
+ *     "mod_gui 层波轮无解"这个结论需重做，不再当作已证事实。
+ *   ★ 仍成立的部分：mod_gui 能力上限（只 4 控件 / 点击即 system() 后 quit_app），
+ *     以及"点完就关窗"的结构缺陷 —— 这才是自己写 UI 的真正理由。
  *
  * 为什么不用 X11 版（nxflab.c，2026-08 已实机验证）：
  *   X11 满屏 720x480 在单核 NX500 上吃满 CPU，连 echo 都执行不完。
