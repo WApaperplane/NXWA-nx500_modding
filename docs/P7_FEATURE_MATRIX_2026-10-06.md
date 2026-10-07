@@ -64,7 +64,7 @@
 ### 2.1 FilmLab胶片仿真— ✅ 实机全通
 | 标签 | 命令 | 状态 |
 |---|---|---|
-| 胶片配方 FilmLab | `@gui_filmlab.NX500` | ✅ 动态生成，9 配方 |
+| 胶片配方 FilmLab | `@gui_filmlab.NX500` | ✅ 动态生成，8 配方 |
 | 配方引擎命令 | `list/show/apply/preset/reset/quick/dump/slots/wb/wbdump/cycle/mkgui` | ✅ 11 个子命令 |
 | 配方库 | SD 卡 `/mnt/mmc/filmlab/recipes.json` | ✅ 数量不限 |
 | Web 相册 | SD 卡同步 + `push.sh` WiFi 推送 | ✅ |
@@ -141,7 +141,7 @@
 ```
 gui_ini.NX500（主菜单，7 项）
 ├── 延时摄影●社区
-├── 胶片配方●我们✅　→ gui_filmlab.NX500（动态 9 配方）✅
+├── 胶片配方●我们✅　→ gui_filmlab.NX500（动态 8 配方）✅
 ├── 实用功能●社区 → gui_func.NX500（10 项）
 ├── 对焦配置 ●社区 → gui_focus.NX500（6 项）→ gui_profiles.NX500（6 项）
 ├── 系统设置 ●社区 → gui_settings.NX500（8 项）
@@ -165,7 +165,7 @@ gui_ini.NX500（主菜单，7 项）
 |---|---|
 | 现有 6 个主菜单项**语义零改动** | ✅ 设计约束 |
 | 社区全部 8 个 `gui_*` 页面**全部保留** | ✅ 已列入矩阵 |
-| FilmLab 9 配方动态生成**不受影响** | ✅ `mkgui` 独立 |
+| FilmLab 8 配方动态生成**不受影响** | ✅ `mkgui` 独立 |
 | 新功能全部挂在**新增页**，不改旧页 | ✅ 设计约束 |
 | 高危操作独立成页 + 二次确认 + 默认隐藏 | ✅ 设计约束 |
 | 标签全部 ≤6 全角字符 | ✅ 逐项已核 |
