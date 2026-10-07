@@ -23,6 +23,7 @@ docs/
 | [`ERROR_CORRECTIONS_2026-10-07.md`](current/ERROR_CORRECTIONS_2026-10-07.md) | ★★★★★ **错误结论修正报告**：mod/固件/系统三层 9 处纠错（C1~C9） |
 | [`AUDIT_2026-10-07.md`](current/AUDIT_2026-10-07.md) | 整体盘查报告：按键槽位静态解 / 版本管理风险 / 文档一致性 |
 | [`FIRMWARE_BREAKTHROUGH_2026-10-07.md`](current/FIRMWARE_BREAKTHROUGH_2026-10-07.md) | ★ 固件层突破口：ISP 参数块已解 / 魔灯三路评估 |
+| [`P7_DISPATCH_AND_LSC_2026-10-07.md`](current/P7_DISPATCH_AND_LSC_2026-10-07.md) | ★★ **跳转表机制纠正**（ARM 索引表 ≠ veneer）+ **镜头阴影描述符解出** |
 | [`STRATEGY_2026-10-07.md`](current/STRATEGY_2026-10-07.md) | 开发策略定案：三层栈 / 固件准入门槛 / 三阶段路线 |
 | [`FEATURE_MATRIX_2026-10-07.md`](current/FEATURE_MATRIX_2026-10-07.md) | 功能矩阵（定案版，取代 2026-10-06 版）|
 | [`NATIVE_UI_DESIGN_2026-10-07.md`](current/NATIVE_UI_DESIGN_2026-10-07.md) | 原生 UI：控件映射 / CJK 决策 / 实施序列 |

@@ -80,6 +80,7 @@ scripts/                          <- 整个目录(模块母本, 会被同步到�
 - [`docs/current/HANDOVER_2026-10-07.md`](docs/current/HANDOVER_2026-10-07.md) — ★★★ **项目交接总纲**：现状 / 死路 / 已验证 / 阻塞 / 纪律 / 待办
 - [`docs/current/ERROR_CORRECTIONS_2026-10-07.md`](docs/current/ERROR_CORRECTIONS_2026-10-07.md) — ★★★★★ **错误结论修正报告**：mod/固件/系统三层 9 处纠错（C1~C9）
 - [`docs/current/FIRMWARE_BREAKTHROUGH_2026-10-07.md`](docs/current/FIRMWARE_BREAKTHROUGH_2026-10-07.md) — ★ 固件层突破口：ISP 参数块已解 / 魔灯三路评估
+- [`docs/current/P7_DISPATCH_AND_LSC_2026-10-07.md`](docs/current/P7_DISPATCH_AND_LSC_2026-10-07.md) — ★★ 跳转表机制纠正（ARM 索引表 ≠ veneer）+ 镜头阴影描述符已解
 - [`docs/current/STRATEGY_2026-10-07.md`](docs/current/STRATEGY_2026-10-07.md) — 开发策略定案
 - [`docs/current/FEATURE_MATRIX_2026-10-07.md`](docs/current/FEATURE_MATRIX_2026-10-07.md) — 功能矩阵（定案版）
 - [`docs/current/3DLUT_API_GUIDE.md`](docs/current/3DLUT_API_GUIDE.md) / [EN](docs/current/3DLUT_API_GUIDE_EN.md) — 3D LUT 操作手册

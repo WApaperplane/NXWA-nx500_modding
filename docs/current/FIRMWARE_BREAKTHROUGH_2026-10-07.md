@@ -121,29 +121,35 @@ FUN_00110eb0(param_1,param_2,param_3,param_4)   @0x110eb0 / 76B
 
 ---
 
-## 二、★★★★ p7 的真正分发机制：veneer 表（已定位）
+## 二、★★★★ p7 的分发机制：**ARM 索引跳转表**（★ 本节结论已被 2026-10-07 20:20 修正）
+
+> ⚠️ **更正**：本节原判「veneer 桩 / 架构上不存裸地址」**是错的**。
+> 详见 `docs/current/P7_DISPATCH_AND_LSC_2026-10-07.md`。要点：
+> `FUN_003f3fa4` 是 **ARM `cmp r1,#0x13; ldrls pc,[pc,r1,lsl #2]` 索引跳转表**（20 条，id 0..19），
+> 目标存 **MMU 虚拟地址**（`0x803f40XX`）；旧分析用 Thumb 模式误读 ARM 指令 ⇒ 凭空造出"7 条 veneer"。
 
 `gamma_writer_hunt` / README 都提到「`FUN_003f3fa4` 是 veneer switch，Ghidra 解不出」。
-本次用 capstone 手工解出来了：
+本次用 capstone 手工解出来了（**ARM 模式**）：
 
 ```
 FUN_003f3fa4(param_1, param_2)   @0x3f3fa4
-   0x3f3fa4: movs r3, r2            ← 把 ID 装进 r3
-   0x3f3fa6: b    #0x3f464c        ← ★ 跳到 veneer 表基址
+   0x3f3fa4: cmp     r1, #0x13             ← id <= 19
+   0x3f3fa8: ldrls   pc, [pc, r1, lsl #2]  ← ★ ARM 索引跳转表
+   0x3f3fac: b       #0x3f40a0             ← 默认: mov r0,#0; bx lr（返回 0）
+   0x3f3fb0: .word   0x803f4098            ← table[0]（VA 基址 0x80000000）
    ...
-0x3f464c 起 = 定长 4 字节 veneer 表：
-   [2B 索引/取指桩] + [2B b <handler>]
+0x3f3ffc:   .word   0x803f4000             ← table[19]
 ```
 
-**解出前 40 条，目标全部落在 `0x3f41xx`–0x3f4bxx`（一条连续的 handler 带）。**
-（样本目标：`0x3f41d4 / 0x3f41dc / 0x3f41e0 / 0x3f41fc / ... / 0x3f4b2a`）
-
-⇒ ★★★★★ **p7 的是「ID → veneer 桩 → handler」三段式分发，不存裸函数地址。**
-　这就是为什么所有"找指针 / 找 BL"的方法都零命中——**它们找的东西在架构上不存在**。
+**⇒ 每个 handler = `ldr r0,[r0,#0x14+id*4] ; bx lr`（单指令字段取值桩）**
+⇒ 语义 = 读 struct 的 20 个 u32 字段（`+0x14..+0x60`），id 越界返回 0。
 
 ★ **推论（可当铁律用）**：
-> **裸镜像里"找不到函数地址表"时，先怀疑「跳转桩（veneer/thunk）分发」，
-> 而不是"表被删了"或"分析工具失效"。**
+> **裸镜像里"找不到函数地址表"时，先检查：(a) 指令集模式对不对（ARM/Thumb 混编易误读）
+> (b) 表里是不是 MMU 虚拟地址（高位置 1）。两条都不成立，才怀疑"表被删了 / 架构上不存"。**
+
+★★ **换言之：p7 确实存裸地址（在跳转表里），只是以 MMU VA 形式、且需 ARM 模式解码。**
+★ 副产品：同族访问器解出 p7 的**镜头阴影（LSC）表生成器** `FUN_003f2f64`（见新文档 §2）。
 
 ---
 
@@ -263,6 +269,7 @@ python veneer.py dis 0x3f3fa4 0x80   # ★ 解 veneer 分发器（需 capstone�
 ```
 
 ★ **关联文档**：
+`docs/current/P7_DISPATCH_AND_LSC_2026-10-07.md`（★ 本文 §2 的更正 + LSC 描述符解出）
 `docs/archive/MAGICLAMP_FEASIBILITY_2026-10-05.md`（旧版可行性，路径 A 的细节）
 `docs/current/Q3_EP_GAMMA_PROBE_2026-10-07.md`（EP 10 块普查）
 `docs/current/3DLUT_DEEP_DIVE_2026-10-07.md`（LUT 寄存器权威版）
