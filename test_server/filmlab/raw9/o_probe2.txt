@@ -1,0 +1,27 @@
+nxfilmui probe: recipes=/mnt/mmc/filmlab/recipes.txt ascii=1
+load_recipes(/mnt/mmc/filmlab/recipes.txt) -> 8
+
+#   key              label(ascii)                             7 values
+  --------------------------------------------------------------
+0   portra400        Portra 400                               106 100 93 11 9 9 8
+1   velvia50         Velvia 50                                102 110 109 10 14 11 13
+2   trix400          TriX 400                                 100 100 100 10 0 13 12
+3   ektachrome       Kodak Ektachrome                         96 105 108 12 13 10 11
+4   hp5              HP5 Plus                                 100 100 100 10 0 11 10
+5   superia400       Superia X-TRA400                         103 99 104 13 11 9 9
+6   monowarm         (cjk) monowarm                           108 100 92 10 0 10 11
+7   ektachrome_cyan  (cjk) ektachrome_cyan                    88 112 125 13 15 12 14
+
+--- 只读回读当前 slot9 的 PW 值（不写任何东西）---
+  PW[0] R      = 100
+  PW[1] G      = 100
+  PW[2] B      = 100
+  PW[3] HUE    = 10
+  PW[4] SAT    = 10
+  PW[5] SHARP  = 10
+  PW[6] CON    = 10
+
+--- 当前 enum（只读）= 0x000000（ENUM9=0x140009）---
+
+★★ probe 不进 GUI、不写 prefman。想试GUI：nxfilmui 
+=== probe done ===

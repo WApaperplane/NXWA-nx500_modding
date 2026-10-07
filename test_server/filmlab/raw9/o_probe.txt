@@ -1,0 +1,3 @@
+nxfilmui probe: recipes=/mnt/mmc/filmlab/recipes.txt ascii=1
+load_recipes(/mnt/mmc/filmlab/recipes.txt) -> -1
+★ 没有配方可用（这是第一步要确认的事）

@@ -66,8 +66,15 @@ ui|start)
   fi
 
   # ---- 切 LCD 视角（社区惯例，否则窗口起在 EVF 上看不见）----
-  if ! $BB st cap capdtm getusr MONITOROUT 2>/dev/null | $BB grep -q LCD; then
-    $BB st app disp lcd 2>/dev/null
+  # ★★★ 2026-10-07 修正：`st` 是独立可执行文件【不是】busybox applet
+  #   `$BB st` 会报 "st: applet not found"（13:57 在 EV_MOBILE.sh 实测踩到）
+  #   ⇒ 必须裸调 st（社区原版 EV_EV.sh 也是裸调）
+  # ★★ 另注：实机 `getuser MONITOROUT` 返回 "Unkonwn Operation"
+  #   ⇒ 这个判断其实静默失效（永远为真 ⇒ 每次都切屏）；
+  #     保留它因为"每次都切"无害，而"不切"会让窗口起在 EVF 上看不见
+  if ! st cap capdtm getusr MONITOROUT 2>/dev/null | $BB grep -q LCD; then
+    st app bb lcd on 2>/dev/null
+    st app disp lcd 2>/dev/null
     $BB sleep 1
   fi
 

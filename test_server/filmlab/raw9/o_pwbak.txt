@@ -1,0 +1,8 @@
+  PW[0] R = 100
+  PW[1] G = 100
+  PW[2] B = 100
+  PW[3] HUE = 10
+  PW[4] SAT = 10
+  PW[5] SHARP = 10
+  PW[6] CON = 10
+已保存 -> /mnt/mmc/filmlab/pwbak.txt
