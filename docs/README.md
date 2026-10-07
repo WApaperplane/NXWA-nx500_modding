@@ -27,11 +27,11 @@ docs/
 | [`STRATEGY_2026-10-07.md`](current/STRATEGY_2026-10-07.md) | 开发策略定案：三层栈 / 固件准入门槛 / 三阶段路线 |
 | [`FEATURE_MATRIX_2026-10-07.md`](current/FEATURE_MATRIX_2026-10-07.md) | 功能矩阵（定案版，取代 2026-10-06 版）|
 | [`NATIVE_UI_DESIGN_2026-10-07.md`](current/NATIVE_UI_DESIGN_2026-10-07.md) | 原生 UI：控件映射 / CJK 决策 / 实施序列 |
+| [`CAMERA_MENU_ARCHITECTURE_2026-10-07.md`](current/CAMERA_MENU_ARCHITECTURE_2026-10-07.md) | ★★★★★ **相机系统菜单渲染档案**：★ 彻底区分 mod 菜单 vs 系统菜单；★ 证明 **p7 无菜单**（显示层只做取景器叠加）；菜单状态机全表 / Edje 主题 / 可扩展性三路评估 |
 | [`Q3_EP_GAMMA_PROBE_2026-10-07.md`](current/Q3_EP_GAMMA_PROBE_2026-10-07.md) | Q3 实测：EP 全 10 块 / mc 结构 / 压死相机 5 次的边界 |
 | [`3DLUT_DEEP_DIVE_2026-10-07.md`](current/3DLUT_DEEP_DIVE_2026-10-07.md) · [EN](current/3DLUT_DEEP_DIVE_2026-10-07_EN.md) | 3D LUT 调查档案（权威）：寄存器全图 / p7 侧逆向 / 地址空间模型 |
 | [`3DLUT_API_GUIDE.md`](current/3DLUT_API_GUIDE.md) · [EN](current/3DLUT_API_GUIDE_EN.md) | 3D LUT 操作手册（API 调用 / 工具用法）|
 | [`P7_3DLUT_PATHS_2026-10-07.md`](current/P7_3DLUT_PATHS_2026-10-07.md) | ★★★★★ **3D LUT 三条 C++ 路径全部解出**（RTTI + 3 vtable）；★ **证明 View 与 Still 完全独立 ⇒ 改 View 表不影响照片** |
-| [`UI_MENU_INJECTION_2026-10-07.md`](current/UI_MENU_INJECTION_2026-10-07.md) | ★★★★★ **UI 菜单可注入**（用户态纯文本 `gui_*.NX500`）+ 三条零固件风险注入路 |
 | [`NX500_ARCHITECTURE.md`](current/NX500_ARCHITECTURE.md) | NX500 系统与软件架构（实机抓取）|
 
 ---
@@ -62,6 +62,7 @@ docs/
 | 弄清项目现在能做什么 / 不能做什么 | `current/HANDOVER_2026-10-07.md` |
 | 知道哪些旧结论是错的 | `current/ERROR_CORRECTIONS_2026-10-07.md` |
 | 找魔灯固件的技术突破口 | `current/FIRMWARE_BREAKTHROUGH_2026-10-07.md` |
+| 搞清**相机系统菜单**怎么渲染 / 能不能改 | `current/CAMERA_MENU_ARCHITECTURE_2026-10-07.md` |
 | 用 3D LUT 的 API | `current/3DLUT_API_GUIDE.md` |
 | 查历史踩过的坑 | `archive/`（对照修正报告）|
 | 看原始逆向证据 | `evidence/` |

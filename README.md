@@ -86,7 +86,8 @@ scripts/                          <- 整个目录(模块母本, 会被同步到�
 - [`docs/current/3DLUT_API_GUIDE.md`](docs/current/3DLUT_API_GUIDE.md) / [EN](docs/current/3DLUT_API_GUIDE_EN.md) — 3D LUT 操作手册
 - [`docs/current/3DLUT_DEEP_DIVE_2026-10-07.md`](docs/current/3DLUT_DEEP_DIVE_2026-10-07.md) / [EN](docs/current/3DLUT_DEEP_DIVE_2026-10-07_EN.md) — 3D LUT 深度调查档案
 - [`docs/current/P7_3DLUT_PATHS_2026-10-07.md`](docs/current/P7_3DLUT_PATHS_2026-10-07.md) — ★★★★★ 3D LUT 三条 C++ 路径全部解出（RTTI + 3 vtable）；★ 证明 View 与 Still 独立 ⇒ 改 View 表不影响照片
-- [`docs/current/UI_MENU_INJECTION_2026-10-07.md`](docs/current/UI_MENU_INJECTION_2026-10-07.md) — ★★★★★ UI 菜单可注入（用户态纯文本 `gui_*.NX500`）+ 三条零固件风险注入路
+- [`docs/current/NATIVE_UI_DESIGN_2026-10-07.md`](docs/current/NATIVE_UI_DESIGN_2026-10-07.md) — 原生 UI 设计：控件映射 / CJK 决策 / 实施序列
+- [`docs/current/CAMERA_MENU_ARCHITECTURE_2026-10-07.md`](docs/current/CAMERA_MENU_ARCHITECTURE_2026-10-07.md) — ★★★★★ **相机系统菜单渲染档案**：彻底区分 mod 菜单 vs 系统菜单；证明 **p7 无菜单**（显示层只做取景器叠加层）；菜单状态机全表 / Edje 主题 / 可扩展性三路评估
 - [`docs/current/NX500_ARCHITECTURE.md`](docs/current/NX500_ARCHITECTURE.md) — 完整系统架构（含 EP 寄存器 dump 全表）
 - [`SYNC.md`](SYNC.md) — 安装 / 增量同步 / WiFi push / 回滚（双语）
 
