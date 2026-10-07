@@ -88,6 +88,8 @@ scripts/                          <- 整个目录(模块母本, 会被同步到�
 - [`docs/current/P7_3DLUT_PATHS_2026-10-07.md`](docs/current/P7_3DLUT_PATHS_2026-10-07.md) — ★★★★★ 3D LUT 三条 C++ 路径全部解出（RTTI + 3 vtable）；★ 证明 View 与 Still 独立 ⇒ 改 View 表不影响照片
 - [`docs/current/NATIVE_UI_DESIGN_2026-10-07.md`](docs/current/NATIVE_UI_DESIGN_2026-10-07.md) — 原生 UI 设计：控件映射 / CJK 决策 / 实施序列
 - [`docs/current/CAMERA_MENU_ARCHITECTURE_2026-10-07.md`](docs/current/CAMERA_MENU_ARCHITECTURE_2026-10-07.md) — ★★★★★ **相机系统菜单渲染档案**：彻底区分 mod 菜单 vs 系统菜单；证明 **p7 无菜单**（显示层只做取景器叠加层）；菜单状态机全表 / Edje 主题 / 可扩展性三路评估
+- [`docs/current/CAMERA_APP_STRUCTURE_2026-10-07.md`](docs/current/CAMERA_APP_STRUCTURE_2026-10-07.md) — ★★★★ **相机官方 App 结构盘查**（面向 App 开发）：di-camera-app 四模块（UI 153/GUI 83/Service 6）/ Manager 总线 + State 状态机 / 111 个 .so 依赖分五族 / 实机安装布局 + 25 个 Edje 主题 / 三条开发路线评估
+- [`docs/current/ILAUNCHER_FIRMWARE_FLASH_2026-10-07.md`](docs/current/ILAUNCHER_FIRMWARE_FLASH_2026-10-07.md) — ★★★★★ **iLauncher 固件刷写机制逆向 + 本地文件刷写可行性**：★ 证明它**不直刷相机**（只是把固件拷到 SD 卡，由相机自升级）；FnA.dll 五参数签名 + 完整流水线还原；两处断点定位；★ 推荐「彻底绕开 iLauncher」方案
 - [`docs/current/NX500_ARCHITECTURE.md`](docs/current/NX500_ARCHITECTURE.md) — 完整系统架构（含 EP 寄存器 dump 全表）
 - [`SYNC.md`](SYNC.md) — 安装 / 增量同步 / WiFi push / 回滚（双语）
 

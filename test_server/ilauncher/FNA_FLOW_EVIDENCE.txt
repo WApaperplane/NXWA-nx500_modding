@@ -1,0 +1,67 @@
+FnA.dll do_modal_firmware_up_dlg 逆向证据 (2026-10-07)
+ImageBase 0x10000000  .text VA 0x1000 raw 0x400  .rdata VA 0x4d000 raw 0x4ba00
+
+== 四参数签名 ==
+ [ebp+8]   arg0 = model_name        (log str 0x52e08)
+ [ebp+0xc] arg1 = device_xml_path   (log str 0x52e1c)
+ [ebp+0x10] arg2 = firmware_copy_dir(log str 0x52e34) <- 关键
+ [ebp+0x14] arg3 = urlType          (log str 0x52e50)
+ [ebp+0x18] arg4 = showCameraModelName (log str 0x52e60)
+
+== 关键 API 调用点 ==
+ 0x6721  PathFileExistsW(device_xml_path)   ; 不存在 => 0x6ba1 => xor al,al; ret (直接失败返回)
+ 0xef99  GetDiskFreeSpaceExW(...)           ; 检查 SD 剩余空间
+ 0xefa7  比较 free vs required(ebx+0xac)    ; >= => 'SD Card Has Space.' 置 flag
+ 0xee10  call 0x28a90 (unzip doer) test al,al ; 'Unzip success'
+ 0x1004d174 = GetDiskFreeSpaceExW   0x1004d39c = PathFileExistsW(shlwapi)
+
+== 关键字符串 VA ==
+  00052de4  "FNA_API do_modal_firmware_up_dlg: "
+  00052e08  "arg: model_name: "
+  00052e1c  "arg: device_xml_path: "
+  00052e34  "arg: firmware_copy_dir: "
+  00052e50  "arg: urlType: "
+  00052e60  "arg: showCameraModelName: "
+  00052ec0  "Path Exists, Executing CurrentInfo Function"
+  000531b8  "Current Info XML Path: "
+  00053f3c  "Download Complete.. Trying to unzip (%s) to (%s)"
+  00053f84  "Unzip success"
+  00053fa0  "Firmware Copy dir: "
+  00053fb4  "SD Card Has Space."
+  00053fe4  "SD Card doesn't has Space."
+  00054048  "Trying to copy file"
+  000540b0  "Trying to create directory "
+  0005412c  ", lastErr= "
+  00054138  "CopyFileEx result= "
+  0005414c  "Firmware Copy successful"
+  00054168  "Firmware Copy not successful"
+  000541b4  "Download Successful"
+  000541c8  "Creating thread to copy the firmware to SD Card"
+  000559cc  "downloadToFile:"
+  00055a94  "Called Unzipper::extract at path: "
+  00053050  "http://www.samsungimaging.com/common/support/firmware/downloadUrlList.do?prd_mdl_name=%s&loc=%s"
+  00053110  "http://www.samsung.com/%s/support/firmware/downloadUrlList.do?prd_mdl_name=%s"
+
+== XPath (device.xml 解析) ==
+  /SDP/Device/LensFirmwareUpdate/@value
+  /SDP/Device/LensFirmwareUpdate/LensModelName/@value
+  /SDP/Device/LensFirmwareUpdate/LensFWVersion/@value
+  /SDP/Device/LensFirmwareUpdate/LensFWName/@value
+  /SDP/Device/LensFirmwareUpdate/LensProductionPlace/@value
+  /FirmwareInfo/*
+  FWVersion
+  DownloadURL
+  Description
+  DescriptionKor
+  /SDP/Device/BaseModelName/@value
+  /SDP/Device/FirmwareUpdate/CurrentVersion/@value
+  /SDP/Device/FirmwareUpdate/ProductionPlace/@value
+
+== iLauncher.exe 里发现的设备/路径字符串 (UTF-16) ==
+  %c://SYSTEM//system.bin
+  %c://SYSTEM//device.xml
+  USB\VID_%4X&PID_%4X
+  \?\%c:
+   firmwareUpgrader.exe
+   firmwareUpgrader\
+  Please attach a SAMSUNG Camera to update firmware

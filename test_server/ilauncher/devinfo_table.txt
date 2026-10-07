@@ -1,0 +1,158 @@
+<devinfo name="HMX100" device="camcorder" vid="04E8" pid="121D" full_name="HMX-H100" save_to_cam="true" ucc_button="false" storage_type="0" fw_upgrade="false">
+<devinfo name="R10" device="camcorder" vid="04E8" pid="121F" full_name="HMX-R10" save_to_cam="true" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="C10" device="camcorder" vid="04E8" pid="1223" full_name="SMX-C10" save_to_cam="true" ucc_button="true" storage_type="1" fw_upgrade="false">
+<devinfo name="K40" device="camcorder" vid="04E8" pid="1224" full_name="SMX-K40" save_to_cam="true" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="U10" device="camcorder" vid="04E8" pid="1225" full_name="HMX-U10" save_to_cam="true" ucc_button="true" storage_type="1" fw_upgrade="false">
+<devinfo name="U15" device="camcorder" vid="04E8" pid="122A" full_name="HMX-U15" save_to_cam="true" ucc_button="true" storage_type="1" fw_upgrade="false">
+<devinfo name="U20" device="camcorder" vid="04E8" pid="122B" full_name="HMX-U20" save_to_cam="true" ucc_button="true" storage_type="1" fw_upgrade="false">
+<devinfo name="C20" device="camcorder" vid="04E8" pid="1227" full_name="SMX-C20" save_to_cam="true" ucc_button="true" storage_type="1" fw_upgrade="false">
+<devinfo name="F40" device="camcorder" vid="04E8" pid="1228" full_name="SMX-F40" save_to_cam="true" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="HMX200" device="camcorder" vid="04E8" pid="1229" full_name="HMX-H200" save_to_cam="true" ucc_button="false" storage_type="0" fw_upgrade="false">
+<devinfo name="S10" device="camcorder" vid="04E8" pid="1226" full_name="HMX-S10" save_to_cam="true" ucc_button="false" storage_type="0" fw_upgrade="false" smart_upload="true">
+<devinfo name="M20" device="camcorder" vid="04E8" pid="122C" full_name="HMX-M20" save_to_cam="true" ucc_button="true" storage_type="1" fw_upgrade="false">
+<devinfo name="ST1000" device="camera" vid="1FAB" pid="101F" usb_type="mass" full_name="Samsung Camera" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="ST1000" device="camera" vid="1FAB" pid="1021" usb_type="multi" full_name="Samsung Camera" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="ST550" device="camera" vid="1FAB" pid="1022" usb_type="mass" full_name="Samsung Camera" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="ST550" device="camera" vid="1FAB" pid="1024" usb_type="multi" full_name="Samsung Camera" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="ST500" device="camera" vid="1FAB" pid="1025" usb_type="mass" full_name="Samsung Camera" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="ST500" device="camera" vid="1FAB" pid="1027" usb_type="multi" full_name="Samsung Camera" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="EU2" device="camera" vid="1FAB" pid="1048" usb_type="mass" full_name="Samsung Camera" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="EU2" device="camera" vid="1FAB" pid="104A" usb_type="multi" full_name="Samsung Camera" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="ES1" device="camera" vid="1FAB" pid="104B" usb_type="mass" full_name="Samsung Camera" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="ES1" device="camera" vid="1FAB" pid="104D" usb_type="multi" full_name="Samsung Camera" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="ES2" device="camera" vid="1FAB" pid="104E" usb_type="mass" full_name="Samsung Camera" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="ES2" device="camera" vid="1FAB" pid="1051" usb_type="multi" full_name="Samsung Camera" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="ES2-EM" device="camera" vid="1FAB" pid="1052" usb_type="mass" full_name="Samsung Camera" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="ES2-EM" device="camera" vid="1FAB" pid="1054" usb_type="multi" full_name="Samsung Camera" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="EX1" device="camera" vid="1FAB" pid="1036" full_name="Samsung Camera" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="FM1" device="camera" vid="1FAB" pid="1038" full_name="Samsung Camera" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="PC1" device="camera" vid="1FAB" pid="103A" full_name="Samsung Camera" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="PC1 Lite" device="camera" vid="1FAB" pid="103C" full_name="Samsung Camera" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="SP1" device="camera" vid="1FAB" pid="103E" full_name="Samsung Camera" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="SP1 Lite" device="camera" vid="1FAB" pid="1041" full_name="Samsung Camera" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="SF1" device="camera" vid="1FAB" pid="1043" full_name="Samsung Camera" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="PL150" device="camera" vid="1FAB" pid="1046" full_name="Samsung Camera" save_to_cam="true" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="ST60" device="camera" vid="1FAB" pid="0015" full_name="Samsung Camera" save_to_cam="true" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="ST60" device="camera" vid="1FAB" pid="0017" full_name="Samsung Camera" save_to_cam="true" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="SS1" device="camera" vid="1FAB" pid="0018" full_name="Samsung Camera" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="SS1" device="camera" vid="1FAB" pid="001A" full_name="Samsung Camera" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="WP1" device="camera" vid="1FAB" pid="001B" full_name="Samsung Camera" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="WP1" device="camera" vid="1FAB" pid="001D" full_name="Samsung Camera" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="WB5500" device="camera" vid="1FAB" pid="001E" full_name="Samsung Camera" save_to_cam="true" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="WB5500" device="camera" vid="1FAB" pid="0021" full_name="Samsung Camera" save_to_cam="true" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="NX5" device="camera" vid="1FAB" pid="1034" full_name="NX5" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="XX01" device="camera" vid="1FAB" pid="1350" full_name="Samsung Camera" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="ES28" device="camera" vid="1FAB" pid="1300" full_name="ES28" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="ES28" device="camera" vid="1FAB" pid="1302" full_name="ES28" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="ES75" device="camera" vid="04E8" pid="1303" full_name="ES75" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="ES75" device="camera" vid="04E8" pid="1305" full_name="ES75" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="ST100" device="camera" vid="04E8" pid="1306" full_name="ST100" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="false" anim_download_type="b8">
+<devinfo name="ST600" device="camera" vid="04E8" pid="1308" full_name="ST600" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="false" anim_download_type="b8">
+<devinfo name="ST80" device="camera" vid="04E8" pid="130A" full_name="ST80" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="PL90" device="camera" vid="04E8" pid="1350" full_name="PL90" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="PL200" device="camera" vid="04E8" pid="1352" full_name="PL200" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="PL200" device="camera" vid="04E8" pid="1354" full_name="PL200" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="ES30" device="camera" vid="04E8" pid="1355" full_name="ES30" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="ES30" device="camera" vid="04E8" pid="1357" full_name="ES30" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="ES33" device="camera" vid="04E8" pid="1358" full_name="ES33" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="ES33" device="camera" vid="04E8" pid="135A" full_name="ES33" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="E10" device="camera" vid="04E8" pid="122F" full_name="HMX-E10" save_to_cam="false" ucc_button="true" storage_type="1" fw_upgrade="false">
+<devinfo name="B10" device="camera" vid="04E8" pid="122E" full_name="HMX-B10" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="T10" device="camera" vid="04E8" pid="122D" full_name="HMX-T10" save_to_cam="true" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="NX100" device="camera" vid="04E8" pid="130C" full_name="NX100" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="ST90" device="camera" vid="04E8" pid="130E" full_name="ST90" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true">
+<devinfo name="PL120" device="camera" vid="04E8" pid="1311" full_name="PL120" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true" anim_download_type="b18" fw_new_url="true">
+<devinfo name="ST95" device="camera" vid="04E8" pid="1313" full_name="ST95" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true">
+<devinfo name="PL170" device="camera" vid="04E8" pid="1315" full_name="PL170" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true" anim_download_type="b18" fw_new_url="true">
+<devinfo name="PL20" device="camera" vid="04E8" pid="1317" full_name="PL20" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="PL20" device="camera" vid="04E8" pid="1319" full_name="PL20" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="WB210" device="camera" vid="04E8" pid="131A" full_name="WB210" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true">
+<devinfo name="SH100" device="camera" vid="04E8" pid="131C" full_name="SH100" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true" fw_new_url="true">
+<devinfo name="PL210" device="camera" vid="04E8" pid="131E" full_name="PL210" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true" fw_new_url="true">
+<devinfo name="ST6500" device="camera" vid="04E8" pid="1321" full_name="ST6500" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true">
+<devinfo name="WB700" device="camera" vid="04E8" pid="1323" full_name="WB700" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true">
+<devinfo name="ST700" device="camera" vid="04E8" pid="1325" full_name="ST700" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true" anim_download_type="mp4">
+<devinfo name="ST65" device="camera" vid="04E8" pid="135B" full_name="ST65" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="ST65" device="camera" vid="04E8" pid="135D" full_name="ST65" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="ES80" device="camera" vid="04E8" pid="135E" full_name="ES80" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="ES80" device="camera" vid="04E8" pid="1361" full_name="ES80" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="ST30" device="camera" vid="04E8" pid="1362" full_name="ST30" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="ST30" device="camera" vid="04E8" pid="1364" full_name="ST30" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="V10" device="camcorder" vid="04E8" pid="1230" full_name="HMX-V10" save_to_cam="true" ucc_button="false" storage_type="0" fw_upgrade="true" smart_upload="true">
+<devinfo name="H300" device="camcorder" vid="04E8" pid="1234" full_name="HMX-H300" save_to_cam="true" ucc_button="false" storage_type="1" fw_upgrade="true">
+<devinfo name="F50" device="camcorder" vid="04E8" pid="1235" full_name="SMX-F50" save_to_cam="true" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="Q10" device="camcorder" vid="04E8" pid="1233" full_name="HMX-Q10" save_to_cam="true" ucc_button="false" storage_type="1" fw_upgrade="true">
+<devinfo name="P100" device="camcorder" vid="04E8" pid="1231" full_name="HMX-P100" save_to_cam="true" ucc_button="true" storage_type="1" fw_upgrade="true">
+<devinfo name="P300" device="camcorder" vid="04E8" pid="1232" full_name="HMX-P300" save_to_cam="true" ucc_button="true" storage_type="1" fw_upgrade="true">
+<devinfo name="NX11" device="camera" vid="04E8" pid="1327" full_name="NX11" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="ES9" device="camera" vid="04E8" pid="1365" full_name="ES9" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="ES9" device="camera" vid="04E8" pid="1367" full_name="ES9" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="NX10" device="camera" vid="1FAB" pid="101C" full_name="NX10" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="ES68" device="camera" vid="04E8" pid="1329" full_name="ES68" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true">
+<devinfo name="ES68" device="camera" vid="04E8" pid="132B" full_name="ES68" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true">
+<devinfo name="ST93" device="camera" vid="04E8" pid="132C" full_name="ST93" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true">
+<devinfo name="ST93" device="camera" vid="04E8" pid="132E" full_name="ST93" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true">
+<devinfo name="W200" device="camcorder" vid="04E8" pid="1236" full_name="HMX-W200" save_to_cam="true" ucc_button="true" storage_type="1" fw_upgrade="true">
+<devinfo name="F70" device="camcorder" vid="04E8" pid="1237" full_name="SMX-F70" save_to_cam="true" ucc_button="true" storage_type="1" fw_upgrade="true">
+<devinfo name="ST96" device="camera" vid="0x04E8" pid="0x1330" full_name="SAMSUNG ST96" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true" download_cmm="true">
+<devinfo name="WB750" device="camera" vid="0x04E8" pid="0x1332" full_name="SAMSUNG WB750" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true" download_cmm="true">
+<devinfo name="WB690" device="camera" vid="0x04E8" pid="0x1334" full_name="SAMSUNG WB690" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true">
+<devinfo name="NX200" device="camera" vid="0x04E8" pid="0x1336" full_name="SAMSUNG NX200" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="ST99" device="camera" vid="0x04E8" pid="0x1339" full_name="SAMSUNG ST99" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true">
+<devinfo name="MV800" device="camera" vid="0x04E8" pid="0x133C" full_name="SAMSUNG MV800" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true">
+<devinfo name="WB150" device="camera" vid="0x04E8" pid="0x133E" full_name="SAMSUNG WB150" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true" fw_new_url="true">
+<devinfo name="WB3000" device="camera" vid="0x04E8" pid="0x1342" full_name="SAMSUNG WB3000" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true">
+<devinfo name="DV300" device="camera" vid="0x04E8" pid="0x1345" full_name="SAMSUNG DV300" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true" anim_download_type="b18" fw_new_url="true">
+<devinfo name="DV500" device="camera" vid="0x04E8" pid="0x1348" full_name="SAMSUNG DV500" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true" anim_download_type="mp4">
+<devinfo name="ST200" device="camera" vid="0x04E8" pid="0x134B" full_name="SAMSUNG ST200" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true">
+<devinfo name="WB850" device="camera" vid="0x04E8" pid="0x134E" full_name="SAMSUNG WB850" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true" map_download="true"  download_cmm="true">
+<devinfo name="PL221" device="camera" vid="0x04E8" pid="0x136A" full_name="SAMSUNG PL221" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true">
+<devinfo name="ST66" device="camera" vid="0x04E8" pid="0x136C" full_name="SAMSUNG ST66" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true" fw_new_url="true">
+<devinfo name="ST77/ST76" device="camera" vid="0x04E8" pid="0x1370" full_name="SAMSUNG ST77/ST76" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true" fw_new_url="true">
+<devinfo name="ST88/ST86" device="camera" vid="0x04E8" pid="0x1373" full_name="SAMSUNG ST88/ST86" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true" fw_new_url="true">
+<devinfo name="NX20" device="camera" vid="0x04E8" pid="0x1376" full_name="SAMSUNG NX20" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true">
+<devinfo name="ES90" device="camera" vid="0x04E8" pid="0x1379" full_name="SAMSUNG ES90" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="WB100" device="camera" vid="0x04E8" pid="0x137C" full_name="SAMSUNG WB100" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="false">
+<devinfo name="DV90/DV100/DV101" device="camera" vid="0x04E8" pid="0x137E" full_name="SAMSUNG DV90/DV100/DV101" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true" fw_new_url="true" anim_download_type="b18">
+<devinfo name="W300" device="camcorder" vid="0x04E8" pid="0x1238" full_name="SAMSUNG HMX-W300" save_to_cam="true" ucc_button="true" storage_type="1" fw_upgrade="true" smart_bgm="true" smart_bgm_channels="1" manual_download="true">
+<devinfo name="F80" device="camcorder" vid="0x04E8" pid="0x1239" full_name="SAMSUNG HMX-F80" save_to_cam="true" ucc_button="false" storage_type="1" fw_upgrade="true" smart_bgm="true">
+<devinfo name="Q20" device="camcorder" vid="0x04E8" pid="0x123A" full_name="SAMSUNG HMX-Q20" save_to_cam="true" ucc_button="false" storage_type="1" fw_upgrade="true" smart_bgm="true">
+<devinfo name="NX210" device="camera" vid="0x04E8" pid="0x1381" full_name="SAMSUNG NX210" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true">
+<devinfo name="NX1000" device="camera" vid="0x04E8" pid="0x1383" full_name="SAMSUNG NX1000" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true">
+<devinfo name="H400" device="camcorder" vid="0x04E8" pid="0x123C" full_name="HMX-H400" save_to_cam="true" ucc_button="false" storage_type="1" fw_upgrade="true">
+<devinfo name="ST64" device="camera" vid="0x04E8" pid="0x1385" full_name="SAMSUNG ST64" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true">
+<devinfo name="MV900F" device="camera" vid="0x04E8" pid="0x1387" full_name="SAMSUNG MV900F" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true" fw_new_url="true">
+<devinfo name="EX2F" device="camera" vid="0x04E8" pid="0x1389" full_name="SAMSUNG EX2F" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true" fw_new_url="true" >
+<devinfo name="WB250F/WB280F" device="camera" vid="0x04E8" pid="0x138B" full_name="SAMSUNG WB250F/WB280F" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true" fw_new_url="true" >
+<devinfo name="WB200F" device="camera" vid="0x04E8" pid="0x138C" full_name="SAMSUNG WB200F" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true" fw_new_url="true" >
+<devinfo name="WB800F" device="camera" vid="0x04E8" pid="0x138D" full_name="SAMSUNG WB800F" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true" fw_new_url="true"  >
+<devinfo name="ST150F" device="camera" vid="0x04E8" pid="0x138E" full_name="SAMSUNG ST150F" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true" fw_new_url="true" >
+<devinfo name="WB900F" device="camera" vid="0x04E8" pid="0x1390" full_name="SAMSUNG WB900F" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true" fw_new_url="true" >
+<devinfo name="WB910F" device="camera" vid="0x04E8" pid="0x1391" full_name="SAMSUNG WB910F" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true" fw_new_url="true" >
+<devinfo name="WB30F" device="camera" vid="0x04E8" pid="0x1392" full_name="SAMSUNG WB30F" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true" fw_new_url="true" >
+<devinfo name="DV150F" device="camera" vid="0x04E8" pid="0x1393" full_name="SAMSUNG DV150F" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true" anim_download_type="b18" fw_new_url="true" >
+<devinfo name="ST72" device="camera" vid="0x04E8" pid="0x1394" full_name="SAMSUNG ST72" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true" fw_new_url="true"  >
+<devinfo name="ES95" device="camera" vid="0x04E8" pid="0x1395" full_name="SAMSUNG ES95" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true" fw_new_url="true" >
+<devinfo name="WB2100" device="camera" vid="0x04E8" pid="0x1396" full_name="SAMSUNG WB2100" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="false" fw_new_url="true" >
+<devinfo name="F90" device="camcorder" vid="0x04E8" pid="0x123D" full_name="SAMSUNG HMX-F90" save_to_cam="true" ucc_button="true" storage_type="1" fw_upgrade="true" smart_bgm="true" fw_new_url="true" >
+<devinfo name="QF30" device="camcorder" vid="0x04E8" pid="0x123E" full_name="SAMSUNG HMX-QF30" save_to_cam="true" ucc_button="false" storage_type="1" fw_upgrade="true" smart_bgm="true" fw_new_url="true" >
+<devinfo name="NX300" device="camera" vid="0x04E8" pid="0x1397" full_name="SAMSUNG NX300" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true" fw_new_url="true" manual_download="true" dng_converter="true" movie_converter="true" lightroom_sn="false" powermedia_player="true">
+<devinfo name="NX2000" device="camera" vid="0x04E8" pid="0x1399" full_name="SAMSUNG NX2000" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true" fw_new_url="true" >
+<devinfo name="NX1100" device="camera" vid="0x04E8" pid="0x169B" full_name="SAMSUNG NX1100" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true">
+<devinfo name="ES99" device="camera" vid="0x04E8" pid="0x169D" full_name="SAMSUNG ES99" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true" fw_new_url="true" >
+<devinfo name="WB110" device="camera" vid="0x04E8" pid="0x139B" full_name="SAMSUNG WB110" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="false" fw_new_url="true" >
+<devinfo name="WB350F" device="camera" vid="0x04E8" pid="0x139C" full_name="SAMSUNG WB350F" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true" fw_new_url="true" fw_new_version="true" udf="true" >
+<devinfo name="WB35F" device="camera" vid="0x04E8" pid="0x139D" full_name="SAMSUNG WB35F" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true" fw_new_url="true" >
+<devinfo name="WB50F" device="camera" vid="0x04E8" pid="0x139E" full_name="SAMSUNG WB50F" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true" fw_new_url="true" >
+<devinfo name="WB1100F" device="camera" vid="0x04E8" pid="0x1400" full_name="SAMSUNG WB1100F" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true" fw_new_url="true" >
+<devinfo name="WB2200F" device="camera" vid="0x04E8" pid="0x1401" full_name="SAMSUNG WB2200F" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true" fw_new_url="true" >
+<devinfo name="NX300M" device="camera" vid="0x04E8" pid="0x1402" full_name="SAMSUNG NX300M" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true" fw_new_url="true" >
+<devinfo name="NX30" device="camera" vid="0x04E8" pid="0x1403" full_name="SAMSUNG NX30" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true" fw_new_url="true" >
+<devinfo name="NXmini" device="camera" vid="0x04E8" pid="0x1404" full_name="SAMSUNG NXmini" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true" fw_new_url="true" >
+<devinfo name="SF2" device="camera" vid="0x04E8" pid="0x1405" full_name="SAMSUNG SF2" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true" fw_new_url="true" >
+<devinfo name="DV2014F" device="camera" vid="0x04E8" pid="0x1406" full_name="SAMSUNG DV2014F" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true" anim_download_type="b18" fw_new_url="true" fw_new_version="true">
+<devinfo name="ST2014F" device="camera" vid="0x04E8" pid="0x1407" full_name="SAMSUNG ST2014F" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true" fw_new_url="true" fw_new_version="true">
+<devinfo name="WB2014F" device="camera" vid="0x04E8" pid="0x1408" full_name="SAMSUNG WB2014F" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true" fw_new_url="true" fw_new_version="true" udf="true" >
+<devinfo name="NX3000" device="camera" vid="0x04E8" pid="0x1409" full_name="SAMSUNG NX3000" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true" fw_new_url="true" manual_download="true" dng_converter="true" lightroom_sn="false" >
+<devinfo name="DV1506F" device="camera" vid="0x04E8" pid="0x140A" full_name="SAMSUNG DV1506F" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true" anim_download_type="b18" fw_new_url="true" fw_new_version="true">
+<devinfo name="NX1" device="camera" vid="0x04E8" pid="0x140B" full_name="SAMSUNG NX1" save_to_cam="false" ucc_button="false" storage_type="1" fw_upgrade="true" fw_new_url="true" manual_download="true" dng_converter="true" movie_converter="true" lightroom_sn="false" powermedia_player="true" >
