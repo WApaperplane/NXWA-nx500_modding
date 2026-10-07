@@ -304,6 +304,16 @@ v1.13 nx500.bin : 352121435 B  md5 a8509338e574319314ba9daa13994c4d
   "EP 地址由 **MOV/MOVW+MOVT 配对**在指令流里构造；
   伪代码（Ghidra）优先于裸字节搜索，因为伪代码已把配对折叠回常量。"
 
+- **116 ★★★★★** **符号区字符串"存在"≠ 类/函数"活着"。**
+  p7 的 `0x580000+` 区共 20120 个 `CBackend_*` / `CMaterial_*` / `CIpc*` 字符串，
+  其中**仅 4.1%（894 / 21806）有代码引用**。该区是 **Itanium C++ mangled name 的裁剪残留**
+  （判据：名字前缀带十进制长度，如 `22CBackend_Ipc_Parameter`、
+  `24CBackend_Ipc_Factory_NX1`），**整体零指针引用**。
+  ⇒ **禁止**用该区的名字推导"注入点/类结构存在"。
+  > 本项目错误示例：`gamma_writer_hunt.txt` 依据 A 区名字列出
+  > "`SetLiveviewParam2Monitor`（现成参数注入函数）/ `CBackend_Ipc_Parameter`" 等 5 个候选，
+  > 并冠以"最高优先级目标"。**该结论已被否证**，见 §7。
+
 ---
 
 ## 6. 待验证（静态不可判定，需上机）
@@ -313,6 +323,74 @@ v1.13 nx500.bin : 352121435 B  md5 a8509338e574319314ba9daa13994c4d
 | V1 | 波轮（JOG）在机身是否发出 `Super_L/Super_R` 事件 | 需 ecore 日志看实际 keysym |
 | V2 | mod_gui 在机身对 `Super_L/Super_R` 是否真的响应 | 需在机上按 |
 | V3 | ISP 参数块 A/B 的写入是否可由**用户操作**触发（路径 B 前提）| 需 dump `iqr` 全 184 个 `eIQ_ID_*` 关联 |
+
+---
+
+## 7. ★★★ 否证：`gamma_writer_hunt.txt` 的「IPC 注入点」结论不成立
+
+**否证日期**：2026-10-07（静态，不依赖实机）
+**被否证文档**：`raw8/p7/gamma_writer_hunt.txt`（2026-10-05）
+**否证依据**：`raw8/p7/ghidra/{04_strings,05_scalar_refs,11_string_xref_stats,22_namesearch}.txt`
+
+### 7.1 原结论
+
+该文档列出「写入者候选（按可能性排序）」，第 1、2 位是：
+
+```
+1  SetLiveviewParam2Monitor@0x584cd0   理由: 现成的参数注入函数
+2  CBackend_Ipc_Parameter@0x584a3a     理由: IPC 参数类本体
+⇒ ★★★ 这是"写入者"的最高优先级目标。
+```
+
+并称「`SetLiveviewParam2Monitor` 的参数结构就是我们要的配方格式」。
+
+### 7.2 三条否证证据
+
+| # | 证据 | 数据 |
+|---|---|---|
+| **E1** | 全量引用率 | 符号区 20120 串，有引用的**仅 894**（4.10%） |
+| **E2** | 标量引用表零命中 | `584cd0 / 584a3a / 584992 / 584cec / 59fb2c / 58b3c2` **全部 0 命中** |
+| **E3** | 反编译全扫零命中 | 16256 个函数中 `IpcGamma / IpcColor / IpcWB / Material / Recipe / GAMMA` **hits=0** |
+
+### 7.3 形态判据（关键区分）
+
+**A 区（`0x584990–0x584d20`）= mangled 残骸，非活类**
+
+```
+00584990  28  24CBackend_Ipc_Factory_NX1      ← 前缀 "24" = 名字长度
+005849fc  28  23CBackend_Ipc_Param_Base       ← 前缀 "23"
+00584a38  28  22CBackend_Ipc_Parameter        ← 前缀 "22"
+      …  连续排列、无引用、无 \n、无格式符
+```
+
+**B 区（`0x710000–0x716980`）= 活代码区**
+
+```
+00716928  64  CBackendParameterMonitor::SetLiveviewParam2Monitor(%x, %p, %d)\n
+00710014  52  product/Liveview/parts/CLiveviewPartsHistogram.cpp      ← __FILE__
+007102ec  48  [Live] SSS free m_workBuffer buffer error %d\n          ← 运行日志
+```
+
+⇒ ★★ **`SetLiveviewParam2Monitor` 确实存在**（B 区有它的格式串），
+　 但它是 **`CBackendParameterMonitor` 的方法** ——
+　 名字语义是「**把参数送进监控器**」（只读观察），**不是「设置参数」**。
+　 配套串 `Set Display Count %d`、`[PARAM MON] Run Still Param Monitor!!`
+　 进一步确认它是**调试期参数打印器**。
+
+### 7.4 对项目的实际影响
+
+| 项 | 变化 |
+|---|---|
+| 「p7 存在 `CBackend_Ipc_Parameter` 注入点」 | ❌ **撤销**（A 区零引用） |
+| 「`SetLiveviewParam2Monitor` 是写入者首选」 | ❌ **撤销**（是监控器，方向相反） |
+| 「固件层冻结」结论 | ✅ **加强**：原本的活线索被排除，冻结理由更硬 |
+| **AUDIT §5.2 的最后一条推论** | ⚠️ **需删**：原文「p7 存在 `CBackend_Ipc_Parameter` 参数注入点，若未来解冻固件层这是首要线索」——该推论基于 A 区名字，**不成立** |
+| 新方向提示 | ★ B 区（`0x710000+`，4000+ 条带 `\n` 的活格式串 + `__FILE__`）才是**真实的 p7 代码地图**，未来的固件逆向应以 B 区为入口，而非 A 区符号名 |
+
+### 7.5 方法论收获（已上升为铁律 116）
+
+这次否证再次验证了**铁律 66「有静态数据源在手时先扒代码，不要钻实验」**的逆向版：
+**有 xref 数据在手时，先查引用率，不要凭符号名脑补结构。**
 
 ---
 
