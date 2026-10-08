@@ -1,0 +1,24 @@
+#=====================================================================
+# gui_filmlab.NX500 —— FilmLab 主菜单（mod_gui 格式）
+#=====================================================================
+# 格式：button|标签|命令   /   @ 前缀 = 打开子菜单
+# 最后两行固定为「返回 / 取消」
+#
+# ★★★ 标签长度铁律（2026-10-04 实机截图教训）★★★
+#   mod_gui 是 2 列按钮网格，标签超长会被【静默截断成"一 键..."】。
+#   实机确认：标签控制在 6 个全角字符内，装饰横线（——）一律不用 ——
+#   横线在 EFL 里占满可用宽度，反而把真正要显示的字挤掉。
+#
+# ★ 每个配方按钮 = 写 1 个 prefman 槽 + 切 1 次 setusr，约 1 秒实时生效
+# ★ 配方在 /mnt/mmc/filmlab/recipes.json —— 增删配方不用改这个文件
+#   （子菜单页由 filmlab.sh mkgui 打开 mod_gui 时自动生成）
+#=====================================================================
+
+button|一键配方|@/opt/usr/nx-ks/gui_filmlab1b.NX500
+button|预设槽|@/opt/usr/nx-ks/gui_filmlab2.NX500
+button|诊断|@/opt/usr/nx-ks/gui_filmlab3.NX500
+
+button|恢复中性|/opt/usr/nx-ks/filmlab.sh reset
+
+button|返回|@/opt/usr/nx-ks/gui_ini.NX500
+button|取消|/opt/usr/nx-ks/gui_exit.sh

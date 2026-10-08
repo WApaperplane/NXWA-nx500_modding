@@ -1,0 +1,186 @@
+{
+  "recipes": {
+    "portra400": {
+        "label": "Portra 400",
+        "R_COLOR": 106,
+        "G_COLOR": 100,
+        "B_COLOR": 93,
+        "HUE": 11,
+        "SATURATION": 9,
+        "SHARPNESS": 9,
+        "CONTRAST": 8
+    },
+    "portra800": {
+        "label": "Portra 800",
+        "R_COLOR": 109,
+        "G_COLOR": 101,
+        "B_COLOR": 94,
+        "HUE": 11,
+        "SATURATION": 9,
+        "SHARPNESS": 8,
+        "CONTRAST": 7
+    },
+    "gold200": {
+        "label": "Gold 200",
+        "R_COLOR": 109,
+        "G_COLOR": 101,
+        "B_COLOR": 89,
+        "HUE": 12,
+        "SATURATION": 12,
+        "SHARPNESS": 9,
+        "CONTRAST": 10
+    },
+    "ultramax400": {
+        "label": "UltraMax 400",
+        "R_COLOR": 106,
+        "G_COLOR": 100,
+        "B_COLOR": 95,
+        "HUE": 12,
+        "SATURATION": 13,
+        "SHARPNESS": 9,
+        "CONTRAST": 11
+    },
+    "superia400": {
+        "label": "Superia 400",
+        "R_COLOR": 103,
+        "G_COLOR": 99,
+        "B_COLOR": 104,
+        "HUE": 13,
+        "SATURATION": 11,
+        "SHARPNESS": 9,
+        "CONTRAST": 9
+    },
+    "fuji400h": {
+        "label": "Fuji 400H",
+        "R_COLOR": 97,
+        "G_COLOR": 103,
+        "B_COLOR": 109,
+        "HUE": 9,
+        "SATURATION": 8,
+        "SHARPNESS": 8,
+        "CONTRAST": 8
+    },
+    "velvia50": {
+        "label": "Velvia 50",
+        "R_COLOR": 102,
+        "G_COLOR": 110,
+        "B_COLOR": 109,
+        "HUE": 10,
+        "SATURATION": 14,
+        "SHARPNESS": 11,
+        "CONTRAST": 13
+    },
+    "provia100f": {
+        "label": "Provia 100F",
+        "R_COLOR": 100,
+        "G_COLOR": 102,
+        "B_COLOR": 105,
+        "HUE": 10,
+        "SATURATION": 12,
+        "SHARPNESS": 11,
+        "CONTRAST": 12
+    },
+    "ektachrome": {
+        "label": "Ektachrome",
+        "R_COLOR": 96,
+        "G_COLOR": 105,
+        "B_COLOR": 108,
+        "HUE": 12,
+        "SATURATION": 13,
+        "SHARPNESS": 10,
+        "CONTRAST": 11
+    },
+    "ektachrome_cyan": {
+        "label": "EK Cyan 冷调",
+        "R_COLOR": 88,
+        "G_COLOR": 112,
+        "B_COLOR": 125,
+        "HUE": 13,
+        "SATURATION": 15,
+        "SHARPNESS": 12,
+        "CONTRAST": 14
+    },
+    "kodachrome64": {
+        "label": "Kodachrome",
+        "R_COLOR": 107,
+        "G_COLOR": 99,
+        "B_COLOR": 90,
+        "HUE": 12,
+        "SATURATION": 13,
+        "SHARPNESS": 11,
+        "CONTRAST": 13
+    },
+    "trix400": {
+        "label": "TriX 400",
+        "R_COLOR": 100,
+        "G_COLOR": 100,
+        "B_COLOR": 100,
+        "HUE": 10,
+        "SATURATION": 0,
+        "SHARPNESS": 13,
+        "CONTRAST": 12
+    },
+    "hp5": {
+        "label": "HP5 Plus",
+        "R_COLOR": 100,
+        "G_COLOR": 100,
+        "B_COLOR": 100,
+        "HUE": 10,
+        "SATURATION": 0,
+        "SHARPNESS": 11,
+        "CONTRAST": 10
+    },
+    "delta3200": {
+        "label": "Delta 3200",
+        "R_COLOR": 100,
+        "G_COLOR": 100,
+        "B_COLOR": 100,
+        "HUE": 10,
+        "SATURATION": 0,
+        "SHARPNESS": 12,
+        "CONTRAST": 14
+    },
+    "monowarm": {
+        "label": "MonoWarm 暖调",
+        "R_COLOR": 108,
+        "G_COLOR": 100,
+        "B_COLOR": 92,
+        "HUE": 10,
+        "SATURATION": 0,
+        "SHARPNESS": 10,
+        "CONTRAST": 11
+    },
+    "monocool": {
+        "label": "MonoCool 冷调",
+        "R_COLOR": 92,
+        "G_COLOR": 100,
+        "B_COLOR": 109,
+        "HUE": 10,
+        "SATURATION": 0,
+        "SHARPNESS": 10,
+        "CONTRAST": 12
+    },
+    "cine_teal": {
+        "label": "Cine Teal",
+        "R_COLOR": 89,
+        "G_COLOR": 104,
+        "B_COLOR": 110,
+        "HUE": 12,
+        "SATURATION": 11,
+        "SHARPNESS": 8,
+        "CONTRAST": 12
+    },
+    "xpro": {
+        "label": "X-Pro 交叉",
+        "R_COLOR": 110,
+        "G_COLOR": 103,
+        "B_COLOR": 88,
+        "HUE": 15,
+        "SATURATION": 15,
+        "SHARPNESS": 10,
+        "CONTRAST": 14
+    }
+  },
+  "presets": {
+  }
+}

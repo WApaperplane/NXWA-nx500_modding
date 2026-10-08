@@ -54,7 +54,11 @@ FilmLab 机内 UI —— 相机端部署说明
     "VERIFY-FAIL"                              → 写入没生效（别信画面，看这里）
 
 【已知限制】
-  · 零中文字体（相机 /usr/share/fonts 只有 9 个 ttf，无 CJK）
-    → UI 里含中文的配方自动降级显示成 "3. trix400" 这种序号+key
+  · 中文字体：★ 2026-10-08 离线验证已推翻旧结论 —— 相机 /usr/share/fonts/ 的
+    SDIC_GP_US_20120720.ttf（10.68MB，49864 字形）**含完整 CJK**，用 evas 的
+    buffer 引擎离线光栅化中文成功（证据 raw8/repro/cjk_render.png）。
+    ⇒ 旧说法「零中文字体、UI 含中文自动降级成序号+key」**不再成立**；
+      只有当文本对象完全没设字体时才会画不出字（evas 不会给你默认字体）。
+      当前 UI 版本仍按 ASCII 降级跑，可另行升级为中文标签。
   · 波轮能否生效取决于 ecore 收到的 keysym 名（JOG1_CW / Up / Down 三种都试了）
   · UI 是全屏 EFL 窗口，退出才释放 CPU；别开着它拍视频

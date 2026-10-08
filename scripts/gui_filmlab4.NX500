@@ -1,0 +1,24 @@
+#=====================================================================
+# gui_filmlab4.NX500 —— FilmLab 第四页：白平衡实验（★未验证）
+#=====================================================================
+# ★★ 警告：这一页的 K 值生效与否【尚未实机验证】。
+#   原因：相机端 UI 不会随 prefman 写入自动刷新，
+#   所以"写入后画面是否变化"无法可靠判定（需要拍图对比才能确认）。
+#
+#   FilmLab v2 默认【不使用】这一页，配方只管 Picture Wizard 7 维。
+#   白平衡请在机身 UI 上自行调整。
+#
+# 如果要用这一页，先看第三页的「白平衡状态」确认写入成功，
+# 再在机身 UI 上切到色温面板观察。
+#=====================================================================
+
+button| WB 自动(相机默认)|/opt/usr/nx-ks/filmlab.sh wb 0 7 7 auto
+button| WB 手动 3000K 暖|/opt/usr/nx-ks/filmlab.sh wb 3000 7 7 manual
+button| WB 手动 5600K 标准|/opt/usr/nx-ks/filmlab.sh wb 5600 7 7 manual
+button| WB 手动 8000K 冷|/opt/usr/nx-ks/filmlab.sh wb 8000 7 7 manual
+button| WB 自定义 tint绿|/opt/usr/nx-ks/filmlab.sh wb 5600 18 7 custom
+
+button| 返回自动 WB|/opt/usr/nx-ks/filmlab.sh wb 0 7 7 auto
+
+button|返回|@/opt/usr/nx-ks/gui_filmlab3.NX500
+button|取消|/opt/usr/nx-ks/gui_exit.sh

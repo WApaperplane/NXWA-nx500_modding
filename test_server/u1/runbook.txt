@@ -1,0 +1,131 @@
+##############################################################################
+# U1 只读上机 runbook   （生成物：python test_server/tools/gate_pack_u1.py）
+##############################################################################
+#
+# 进门条件：G0（21 端口可连）+ G1（preflight 全绿）。先跑：
+#     python test_server/tools/gate_flow.py
+#
+# 三条不可协商的纪律：
+#   1. telnet 里【一次会话只发一条命令】；结果一律 FTP 拉，不信回显
+#   2. 每条 RUN 都用 /usr/bin/setsid 脱离 telnet 会话（掉线不中断）
+#   3. 段间按要求等待（铁律 88）；本 runbook 所有等待 >= 60s
+#
+# 每条命令里不写 $() / 变量赋值嵌套 —— 跨 Windows/WSL 传参曾把宿主机字体
+# 当成相机字体（假结论）。命令一律写死绝对路径。
+
+==============================================================================
+[0] PC 侧：下发脚本（先做完这一步再开 telnet）
+==============================================================================
+PUT: python test_server/u1/u1_collect.py push --host 192.168.0.105
+     推送目标：相机 SD 卡 /mnt/mmc/u1/（FTP 根 == SD 卡根 ⇒ 相对路径 /u1/）
+     ★ 清单含 epmc.arm（test_server/sysarch/epmc.arm ⇒ /u1/epmc.arm）
+CHMOD: /usr/bin/setsid /opt/usr/nx-ks/busybox chmod 755 /mnt/mmc/u1/epmc.arm
+     ★ FTP 上传【不保留 x 位】；不 chmod 则 u1_epmc.sh 报 '缺失或不可执行' 直接退出
+
+==============================================================================
+[1] 环境侦察 + 负载基线 + P8 定案判据（1 条命令，全只读）
+==============================================================================
+RUN: /usr/bin/setsid /bin/sh /mnt/mmc/u1/u1_probe.sh
+WAIT: 60
+验收：probe.log 里有 uptime/loadavg/ps 行数（后续判'拖垮'的参照物）、
+      /dev/input 列表、p8 的 ro/start/size 与 /proc/diskstats
+判据：diskstats 里 mmcblk0p8 的第 3 列(已读扇区)与第 7 列(已写扇区)；
+      若【已写扇区 == 0】且 p8 ro=0  =>  p8 '从未被写入' 定案（P8_ZERO_INVESTIGATION）
+
+==============================================================================
+[2] ① /dev/mem 四点对照（4 条命令）—— 顺序即判据，不要打乱
+==============================================================================
+★ 铁律 118：先阳性对照证明'方法在本机读得动'，再阴性对照，最后才问问题本体。
+# idx=1  ctl_dram_94000000  0x94000000  768 regs -- 阳性对照：Linux CMA 窗口，已知 dd 可读
+RUN: /usr/bin/setsid /bin/sh /mnt/mmc/u1/u1_rd.sh 1
+WAIT: 90
+# idx=2  ctl_dev_2082b000  0x2082b000  768 regs -- 阴性对照：设备寄存器区，预期 dd 失败
+RUN: /usr/bin/setsid /bin/sh /mnt/mmc/u1/u1_rd.sh 2
+WAIT: 90
+# idx=3  lut_a_810fd100  0x810fd100  768 regs -- 问题本体：p7 LUT 缓冲 A
+RUN: /usr/bin/setsid /bin/sh /mnt/mmc/u1/u1_rd.sh 3
+WAIT: 90
+# idx=4  lut_b_81115200  0x81115200  768 regs -- 问题本体：p7 LUT 缓冲 B（= LUT0）
+RUN: /usr/bin/setsid /bin/sh /mnt/mmc/u1/u1_rd.sh 4
+WAIT: 90
+验收：每段 .bin 与 .log 落盘；.log 里 dd_rc=0 表示读成功
+判据（写死，避免事后解释）：
+  idx=1 读成功 + idx=2 读失败  =>  方法可用，'读不到'= 该地址面真的不可读
+  idx=1 读失败                 =>  整套方法失效，回到离机轨（禁止输出主结论）
+  idx=3/4 任一读成功           =>  G2a：走读已知内容的表做差分，U11 直接解
+                                    D1 降级为交叉验证，lutmod 补丁永久弃用
+  idx=3/4 都读失败             =>  G2b：才评估 lutmod，且必须重推目标地址
+  ★ 把四个 .bin 的 md5 与大小抄进 raw8/gates/u1/mem_compare.json（gate_flow 读它判 G2）
+
+==============================================================================
+[3] ② IPC 寄存器区 0x20800000-0x2081FFFF（共 43 条命令；P0 子集 8 条）
+==============================================================================
+★ 这 128KB 从未被扫过（U03）。预期：/dev/mem 对 MMIO 可能直接失败——
+  失败也是结论（说明必须改走驱动路径，像 epmc 那样）。
+--- P0 子集（idx 5..12，前 8 段，本次必做）---
+RUN: /usr/bin/setsid /bin/sh /mnt/mmc/u1/u1_rd.sh 5
+WAIT: 90
+RUN: /usr/bin/setsid /bin/sh /mnt/mmc/u1/u1_rd.sh 6
+WAIT: 90
+RUN: /usr/bin/setsid /bin/sh /mnt/mmc/u1/u1_rd.sh 7
+WAIT: 90
+RUN: /usr/bin/setsid /bin/sh /mnt/mmc/u1/u1_rd.sh 8
+WAIT: 90
+RUN: /usr/bin/setsid /bin/sh /mnt/mmc/u1/u1_rd.sh 9
+WAIT: 90
+RUN: /usr/bin/setsid /bin/sh /mnt/mmc/u1/u1_rd.sh 10
+WAIT: 90
+RUN: /usr/bin/setsid /bin/sh /mnt/mmc/u1/u1_rd.sh 11
+WAIT: 90
+RUN: /usr/bin/setsid /bin/sh /mnt/mmc/u1/u1_rd.sh 12
+WAIT: 90
+--- P1 其余 35 段（idx 13..47）：另开一批，不必一次做完 ---
+NOTE: 模板 —— /usr/bin/setsid /bin/sh /mnt/mmc/u1/u1_rd.sh <idx>
+      每段之间等 90s；一次会话只发一条；跑完立刻重新看 loadavg。
+验收：每段 dd_rc 与是否全零；若可读，PC 侧统计非零寄存器分布
+
+==============================================================================
+[4] ③④ 输入设备侦察 + 事件流抓取（波轮 / 触摸）
+==============================================================================
+★ 已实测定位（2026-10-08 U1）：event0=GPIO kbd / event1=ADC kbd（四向） / event2=触摸（MT-B）。
+★ 下面三条运行期间，请人在机身上【转动波轮·按方向键 / 触摸屏幕划动】。
+RUN: /usr/bin/setsid /bin/sh /mnt/mmc/u1/u1_input.sh 0 20   # GPIO 键盘 125/126/163/165/177/178
+WAIT: 60
+RUN: /usr/bin/setsid /bin/sh /mnt/mmc/u1/u1_input.sh 1 20   # ADC 键盘四向 72/75/77/80
+WAIT: 60
+RUN: /usr/bin/setsid /bin/sh /mnt/mmc/u1/u1_input.sh 2 20   # 触摸屏 MT protocol B
+WAIT: 60
+验收：input_eventN.bin 非空；PC 侧用 test_server/tools/u1_input_map.py 解出 (type, code, value)
+      => raw8/gates/u1/input_map.json；★ 全集无 EV_REL ⇒ 无独立相对轴设备
+
+==============================================================================
+[5] ⑤ st cap iqr 全量 dump（184 个 eIQ_ID_*）+ epmc 读 ISP 参数块
+==============================================================================
+RUN: /usr/bin/setsid /bin/sh /mnt/mmc/u1/u1_iqr.sh
+WAIT: 90
+验收：iqr_dump.txt 里唯一 eIQ_ID_* 数 >= 184（少于此数先怀疑被截断 —— 铁律 94）
+# epmc idx=8 nreg=4   -- 自证：3dlut 前 4 个，应与已知 OnOff=0x1 / Cfg=0x100 / Pulse=0x0 / LUT0=0x81115200 对上  [有效 4 regs]
+RUN: /usr/bin/setsid /bin/sh /mnt/mmc/u1/u1_epmc.sh 8 4
+WAIT: 90
+# epmc idx=0 nreg=1728 nz 0x1300  -- ISP 参数块 A+B 非零面（0x20821300 / 0x20821700，落在 top 块内）  [有效 512 regs]
+RUN: /usr/bin/setsid /bin/sh /mnt/mmc/u1/u1_epmc.sh 0 1728 nz 0x1300
+WAIT: 90
+# epmc idx=2 nreg=768   -- mc 块前 768 regs 非零面（0x20824000）  [有效 768 regs]
+RUN: /usr/bin/setsid /bin/sh /mnt/mmc/u1/u1_epmc.sh 2 768
+WAIT: 90
+NOTE: epmc 2 2048 nz 0xc00 —— mc 块其后部分。★ 超出铁律 88（>768 regs），
+      本次【不做】。要升级必须先满足：epmc 2 768 nz 跑通、本人看着机身、且
+      上一段的 loadavg 没有异常抬升。
+NOTE: 关联表 = iqr(184 ID) x epmc(两块 21x10) => raw8/gates/u1/iqr_epmc_map.tsv
+      ★ 必须记录【写入瞬间的运行时槽号】（U14：槽池 8 槽 x stride 0xc8，槽号运行时分配）
+
+==============================================================================
+[6] PC 侧：回收结果
+==============================================================================
+PULL: python test_server/u1/u1_collect.py pull --host 192.168.0.105
+      -> raw8/gates/u1/   （>60KB 自动分块，逐文件 md5）
+THEN: python test_server/tools/gate_flow.py     # 看 G2 / G5 是否转绿
+
+==============================================================================
+# 收工纪律：把本次 loadavg / ps 行数与 [1] 的基线对照，由人判定'没拖垮'（铁律 104）。
+==============================================================================

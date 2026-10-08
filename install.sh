@@ -105,6 +105,17 @@ for _f in /opt/usr/nx-ks/* /opt/usr/nx-ks/nx-rc/* /opt/usr/nx-ks/nx-rc/thumb/*; 
 done
 unset _f
 
+# ---- ★ FilmLab（NX500 专属）：配方库种子 + 菜单生成（2026-10-08 加入）----
+#   配方库在 SD 卡（/mnt/mmc/filmlab/recipes.json，插卡即可编辑，加配方不用改代码）
+#   内部留只读种子（/opt/usr/nx-ks/filmlab/recipes.json，随 scripts/ 同步而来）
+#   ★ 只在 SD 卡还没有配方库时复制 —— 绝不覆盖用户改过的配方
+#   ★ 菜单由 mkgui 从配方库现场生成（幂等）；引擎缺失时整体跳过
+if /bin/grep -q '^NX500$' /etc/version.info && [ -x /opt/usr/nx-ks/filmlab.sh ]; then
+    mkdir -p /mnt/mmc/filmlab 2>/dev/null
+    [ -f /mnt/mmc/filmlab/recipes.json ] || cp -f /opt/usr/nx-ks/filmlab/recipes.json /mnt/mmc/filmlab/recipes.json 2>/dev/null
+    /opt/usr/nx-ks/filmlab.sh mkgui >/dev/null 2>&1
+fi
+
 # ---- ★ 拉起 telnet + ftpd (2026-10-06) ----
 # ★ 必须放在上面的 chmod 兜底【之后】—— SD 卡 FAT 挂载丢可执行位时,
 #   /mnt/mmc/scripts/onboard.sh 本身也是 0644, 直接调用会 Permission denied。

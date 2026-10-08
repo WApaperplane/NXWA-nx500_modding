@@ -1,0 +1,25 @@
+name: scripts-ci
+
+# ★ 把「铁律 99（CRLF）+ 语法 + git 执行位」变成 CI 门控（工作流 D8 / 拆仓 §6 第 4 步）
+#
+# 为什么必须在 CI 而不是靠人记得：
+#   本仓库是「Windows 上开发、Linux/相机上运行」——
+#   ① CRLF 会让 `renice -p 'xxxx\r'` 之类的脚本必然失败（铁律 99，排查最久的一次）
+#   ② Windows 下 core.filemode=false ⇒ 文件系统执行位不可信，
+#      必须用 `git ls-files -s` 判断 git 里的 mode（曾 136 个脚本全是 100644）
+#
+# 本地等价命令： python3 test_server/tools/check_scripts.py
+# 一键修复：     python3 test_server/tools/apply_ci_fixes.py
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  sh-hygiene:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 检查 CRLF / shebang / 语法 / git 执行位
+        run: python3 test_server/tools/check_scripts.py

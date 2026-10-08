@@ -1,15 +1,42 @@
-# FilmLab 配方表 v2 —— X11 选择器读取格式
-# 格式： key|label|R|G|B|HUE|SAT|SHARP|CON
-# ★ 白平衡不在这里：FilmLab v2 只管 Picture Wizard 7 维，WB 由用户在机身 UI 调
-# ★ 只用 CUSTOM_1/2/3（prefman slot 9/10/11）；厂商槽 0/3 的 HUE 是垃圾字节
+# FilmLab 配方源表 —— NX500/NX1 Picture Wizard 7 维（18 条）
+# 格式： key|label|R|G|B|HUE|SAT|SHARP|CON   —— 一行一个，顺序 = mod_gui 菜单顺序
 #
-# 生成自 nx500_filmlab_sd.json —— 改配方请改 JSON 后重新生成本文件
+# ★ 本文件 = 配方的唯一权威源。改配方流程：
+#     1) 编辑本文件
+#     2) python test_server/filmsim/mk_recipes_json.py   → 生成 recipes.json（引擎用）
+#     3) 部署 recipes.json → /mnt/mmc/filmlab/recipes.json
+#     4) 机上跑 `filmlab.sh mkgui` 刷新 mod_gui 菜单（或重开菜单时自动刷）
+#   recipes.txt（旧自绘 UI 用）由 `filmlab.sh export` 从 recipes.json 反向生成，勿手改。
+#
+# ★ label 长度铁律（2026-10-04 mod_gui 实机截图教训）：
+#   2 列按钮网格，标签超长会被【静默截断】⇒ 显示名控制在约 6 个全角字符（≈12 半角）内
+#   ⇒ 品牌长名用缩写（Kodak Gold 200→Gold 200 / Kodak Ektachrome→Ektachrome）
+#
+# 取值（实机验证过的安全范围；中枢 = R/G/B 100、H/S/Sh/C 10）：
+#   R/G/B ≈ 88..125｜HUE/SAT/SHARP/CONTRAST ≈ 0..15
+#   ★ SAT=0 = 纯黑白；保留 R/B 增益差 = 暖调/冷调黑白（机身独有能力）
+#   ★ 白平衡不在配方内：WB 由用户在机身 UI 自行调整
+#   ★ 只用 UI 可见的 CUSTOM_1（slot 9）作载体：写一个、显示一个、位置恒定
 
+# ---- 彩色负片 ----
 portra400|Portra 400|106|100|93|11|9|9|8
+portra800|Portra 800|109|101|94|11|9|8|7
+gold200|Gold 200|109|101|89|12|12|9|10
+ultramax400|UltraMax 400|106|100|95|12|13|9|11
+superia400|Superia 400|103|99|104|13|11|9|9
+fuji400h|Fuji 400H|97|103|109|9|8|8|8
+# ---- 反转片 ----
 velvia50|Velvia 50|102|110|109|10|14|11|13
+provia100f|Provia 100F|100|102|105|10|12|11|12
+ektachrome|Ektachrome|96|105|108|12|13|10|11
+ektachrome_cyan|EK Cyan 冷调|88|112|125|13|15|12|14
+kodachrome64|Kodachrome|107|99|90|12|13|11|13
+# ---- 黑白 ----
 trix400|TriX 400|100|100|100|10|0|13|12
-ektachrome|Kodak Ektachrome|96|105|108|12|13|10|11
 hp5|HP5 Plus|100|100|100|10|0|11|10
-superia400|Superia X-TRA400|103|99|104|13|11|9|9
-monowarm|MonoWarm 暖调黑白|108|100|92|10|0|10|11
-ektachrome_cyan|Ektachrome Cyan 冷调反转|88|112|125|13|15|12|14
+delta3200|Delta 3200|100|100|100|10|0|12|14
+monowarm|MonoWarm 暖调|108|100|92|10|0|10|11
+monocool|MonoCool 冷调|92|100|109|10|0|10|12
+# ---- 电影 / 特效 ----
+cine_teal|Cine Teal|89|104|110|12|11|8|12
+xpro|X-Pro 交叉|110|103|88|15|15|10|14

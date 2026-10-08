@@ -40,7 +40,7 @@ if [ -z "$rem_p" ]; then rem_p="not entered"; fi
 /opt/usr/nx-ks/rem_gui "$rem_c" "$rem_s" "$rem_u" "$rem_p"
 #
 filename="/opt/usr/nx-ks/remote.cfg"
-while IFS='' read -r line || [[ -n "$line" ]]; do echo "Text read from file: $line"  done < "$filename"
+while IFS='' read -r line || [[ -n "$line" ]]; do echo "Text read from file: $line"; done < "$filename"
 #
 read -r line < "$filename"
 

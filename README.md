@@ -4,12 +4,14 @@ Samsung NX500 / NX1 (Tizen / DRIMe5) 增强固件 mod —— 基于社区
 [nx500\_nx1\_modding](https://github.com/SamsungNX500/nx500_nx1_modding) 上游改造与扩展。
 
 > An enhancement mod for the Samsung NX500 / NX1, built on the community  
-> `nx500_nx1_modding` upstream.
+> `nx500_nx1_modding` upstream.  
+> **English version: [README_EN.md](README_EN.md)**
 
 **分支说明 / Branches**: `master` = 上游原始历史(勿动)；**`nx-ks2` = 本项目源码(本文档所在分支)**。
 
 ## 特性亮点 / Highlights
 
+- **FilmLab 胶片配方**：18 条胶片风格（负片 / 反转 / 黑白 / 电影）；机身 **`EV+AEL` → 点配方 → 画面立即生效（2 步）**，无需进 Fn 菜单。配方库在 SD 卡（可编辑、可扩充），菜单自动生成。
 - Web 遥控 (`nx-rc`) 网页相册：**折叠目录模型** —— 目录倒序、默认只展开最新目录、  
   按需加载 + 缩略图缓存，根治单核 CPU 上目录多导致的首屏卡顿。
 - 相册**实时目录源**：8080 端口 `dirlist` CGI 每次请求直接 readdir SD 卡，  
@@ -31,9 +33,47 @@ Samsung NX500 / NX1 (Tizen / DRIMe5) 增强固件 mod —— 基于社区
 | ----------------------- | ------------------------------------------------------- |
 | `IP: x.x.x.x [Telnet关]` | 显示当前 WiFi IP；**点击 = 开/关 Telnet(23) + FTP(21)**，popup 反馈 |
 | `远程控制` (checkbox)       | 开关 Web 遥控（80 端口），同时拉起 8080 服务群与缩略图预热                    |
+| **`EV + AEL`**（组合键）    | ★ **FilmLab 配方菜单**：点配方立即生效；再按一次 = 关闭 【NX500 专属】         |
 
 菜单每次打开时重新生成（`gen_menu.sh`），IP / Telnet 状态始终最新。  
 PC 端排障工具：`test_server/telnet_run.py <相机IP> '命令'`（非交互 telnet，root 空密码）。
+
+## FilmLab 胶片配方 / FilmLab recipes
+
+> **两步出片**：`EV + AEL` 打开配方菜单 → 点选配方 → 画面立即套上该胶片风格。  
+> （不需要再进 Fn 菜单；旧链路的「选 PW → Slot9 → 确认」已完全不需要）
+
+### 内置 18 条配方
+
+| 族      | 配方（= 菜单顺序）                                                    |
+| ------ | ------------------------------------------------------------- |
+| 彩色负片   | Portra 400 / Portra 800 / Gold 200 / UltraMax 400 / Superia 400 / Fuji 400H |
+| 反转片    | Velvia 50 / Provia 100F / Ektachrome / EK Cyan 冷调 / Kodachrome |
+| 黑白     | TriX 400 / HP5 Plus / Delta 3200 / MonoWarm 暖调 / MonoCool 冷调 |
+| 电影 · 特效 | Cine Teal / X-Pro 交叉                                          |
+
+- 黑白配方用 `SAT=0`（真黑白）；**MonoWarm / MonoCool 是机身独有的暖调 / 冷调黑白**（保留 R/B 增益差）。
+- 配方 = Picture Wizard 7 维向量（R/G/B 增益 + HUE/SAT/SHARP/CONTRAST），固定写入 UI 的「自定义1」槽，位置恒定、可预期。
+- 彩色配方靠 R/G/B 增益相对差 + 饱和度/对比度实现胶片色偏（比 HUE 更可控）。
+
+### 改配方 / 加配方（不用改代码、不用重刷）
+
+```
+配方库在 SD 卡：/mnt/mmc/filmlab/recipes.json   ← 引擎直接读这份
+加一条：编辑该 JSON → 拷回 SD 卡 → 重新打开菜单（菜单会自动重建）
+```
+
+- 仓库中的配方源表：`test_server/filmsim/recipes/nx500_recipes.txt`（唯一权威源）  
+  → `python test_server/filmsim/mk_recipes_json.py` 生成 `recipes.json`。
+- 上机部署 / 菜单刷新一条龙：`python test_server/filmsim/deploy_recipes.py a` → `… b <idx>`。
+
+### 已知边界（诚实说明）
+
+- `mod_gui` 固有「点击即退」：不能滚动对比；要对比就连点两个配方看变化。
+- 白平衡不在配方内：WB 请在机身 UI 自行调整（配方只管色彩风格）。
+- 配方是**全局色彩向量**，做不出高光滚降 / 分区曝光（与 Recipe Lab 同级）。
+- 配方为 **NX500 专属**（prefman 偏移仅在 NX500 1.12 上实证）；NX1 上 `EV+AEL` 自动回退社区原版「长录像」脚本（`EV_AEL.community.sh`）。
+- 进阶（telnet）：`filmlab.sh list` 列配方 / `dump` 读全部槽位 / `reset` 恢复中性 / `cycle` 轮换下一个。
 
 ## 快速开始 / Quick start
 
@@ -64,9 +104,15 @@ scripts/                          <- 整个目录(模块母本, 会被同步到�
 | ---------------------------------- | --------------------------------------------------------------------- |
 | `install.sh` `info.tg` `nx_cs.adj` | SD 卡根触发三件套（装机/同步入口）                                                   |
 | `scripts/`                         | 全部模块母本，同步目标 = 相机内部 `/opt/usr/nx-ks/`                                  |
+| `scripts/filmlab.sh`               | ★ **FilmLab 引擎**（相机端运行版）：配方读写 / 应用 / 菜单生成                                    |
+| `scripts/filmlab/recipes.json`     | 配方库种子：首次安装时自动拷到 SD 卡 `/mnt/mmc/filmlab/`                                  |
+| `scripts/EV_AEL.sh`                | FilmLab 入口（`EV+AEL` 组合键）；NX1 自动回退 `EV_AEL.community.sh`（社区原版长录像）        |
+| `scripts/gui_filmlab*.NX500`       | FilmLab 菜单：`1b`=配方主菜单（默认）；`2/3/4`=预设槽 / WB / 诊断页                         |
 | `scripts/nx-rc/`                   | Web 遥控：`web_root/`(前端)、`thumb/`(缩略图)、`capdtm/`(参数API)、`push/`(WiFi同步) |
 | `scripts/update_nxrc.sh`           | 只更新 nx-rc 模块的增量脚本（相机端）                                                |
 | `test_server/`                     | PC 端开发/验证环境（模拟相机 API + playwright 用例）                                 |
+| `test_server/filmsim/`             | FilmLab 开发侧：配方源表 `recipes/nx500_recipes.txt` + 生成/部署工具                |
+| `deploy/filmlab/`                  | 早期 FilmLab 部署件（`nxfilmui` 原生 UI 实验，保留作参考）                              |
 | `backup_original/`                 | 原厂文件备份（不入库上传）                                                         |
 
 ## 文档 / Docs

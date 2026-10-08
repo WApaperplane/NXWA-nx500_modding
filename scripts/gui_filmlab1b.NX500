@@ -1,0 +1,28 @@
+#=====================================================================
+# gui_filmlab1b.NX500 —— FilmLab 一键配方（由filmlab.sh mkgui 自动生成）
+#=====================================================================
+# ★ 本文件是生成物，不要手改。改配方请编辑 SD卡 filmlab/recipes.json
+#   然后重新打开 mod_gui（或 telnet 执行 filmlab.sh mkgui）
+#格式：button|标签|命令
+
+button|Portra 400|/opt/usr/nx-ks/filmlab.sh apply portra400
+button|Portra 800|/opt/usr/nx-ks/filmlab.sh apply portra800
+button|Gold 200|/opt/usr/nx-ks/filmlab.sh apply gold200
+button|UltraMax 400|/opt/usr/nx-ks/filmlab.sh apply ultramax400
+button|Superia 400|/opt/usr/nx-ks/filmlab.sh apply superia400
+button|Fuji 400H|/opt/usr/nx-ks/filmlab.sh apply fuji400h
+button|Velvia 50|/opt/usr/nx-ks/filmlab.sh apply velvia50
+button|Provia 100F|/opt/usr/nx-ks/filmlab.sh apply provia100f
+button|Ektachrome|/opt/usr/nx-ks/filmlab.sh apply ektachrome
+button|EK Cyan 冷调|/opt/usr/nx-ks/filmlab.sh apply ektachrome_cyan
+button|Kodachrome|/opt/usr/nx-ks/filmlab.sh apply kodachrome64
+button|TriX 400|/opt/usr/nx-ks/filmlab.sh apply trix400
+button|HP5 Plus|/opt/usr/nx-ks/filmlab.sh apply hp5
+button|Delta 3200|/opt/usr/nx-ks/filmlab.sh apply delta3200
+button|MonoWarm 暖调|/opt/usr/nx-ks/filmlab.sh apply monowarm
+button|MonoCool 冷调|/opt/usr/nx-ks/filmlab.sh apply monocool
+button|Cine Teal|/opt/usr/nx-ks/filmlab.sh apply cine_teal
+button|X-Pro 交叉|/opt/usr/nx-ks/filmlab.sh apply xpro
+
+button|返回|@/opt/usr/nx-ks/gui_filmlab.NX500
+button|取消|/opt/usr/nx-ks/gui_exit.sh

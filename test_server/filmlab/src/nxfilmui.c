@@ -92,6 +92,12 @@ typedef int Eina_Bool;
 #define ELM_LABEL          8
 #define ELM_SCROLLER       13
 
+/* ★ v4 字体常量 —— 见上方 ABI 说明：离线已证 SDIC_GP_US 可出 CJK。
+   ★ 若将来换字体，改这里；族名必须与 TTF 内的 family name 一致。*/
+#define FILMUI_FONT_FILE  "/usr/share/fonts/SDIC_GP_US_20120720.ttf"
+#define FILMUI_FONT_FAM   "SDIC_GP_US"
+#define FILMUI_FONT_SZ    26
+
 int  elm_init(int, char **, Eina_Bool);
 int  elm_run(void);
 void elm_exit(void);
@@ -109,6 +115,36 @@ Evas_Object *elm_label_add(Evas_Object *box);
 void elm_object_part_text_set(Evas_Object *obj, const char *part, const char *text);
 void elm_object_style_set(Evas_Object *obj, const char *style, Eina_Bool reset);
 Evas_Object *elm_button_add(Evas_Object *box);
+
+/* ★ v6（2026-10-08，U2 上机 A/B 假设）：显式窗口几何 + 激活。
+ *   现状：本程序只靠 elm_win_resize_object_add 把 box 绑到窗口，**从不设窗口
+ *   size/pos、也不 activate** ⇒ 若窗口是 0×0 或停在屏外、或没被激活，
+ *   对象全都"建好了却看不见"（这就是 U2 观察到的现象）。
+ *   mod_gui 导入表里也没有 resize/move（已核对 .dynsym），故这几条是**新变量**。 */
+void evas_object_resize(Evas_Object *obj, int w, int h);
+void evas_object_move(Evas_Object *obj, int x, int y);
+void evas_object_geometry_get(const Evas_Object *obj, int *x, int *y, int *w, int *h);
+int  elm_win_activate(Evas_Object *obj);
+void elm_win_fullscreen_set(Evas_Object *win, Eina_Bool fullscreen);
+
+/* ★★ v4（2026-10-08，工作流 D7：把本轮 CJK 离机结论反哺回 UI）
+ *
+ * 离线已证（证据：raw8/repro/cjk_render.png + cjk_render.log，做法见
+ * test_server/filmlab/src/cjk_render.c）：
+ *   · 相机自带 /usr/share/fonts/SDIC_GP_US_20120720.ttf，含 49864 字形，
+ *     **CJK 真的能画出来**（不是"字形在"而已，是光栅化那一层已验）；
+ *   · evas 有字形回落（给不含 CJK 的字体也照画）；
+ *   · ★ 唯一的硬约束：**完全不调用一次 font_set ⇒ 几何 0×0、一个像素都不画**。
+ *
+ * ⇒ 「相机 /usr/share/fonts 无中文字体 ⇒ 中文标签必须降级为 ASCII」这条
+ *    旧前提（本文件 v3 的 g_ascii 降级就是按它写的）**已被证伪**。
+ *    中文标签对原生 UI 是**零额外成本**，但**每一处文本都必须设置字体**。
+ *    推荐显式给 font_source（TTF 绝对路径）+ 族名 SDIC_GP_US，求确定性，
+ *    而不是依赖 evas 的回落。
+ */
+Evas_Object *elm_object_part_text_get(const Evas_Object *obj, const char *part);
+void evas_object_text_font_set(Evas_Object *obj, const char *font, int size);
+void evas_object_text_font_source_set(Evas_Object *obj, const char *font_source);
 
 /* ★★ 三个"我以为存在、但真机上查无实据"的 API —— 已全部弃用，不要加回来：
  *
@@ -428,12 +464,42 @@ static char g_item_text[MAXR][96];
 
 static void sel_changed(void);
 
-/*★★ v3 新增：ASCII 降级开关（★ 阶段 1 强制开，避免中文字体渲染成空白）
- *   相机 /usr/share/fonts 无中文字体 ⇒ 中文标签 = 空白块
- *   ⇒ 默认走 ASCII（key 名本身是 ASCII：portra400 / velvia50 ...）
- *   ⇒ 想试中文时用 nxfilmui <recipes> cjk
+/* ★★ v4（2026-10-08 / D7）字体施加 —— 每处 label 生成后调用一次
+ *
+ * 两件事：① 取该 widget 的 "label" part text 的 evas 对象
+ *         ② 显式设**字体源（TTF 绝对路径）+ 族名 + 字号**
+ *
+ * ★ 为什么必须显式：离线已证 —— 「完全不调用一次 font_set ⇒ 几何 0×0、一个像素都不画」。
+ * ★ 为什么用 part_text_get 而不是 elm_object_text_font_set：
+ *   后者在 mod_gui / di-camera-app 的未定义符号里**无真机证据**（check_abi.py 实测 MISS），
+ *   而 elm_object_part_text_get **有** —— 按铁律 84（ABI 只取真机跑通过的证据）选前者。
+ *   evas_object_text_font_set / _font_source_set 的真机等价证据来自
+ *   test_server/filmlab/src/out/cjk_render.arm（已在相机 rootfs 里跑通，见 D7 报告）。
+ * ★ g_font_n 是自证计数：起窗日志里能看到"一共给 N 个文本设了字体"，
+ *   与 build_grid 的 item 数对照即可判断有没有漏设。
  */
-static int g_ascii = 1;
+static int g_font_n = 0;
+static void apply_label_font(Evas_Object *w) {
+    Evas_Object *t;
+    if (!w) return;
+    t = elm_object_part_text_get(w, "label");
+    if (!t) { logf_("★ apply_label_font: part 'label' 取不到文本对象（该控件无 label part）\n"); return; }
+    evas_object_text_font_source_set(t, FILMUI_FONT_FILE);
+    evas_object_text_font_set(t, FILMUI_FONT_FAM, FILMUI_FONT_SZ);
+    g_font_n++;
+}
+
+/*★★ v3 新增：ASCII 降级开关；★ v4（2026-10-08 / D7）**默认值 1 → 0：中文可用**
+ *
+ * v3 的原始理由（"相机 /usr/share/fonts 无中文字体 ⇒ 中文标签 = 空白块"）
+ * 已在本轮被**证伪** —— 离线已证 SDIC_GP_US 能画 CJK（见文件头 ABI 说明），
+ * 且现在每处 label 都经 apply_label_font() 显式设了字体。
+ *   ⇒ 默认 g_ascii = 0：**直接显示中文标签**。
+ *   ⇒ g_ascii = 1 保留为**降级开关**（`nxfilmui <recipes> ascii`）：
+ *     一旦实机上发现字体路径缺失/渲染异常，可一键退回纯 ASCII（key 名），
+ *     屏幕上仍保证有可读文字。这是"改动可回滚 + 单开关兜底"的形态。
+ */
+static int g_ascii = 0;
 
 /* ★★★ v3 新增：只读探测模式（不进 elm_run，telnet 里可直接跑）
  *   用途：GUI 出问题时，用它把"配方读到了吗 / 通道通吗"分离出来判断
@@ -497,10 +563,10 @@ static void cb_item(void *data, Evas_Object *obj, void *ev) {
      *   在无 CJK 字体的机器上有渲染风险，故去掉。*/
 }
 
-/* ★ 生成一个 item 的显示文本（ASCII 降级在此统一，v3）
- *   g_ascii=1（默认）：标签含非 ASCII ⇒ 用 key（key 本身是 ASCII）
- *   g_ascii=0（cjk）  ：用原label（★ 相机无中文字体 ⇒ 会渲染空白，仅调试）
- *   ★★ 无论哪种，屏幕上【保证有可读文字】，不会出现空白块。
+/* ★ 生成一个 item 的显示文本（v3 引入，★ v4 改默认）
+ *   g_ascii=0（★ v4 默认）：用原 label —— **中文可用**（离线已证 SDIC_GP_US 出 CJK）
+ *   g_ascii=1（降级开关） ：标签含非 ASCII ⇒ 用 key（key 本身是 ASCII）
+ *   ★★ 无论哪种，屏幕上【保证有可读文字】。
  */
 static void item_text(int i, char *out, size_t n) {
     Rec *r = &g_rec[i];
@@ -519,6 +585,7 @@ static Evas_Object *mk_item(int i) {
 
     item_text(i, t, sizeof(t));
     elm_object_part_text_set(b, "label", t);
+    apply_label_font(b);                 /* ★ v4：显式设字体（否则不画） */
     elm_object_style_set(b, "transparent", 1);
     evas_object_color_set(b, 200, 200, 200, 255);
     /* 2 列 × 每行 54px，720 宽正好 2 列 */
@@ -590,6 +657,7 @@ static void build_grid(void) {
         it = elm_button_add(cur_row);
         item_text(i, g_item_text[i], sizeof(g_item_text[i]));
         elm_object_part_text_set(it, "label", g_item_text[i]);
+        apply_label_font(it);            /* ★ v4：显式设字体（否则不画） */
         evas_object_size_hint_min_set(it, roww, rowh);
         evas_object_show(it);
         g_item[i] = it;
@@ -614,9 +682,11 @@ static void sel_changed(void) {
     if (g_nrec == 0) return;
     g_sel = ((g_sel % g_nrec) + g_nrec) % g_nrec;
 
-    /* ★★ 状态栏：★ 必带序号，★★ 必用 key（ASCII）——
-     *   因为 key 一定是 ASCII，中文字体缺失时只有它可读。
-     *   格式形如 "[2/9] velvia50"
+    /* ★★ 状态栏：★ 带序号 + key。
+     *   ★ v4 更正：旧注释写"中文字体缺失时只有 key 可读"—— 该前提已证伪
+     *     （字体在、且每处 label 都显式设了字体）。这里仍用 key 的理由变成
+     *     **简洁**（key 短、便于和 recipes.txt 对照），而不是"中文画不出"。
+     *     格式形如 "[2/9] velvia50"
      */
     char b[128];
     snprintf(b, sizeof(b), "[%d/%d] %s", g_sel + 1, g_nrec, g_rec[g_sel].key);
@@ -667,17 +737,19 @@ int main(int argc, char **argv) {
 
     /* ★★★ v3 参数解析（★ 不再靠 argv[1] 猜，猜错会把参数当路径）
      *   nxfilmui probe              只读探测，不开GUI、不写 prefman
-     *   nxfilmui gui                正常开 GUI（默认）
+     *   nxfilmui gui                正常开 GUI（默认；★ v4 起即"中文标签"）
      *   nxfilmui <recipes.txt>      旧写法仍支持（兼容性）
-     *   nxfilmui gui cjk            强行用中文标签（会渲染空白，仅调试用）
-     *   nxfilmui probe cjk
+     *   nxfilmui gui cjk            显式要求中文标签（★ v4 起为默认，保留兼容）
+     *   nxfilmui gui ascii          ★ v4 新增【降级开关】：强制走 ASCII（key 名）
+     *   nxfilmui probe cjk / ascii
      */
     for (i = 1; i < argc; i++) {
         const char *a = argv[i];
         if (!strcmp(a, "probe")) want_probe = 1;
-        else if (!strcmp(a, "gui") || !strcmp(a, "cjk")) {
-            if (!strcmp(a, "cjk")) g_ascii = 0;
-        } else if (a[0] == '/') {
+        else if (!strcmp(a, "gui")) { /* 默认行为，无需改开关 */ }
+        else if (!strcmp(a, "cjk"))   g_ascii = 0;   /* v4 默认即 0，保留兼容 */
+        else if (!strcmp(a, "ascii")) g_ascii = 1;   /* ★ v4 降级开关（实机出问题时用） */
+        else if (a[0] == '/') {
             rpath = a;
         }
     }
@@ -740,6 +812,9 @@ int main(int argc, char **argv) {
 
     g_win = elm_win_add(NULL, "nxfilmui", ELM_WIN_BASIC);
     if (!g_win) { logf_("elm_win_add FAILED\n"); return 1; }
+    /* ★ v6（U2 A 假设）：显式给窗口几何，不指望默认值 */
+    evas_object_resize(g_win, 720, 480);
+    evas_object_move(g_win, 0, 0);
     elm_win_title_set(g_win, "FilmLab");
     evas_object_smart_callback_add(g_win, "delete,request", (void *)on_quit, NULL);
     /* ★ 满屏 = 仿 mod_gui 的做法：只靠 elm_win_resize_object_add 把对象绑到窗口尺寸，
@@ -755,6 +830,12 @@ int main(int argc, char **argv) {
      *      ② ★★ 末尾必须 evas_object_show(g_win) —— 原代码从未show 窗口！
      */
     Evas_Object *box = elm_box_add(g_win, 0 /* vertical */);
+    /* ★★★ v7（U2 真因修复）：box 的 size hint 决定窗口尺寸。
+     *   v6 实测日志：`win geom after show = 1x53` —— 因为下面所有子项的
+     *   min hint 宽度都写成 0，box 的最小宽度被算成 1 像素 ⇒ 窗口只有 1px 宽
+     *   ⇒ 视觉上"完全看不见"（对象确实都建好了）。
+     *   ⇒ 必须给 box 自己一个明确的最小尺寸。 */
+    evas_object_size_hint_min_set(box, 720, 480);
     evas_object_show(box);
     elm_win_resize_object_add(g_win, box);
 
@@ -764,7 +845,7 @@ int main(int argc, char **argv) {
      elm_label_alignment_set（已用 ELF 符号表逐个核实），
      颜色统一走 evas_object_color_set —— 它在 libevas.so.1 里确实存在。*/
     evas_object_color_set(g_title, 255, 200, 80, 255);
-    evas_object_size_hint_min_set(g_title, 0, 28);
+    evas_object_size_hint_min_set(g_title, 720, 28);   /* ★ v7：给宽度，别留 0 */
     elm_box_pack_end(box, g_title);
     evas_object_show(g_title);
 
@@ -802,6 +883,9 @@ int main(int argc, char **argv) {
     logf_("step: title done, creating scroller\n");
     Evas_Object *scroll = elm_scroller_add(box);
     evas_object_color_set(scroll, 24, 24, 24, 255);
+    /* ★ v7：scroller 也要尺寸 hint，否则它在 box 里也是 0 宽 */
+    evas_object_size_hint_min_set(scroll, 720, 400);
+    evas_object_size_hint_weight_set(scroll, 1.0f, 1.0f);
     evas_object_show(scroll);
     elm_scroller_policy_set(scroll, 1 /*h*/, 1 /*v*/);
     elm_box_pack_end(box, scroll);
@@ -821,8 +905,9 @@ int main(int argc, char **argv) {
 
     logf_("step: creating status label\n");
     g_status = elm_label_add(box);
+    apply_label_font(g_status);          /* ★ v4：状态栏同样必须设字体 */
     evas_object_color_set(g_status, 120, 255, 160, 255);
-    evas_object_size_hint_min_set(g_status, 0, 26);
+    evas_object_size_hint_min_set(g_status, 720, 26);   /* ★ v7：给宽度 */
     elm_box_pack_end(box, g_status);
     evas_object_show(g_status);
     sel_changed();
@@ -830,6 +915,24 @@ int main(int argc, char **argv) {
     /* ★★★ show 窗口 —— 缺这行窗口不可见 */
     logf_("step: showing window\n");
     evas_object_show(g_win);
+    /* ★ v8（U2 真因修复·第二步）：
+     *   v7 实测 `win geom = 720x53` 而 `box geom = 720x480` —— 宽度修好了（1→720），
+     *   但高度停在 53。原因：elm 把窗口尺寸算成 box 的【自然高度】
+     *   = title(28) + status(26) ≈ 53（带 weight 的 scroller 不计入自然尺寸）。
+     *   ⇒ fullscreen + show 后再强制 resize 一次，双保险。 */
+    elm_win_fullscreen_set(g_win, 1);
+    evas_object_resize(g_win, 720, 480);
+    elm_win_activate(g_win);
+    {
+        int gx = -1, gy = -1, gw = -1, gh = -1;
+        evas_object_geometry_get(g_win, &gx, &gy, &gw, &gh);
+        logf_("step: win geom after show = %dx%d @ (%d,%d)\n", gw, gh, gx, gy);
+    }
+    {
+        int bx = -1, by = -1, bw = -1, bh = -1;
+        evas_object_geometry_get(box, &bx, &by, &bw, &bh);
+        logf_("step: box geom = %dx%d @ (%d,%d)\n", bw, bh, bx, by);
+    }
 
     /*★★★★★★ 主循环：★ 不再用 elm_run（这个构建上它立即返回），改用
      *   ecore_main_loop_iterate —— ★★ mod_gui 实证使用的写法
@@ -841,7 +944,20 @@ int main(int argc, char **argv) {
      */
     logf_("step: entering ecore_main_loop_iterate loop (quit=%d)\n", g_quit);
 
-    if (p_ecore_main_loop_iterate) {
+    /* ★★★ v5 实验（2026-10-08）：排查"进程起来但屏幕看不到窗口"
+     *
+     *   事实：mod_gui（同为独立 EFL 进程、由 telnet 起）【能显示】；
+     *         本程序不能。两者已逐项比对：
+     *           env  —— 相同（DISPLAY=:0 / LD_LIBRARY_PATH 含 /usr/lib/driver /
+     *                   ELM_PROFILE=mobile / EVAS_GL_NO_BLACKLIST=1 …）
+     *           fd   —— 相同（都持有 /dev/dri/card0 + /dev/ump）
+     *           win API —— 相同（elm_win_add + elm_win_resize_object_add + evas_object_show）
+     *         ⇒ 唯一实质差异：本程序只跑 ecore_main_loop_iterate()，
+     *           ★ 从不调用 elm_run()。
+     *   ⇒ 设 NXFUI_ELMRUN=1 强制走 elm_run（elementary 正规主循环，
+     *     内部驱动 evas render + 屏幕 flush）。★ 默认行为不变（便于对照，铁律 118）。
+     */
+    if (p_ecore_main_loop_iterate && !getenv("NXFUI_ELMRUN")) {
         int spin = 0;
         int r0 = -999;
         while (!g_quit) {

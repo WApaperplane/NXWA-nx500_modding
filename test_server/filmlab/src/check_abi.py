@@ -20,7 +20,12 @@ HERE = Path(__file__).parent
 ROOT = HERE.parent.parent.parent  # -> 仓库根
 
 PROVIDERS = [ROOT / "scripts" / "mod_gui",
-             ROOT / "test_server" / "appprobe" / "di-camera-app"]
+             ROOT / "test_server" / "appprobe" / "di-camera-app",
+             # ★ 2026-10-08（工作流 D7）：第三个白名单来源 ——
+             #   离线 CJK 光栅化程序，已在相机 rootfs（chroot + qemu-arm-static）里
+             #   跑通出图，是 **evas 纯文本 API（evas_object_text_*）的第一手等价证据**。
+             #   没有它，nxfilmui v4 新加的字体调用会被误判为"无真机证据"。
+             ROOT / "test_server" / "filmlab" / "src" / "out" / "cjk_render.arm"]
 
 SRC = HERE / "nxfilmui.c"
 
