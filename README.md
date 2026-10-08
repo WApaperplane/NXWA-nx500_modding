@@ -9,6 +9,8 @@ Samsung NX500 / NX1 (Tizen / DRIMe5) 增强固件 mod —— 基于社区
 
 **分支说明 / Branches**: `master` = 上游原始历史(勿动)；**`nx-ks2` = 本项目源码(本文档所在分支)**。
 
+**许可证与血缘 / License**: **AGPL-3.0**（派生自社区上游 `nx500_nx1_modding`，已复核其为 AGPL-3.0）—— 上游血缘表与发布前核对清单见 [ATTRIBUTION.md](ATTRIBUTION.md)。
+
 ## 特性亮点 / Highlights
 
 - **FilmLab 胶片配方**：18 条胶片风格（负片 / 反转 / 黑白 / 电影）；机身 **`EV+AEL` → 点配方 → 画面立即生效（2 步）**，无需进 Fn 菜单。配方库在 SD 卡（可编辑、可扩充），菜单自动生成。

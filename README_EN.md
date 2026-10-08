@@ -7,6 +7,8 @@ community [`nx500_nx1_modding`](https://github.com/SamsungNX500/nx500_nx1_moddin
 
 **Branches**: `master` = untouched upstream history (do not touch); **`nx-ks2` = this project's source (the branch this document lives on)**.
 
+**License & attribution**: **AGPL-3.0** (derived from the community `nx500_nx1_modding` upstream, verified to be AGPL-3.0 itself) — upstream lineage table and the pre-release checklist live in [ATTRIBUTION.md](ATTRIBUTION.md).
+
 ## Highlights
 
 - **FilmLab film recipes** — 18 film looks (negative / slide / B&W / cinema). On the camera: **`EV+AEL` → tap a recipe → the look is applied immediately (2 steps)**, no Fn menu needed. The recipe library lives on the SD card (editable, extensible); the menu is generated automatically.
