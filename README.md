@@ -1,4 +1,4 @@
-# NX-KS2
+# NX-WA
 
 Samsung NX500 / NX1 (Tizen / DRIMe5) 增强固件 mod —— 基于社区  
 [nx500\_nx1\_modding](https://github.com/SamsungNX500/nx500_nx1_modding) 上游改造与扩展。
