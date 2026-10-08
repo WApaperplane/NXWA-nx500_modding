@@ -7,13 +7,22 @@ Samsung NX500 / NX1 (Tizen / DRIMe5) 增强固件 mod —— 基于社区
 > `nx500_nx1_modding` upstream.  
 > **English version: [README_EN.md](README_EN.md)**
 
-**分支说明 / Branches**: `master` = 上游原始历史(勿动)；**`nx-ks2` = 本项目源码(本文档所在分支)**。
+**本 fork 仓库 / This fork**: **[WApaperplane/nxwa](https://github.com/WApaperplane/nxwa)**
+（2026-10-08 起由 `nx500_nx1_modding` 的 fork **更名为 `nxwa`**，以后以此为准；相机端安装路径 `/opt/usr/nx-ks/` 保持不变。）
+
+**分支说明 / Branches**: `master` = 上游原始历史(勿动)；**`nxwa` = 本项目源码(本文档所在分支)**。
 
 **许可证与血缘 / License**: **AGPL-3.0**（派生自社区上游 `nx500_nx1_modding`，已复核其为 AGPL-3.0）—— 上游血缘表与发布前核对清单见 [ATTRIBUTION.md](ATTRIBUTION.md)。
 
 ## 特性亮点 / Highlights
 
-- **FilmLab 胶片配方**：18 条胶片风格（负片 / 反转 / 黑白 / 电影）；机身 **`EV+AEL` → 点配方 → 画面立即生效（2 步）**，无需进 Fn 菜单。配方库在 SD 卡（可编辑、可扩充），菜单自动生成。
+- **FilmLab 胶片配方**：18 条胶片风格（负片 / 反转 / 黑白 / 电影）；机身 **`EV+AEL` → 点配方 → 画面向导选「自定义1」生效（3 步）**，无需进 Fn 菜单。配方库在 SD 卡（可编辑、可扩充），菜单自动生成。  
+  ★ 2026-10-08 上机实测定论：此前记录的"点配方即生效（2 步）"**不成立**。PW 生效是三条独立通道 ——
+  **① 存储 `prefman` / ② 选择 `setusr 20`** 都只改"选哪个风格"，**打不到 ISP 的 PW 引擎**；
+  **③ 参数** 走 app 内部属性总线（`CAttributeHandler::setPWColor… → set_attribute(0x10e/0x110/0x111/0x112)`），
+  而 `st` 命令面**不暴露**它 ⇒ 从 shell 侧"点一下即生效"在架构上做不到。
+  ★ 现在可以**客观判定**：`sh /opt/usr/nx-ks/filmlab.sh check` 直接读 ISP 手上那 7 维，
+  与配方槽位比对（只读、零风险）。细节见 `docs/current/PW_PARAM_CHANNEL_2026-10-08.md`。
 - Web 遥控 (`nx-rc`) 网页相册：**折叠目录模型** —— 目录倒序、默认只展开最新目录、  
   按需加载 + 缩略图缓存，根治单核 CPU 上目录多导致的首屏卡顿。
 - 相册**实时目录源**：8080 端口 `dirlist` CGI 每次请求直接 readdir SD 卡，  

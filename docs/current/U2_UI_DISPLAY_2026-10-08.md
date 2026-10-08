@@ -180,6 +180,9 @@ rm -rf /opt/usr/nx-ks/filmlab /opt/usr/nx-ks/flab_ui.sh
 
 ## 8. ★★★ 最终形态（21:15 更新）：EV+AEL → 点配方 → 立即生效（2 步）
 
+> ⛔ **本节结论已于 2026-10-08 晚被用户实机复测证伪，勿再引用。**
+> 见 **§9**（真因 + 引擎改动）。此处保留原文仅作排查过程留档。
+
 ### 8.1 用户诉求
 
 原链路 4 步：开菜单 → 选配方 → 进图片向导 → 选 Slot9 确认。要求更短。
@@ -219,4 +222,84 @@ EV + AEL  →  配方菜单  →  点 Portra 400  →  画面立即生效 ✅
 用 telnet 跑 `apply` 时，`st app mode` 重建 UI 会**中断 telnet 会话**，脚本后半段输出丢失
 （**功能不受影响**：slot 与模式都正确；从菜单点击时无此问题）。
 
+---
+
+## 9. ⛔ 纠错：§8 的"2 步链路"不成立（2026-10-08 晚 · 用户实机复测）
+
+### 9.1 实测结论
+
+```
+真实链路：机身 EV+AEL → 点配方 → 打开画面向导 → 选中「自定义1」 → 画面生效
+         （§8 声称的「点配方即生效」不成立 —— 最后一步省不掉）
+```
+
+### 9.2 断在哪一环：③ 参数通道
+
+| 通道 | 命令 | 写在哪儿 | 画面会变吗 |
+|---|---|---|---|
+| ① 存储 | `prefman set 0 0xa3ec…` | 偏好存储（槽位数据） | ❌ |
+| ② 选择 | `setusr 20 0x14000N` | "当前选哪个 PW" | ❌（ISP 换风格了，但手里那 7 维参数是旧的） |
+| ③ **参数** | PW 引擎运行时的 7 维副本 | 只有 app 的"画面向导"会推 | ✅ |
+
+★★ 静态证据（本轮新挖出，决定性地解释"为什么必须是画面向导"）：
+
+```
+di-camera-app → CAttributeHandler::setPWColor / setPWSaturation / setPWSharpness / setPWContrast
+              → set_attribute(0x10e / 0x110 / 0x111 / 0x112, &v, 4)
+   （符号与调用点：test_server/pwfilter/CAPTURE_FW.md §6）
+```
+
+- 这一套是**属性总线**，与 capdtm 的 userdata 总线（`0x14xxxx` 那套）**不是同一编号体系**；
+- ★ **`st` 命令面（`st cap capdtm` 只有 setusr/getusr/setvar/getvar/usrlist/varlist）不暴露属性总线**
+  ⇒ 任何"写 prefman / 改 setusr / 切拍摄模式"都到不了 ③；
+- 而在画面向导里点一次自定义1，app 会把该槽的 7 维参数**重新推给 PW 引擎** ⇒ 画面立刻变。
+
+★ 旁证：用户的操作是"（PW 已停在自定义1 的情况下）再选一次自定义1" ——
+  ② 通道的值**根本没变化**，画面却变了 ⇒ 变的一定是 ③。
+
+### 9.3 已落到引擎的改动（本次）
+
+| 改动 | 内容 |
+|---|---|
+| ⬇ 降级 | `trigger_reload()`（切拍摄模式）默认**关闭**，仅 `FILMLAB_MODE=1` 启用（它会重建 UI、打断 telnet，收益已证伪） |
+| ⬆ 新增 | `pw_push_vars()` —— 用 ③ 通道等价物 `st cap capdtm setvar VARIABLE_PW*` 推 7 维参数 |
+| ⬆ 新增 | `filmlab.sh pwvar` —— **安全探测** ③ 通道可用写法（只写 ±1 并立即还原；先 `getvar` 回读语义校验，读不到就不写），结果缓存 `/mnt/mmc/filmlab/pwvar.fmt` |
+| ⬆ 新增 | `filmlab.sh reload` —— 只重触发、不写配方（配方没变但画面没跟上时用） |
+| 🔧 调整 | `pw_force_reload()` 借道值优先级：**另一个自定义槽**（默认）> STANDARD（`FILMLAB_MID=standard` 可退回） |
+| 📣 提示 | `apply` 结尾按 ③ 通道状态打印**下一步该做什么**（未探明时明确要求"进画面向导选自定义1"） |
+
+★ 判定顺序（上机一次性做完）：
+```
+1) sh filmlab.sh pwvar          # 探明 ③；期间盯取景器（±1 变化肉眼看不出，只看是否报 [OK]）
+2) sh filmlab.sh apply portra400   # 3 通道全推，看画面是否【立刻】变
+3) 若仍不变 → sh filmlab.sh reload 再试；仍不变 ⇒ ③ 不可达，保持"进画面向导"这一步
+```
+★ 纪律：③ 是**运行时通道**，`pwvar` 单次只碰 1 个变量、4 个候选，输出很小（铁律 88）。
+
 *生成：2026-10-08 · 上机轨 U2 · 相机地址已脱敏*
+
+---
+
+## 10. ★★★ 上机定论（2026-10-08 23:00 · 相机在线复测）
+
+§9 的"三通道"模型**成立并被实测证实**（细节见
+[`PW_PARAM_CHANNEL_2026-10-08.md`](PW_PARAM_CHANNEL_2026-10-08.md)）：
+
+| 通道 | 动作 | ISP 的 7 维变量 |
+|---|---|---|
+| ① 存储 | `prefman set ×7`（+`save 0`+`sync`） | ❌ 纹丝不动（仍 88/111/125 / SAT15） |
+| ② 选择 | `setusr 20 0x140009`（含借道） | ❌ 只改 `eIQ_ID_EFFECT_MODE` |
+| ③ 参数 | app「画面向导→确认」 | ✅ 唯一有效 |
+
+- ★ **客观判据已找到并落地为命令**：`st cap capdtm varlist` 的 PW 变量 = ISP 手上的 7 维，
+  编码已解（`PWCOLOR_x = gain<<16|0x00FF`；`PW{HUE,SAT,SHARP,CON} = (10+offset)<<16|0xD80A`
+  形态用 `(b>>4)` 取偏移）。`filmlab.sh check` 一条命令直接给判词。
+- ★ `st cap iqr` 不适合做判据：PW 变化只动 `eIQ_ID_EFFECT_MODE` 一个节点。
+- ★ 不再有任何"shell 侧一键"的幻想：③ 走属性总线（`0x10e/0x110/0x111/0x112`），
+  `st cap` 全家（capt/fenx/live/dp/seq/capmm/face/back/capdtm）都没有入口。
+- 新候选（未通）：**A** `st app nx key` 键注入（命令在、键名表未解）；
+  **B** 自写用户态助手直调属性总线（需先解 `set_attribute` 传输层）。
+- 现实链路仍是 3 步，且**只有第 3 步有效** —— 已同步进 README / RE_PROGRESS。
+- ★★ **闭环已验（23:13）**：apply 后 ✗（ISP=88/111/125）；木一在机身点一次「画面向导→自定义1」后
+  **✓（ISP=108/100/93 11/9/8/7 = slot9）**。⇒ ③ 唯一性实证，判据双向验证通过。
+- 键注入（`st app nx key`）实测**未生效**（S1 不锁 AF、S2 不出片）⇒ 归入独立里程碑。

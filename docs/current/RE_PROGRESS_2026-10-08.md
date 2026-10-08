@@ -179,9 +179,21 @@ SoC：DRIMe5（双核）
 | 实时切换 | `setusr 20 0x14000N`；★ 槽 11 → enum 12（**off-by-one**）；enum 11 是空洞 |
 | enum 回显 | 有 bug（N=10/11 都显示 CUSTOM2）⇒ **信 prefman 读回，不信 enum 回显** |
 
-- ★★ **PW 重载机制**：`di-camera-app` 用**自己进程内的 PW 副本**；外部写（`setusr 20`、`prefman`）**不刷新取景器**。
-  唯一刷新法 = **切换拍摄模式**（`st app mode p; sleep 1; st app mode a`）⇒ 重建 ISP 管线 ⇒ prefman 重读。
-  已实现为 `trigger_reload()`。
+- ★★ **PW 生效 = 三条独立通道，缺 ③ 画面不变**（2026-10-08 晚纠错，旧"切模式即可"**已证伪**）：
+  | 通道 | 命令 | 作用范围 |
+  |---|---|---|
+  | ① 存储 | `prefman set 0 0xa3ec…` | 只改槽位数据（偏好存储） |
+  | ② 选择 | `setusr 20 0x14000N` | 只改"当前选哪个 PW"（ISP 换风格，但手中 7 维参数是旧的） |
+  | ③ **参数** | app「画面向导→确认自定义1」推送（属性总线 `0x10e/0x110/0x111/0x112`） | ★ **只有这条能让画面立刻变**；shell 侧**无入口**（setvar 实测不通且危险） |
+  - di-camera-app 自己走 ③ 的等价物：`CAttributeHandler::setPWColor/Saturation/Sharpness/Contrast`
+    → `set_attribute(0x10e/0x110/0x111/0x112, &v, 4)`（`test_server/pwfilter/CAPTURE_FW.md` §6），
+    该属性总线 **`st` 命令面不暴露** ⇒ 这就是"必须进画面向导点一次自定义1"的根因。
+  - ★ 实测链路（用户 2026-10-08 晚复测）：`EV+AEL → 点配方 → 打开画面向导 → 选中自定义1 → 画面生效`。
+    "切一次拍摄模式 (`st app mode p;…;a`) 即刷新" **不成立**。
+  - ★★ **上机实测（2026-10-08 23:00）**：① ② `save` 全都不搬参数；判据 = `varlist` 的 PW 变量
+    （`filmlab.sh check` 一条命令给判词，详见 `PW_PARAM_CHANNEL_2026-10-08.md`）。
+  - 引擎已改：`trigger_reload()` 降级为可选（`FILMLAB_MODE=1`，默认关）；apply 补 `prefman save 0`（否则重启回退）；
+    新增 `filmlab.sh check`（只读判据）+ `reload`（只重触发）；`pwvar`（setvar 探测）**作废**。
 - ★ `SAT=0` = 真黑白；**保留 R/B 增益差 = 暖调/冷调黑白**（相机独有，PC 端矩阵引擎做不到）。
 
 ### 5.2 ISP 参数块（路径 B，不刷固件）

@@ -1,16 +1,17 @@
-Metol — Samsung NX (DRIMe5 / Tizen) enhancement & research project
+NX-WA — Samsung NX (DRIMe5 / Tizen) enhancement & research project
 
-version        2.88.0-metol.1
-bloodline      NX-KS 2.88 (KinoSeed)  +  nx500_nx1_modding (fork 血缘)
+version        2.88.0-nxwa.1
+repo           https://github.com/WApaperplane/nxwa   ★ fork 项目名（2026-10-08 定案）
+bloodline      NX-KS 2.88 (KinoSeed)  +  nx500_nx1_modding (上游血缘)
 camera-path    /opt/usr/nx-ks/          ★ 相机端安装路径【保持不变】，改名只改项目名
 license        AGPL-3.0（见 LICENSE；派生自 AGPL 上游 ⇒ 必须同证）
 
 命名说明
-  Metol（米吐尔）= 银盐显影工艺里最经典的主显影剂。
-  语义双关：显影 = 让潜影显出来 = 逆向；且不绑死机型（未来可扩到 DRIMeIV 机型）。
+  NX-WA = NX + WA（作者 ID WApaperplane），项目名以 GitHub 仓库 `nxwa` 为准。
+  内部曾用代号 Metol（米吐尔，银盐显影主剂）；仅作历史代号，不再作发布名。
 
 版本号规则（建议）
-  <NX-KS 血脉>.<Metol 主版本>.<补丁>
-  例：2.88.0-metol.1  = 基于 NX-KS 2.88 的第 1 个 Metol 版本
+  <NX-KS 血脉>.<主版本>.<补丁>
+  例：2.88.0-nxwa.1  = 基于 NX-KS 2.88 的第 1 个 NX-WA 版本
 
-生成：2026-10-08（工作流总表 D8）
+生成：2026-10-08（工作流总表 D8；命名于同日修正为 nxwa）

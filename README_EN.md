@@ -1,17 +1,22 @@
-# NX-KS2
+# NX-WA
 
 An enhancement mod for the **Samsung NX500 / NX1** (Tizen / DRIMe5), built on the
 community [`nx500_nx1_modding`](https://github.com/SamsungNX500/nx500_nx1_modding) upstream.
 
+**This fork**: **[WApaperplane/nxwa](https://github.com/WApaperplane/nxwa)**
+(renamed from the `nx500_nx1_modding` fork to **`nxwa`** on 2026-10-08 and authoritative from now on; the on-camera install path `/opt/usr/nx-ks/` is unchanged).
+
 > 这是一个三星 NX500 / NX1 相机的增强 mod，基于社区上游工程改造与扩展。中文版见 [README.md](README.md)。
 
-**Branches**: `master` = untouched upstream history (do not touch); **`nx-ks2` = this project's source (the branch this document lives on)**.
+**Branches**: `master` = untouched upstream history (do not touch); **`nxwa` = this project's source (the branch this document lives on)**.
 
 **License & attribution**: **AGPL-3.0** (derived from the community `nx500_nx1_modding` upstream, verified to be AGPL-3.0 itself) — upstream lineage table and the pre-release checklist live in [ATTRIBUTION.md](ATTRIBUTION.md).
 
 ## Highlights
 
-- **FilmLab film recipes** — 18 film looks (negative / slide / B&W / cinema). On the camera: **`EV+AEL` → tap a recipe → the look is applied immediately (2 steps)**, no Fn menu needed. The recipe library lives on the SD card (editable, extensible); the menu is generated automatically.
+- **FilmLab film recipes** — 18 film looks (negative / slide / B&W / cinema). On the camera: **`EV+AEL` → tap a recipe → pick "自定义1" in the Picture Wizard UI (3 steps)**; no Fn menu digging needed. The recipe library lives on the SD card (editable, extensible); the menu is generated automatically.  
+  ★ Measured on-camera (2026-10-08): the previously documented "tap a recipe and it applies immediately (2 steps)" is **not reproducible**. Applying a recipe is three independent channels — **① storage (`prefman`) and ② selection (`setusr 20`)** only change *which* style is selected and **never reach the ISP's PW engine**; **③ parameters** are pushed by the app over its internal **attribute bus** (`CAttributeHandler::setPWColor… → set_attribute(0x10e/0x110/0x111/0x112)`), which the `st` command surface does **not** expose — so "one tap applies it" is architecturally impossible from a shell script.
+  ★ You can now **verify objectively**: `sh /opt/usr/nx-ks/filmlab.sh check` reads the 7 values the ISP is actually using and compares them with the recipe slot (read-only, zero risk). Details: `docs/current/PW_PARAM_CHANNEL_2026-10-08.md`.
 - **Web remote (`nx-rc`) photo gallery** — *collapsed directory model*: directories in reverse order, only the newest expanded by default, lazy loading + thumbnail cache. Fixes the first-paint stall on a single-core CPU when the SD card holds many directories.
 - **Live directory source for the gallery** — the `dirlist` CGI on port 8080 does a real `readdir` on every request, so brand-new photos appear instantly (the port-80 daemon's list is a boot-time snapshot; new photos never show up there).
 - **Thumbnail pre-warm** — enabling the remote spawns a background warmer (grid 320 px × newest 300 + lightbox 1024 px × newest 60, under `nice -n 19`, never disturbing shooting). The frontend shows progress; failed loads retry automatically.

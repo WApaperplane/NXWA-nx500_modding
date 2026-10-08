@@ -93,59 +93,95 @@ get_tint()    { V=$(prefman get 0 "$(printf 0x%05x $WB_MANUAL_BA)" l 2>/dev/null
                 echo "A=$(( (V >> 16) & 0xffff )) B=$(( V & 0xffff ))"; }
 get_wb() { prefman get 0 "$(printf 0x%05x $WB_K)" l 2>/dev/null | tr -d '\r' | sed -n 's/.*value = \([-0-9]*\).*/\1/p'; }
 
-# ---- 强制ISP 重读 PW 段（2026-10-05 修正）--------------------------------
-#★ 为什么需要这个函数（★ 一个真实的逻辑 bug）
-#   旧apply 的收尾动作是 `setusr 20 $NEED`「写完再切一次，让 ISP 重读」。
-#   但FilmLab 固定写 slot 9 → enum 恒为 9 → 连按两次同一个 enum。
-#   ★ 第二次 setusr 写入的是【与当前完全相同的值】= 空操作，
-#     ISP 收不到"风格变了"的通知 → 【不重读 PW 段】→ 画面不变。
-#   ★ 这就是"按S1 没反应、必须回 GUI 把图片向导切走再切回来才生效"的根因。
-#     它不是延迟，是那次setusr 根本没生效。
+# =====================================================================
+# ★★★ PW「画面生效」—— 上机实测定论（2026-10-08 夜，NX500 v1.12）
+# ---------------------------------------------------------------------
+# 三条独立通道，缺第 ③ 条画面就不会变；而 ③ **`st` 命令面够不到**：
 #
-# ★ 正确的做法：制造一次【真实变化】。
-#   enum 不同 → 直接切（本身就是变化，会触发重读）
-#   enum 相同 → 先切到别处（STANDARD= 0x140000），再切回来 = 一次真实变化
+#   ① 存储  prefman set 0 0xa3ec…        ⇒ 只改 Linux 侧偏好存储（槽位 RAM 副本）
+#   ② 选择  setusr 20 0x14000N          ⇒ 只改 eIQ_ID_EFFECT_MODE（"选哪个风格"）
+#   ③ 参数  PW 引擎手里的 7 维副本        ⇒ ★ 只有它能改变画面
+#                                        只有 di-camera-app 的"画面向导确认"会推它
+#
+# ★ 实测证据（2026-10-08，客观判据 = `st cap capdtm varlist` 的 PW 变量）：
+#   apply trix400 后：prefman slot9 = 100/100/100 10/0/13/12（读回确认已写）
+#                     但 ISP 的 VARIABLE_PWCOLOR_R/G/B 与 PWSATURATION **纹丝不动**
+#                     （仍是上一套 88/112/125 / SAT偏移5）
+#   加 prefman save 0 + sync 后：仍不动。
+#   ⇒ 结论：① ② save 全都不搬参数；③ 只能由 app 的 PW 菜单确认触发。
+#   ⇒ setvar 这条路也不通：varlist 显示下标 ≠ setvar/getvar 的 id（id 运行时注册），
+#     而历史记录里"盲扫 id"直接写死过 p7 capture 服务 ⇒ 【本项目禁止再试】。
+#
+# ★ 与 3D LUT 同源：app 推参数走的是【属性总线】
+#     CAttributeHandler::setPWColor/Saturation/Sharpness/Contrast
+#       → set_attribute(0x10e/0x110/0x111/0x112, &v, 4)
+#   该总线不在 `st cap` 里（capdtm 只有 setusr/getusr/setvar/getvar/usrlist/varlist 六个子命令）。
+#
+# ⇒ 本引擎的立场（诚实版）：
+#   · ① 写槽 + prefman save（持久化；★ 不 save 则重启回退，实测过）
+#   · ② 借道切到目标槽（保证"选择"真的发生，虽然它不搬参数）
+#   · ③ **不假装能做到**：改为 `filmlab.sh check` —— 只读判据，直接读 ISP 那 7 维，
+#        和 prefman 槽位比对，一眼看出"参数进没进 ISP"。
+#   · 画面生效的最后一步目前必须由人来点：打开「画面向导」→ 选中「自定义1」。
+#     要自动化这一步，唯一干净的路是"app 自己的确认动作"（`st app nx key` 键注入
+#     或用户态助手直调属性总线）—— 属下一里程碑，未打通前不写进链路。
+# =====================================================================
+
+FILMLAB_MODE=${FILMLAB_MODE:-0}     # 1 = 保留旧的「切模式」触发（默认关）
+FILMLAB_SAVE=${FILMLAB_SAVE:-1}     # 1 = apply 后 prefman save（默认开；否则重启回退）
+FILMLAB_MID=${FILMLAB_MID:-custom}  # custom(默认)=借道另一个自定义槽 | standard=旧行为
+
+# ---- userdata(20) 读写（★ getusr/setusr 只认【十进制索引或名字】）----
+getusr20() {
+  st cap capdtm getusr 20 2>/dev/null | tr -d '\r' \
+  | sed -n 's/.*UserData is [A-Z_0-9]* (\(0x[0-9a-f]*\)).*/\1/p'
+}
+setusr20() { st cap capdtm setusr 20 "$1" >/dev/null 2>&1; }
+
+# ---- ② 选择通道：确保 PW 真的切到目标槽（同值 = 空操作 ⇒ 要借道）----
+#★ 为什么需要这个函数（★ 一个真实的逻辑 bug）
+#   旧 apply 的收尾动作是 `setusr 20 $NEED`「写完再切一次，让 ISP 重读」。
+#   但 FilmLab 固定写 slot 9 → enum 恒为 9 → 连按两次同一个 enum。
+#   ★ 第二次 setusr 写入的是【与当前完全相同的值】= 空操作 ⇒ 什么都不会发生。
+#   修法：制造一次【真实变化】（借道一个不同的值再切回来）。
+# ★ 2026-10-08 调整借道值优先级：先另一个【自定义槽】，再 STANDARD。
+#   理由：厂商 9 风格的曲线硬编码在 ISP 常量里，切到厂商风格可能走与自定义槽
+#   不同的分支；自定义槽之间切换必然走「读槽位数据」的分支。
+#   FILMLAB_MID=standard 可退回旧行为（借道 STANDARD=0x140000）。
 _NEED_PW=0
 pw_force_reload() {
   TGT=$1
-  CUR=$(st cap capdtm getusr 20 2>/dev/null | tr -d '\r' \
-        | sed -n 's/.*UserData is [A-Z_0-9]* (\(0x[0-9a-f]*\)).*/\1/p')
+  CUR=$(getusr20)
   _NEED_PW=$CUR
-  # ★ 借道用的中间值：必须既不等于当前、也不等于目标，否则还是同值空操作。
-  #   优先用 CUSTOM_1(0x140009)，它在任何 FilmLab 场景下都不可能是目标
-  #   （FilmLab 只写 slot 9，槽位映射表里slot9=enum9，中间隔着原生槽）。
-  MID=0x140009
-  [ "$MID" = "$TGT" ] && MID=0x140000
-  [ "$MID" = "$TGT" ] && MID=0x14000a
   if [ "$CUR" = "$TGT" ]; then
-    st cap capdtm setusr 20 $MID >/dev/null 2>&1
+    # 借道候选：必须既不等于 CUR(=TGT)、也不等于 TGT
+    if [ "$FILMLAB_MID" = "standard" ]; then
+      CAND="0x140000 0x14000a 0x140009"
+    else
+      CAND="0x14000a 0x14000c 0x140000"
+    fi
+    MID=""
+    for c in $CAND; do
+      [ "$c" = "$TGT" ] && continue
+      MID=$c; break
+    done
+    [ -z "$MID" ] && MID=0x140000
+    setusr20 $MID
     $B sleep 1
-    st cap capdtm setusr 20 "$TGT" >/dev/null 2>&1
+    setusr20 "$TGT"
     $B sleep 1
     RELOAD=via-$MID
   else
-    st cap capdtm setusr 20 "$TGT" >/dev/null 2>&1
+    setusr20 "$TGT"
     $B sleep 1
     RELOAD=direct
   fi
   # ★ 自证：切完回读，确认真的落在目标上（不信 setusr 的退出码）
-  NOW=$(st cap capdtm getusr 20 2>/dev/null | tr -d '\r' \
-        | sed -n 's/.*UserData is [A-Z_0-9]* (\(0x[0-9a-f]*\)).*/\1/p')
+  NOW=$(getusr20)
   [ "$NOW" = "$TGT" ] || RELOAD="$RELOAD-VERIFY-FAIL(now=$NOW want=$TGT)"
 }
 
-# ★★★ trigger_reload —— 真正能触发 ISP 重读的那一步（2026-10-08 实机发现）
-#   为什么需要它（这一轮排查的结论）：
-#     · `pw_force_reload` 用 `setusr 20` 改 PW 类型 ⇒ 实测【画面不刷新】
-#     · 写 prefman 0xa3d4（APPPREF_EFFECT_PW_TYPE，UI 的 PW 类型字段）⇒ 也不刷新
-#       （而相机 UI 里手动切 PW 时，正是这个字段从 9→1 / 1→9 变化 —— 已用 diff 实证）
-#     · 真因：di-camera-app 用【自己进程内的 PW 参数副本】喂 ISP，
-#             外部改 prefman / capdtm 它不知道，所以画面不动。
-#   ★ 实测有效的触发方式 = 【切换一次拍摄模式】：
-#         di-camera-app 重建 ISP 管线时会重读 prefman 的 PW 参数 ⇒ 画面立即变。
-#   ★ 实机验证（2026-10-08）：`st app mode p; sleep 4; st app mode a`
-#         之后画面立刻从彩色变成刚 apply 的黑白（TriX 400）。
-#   ⇒ 有了它，链路 = 【打开菜单 → 点配方】两步，不再需要手动进 Fn 菜单选 PW。
+# ---- 旧触发：切一次拍摄模式（默认关闭，见上面的纠错）----
 trigger_reload() {
   M=$(st cap capdtm getusr DIALMODE 2>/dev/null | tr -d '\r' \
       | sed -n 's/.*UserData is DIALMODE_\([A-Z_]*\).*/\1/p')
@@ -169,6 +205,92 @@ trigger_reload() {
   RELOAD2="mode-switch($TMP->$M2)"
 }
 
+# ---- ③ 参数通道：状态判据（读 ISP 的 PW 运行时变量）---------------------
+# ★★ 2026-10-08 上机实测（决定性，见 docs/current/PW_PARAM_CHANNEL_2026-10-08.md）：
+#   · ① prefman set 后，ISP 的 PW 变量**纹丝不动** —— 存储层与运行时是两份数据
+#   · ② setusr 20 只改 eIQ_ID_EFFECT_MODE（风格名），**不搬那 7 维参数**
+#   · prefman save 0 + sync 也**不搬**
+#   · setvar 写不进去：varlist 显示下标 ≠ setvar/getvar 的 id（id 是运行时注册的，
+#     且历史上盲扫 id 写死过 p7 capture 服务 ⇒ 【禁止盲试】）
+#   ⇒ 所以本引擎**不做参数推送**（做不到），改为提供**客观判据**：
+#     直接读 ISP 手上那 7 维的值，和 prefman 里该槽的值比 —— 一眼看出"参数进没进 ISP"。
+#
+# ISP 变量编码（实测解出）：
+#   VARIABLE_PWCOLOR_R/G/B  = (gain20 << 16) | 0x00FF   ⇒ gain ≈ (v>>16)/20.32
+#   VARIABLE_PW{HUE,SATURATION,SHARPNESS,CONTRAST} = (b<<16) | 0xD80A
+#                            ⇒ 值 = 10 + (b>>4)（低 nibble 恒 0xF，是标记位）
+#   [14] VARIABLE_PWCOLOR 恒为 "----------"（聚合项，未定义）
+# 用法: st cap capdtm varlist  → 抓 PW 行（只读，零风险）
+isp_pw_snapshot() {
+  # ★ 用 -F'|' 取第 4 列（varlist 列序: [idx]| NAME | len | ID(Hex) | ID(Dec)|）
+  #   别用 gsub(/.*\|/)——贪婪匹配会吃到最后一列的数字，把 hex 读成十进制值。
+  st cap capdtm varlist 2>/dev/null | tr -d '
+' | sed 's/\[[0-9;]*m//g'   | /opt/usr/nx-ks/busybox awk -F'|' '
+    /VARIABLE_PWCOLOR_[RGB]|VARIABLE_PWHUE|VARIABLE_PWSATURATION|VARIABLE_PWSHARPNESS|VARIABLE_PWCONTRAST/ {
+      n = $2; gsub(/VARIABLE_/, "", n); gsub(/ /, "", n)
+      h = $4; gsub(/ /, "", h)
+      if (n != "" && h != "") print n" "h
+    }'
+}
+# 从快照取某变量的 hex（不含 0x 前缀；取不到返回空）
+snap_hex() {
+  echo "$SNAP" | while read -r n h; do
+    [ "$n" = "$1" ] || continue
+    echo "${h#0x}"
+  done
+}
+# 标量变量解码：raw16(有符号) = 16*(值-10)+15 ⇒ 值 = 10 + (raw16-15)/16
+sgn_scalar() {
+  H=$(( 0x$1 >> 16 ))
+  [ "$H" -ge 32768 ] && H=$(( H - 65536 ))
+  echo $(( 10 + (H - 15) / 16 ))
+}
+# 把 ISP 的 7 维解出来并打印 + 与 prefman 槽位比对
+# 返回 ISP_SYNC=yes|no|unknown
+check_isp_pw() {
+  SLOT=${2:-9}
+  SNAP=$(isp_pw_snapshot)
+  if [ -z "$SNAP" ]; then
+    echo "  ★ 读不到 ISP PW 变量（varlist 无输出）⇒ 判据不可用"; ISP_SYNC=unknown; return 0
+  fi
+  VR=$(snap_hex PWCOLOR_R); VG=$(snap_hex PWCOLOR_G); VB=$(snap_hex PWCOLOR_B)
+  [ -z "$VR" ] && { echo "  ★ 快照里没有 PWCOLOR_R ⇒ 判据不可用"; ISP_SYNC=unknown; return 0; }
+  # 高 16 位 / 20.32 ≈ 增益（÷20.32 用整数近似：×100/2032）
+  IR=$(( (0x$VR >> 16) * 100 / 2032 ))
+  IG=$(( (0x$VG >> 16) * 100 / 2032 ))
+  IB=$(( (0x$VB >> 16) * 100 / 2032 ))
+  NH=$(snap_hex PWHUE); NSS=$(snap_hex PWSATURATION)
+  NSH=$(snap_hex PWSHARPNESS); NC=$(snap_hex PWCONTRAST)
+  # ★ 高 16 位是【有符号】的 16*(值-10)+15 —— 必须按补码还原，否则负偏移会被
+  #   当成 0xFF=255 解出 25（2026-10-08 实测踩过：SAT=9 的原始值就是 0xFFFF）。
+  IH=$(sgn_scalar "$NH"); IS=$(sgn_scalar "$NSS")
+  IP=$(sgn_scalar "$NSH"); IC=$(sgn_scalar "$NC")
+  echo "  ISP 现用参数:  R/G/B=$IR/$IG/$IB  HUE=$IH SAT=$IS SHARP=$IP CON=$IC"
+  # 槽位值
+  P0=$(get_r 0 $SLOT); P1=$(get_r 1 $SLOT); P2=$(get_r 2 $SLOT)
+  P3=$(get_r 3 $SLOT); P4=$(get_r 4 $SLOT); P5=$(get_r 5 $SLOT); P6=$(get_r 6 $SLOT)
+  echo "  prefman slot$SLOT: R/G/B=$P0/$P1/$P2  HUE=$P3 SAT=$P4 SHARP=$P5 CON=$P6"
+  ISP_SYNC=no
+  # 颜色只比【比例】（绝对值有量化差）：以 G 为 1
+  if [ -n "$IG" ] && [ "$IG" != 0 ] && [ -n "$P1" ] && [ "$P1" != 0 ]; then
+    a=$(( IR * 1000 / IG )); b=$(( P0 * 1000 / P1 ))
+    d=$(( a - b )); [ $d -lt 0 ] && d=$(( -d ))
+    a=$(( IB * 1000 / IG )); b=$(( P2 * 1000 / P1 ))
+    e=$(( a - b )); [ $e -lt 0 ] && e=$(( -e ))
+    if [ $d -le $(( b / 20 )) ] && [ $e -le $(( b / 20 )) ]; then
+      # 比例对上了：再看 4 个标量（必须逐个相等）
+      if [ "$IH" = "$P3" ] && [ "$IS" = "$P4" ] && [ "$IP" = "$P5" ] && [ "$IC" = "$P6" ]; then
+        ISP_SYNC=yes
+      fi
+    fi
+  fi
+  if [ "$ISP_SYNC" = yes ]; then
+    echo "  ✓ 判据：ISP 手上的 7 维 = slot$SLOT（参数已进 ISP）"
+  else
+    echo "  ✗ 判据：ISP 手上的 7 维 ≠ slot$SLOT ⇒ **参数没进 ISP**（画面不会按配方变）"
+    echo "     已知可用链路：打开「画面向导」→ 选中「自定义1」→ 再跑 filmlab.sh check 复验"
+  fi
+}
 # slot -> enum（切风格用）
 enum_of_slot() {
   case $1 in
@@ -318,18 +440,37 @@ apply)
   set_r 5 $SLOT "$V5"
   set_r 6 $SLOT "$V6"
   # v2: 白平衡不由配方控制，相机保持自动 WB（见 recipes.json 的 _note）
-  # ★ 写完后强制 ISP 重读（2026-10-05：旧代码这里写的是同值空操作，永远不生效）
+  # ★ 落盘（2026-10-08 实测必需）：只 set 不 save ⇒ 相机重启后槽位回退到旧值。
+  #   FILMLAB_SAVE=0 可关掉（跑批量试验时省 eMMC 写入）。
+  if [ "$FILMLAB_SAVE" = "1" ]; then
+    prefman save 0 >/dev/null 2>&1
+    sync
+    SAVED="saved"
+  else
+    SAVED="not-saved"
+  fi
+  # ② 选择通道：切到目标槽（同值空操作已由借道修掉）
   pw_force_reload $(printf "0x%06x" $((0x140000 + ENUM)))
-  # ★★★ 2026-10-08：关键一步 —— 切一次拍摄模式，逼 di-camera-app 重读 prefman 的 PW 参数。
-  #   实测：仅 setusr 20 不足以刷新画面（详见 trigger_reload 的注释）。
-  trigger_reload
-  log "$(date '+%H:%M:%S') apply $REC -> slot$SLOT enum$ENUM reload=$RELOAD $RELOAD2"
-  echo "  已写入:"
+  # 旧触发（切拍摄模式）—— 2026-10-08 证伪，默认关闭；FILMLAB_MODE=1 才跑
+  RELOAD2="off"
+  [ "$FILMLAB_MODE" = "1" ] && trigger_reload
+  log "$(date '+%H:%M:%S') apply $REC -> slot$SLOT enum$ENUM reload=$RELOAD mode=$RELOAD2 $SAVED"
+  echo "  已写入($SAVED):"
   echo "  R=$(get_r 0 $SLOT) G=$(get_r 1 $SLOT) B=$(get_r 2 $SLOT) HUE=$(get_r 3 $SLOT) SAT=$(get_r 4 $SLOT) SHARP=$(get_r 5 $SLOT) CON=$(get_r 6 $SLOT)"
-  echo "  PW_TYPE  = $(st cap capdtm getusr 20 2>/dev/null | tr -d '\r' | sed -n 's/.*UserData is \(.*\)/\1/p')"
-  echo "  重读方式 = $RELOAD + $RELOAD2"
-  case "$RELOAD" in *VERIFY-FAIL*) echo "  ★★ 自证失败：切完回读不等于目标，ISP 大概率没重读";; esac
-  echo "  ★ 相机 UI 上固定显示「自定义1」，不用切菜单确认"
+  echo "  PW_TYPE  = $(st cap capdtm getusr 20 2>/dev/null | tr -d '
+' | sed -n 's/.*UserData is \(.*\)//p')"
+  echo "  通道: ①存储=已写  ②选择=$RELOAD  模式触发=$RELOAD2"
+  case "$RELOAD" in *VERIFY-FAIL*) echo "  ★★ 自证失败：切完回读不等于目标（② 通道没落到目标槽）";; esac
+  # ★★ 客观判据：ISP 手上的 7 维到底是不是这个槽的值
+  check_isp_pw "" $SLOT
+  case "$ISP_SYNC" in
+    yes) echo "  ★ ISP 已按本配方渲染 ⇒ 画面应当就是配方效果。" ;;
+    no)
+      echo "  ★★ 画面**不会**变（参数没进 ISP，① ② 两条通道都做不到）。"
+      echo "     已知可用链路：打开「画面向导」→ 选中「自定义1」→ 再跑 filmlab.sh check 复验。" ;;
+    *) echo "  ★ 判据不可用，无法自动确认。" ;;
+  esac
+  echo "  ★ 相机 UI 上固定显示「自定义1」"
   ;;
 
 #---------------------------------------------------------------
@@ -490,6 +631,44 @@ slots)
   ;;
 
 #---------------------------------------------------------------
+check)
+  # ★★ 客观判据（只读）：ISP 手上那 7 维 vs prefman 槽位值
+  #   这是"参数到底有没有进 ISP"的唯一可信判据（不是回读 prefman，也不是看 enum 回显）
+  echo "=== FilmLab 参数通道判据 ==="
+  check_isp_pw "" ${2:-9}
+  ;;
+
+#---------------------------------------------------------------
+pwvar)
+  # ⛔ 已作废：capdtm setvar 写 PW 运行时变量（varlist 下标 ≠ setvar id，且盲试会写死
+  #    p7 capture 服务）。2026-10-08 上机实测证伪，2026-10-09 移除探测代码。
+  echo "⛔ pwvar 已作废（setvar 通道实测不通，且盲试有写死 ISP 的风险）。"
+  echo "   请改用: filmlab.sh check   —— 只读判据，直接告诉你参数有没有进 ISP。"
+  ;;
+
+#---------------------------------------------------------------
+reload)
+  # ★ 只重触发、不写配方：把「当前 slot$SLOT 的值」重新推一遍
+  #   用途：配方的存储值没变，但画面没跟上时，不必再点一次配方（省一次 prefman 写）
+  SLOT=9
+  ENUM=$(enum_of_slot $SLOT)
+  V0=$(get_r 0 $SLOT); V1=$(get_r 1 $SLOT); V2=$(get_r 2 $SLOT)
+  V3=$(get_r 3 $SLOT); V4=$(get_r 4 $SLOT); V5=$(get_r 5 $SLOT); V6=$(get_r 6 $SLOT)
+  case "" in
+    $V0|$V1|$V2|$V3|$V4|$V5|$V6)
+      echo "★ 拒绝：slot $SLOT 有字段读不到（PW 段可能被写坏）⇒ 先跑 filmlab.sh dump $SLOT 自查"
+      exit 1 ;;
+  esac
+  pw_force_reload $(printf "0x%06x" $((0x140000 + ENUM)))
+  RELOAD2="off"
+  [ "$FILMLAB_MODE" = "1" ] && trigger_reload
+  echo "reload: slot$SLOT = $V0/$V1/$V2/$V3/$V4/$V5/$V6"
+  echo "  ② 选择=$RELOAD  模式触发=$RELOAD2"
+  check_isp_pw "" $SLOT
+  log "$(date '+%H:%M:%S') reload slot$SLOT reload=$RELOAD isp=$ISP_SYNC"
+  ;;
+
+#---------------------------------------------------------------
 mkgui)
   # ★ 从 SD 卡配方库生成 mod_gui 菜单页 —— 让"配方数不限"真正成立
   # 手写菜单是死的：往 SD 卡加配方但不改菜单文件，界面上就看不到。
@@ -596,6 +775,13 @@ export)
   echo "  mkgui             ★ 从 SD 卡配方库生成 mod_gui 菜单页（打开 mod_gui 时自动跑）"
   echo "  export            ★ 导出 recipes.txt（给机内 UI 程序读）"
   echo "  cycle              轮换到下一个配方（绑机身键用，零界面）"
+  echo "  check [slot]      ★ 客观判据（只读）：ISP 手上的 7 维 vs prefman 槽位值"
+  echo "  reload            ★ 只重触发（不写配方）+ 打印判据 —— 配方没变但画面没跟上时用"
   echo "  quit               关闭 X11 选择器（已弃用，X11 在单核机上会吃满 CPU）"
+  echo
+  echo "★ 生效通道（2026-10-08 上机定论）：①prefman 存储 ②setusr 选择 ③【app 推参数】"
+  echo "  ① ② 都到不了 ISP 的 PW 引擎 ⇒ 画面对不上时用 check 判，然后："
+  echo "    EV+AEL → 点配方 → 打开画面向导 → 选中「自定义1」→ 画面生效（唯一已知链路）"
   ;;
+
 esac
