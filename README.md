@@ -32,7 +32,7 @@ Samsung NX500 / NX1 (Tizen / DRIMe5) 增强固件 mod —— 基于社区上游
 - 相机端缩略图 CGI（ImageMagick DCT 缩放 + SD 缓存 + `nice` 降权），前端心跳去抖 + 并发限流，WiFi 假断开根治。
 - **8080 服务群**（busybox httpd）：`thumb`(缩略图) / `dirlist`(实时目录) / `prewarm`(预热进度) / `push`(WiFi 在线推送前端，免拔卡)。
 - 拍摄参数 Web API（`capdtm`）、键位/码率/黑场等原 NX-KS 模块保留。
-- 全新**同步链路**：SD 卡"智能引导器"插卡即增量同步（永不误卸载）+ WiFi 在线 push。初次安装请在显示“安装完成”后手动开启蓝牙以初始化mod。
+- 全新**同步链路**：SD 卡"智能引导器"插卡即增量同步（永不误卸载）+ WiFi 在线 push。
 ## 相机菜单速查 / Camera menu
 
 | 菜单项 | 作用 |
@@ -99,8 +99,7 @@ PC 端排障工具：`test_server/telnet_run.py <相机IP> '命令'`（非交互
 ## 快速开始 / Quick start
 
 把以下文件放 SD 卡根目录，插入相机即自动执行（相机固件触发链：  
-`info.tg` → `nx_cs.adj` → 自动运行 `install.sh`），安装完成后，在设置中开启蓝牙，即开始初始化：
-
+`info.tg` → `nx_cs.adj` → 自动运行 `install.sh`），**初次安装请在显示“安装完成”后手动开启蓝牙以初始化mod。**
 ```
 info.tg  nx_cs.adj  install.sh   <- 仓库根(智能引导器: 未装=全量安装, 已装=增量同步)
 scripts/                          <- 整个目录(模块母本, 会被同步到相机内部)
