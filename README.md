@@ -32,8 +32,7 @@ Samsung NX500 / NX1 (Tizen / DRIMe5) 增强固件 mod —— 基于社区上游
 - 相机端缩略图 CGI（ImageMagick DCT 缩放 + SD 缓存 + `nice` 降权），前端心跳去抖 + 并发限流，WiFi 假断开根治。
 - **8080 服务群**（busybox httpd）：`thumb`(缩略图) / `dirlist`(实时目录) / `prewarm`(预热进度) / `push`(WiFi 在线推送前端，免拔卡)。
 - 拍摄参数 Web API（`capdtm`）、键位/码率/黑场等原 NX-KS 模块保留。
-- 全新**同步链路**：SD 卡"智能引导器"插卡即增量同步（永不误卸载）+ WiFi 在线 push。
-
+- 全新**同步链路**：SD 卡"智能引导器"插卡即增量同步（永不误卸载）+ WiFi 在线 push。初次安装请在显示“安装完成”后手动开启蓝牙以初始化mod。
 ## 相机菜单速查 / Camera menu
 
 | 菜单项 | 作用 |
