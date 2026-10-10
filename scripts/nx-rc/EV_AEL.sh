@@ -30,7 +30,10 @@ fi
 { st app bb lcd on; st app disp lcd; } > /dev/null 2>&1
 sleep 1
 
-# ---- 起配方菜单：gui_filmlab1b = 打开就是 8 条配方 ----
+# ---- ★ 同步菜单（2026-10-09 分页版）：按当前 page.idx / cur.idx 生成正确页 ----
+$D/filmlab.sh mkgui > /dev/null 2>&1
+
+# ---- 起配方菜单：gui_filmlab1b（已分页；页码见「上页/下页」按钮 label）----
 #   nice +15：让相机主进程优先（社区约定，别跟拍照抢 CPU）
 nice -n +15 $D/mod_gui $D/gui_filmlab1b &
 exit 0

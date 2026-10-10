@@ -1,7 +1,7 @@
 # NX-KS2 文档索引 / Documentation Index
 
 > 本目录按**时效**分区，避免"旧结论淹没新结论"。
-> 更新：2026-10-08 · 分支：`nx-ks2`
+> 更新：2026-10-09 · 分支：`nxwa`
 
 ## 目录结构
 
@@ -19,6 +19,17 @@ docs/
 
 | 文档 | 定位 |
 |---|---|
+| [`TASKFLOW_2026-10-10.md`](current/TASKFLOW_2026-10-10.md) | ★★★★★ **当前逆向任务流（新）**：按顺序的执行表 —— 离机轨 P1–P7 / 上机轨 W-1（U6 收尾）→W-2（U4）→W-3（U5）/ 门槛后 A。**"接下来做什么"只看这一页**；含编排决策记录与防漂移清单（取代 10-09 版，10-09 版留档执行轨迹） |
+| [`ATTR_BUS_MCB_2026-10-09.md`](current/ATTR_BUS_MCB_2026-10-09.md) | ★★★★★ **属性总线传输层全解（新）**：★★★ **`set_attribute(0x10e/0x110/0x111/0x112)` = `SetVariableDataMCB`**（PLT 桩 #994 反查，`.plt`/`.rel.plt` 索引法自校验）⇒ 完整链 `SetVariableDataMCB → CMCBAdapter::SetParam(cmd=(id-0xff)\|0x1300) → CMulticoreBridge::Send(0x81,cmd,4,data) → CSender → ipcc_write_pkt → p7`（全字节级证据）；★★ **POC `pwsend.arm`**（dlopen+dlsym 直调，QEMU 实测符号解析成功）；★ 上机校准实验设计（id↔维度 / R/G/B 通道 / PWHUE 遗留）；新工具 `pltmap.py`（通用 PLT→符号映射器）|
+| [`PW_ID_MAP_FULL_2026-10-10.md`](current/PW_ID_MAP_FULL_2026-10-10.md) | ★★★★★ **PW 属性 id 全图（★ 10-10 上机定案）**：R/G/B/HUE **内部** id = `0x130–0x133`（三层静态铁证）—— **但上机 probe3 证伪"外部可直推"**（rc=0 而 varlist 无变化）+ **§6 机制铁证**：外部归一化器 `FUN_00051090` 跳转表**只覆盖 0x100–0x12e**，界外一律 `0xff` 拒收 ⇒ **外部可达 PW 直推 = 三维 SAT/SHARP/CON**；全 7 维只能走官方「画面向导→自定义1」；打通外部需改 p7（A1/G4）|
+| [`PW_APPLY_TRIGGER_CHAIN_2026-10-10.md`](current/PW_APPLY_TRIGGER_CHAIN_2026-10-10.md) | ★★★★★ **「画面向导→自定义1」在 p7 侧的触发链（新 · 离线）**：★ **真身 = 类别消息 `class=0x0107000E`**（`FUN_0004c924` 14 路跳表 @0x4c958，k=13 → `0xd26b8` 应用例程）；★ **档位应用 `FUN_00051ab8`@0x51ab8 是"值无参"的**（只读 p7 参数槽 218–226=0xda..0xe2）⇒ 推值永远够不到 R/G/B/HUE；★ **写槽本身即触发应用**（槽变更通知器 `FUN_00053330` 531 路跳表 @0x53368，selector 0xda–0xe2 → 0x545b8）；★ p7 **两个编号空间**（变量 id 0x100–0x12e ／ 类别 `cat<<16\|sub`）互不相通；**最短打通路 = RE `di-camera-app` 发送侧取 MCB 报文**（离线）；4 条新判据 + 判据/回滚 ｜ ★ **§7 路 A 已证伪**：AP↔p7 **不存在**"类别消息"实体（capfw 全库仅 `SetUserDataMCB`\|0x1100 与 `SetVariableDataMCB`\|0x1300 两扇门；class 0x107000E 在 p7 内**无任何静态引用**，5 路取证全 0）⇒ 全 7 维**只能改 p7** |
+| [`MODGUI_SPEED_AND_RECIPES_2026-10-10.md`](current/MODGUI_SPEED_AND_RECIPES_2026-10-10.md) | ★★★★ **mod_gui 弹出提速 + 配方扩充（新）**：菜单弹出 **2.4s → ~0.6s**（4×）/ 翻页 **3.2s → ~0.4s**（8×）/ 配方 **35 → 68**（4 页）；★ mkgui **fork 风暴**（46→8 fork，每行 `echo\|tr\|sed` 54 次）+ ★ **跨文件系统 mtime 不能做缓存**（ext4 vs exFAT ⇒ 改内容指纹）；含机上实测数字与部署命令 |
+| [`FW_NATIVE_UI_ONEKEY_FEASIBILITY_2026-10-10.md`](current/FW_NATIVE_UI_ONEKEY_FEASIBILITY_2026-10-10.md) | ★★★★★ **「原生 UI 一键滤镜」可行性链路（新）**：把目标拆成 **G-UI（入口原生）/ G-ONEKEY（一次操作）/ G-FILTER（效果完整）** 三个独立子目标；★ **改 p7 做不出菜单**（p7 无 UI）+ **重刷 rootfs 才能动 `di-camera-app`**（无源码，成本极高）+ **"一键"其实零固件即可**；四层 × 三目标矩阵 + 链路 A/A+/B/C 详解（步骤·门槛·判据·回滚）+ 推荐里程碑 M1–M5 + 8 条死路 |
+| [`U6_ONMACHINE_RESULT_2026-10-09.md`](current/U6_ONMACHINE_RESULT_2026-10-09.md) | ★★★★★ **U6 上机结果与发现（新）**：**写表生效律**（写前必须 p7 抢回态，A/B 对照）+ **判据重构**（出厂表全是风格表；"identity→中性"作废）+ 硬件取证（16 单元镜像 / 0x014+ 两态之谜〔10-10 归档〕）；**E1 ✓（LUT1 接入主链）/ E3 ✓（守护 6 次抢回-恢复）/ E4 ✗（成片直灌死路）**；台账 `raw8/gates/u6/u6_result.md`；定式 = **预览直灌 / 成片后处理** |
+| [`PW_ONECLICK_DESIGN_2026-10-09.md`](current/PW_ONECLICK_DESIGN_2026-10-09.md) | ★★★★★ **FilmLab「一键滤镜」设计（新）**：把「apply → 人工画面向导」压缩为 **apply 一步**——③ PW 直推（`pwsend.arm seq`）+ 值编码表（COLOR `ceil(值×2032/100)` / SCALAR `16×(值-10)+15` 补码，selftest 往返精确）+ id 铁证/待校准清单 + 安全回退三层；**filmlab.sh 已集成**（`pw_direct`/`pwpush` 子命令/`FILMLAB_PW` 开关，默认关=行为不变）；上机校准 runbook `test_server/pwsend/runbook.txt` |
+| [`LUT_PIPELINE_DESIGN_2026-10-09.md`](current/LUT_PIPELINE_DESIGN_2026-10-09.md) | ★★★★★ **LUT 应用链路设计（新）**：`.cube → deploy_luts.py → lutpick.sh apply → 取景器 → 成片` 全景；四需求映射（**可选**=list/apply/off、**可导入**=任意 .cube 批量转换+推送、**显示**=cmapick→cmasafe→lutapi load、**照片**=共用池+U6 实证）；★ **Still 抢回风险**的判据（U6 §[6]）与三条出路（直灌/ksfilm 保底/G4 后写档位池）；与 PW 通道的叠加关系 |
+| [`P7_RECLAIM_COUNTERMEASURE_2026-10-09.md`](current/P7_RECLAIM_COUNTERMEASURE_2026-10-09.md) | ★★★★★ **P7 抢回表指针——处理方案（新）**：★★ **双通道隔离**（Cfg bits[5:4]=SelLUT；表进 LUT1、p7 只碰 LUT0，QEMU S4/S8 实证）⇒ 恢复从 20KB DMA 降级为 **1 个 Cfg 写**（`op_init(sel=1)`）；★ `lutsentinel.arm` 守护（轮询 SelLUT→恢复，含 p7 表址诊断）+ `lutpick.sh --ch1/sentinel`；**四层防御**（L0 纪律/L1 守护/L2 半按→恢复→全按/L3 G4 写池）；**实验矩阵 E1–E5**（判据写死） |
+| [`FLAB_DATAFLOW_DESIGN_2026-10-09.md`](current/FLAB_DATAFLOW_DESIGN_2026-10-09.md) | ★★★★★ **FilmLab 数据流设计（新）**：**三类数据三文件**（recipes.json 配方 / **filmlab.conf 设置**〔PWID 校准结果、开关〕/ luts 表）+ **`flab.py` 一条龙**（add/edit/rm → lint〔模拟引擎 awk〕→ deploy〔推→export→mkgui→cur.idx 归一→回收核对〕）；★ 渲染器**逐字节复刻**引擎缩进（diff 实测）；★ conf 优先级（conf>env>默认）+ `FILMLAB_NO_CONF` 逃生门；★ 校准结果固化流程：`flab.py conf --set` → `deploy --conf` |
 | [`RE_PROGRESS_2026-10-08.md`](current/RE_PROGRESS_2026-10-08.md) | ★★★★★ **逆向进度总览（单文件收口 / 新）**：一张总表看清"解了什么 / 卡在哪 / 什么是死路"——系统硬件层 / p7 静态 / 容器与升级链 / 通信层 / 用户态接口（PW+ISP参数块+3D LUT）/ 原生 UI / 门控 1-of-5 / **死路清单 10 条** / 未解缺口 / 资产索引 / 下一步。★ 对外交付与新人上手的第一入口 |
 | [`HANDOVER_2026-10-07.md`](current/HANDOVER_2026-10-07.md) | ★★★ **项目交接总纲**：现状 / 死路 / 已验证 / 阻塞 / 纪律 / 待办 |
 | [`ERROR_CORRECTIONS_2026-10-07.md`](current/ERROR_CORRECTIONS_2026-10-07.md) | ★★★★★ **错误结论修正报告**：mod/固件/系统三层 9 处纠错（C1~C9） |
@@ -35,10 +46,16 @@ docs/
 | [`3DLUT_DEEP_DIVE_2026-10-07.md`](current/3DLUT_DEEP_DIVE_2026-10-07.md) · [EN](current/3DLUT_DEEP_DIVE_2026-10-07_EN.md) | 3D LUT 调查档案（权威）：寄存器全图 / p7 侧逆向 / 地址空间模型 |
 | [`3DLUT_API_GUIDE.md`](current/3DLUT_API_GUIDE.md) · [EN](current/3DLUT_API_GUIDE_EN.md) | 3D LUT 操作手册（API 调用 / 工具用法）|
 | [`P7_3DLUT_PATHS_2026-10-07.md`](current/P7_3DLUT_PATHS_2026-10-07.md) | ★★★★★ **3D LUT 三条 C++ 路径全部解出**（RTTI + 3 vtable）；★ **证明 View 与 Still 完全独立 ⇒ 改 View 表不影响照片** |
+| [`3DLUT_APPLY_PATHS_2026-10-08.md`](current/3DLUT_APPLY_PATHS_2026-10-08.md) | ★★★★★ **3D LUT「应用线路」定论（新）**：**全镜像只有 7 个函数访问 `0x2082b000`**，唯一写表地址的 = `FUN_004a5e30`；**5 条线路** = View / Still / CS / Base + ★**MCB 生产域打包序列**（`FUN_003f27ec→003f222c→003f3488`）；★★ **寄存器语义修正**：`+0x00c`/`+0x010` 实为 **Load/Save 目标地址**（非 LUT0/LUT1 双通道）、`+0x008` **bit8/bit4 = Load/Save 启动脉冲**；★ `FUN_00179384` 实测是 **Save** 路径（旧称 load/save 封装）；★★ **新发现第二套表缓冲池** `0x813D8800/0x813DD500/0x813E2200/0x813E6F00`（步长同为 `0x4D00`）；**QEMU/Unicorn 30 场景复现**（真实寄存器写序 + 传参钩子）|
+| [`3DLUT_VIEW_STILL_ISOLATION_2026-10-08.md`](current/3DLUT_VIEW_STILL_ISOLATION_2026-10-08.md) | ★★★★★ **View/Still 隔离性与「显示正常＋成片有效」解法（新）**：★★★ **硬结论 `View 4 档 ⊆ Still 可达集(18)`，View 独有 = 空 ⇒ 软件层无法隔离两路**（函数独立 ≠ 资源独立）；★ **澄清：花屏根因是表格式、不是线路选择** —— 格式正确时共用池反而是优点；★★★ **新发现 save_lut dump 通道**（`0x179520`，**目标地址由调用者指定**）+ p7 可写 Linux CMA ⇒ **能读到内置表原始字节**（不需 `/dev/mem`、不需重刷）；★ 三路线矩阵（R1 解表格式＝正式解 / R3 软件后处理＝保底 / R2 改 p7 分离池＝**伪解**）；★ 开发期策略：**用 View 当探针（秒级反馈）、Still 当验收** |
+| [`3DLUT_TABLE_FORMAT_2026-10-08.md`](current/3DLUT_TABLE_FORMAT_2026-10-08.md) | ★★★★★ **3D LUT 表格式解开（新）**：**`4913 × 4B {R,G,B,pad=0}`**，索引 **`((B*17+G)*17+R)*4`**（R 最快），**槽步长 `0x4D00`**，17 个等距电平（step 16），尾部填充 = 末项×3 + 48×0；★★★ **镜像内表池离线可读**：Block A（20 槽, phase 0x6C0, `0x808592C0..0x808B49C0`）+ Block B（22 槽, phase 0xAC0, `0x808B9AC0..0x8091EBC0`）；★★ **运行时「标准」`0x810FD100` 前 8B 逐字节 == 文件 `0x80892EC0`** ⇒ 桥接打通；★ **旧「16-bit 交织」假说被否**（pad 恒 0）；★ 84 个 `.bin` 产物于 `raw8/p7/lut_format/` |
+| [`3DLUT_CUBE_IMPORT_TOOL.md`](current/3DLUT_CUBE_IMPORT_TOOL.md) | ★★★★ **3D LUT `.cube` 导入工具（新）**：`test_server/isp/nx3dlut.py` 命令速查（import/export/identity/info/preview/patch/selftest）；★ 三处设计决策 —— **必须按硬件非均匀格点 `{0,16,…,240,255}` 采样**（否则 level15 差一格）、**轴序自动纠正**（仓内 `identity33.cube` 实为 `bgr`）、**只产文件 + 槽合法性双保险**；★ 自测 T1–T6 全绿；★ 旧 `cube2nx17.py`（29478B）为被否格式，本工具自动降转 |
 | [`NX500_ARCHITECTURE.md`](current/NX500_ARCHITECTURE.md) | NX500 系统与软件架构（实机抓取）|
 | [`UNBLOB_WSL_QEMU_2026-10-08.md`](current/UNBLOB_WSL_QEMU_2026-10-08.md) | ★★★★ **PC 侧全链路（新）**：WSL(NXKS2，全数据在 E) + **unblob 26.6.4** + **相机 rootfs 全量提取（17,838 文件）** + **chroot+qemu-arm 运行相机二进制**（st/bash/toybox 实测）；含命令备忘与坑清单 |
 | [`G5P3_IQR_EPMC_MAP_2026-10-08.md`](current/G5P3_IQR_EPMC_MAP_2026-10-08.md) | ★★★★★ **G5-3 关联表定论（新）**：槽池双写入器全解（A `FUN_004b6894` @`0x20821300` / B `FUN_004b6b98` @`0x20821700`，21 槽 × stride 0x100 × 双通道；★ **提交位图实为 `0x20821044`**，修正旧记 `0x20820044`）；★★ **架构判定：槽池 = ISP 流描述符层，iqr = 状态镜像层，两层正交，唯一强锚点 = 尺寸三元组**（s1/s2/s3 = 720×480 / 528×352 / 384×288 金字塔，`+0x08[31:12]`/`+0x20`/`+0x24` 三处编码同值）⇒ **"路径 B = EP 直写画质"降级为流描述符直写**；产物 `raw8/gates/u1/iqr_epmc_map.tsv`（G5-3 已判 OK，G5 全绿） |
 | [`PW_PARAM_CHANNEL_2026-10-08.md`](current/PW_PARAM_CHANNEL_2026-10-08.md) | ★★★★★ **PW 参数通道上机定论（新）**：三通道实测 —— ①存储（prefman）/②选择（setusr）**均打不到 ISP**，仅③"画面向导确认"有效（木一机身闭环，✓/✗ 双向验证）；★ **客观判据 = `st cap capdtm varlist` 的 PW 7 维变量**（raw16 须补码还原），已做成 `filmlab.sh check`；★ `setvar` 死路确认（id 运行时注册，盲扫写死过 p7，**禁再试**）；5 条新纪律（jpeg:size 单核必带 / 无 timeout / CRLF / FTP 路径域 / MSYS）；路径 A 键注入（`st app nx key`）命令在但**注入未生效**（疑走 X11/XTest，键名表未解） |
+| [`U2_UI_DISPLAY_2026-10-08.md`](current/U2_UI_DISPLAY_2026-10-08.md) | ★★★★ **U2 上机报告：显示障碍诊断 + 最终裁定（新）**：部署/probe/起 UI/不拖垮四项全达成，但自绘窗口**不显示**（5 类对照实验排除 env/设备/API/主循环/盖屏；剩 3 候选：几何/layer/DRM master）；★ **最终裁定（10-08 夜）：改走 mod_gui 菜单路径**（能显示 + 不卡），自绘窗口留作阶段 2 可选项 |
+| [`U4_SLP_REPACK_2026-10-08.md`](current/U4_SLP_REPACK_2026-10-08.md) | ★★★★ **U4 SLP 重打包（离机阶段完成）（新）**：`slp_test_pcache.bin` 重打包自证 **IDENTICAL**（JAMCRC 复算一致）+ 段↔分区映射（img5 = p7）+ 风险结论"1.13≈1.12"；★ 上机步骤与判据（接受+完成+telnet 活 ⇒ 写 `raw8/gates/u4/acceptance.json` ⇒ **G4-1 转绿**）|
 | [`ST_RE_AND_REPRO_2026-10-08.md`](current/ST_RE_AND_REPRO_2026-10-08.md) | ★★★★ **st 逆向 + PC 复现（新）**：sasquatch 补齐（unblob 闭环）；**st = 表驱动调度器**（shell_exec / sndmsg 双路径，与 MCB 报错互证）；**ksfilm 胶片引擎在 PC 全流程跑通（4 配方）**；-L / chroot 双路线与坑 |
 | [`MCB_PROTOCOL_AND_ST_TABLE_2026-10-08.md`](current/MCB_PROTOCOL_AND_ST_TABLE_2026-10-08.md) | ★★★★★ **MCB 协议档案 + st 全表（新）**：运行时装 28 条全解（gdb 经 GOT 直取）；**SysV 消息离线拦截**（key 0x8828，载荷格式）；**MCB 协议全栈**（帧格式/396B 上限/命令 ID 字典 8 域/0xB0-0xB6-cap 链路）；di-camera-app 全量反编译 7,073 函数 |
 | [`QEMU_S4_AND_ENV_CLEANUP_2026-10-08.md`](current/QEMU_S4_AND_ENV_CLEANUP_2026-10-08.md) | ★★★★★ **QEMU S4 全链路 + PC 资源归位（新）**：**纯 Windows 零 WSL** 跑通「slp06 → guest 内 unlzop（18s）→ mount ext4（16021 文件）→ chroot 原生跑相机二进制」；★ `st` 24 条内置命令运行时实测；★ 两个新坑（virtio 设备号乱序 / ext4 需 crc32c）；★ C 盘审计（已迁 690MB + binwalk 配置到 E，唯 `C:\Program Files\WSL` 1.2GB 不可迁） |
@@ -87,14 +104,19 @@ docs/
 
 | 我想…… | 先看 |
 |---|---|
+| **知道"现在按什么顺序做什么"** | `current/TASKFLOW_2026-10-10.md`（当前任务流） |
 | **一次看清全部逆向进度 / 对外介绍本项目** | `current/RE_PROGRESS_2026-10-08.md`（单文件收口） |
 | 弄清项目现在能做什么 / 不能做什么 | `current/HANDOVER_2026-10-07.md` |
 | 知道哪些旧结论是错的 | `current/ERROR_CORRECTIONS_2026-10-07.md` |
 | 找魔灯固件的技术突破口 | `current/FIRMWARE_BREAKTHROUGH_2026-10-07.md` |
 | 搞清**相机系统菜单**怎么渲染 / 能不能改 | `current/CAMERA_MENU_ARCHITECTURE_2026-10-07.md` |
+| **"原生 UI 一键滤镜"能不能做 / 要不要重写固件** | `current/FW_NATIVE_UI_ONEKEY_FEASIBILITY_2026-10-10.md` |
+| **PW 全 7 维能不能外部一键 / "画面向导自定义1"靠什么触发** | `current/PW_APPLY_TRIGGER_CHAIN_2026-10-10.md` |
 | **开发相机 App / 复用官方 UI 能力** | `current/CAMERA_APP_STRUCTURE_2026-10-07.md` |
 | **搞懂刷机原理 / 本地刷固件** | `current/ILAUNCHER_FIRMWARE_FLASH_2026-10-07.md` |
 | 用 3D LUT 的 API | `current/3DLUT_API_GUIDE.md` |
+| **把 `.cube` 转成相机原生表 / 打进 p7 副本** | `current/3DLUT_CUBE_IMPORT_TOOL.md` |
+| **3D LUT 表的字节格式到底是什么** | `current/3DLUT_TABLE_FORMAT_2026-10-08.md` |
 | **在 PC 上分析固件 / 跑相机二进制 / 拿 rootfs** | `current/UNBLOB_WSL_QEMU_2026-10-08.md` |
 | **没有相机也想跑相机用户态（零 WSL）** | `current/QEMU_S4_AND_ENV_CLEANUP_2026-10-08.md` |
 | **还有哪些东西没搞清 / 下一步打哪** | `current/UNKNOWN_STRUCTURES_AND_PROJECT_FORK_PLAN_2026-10-08.md` |

@@ -33,6 +33,16 @@ LAB=/mnt/mmc/filmlab
 RECIPE=$LAB/recipes.json
 LOG=$LAB/last.log
 
+# ---- 外置设置数据（filmlab.conf；2026-10-09）----
+#   「校准结果 / 开关 / 通道参数」等【数据】放这里 ⇒ 改数据不改脚本。
+#   管理工具（PC 侧）：python test_server/filmlab/flab.py conf --set K=V …  + deploy --conf
+#   格式：KEY=VALUE 每行一条（busybox sh 可直接 . source）。
+#   优先级：conf（持久配置）> 环境变量 > 脚本默认；下方 ${VAR:-默认} 不覆盖已设值。
+#   ★ 逃生门：临时调试想用 env 覆盖时，前缀 FILMLAB_NO_CONF=1 跳过 conf。
+if [ -z "${FILMLAB_NO_CONF:-}" ] && [ -f "$LAB/filmlab.conf" ]; then
+  . "$LAB/filmlab.conf" 2>/dev/null
+fi
+
 # ---- prefman 布局（★ 来自 prefman info 0 的官方命名表，4/4 对齐已验证）----
 PW_BASE=41964          # 0xa3ec = APPPREF_EFFECT_STANDARD_R_COLOR
 PSTEP=52               # 参数步进（R=0 G=1 B=2 HUE=3 SAT=4 SHARP=5 CON=6）
@@ -117,19 +127,36 @@ get_wb() { prefman get 0 "$(printf 0x%05x $WB_K)" l 2>/dev/null | tr -d '\r' | s
 #       → set_attribute(0x10e/0x110/0x111/0x112, &v, 4)
 #   该总线不在 `st cap` 里（capdtm 只有 setusr/getusr/setvar/getvar/usrlist/varlist 六个子命令）。
 #
-# ⇒ 本引擎的立场（诚实版）：
+# ⇒ 本引擎的立场（诚实版，2026-10-09 更新）：
 #   · ① 写槽 + prefman save（持久化；★ 不 save 则重启回退，实测过）
 #   · ② 借道切到目标槽（保证"选择"真的发生，虽然它不搬参数）
-#   · ③ **不假装能做到**：改为 `filmlab.sh check` —— 只读判据，直接读 ISP 那 7 维，
-#        和 prefman 槽位比对，一眼看出"参数进没进 ISP"。
-#   · 画面生效的最后一步目前必须由人来点：打开「画面向导」→ 选中「自定义1」。
-#     要自动化这一步，唯一干净的路是"app 自己的确认动作"（`st app nx key` 键注入
-#     或用户态助手直调属性总线）—— 属下一里程碑，未打通前不写进链路。
+#   · ③ **已打通（待校准）**：2026-10-09 静态全解属性总线传输层
+#        （docs/current/ATTR_BUS_MCB_2026-10-09.md）：
+#        set_attribute(id) == SetVariableDataMCB(id,&v,4) → MCB → p7 → ISP。
+#        工具 `pwsend.arm`（已编译，百名单 0x100..0x12b）+ 「值编码器」gen_pwpush.py。
+#        ⇒ 校准（pwcalib.sh，确定 R/G/B/HUE 的 id 与编码）完成后，
+#          置 FILMLAB_PW=1 即得【真·一键】：点配方 → 7 维直进 ISP → 画面立即变。
+#        ★ 未校准前保持 FILMLAB_PW=0（行为与旧版完全一致）；官方画面向导仍是
+#          保底链路（当前 slot9 已有正规数据，重选一遍即恢复）。
+#   · check 判据（只读）永远保留：ISP 手上的 7 维 vs prefman 槽位，一眼看出进没进。
 # =====================================================================
 
 FILMLAB_MODE=${FILMLAB_MODE:-0}     # 1 = 保留旧的「切模式」触发（默认关）
 FILMLAB_SAVE=${FILMLAB_SAVE:-1}     # 1 = apply 后 prefman save（默认开；否则重启回退）
 FILMLAB_MID=${FILMLAB_MID:-custom}  # custom(默认)=借道另一个自定义槽 | standard=旧行为
+
+# ---- ③ PW 直推（2026-10-09 新增；校准前默认关）----
+PWSEND=${PWSEND:-/opt/usr/nx-ks/pwsend.arm}
+FILMLAB_PW=${FILMLAB_PW:-0}         # 1 = apply 后自动直推（pwcalib.sh 校准完成后置 1）
+# ★ PW id 表：铁证项 = libcapture-fw-prod.so setter 函数名对应；
+#   空 = 跳过（等 pwcalib.sh 校准后填入实测值）
+PWID_R=${PWID_R:-}        # 待校准（候选 0x10e——实测效果"偏蓝"，映射需指纹法定位）
+PWID_G=${PWID_G:-}        # 待校准（候选 0x10f）
+PWID_B=${PWID_B:-}        # 待校准
+PWID_H=${PWID_H:-}        # 待校准（候选 0x113）
+PWID_S=0x110              # ★ 铁证（setPWSaturation）
+PWID_P=0x111              # ★ 铁证（setPWSharpness）
+PWID_C=0x112              # ★ 铁证（setPWContrast）
 
 # ---- userdata(20) 读写（★ getusr/setusr 只认【十进制索引或名字】）----
 getusr20() {
@@ -179,6 +206,39 @@ pw_force_reload() {
   # ★ 自证：切完回读，确认真的落在目标上（不信 setusr 的退出码）
   NOW=$(getusr20)
   [ "$NOW" = "$TGT" ] || RELOAD="$RELOAD-VERIFY-FAIL(now=$NOW want=$TGT)"
+}
+
+# ---- ③ PW 直推：值编码 + pwsend（2026-10-09，ATTR_BUS_MCB 通道）----
+# ★ 编码（2026-10-09 夜真机实证，v2）：
+#   SCALAR（H/S/S/C）: (raw16 << 16) | 0xD80A    raw16 = 16×值 - 145（补码 16 位）
+#   COLOR （R/G/B）  : (gain16 << 16) | 0x00FF   gain16 = ceil(值×2032/100)
+#   ★ 用 printf 分段拼接（"0x%04x%04x"）——32 位 ash 的 << 16 会溢出成负数，
+#     分段输出则任意平台安全（且 pwsend 用 strtoul 接收完整 32 位）。
+pw_raw_code()  { U=$(( ($1 * 16 - 145) & 0xFFFF )); printf "0x%04x%04x" "$U" 0xD80A; }
+pw_gain_code() { G=$(( ($1 * 2032 + 99) / 100 ));   printf "0x%04x%04x" "$G" 0x00FF; }
+
+# pw_direct <R> <G> <B> <HUE> <SAT> <SHARP> <CON> [--yes]
+#   默认 dry-run（只打印）；--yes 才真发。id 为空的维度自动跳过（未校准）。
+pw_direct() {
+  [ -x "$PWSEND" ] || { echo "  ③ PW直推: 缺 $PWSEND（先部署）——跳过"; return 1; }
+  case "" in
+    $1|$2|$3|$4|$5|$6|$7)
+      echo "  ③ PW直推: 七维有空值 —— 拒绝发送（防静默坏值）"
+      return 1 ;;
+  esac
+  ARGS=""
+  [ -n "$PWID_R" ] && ARGS="$ARGS $PWID_R $(pw_gain_code $1)"
+  [ -n "$PWID_G" ] && ARGS="$ARGS $PWID_G $(pw_gain_code $2)"
+  [ -n "$PWID_B" ] && ARGS="$ARGS $PWID_B $(pw_gain_code $3)"
+  [ -n "$PWID_H" ] && ARGS="$ARGS $PWID_H $(pw_raw_code $4)"
+  ARGS="$ARGS $PWID_S $(pw_raw_code $5)"
+  ARGS="$ARGS $PWID_P $(pw_raw_code $6)"
+  ARGS="$ARGS $PWID_C $(pw_raw_code $7)"
+  YES="$8"
+  echo "  ③ PW直推（$([ "$YES" = "--yes" ] && echo 真发 || echo dry-run)）:"
+  echo "     $PWSEND seq$ARGS $YES"
+  # shellcheck disable=SC2086
+  "$PWSEND" seq $ARGS $YES
 }
 
 # ---- 旧触发：切一次拍摄模式（默认关闭，见上面的纠错）----
@@ -330,6 +390,31 @@ jval() {
     inr && $0 ~ /^    \}/ { exit }
   ' $RECIPE 2>/dev/null
 }
+# ★ jtable —— 一次性导出全部配方表（单 awk 进程）
+#   供 export/mkgui 使用：35 配方从"280 次 awk 进程风暴（~90s）"降到 <1s（2026-10-09 优化）
+#   输出：key|label|R|G|B|HUE|SAT|SHARP|CON（每行一个配方；与 recipes.txt 同格式）
+jtable() {
+  /opt/usr/nx-ks/busybox awk '
+    BEGIN { inr=0; key=""; label="" }
+    /"recipes"/ { inr=1; next }
+    /"presets"/ { inr=0; next }
+    !inr { next }
+    /^    "/ {
+      key=$0; sub(/^    "/,"",key); sub(/": *\{.*$/,"",key); sub(/",? *$/,"",key)
+      label=""; delete F; next
+    }
+    /^        "label":/ { s=$0; sub(/.*"label": *"/,"",s); sub(/".*$/,"",s); label=s; next }
+    /^        "/ {
+      name=$0; sub(/^ *"/,"",name); sub(/":.*$/,"",name)
+      val=$0; gsub(/[^0-9-]/,"",val)
+      F[name]=val; next
+    }
+    /^    \}/ {
+      if (key != "") printf "%s|%s|%s|%s|%s|%s|%s|%s|%s\n", key,label,F["R_COLOR"],F["G_COLOR"],F["B_COLOR"],F["HUE"],F["SATURATION"],F["SHARPNESS"],F["CONTRAST"]
+      key=""; next
+    }
+  ' $RECIPE 2>/dev/null
+}
 # 列出所有配方名
 jlist() {
   /opt/usr/nx-ks/busybox awk '
@@ -451,10 +536,16 @@ apply)
   fi
   # ② 选择通道：切到目标槽（同值空操作已由借道修掉）
   pw_force_reload $(printf "0x%06x" $((0x140000 + ENUM)))
+  # ③ PW 直推（2026-10-09 新链路；FILMLAB_PW=1 时启用——pwcalib.sh 校准后开）
+  PWSTAT="off"
+  if [ "$FILMLAB_PW" = "1" ]; then
+    pw_direct "$V0" "$V1" "$V2" "$V3" "$V4" "$V5" "$V6" --yes
+    PWSTAT="direct"
+  fi
   # 旧触发（切拍摄模式）—— 2026-10-08 证伪，默认关闭；FILMLAB_MODE=1 才跑
   RELOAD2="off"
   [ "$FILMLAB_MODE" = "1" ] && trigger_reload
-  log "$(date '+%H:%M:%S') apply $REC -> slot$SLOT enum$ENUM reload=$RELOAD mode=$RELOAD2 $SAVED"
+  log "$(date '+%H:%M:%S') apply $REC -> slot$SLOT enum$ENUM reload=$RELOAD mode=$RELOAD2 pw=$PWSTAT $SAVED"
   echo "  已写入($SAVED):"
   echo "  R=$(get_r 0 $SLOT) G=$(get_r 1 $SLOT) B=$(get_r 2 $SLOT) HUE=$(get_r 3 $SLOT) SAT=$(get_r 4 $SLOT) SHARP=$(get_r 5 $SLOT) CON=$(get_r 6 $SLOT)"
   echo "  PW_TYPE  = $(st cap capdtm getusr 20 2>/dev/null | tr -d '
@@ -466,8 +557,16 @@ apply)
   case "$ISP_SYNC" in
     yes) echo "  ★ ISP 已按本配方渲染 ⇒ 画面应当就是配方效果。" ;;
     no)
-      echo "  ★★ 画面**不会**变（参数没进 ISP，① ② 两条通道都做不到）。"
-      echo "     已知可用链路：打开「画面向导」→ 选中「自定义1」→ 再跑 filmlab.sh check 复验。" ;;
+      echo "  ★★ 画面**不会**变（① ② 两条通道不搬参数）。"
+      if [ "$FILMLAB_PW" != "1" ]; then
+        echo "     ⇒ 两个选择："
+        echo "       a) 人工（保底，已验证）：画面向导 → 选中「自定义1」"
+        echo "       b) 自动（待校准）：跑 pwcalib.sh 校准 → 置 FILMLAB_PW=1 后再 apply"
+      else
+        echo "     ⇒ ③ 直推已开但 ISP 未跟上："
+        echo "        · pwcalib.sh readback 检查 id/编码是否与实测一致"
+        echo "        · 或人工恢复：画面向导 → 选中「自定义1」"
+      fi ;;
     *) echo "  ★ 判据不可用，无法自动确认。" ;;
   esac
   echo "  ★ 相机 UI 上固定显示「自定义1」"
@@ -669,29 +768,70 @@ reload)
   ;;
 
 #---------------------------------------------------------------
+pwpush)
+  # ★ ③ PW 直推（2026-10-09，ATTR_BUS_MCB 通道）：把配方的 7 维送进 ISP PW 引擎
+  #   用法: pwpush <recipe> [--yes]      —— 默认 dry-run；--yes 真发
+  #   前置: pwsend.arm 已部署；pwcalib.sh 校准完成后 PWID_* 为实测值
+  #   ★ 这是「一键滤镜」的直推步骤本体；apply 在 FILMLAB_PW=1 时会自动调用它。
+  [ -z "$REC" ] && { echo "用法: pwpush <recipe> [--yes]（默认 dry-run）"; exit 1; }
+  V0=$(jval $REC R_COLOR);   V1=$(jval $REC G_COLOR);    V2=$(jval $REC B_COLOR)
+  V3=$(jval $REC HUE);       V4=$(jval $REC SATURATION)
+  V5=$(jval $REC SHARPNESS); V6=$(jval $REC CONTRAST)
+  case "" in
+    $V0|$V1|$V2|$V3|$V4|$V5|$V6)
+      echo "★ 拒绝：配方 '$REC' 字段读不到（先 filmlab.sh list 自查）"; exit 1 ;;
+  esac
+  echo "pwpush '$REC' => R/G/B=$V0/$V1/$V2 HUE=$V3 SAT=$V4 SHARP=$V5 CON=$V6"
+  if [ "$SLOT" = "--yes" ]; then
+    pw_direct "$V0" "$V1" "$V2" "$V3" "$V4" "$V5" "$V6" --yes
+  else
+    echo "（dry-run；加 --yes 真发）"
+    pw_direct "$V0" "$V1" "$V2" "$V3" "$V4" "$V5" "$V6"
+  fi
+  echo "  （校验请跑 filmlab.sh check）"
+  ;;
+
+#---------------------------------------------------------------
 mkgui)
   # ★ 从 SD 卡配方库生成 mod_gui 菜单页 —— 让"配方数不限"真正成立
   # 手写菜单是死的：往 SD 卡加配方但不改菜单文件，界面上就看不到。
   # 每次打开 mod_gui（EV_EV.sh）先跑一次本命令 → 菜单与 SD 卡永远同步。
+  # ★ 2026-10-09 分页版：每页 18 个 + 上/下页 + 返回/取消 = 22（mod_gui 上限）
+  #   页状态 /mnt/mmc/filmlab/page.idx；翻页用 filmlab_page.sh（改页→重生成→重开菜单）
   OUT=/opt/usr/nx-ks/gui_filmlab1b.NX500
-  MAXBTN=22                    # mod_gui 上限约 24，去掉「返回/取消」两行
+  PERPAGE=18                   # 每页配方数（同步：flab.py 的 PERPAGE）
   ST=/mnt/mmc/filmlab/cur.idx  # 当前配方索引，用来打 ★ 标记
+  PG=/mnt/mmc/filmlab/page.idx # ★ 页状态（0 基）
 
   CUR=0
   [ -f "$ST" ] && CUR=$(cat $ST 2>/dev/null)
   case "$CUR" in ""|*[!0-9]*) CUR=0 ;; esac
+  PAGE=0
+  [ -f "$PG" ] && PAGE=$(cat $PG 2>/dev/null)
+  case "$PAGE" in ""|*[!0-9]*) PAGE=0 ;; esac
 
-  N=0
-  TOTAL=0
   jlist > /tmp/fl.keys
   [ -s /tmp/fl.keys ] || { echo "mkgui: 配方库为空，保持原菜单不动"; rm -f /tmp/fl.keys; exit 1; }
   TOTAL=$(grep -c . /tmp/fl.keys 2>/dev/null)
   case "$TOTAL" in ""|*[!0-9]*) TOTAL=0 ;; esac
+  rm -f /tmp/fl.keys
+  # ★ 配方表（单 awk 重建，<1s）；mkgui 直读 tbl 生成按钮（绕开逐字段 jval 进程风暴）
+  TBL=$LAB/recipes.txt
+  jtable > $TBL
+  TOTAL=$(grep -c . $TBL 2>/dev/null)
+  case "$TOTAL" in ""|*[!0-9]*) TOTAL=0 ;; esac
+  [ "$TOTAL" -lt 1 ] && { echo "mkgui: 配方库为空（表为空），保持原菜单不动"; exit 1; }
+  PAGES=$(( (TOTAL + PERPAGE - 1) / PERPAGE ))
+  [ "$PAGES" -lt 1 ] && PAGES=1
+  [ "$PAGE" -ge "$PAGES" ] && PAGE=$((PAGES - 1))   # 越界归一（删配方后页数变少）
+  echo "$PAGE" > $PG
+  START=$((PAGE * PERPAGE))
 
   #先写头部（务必 LF 行尾 —— CRLF 会让 mod_gui 解析失败）
   {
     echo "#====================================================================="
     echo "# gui_filmlab1b.NX500 —— FilmLab 一键配方（由filmlab.sh mkgui 自动生成）"
+    echo "#   第 $((PAGE+1))/$PAGES 页（每页 $PERPAGE 个；配方库共 $TOTAL 个）"
     echo "#====================================================================="
     echo "# ★ 本文件是生成物，不要手改。改配方请编辑 SD卡 filmlab/recipes.json"
     echo "#   然后重新打开 mod_gui（或 telnet 执行 filmlab.sh mkgui）"
@@ -699,29 +839,33 @@ mkgui)
     echo ""
   } > $OUT
 
-  while read KEY; do
+  # 本页配方（取第 START+1 .. START+PERPAGE 个；tbl 行 = key|label|7维）
+  sed -n "$((START + 1)),$((START + PERPAGE))p" $TBL > /tmp/fl.page
+  N=0
+  while IFS='|' read -r KEY LBL _REST; do
     [ -z "$KEY" ] && continue
     N=$((N + 1))
-    [ $N -gt $MAXBTN ] && break
-    LBL=$(jlabel $KEY)
     [ -z "$LBL" ] && LBL=$KEY
     # ★ 剥掉标签里可能混入的引号/逗号/CR —— 竖线会破坏菜单解析
     LBL=$(echo "$LBL" | tr -d '"\r,' | sed 's/[|]//g')
-    # 当前生效的配方打★（静态标记，生成那一刻的状态）
-    [ $((N - 1)) -eq $CUR ] && LBL="★ $LBL"
+    # 当前生效的配方打★（静态标记；全局索引比较，本页无匹配则不打）
+    [ $((START + N - 1)) -eq "$CUR" ] && LBL="★ $LBL"
     echo "button|$LBL|/opt/usr/nx-ks/filmlab.sh apply $KEY" >> $OUT
-  done < /tmp/fl.keys
-  rm -f /tmp/fl.keys
+  done < /tmp/fl.page
+  rm -f /tmp/fl.page
 
   {
     echo ""
+    if [ "$PAGES" -gt 1 ]; then
+      echo "button|◀ 上页$((PAGE+1))/$PAGES|/opt/usr/nx-ks/filmlab_page.sh prev"
+      echo "button|▶ 下页$((PAGE+1))/$PAGES|/opt/usr/nx-ks/filmlab_page.sh next"
+    fi
     echo "button|返回|@/opt/usr/nx-ks/gui_filmlab.NX500"
     echo "button|取消|/opt/usr/nx-ks/gui_exit.sh"
   } >> $OUT
 
-  echo "mkgui: 已生成 $OUT — $N 个配方按钮（配方库共 $TOTAL 个）"
-  [ "$TOTAL" -gt "$MAXBTN" ] && echo "  ★ 超出 $MAXBTN 按钮上限，剩余 $((TOTAL - MAXBTN)) 个请用 filmlab.sh cycle 或 telnet apply"
-  log "$(date '+%H:%M:%S') mkgui -> $N buttons (of $TOTAL)"
+  echo "mkgui: 已生成 $OUT — 第 $((PAGE+1))/$PAGES 页，$N 个配方按钮（配方库共 $TOTAL 个）"
+  log "$(date '+%H:%M:%S') mkgui -> page $((PAGE+1))/$PAGES, $N buttons (of $TOTAL)"
   ;;
 
 #---------------------------------------------------------------
@@ -729,30 +873,18 @@ export)
   # ★ 从 SD 卡 JSON 导出扁平配方表，给机内 UI 程序（nxfilmui.arm）读。
   #   nxfilmui 不解析 JSON（相机上也没有 jq），只读纯文本：
   #     key|label|R|G|B|HUE|SAT|SHARP|CON
-  #   每次启动 UI 前跑一次，保证配方库改了 UI 就跟着变。
+  #   ★ 2026-10-09 优化：改用 jtable（单 awk 进程）——35 配方从 ~90s 降到 <1s。
   OUT=$LAB/recipes.txt
   TMP=$OUT.tmp
-  N=0
-  jlist > /tmp/fl.keys
-  [ -s /tmp/fl.keys ] || { echo "export: 配方库为空，未改动 $OUT"; rm -f /tmp/fl.keys; exit 1; }
-  {
-    while read KEY; do
-      [ -z "$KEY" ] && continue
-      LBL=$(jlabel "$KEY")
-      [ -z "$LBL" ] && LBL=$KEY
-      # ★ 竖线会破坏 UI 的 strtok('|') 解析；换行/回车会串行
-      LBL=$(echo "$LBL" | tr -d '|\r\n' | cut -c1-40)
-      echo "$KEY|$LBL|$(jval $KEY R_COLOR)|$(jval $KEY G_COLOR)|$(jval $KEY B_COLOR)|$(jval $KEY HUE)|$(jval $KEY SATURATION)|$(jval $KEY SHARPNESS)|$(jval $KEY CONTRAST)"
-      N=$((N + 1))
-    done < /tmp/fl.keys
-  } > $TMP
-  rm -f /tmp/fl.keys
-  if [ -s "$TMP" ]; then
+  jtable > $TMP
+  N=$(grep -c . $TMP 2>/dev/null)
+  case "$N" in ""|*[!0-9]*) N=0 ;; esac
+  if [ "$N" -gt 0 ]; then
     mv -f $TMP $OUT
     echo "export: 已生成 $OUT — $N 个配方"
   else
     rm -f $TMP
-    echo "export: 生成失败，保持原$OUT 不变"
+    echo "export: 生成失败（配方库空或格式异常），保持原$OUT 不变"
     exit 1
   fi
   ;;
@@ -777,11 +909,13 @@ export)
   echo "  cycle              轮换到下一个配方（绑机身键用，零界面）"
   echo "  check [slot]      ★ 客观判据（只读）：ISP 手上的 7 维 vs prefman 槽位值"
   echo "  reload            ★ 只重触发（不写配方）+ 打印判据 —— 配方没变但画面没跟上时用"
+  echo "  pwpush <recipe> [--yes]  ★ ③ PW 直推（2026-10-09）：7 维直进 ISP（默认 dry-run）"
   echo "  quit               关闭 X11 选择器（已弃用，X11 在单核机上会吃满 CPU）"
   echo
-  echo "★ 生效通道（2026-10-08 上机定论）：①prefman 存储 ②setusr 选择 ③【app 推参数】"
-  echo "  ① ② 都到不了 ISP 的 PW 引擎 ⇒ 画面对不上时用 check 判，然后："
-  echo "    EV+AEL → 点配方 → 打开画面向导 → 选中「自定义1」→ 画面生效（唯一已知链路）"
+  echo "★ 生效通道（2026-10-09 更新）：①prefman 存储 ②setusr 选择 ③【PW 直推 / app 推参数】"
+  echo "  ① ② 到不了 ISP；③ 已打通（ATTR_BUS_MCB 通道：pwsend.arm + pwcalib.sh）"
+  echo "  · 校准完成前：EV+AEL → 点配方 → 画面向导 → 选中「自定义1」（保底链路）"
+  echo "  · 校准完成后：置 FILMLAB_PW=1 ⇒ apply 即一键生效（直推 7 维）"
   ;;
 
 esac
