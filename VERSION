@@ -1,7 +1,10 @@
 NX-WA — Samsung NX (DRIMe5 / Tizen) enhancement & research project
 
 version        2.88.0-nxwa.1
-repo           https://github.com/WApaperplane/nxwa   ★ fork 项目名（2026-10-08 定案）
+repo           https://github.com/WApaperplane/NXWA-nx500_modding   ★ 规范地址（2026-10-10 复核）
+               ↑ 旧名 WApaperplane/nx500_nx1_modding 仍可重定向；不是 /nxwa（该地址不存在）
+branch         nxwa（仓库默认分支）
+upstream       https://github.com/ottokiksmaler/nx500_nx1_modding   ★ GitHub fork parent（实测）
 bloodline      NX-KS 2.88 (KinoSeed)  +  nx500_nx1_modding (上游血缘)
 camera-path    /opt/usr/nx-ks/          ★ 相机端安装路径【保持不变】，改名只改项目名
 license        AGPL-3.0（见 LICENSE；派生自 AGPL 上游 ⇒ 必须同证）

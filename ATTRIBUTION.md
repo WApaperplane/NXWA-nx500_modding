@@ -1,7 +1,7 @@
-# ATTRIBUTION — Metol 的上游血缘与许可证状态
+# ATTRIBUTION — NX-WA 的上游血缘与许可证状态
 
 > 目的：**在许可证审计完成前，明确不把本项目包装成"全新原创"**。
-> 每一项上游都必须有**名字 + 许可证状态 + 用在哪**。生成：2026-10-08（工作流 D8）。
+> 每一项上游都必须有**名字 + 许可证状态 + 用在哪**。生成：2026-10-08（工作流 D8）；2026-10-10 复核上游仓库名。
 
 ---
 
@@ -9,7 +9,7 @@
 
 | 上游 | 用途 | 许可证状态 | 备注 |
 |---|---|---|---|
-| **`nx500_nx1_modding`**（本项目为其 fork） | `scripts/` 的绝大多数脚本、`info.tg`、`nx_cs.adj`、`mod_gui`、`gui_*.NX500` 菜单母本 | ✅ **AGPL-3.0 已复核**（2026-10-08：`origin/master:LICENSE` = GNU Affero GPL v3 全文 661 行；与本地 `LICENSE` 忽略空白后仅差 `http/https` 链接写法） | ★ 这是**决定本项目整体许可证**的那一条 ⇒ **本项目保持 AGPL-3.0**（`LICENSE` 已按此落地） |
+| **`ottokiksmaler/nx500_nx1_modding`**（本项目的 GitHub fork parent；实测其自身无 parent） | `scripts/` 的绝大多数脚本、`info.tg`、`nx_cs.adj`、`mod_gui`、`gui_*.NX500` 菜单母本 | ✅ **AGPL-3.0 已复核**（2026-10-08：`origin/master:LICENSE` = GNU Affero GPL v3 全文 661 行；与本地 `LICENSE` 忽略空白后仅差 `http/https` 链接写法） | ★ 这是**决定本项目整体许可证**的那一条 ⇒ **本项目保持 AGPL-3.0**（`LICENSE` 已按此落地）。★ 注意：历史文档曾把上游写成 `SamsungNX500/nx500_nx1_modding`，**该仓库不存在**（2026-10-10 实测） |
 | **NX-KS 2.88**（作者 **KinoSeed**） | 原始 mod 的血脉（版本号 2.88 即来自此） | ★ **待考**（未见明确 LICENSE 文件） | 产品 `VERSION` 标注血脉来源；**发布前必须联系作者或查清其声明** |
 | **capstone** | 研究侧反汇编工具（`test_server/isp/`） | BSD-3-Clause（仓库内已有其 LICENSE） | 研究仓依赖 |
 | **ge0rg/samsung-nx-hacks** | 机型表 / 固件格式参考 | 见其仓库（未复制代码，仅参考） | 参考，不含代码 |
