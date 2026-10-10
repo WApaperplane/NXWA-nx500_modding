@@ -179,6 +179,506 @@
         "SATURATION": 15,
         "SHARPNESS": 10,
         "CONTRAST": 14
+    },
+    "ektar100": {
+        "label": "Ektar 100",
+        "R_COLOR": 110,
+        "G_COLOR": 100,
+        "B_COLOR": 88,
+        "HUE": 11,
+        "SATURATION": 14,
+        "SHARPNESS": 12,
+        "CONTRAST": 12
+    },
+    "colorplus200": {
+        "label": "ColorPlus 200",
+        "R_COLOR": 107,
+        "G_COLOR": 102,
+        "B_COLOR": 90,
+        "HUE": 12,
+        "SATURATION": 11,
+        "SHARPNESS": 8,
+        "CONTRAST": 9
+    },
+    "proimage100": {
+        "label": "ProImage 100",
+        "R_COLOR": 108,
+        "G_COLOR": 100,
+        "B_COLOR": 92,
+        "HUE": 11,
+        "SATURATION": 10,
+        "SHARPNESS": 9,
+        "CONTRAST": 9
+    },
+    "portra160": {
+        "label": "Portra 160",
+        "R_COLOR": 104,
+        "G_COLOR": 100,
+        "B_COLOR": 94,
+        "HUE": 10,
+        "SATURATION": 9,
+        "SHARPNESS": 10,
+        "CONTRAST": 8
+    },
+    "c200": {
+        "label": "Fuji C200",
+        "R_COLOR": 99,
+        "G_COLOR": 103,
+        "B_COLOR": 105,
+        "HUE": 12,
+        "SATURATION": 10,
+        "SHARPNESS": 8,
+        "CONTRAST": 8
+    },
+    "superia200": {
+        "label": "Superia 200",
+        "R_COLOR": 102,
+        "G_COLOR": 100,
+        "B_COLOR": 103,
+        "HUE": 12,
+        "SATURATION": 11,
+        "SHARPNESS": 9,
+        "CONTRAST": 9
+    },
+    "vista200": {
+        "label": "Vista 200",
+        "R_COLOR": 108,
+        "G_COLOR": 100,
+        "B_COLOR": 96,
+        "HUE": 12,
+        "SATURATION": 13,
+        "SHARPNESS": 8,
+        "CONTRAST": 10
+    },
+    "velvia100": {
+        "label": "Velvia 100",
+        "R_COLOR": 101,
+        "G_COLOR": 108,
+        "B_COLOR": 112,
+        "HUE": 10,
+        "SATURATION": 15,
+        "SHARPNESS": 11,
+        "CONTRAST": 13
+    },
+    "astia100f": {
+        "label": "Astia 100F",
+        "R_COLOR": 101,
+        "G_COLOR": 103,
+        "B_COLOR": 104,
+        "HUE": 11,
+        "SATURATION": 10,
+        "SHARPNESS": 9,
+        "CONTRAST": 9
+    },
+    "provia400x": {
+        "label": "Provia 400X",
+        "R_COLOR": 100,
+        "G_COLOR": 103,
+        "B_COLOR": 107,
+        "HUE": 11,
+        "SATURATION": 12,
+        "SHARPNESS": 10,
+        "CONTRAST": 11
+    },
+    "e100": {
+        "label": "Ektachrome E100",
+        "R_COLOR": 98,
+        "G_COLOR": 103,
+        "B_COLOR": 106,
+        "HUE": 11,
+        "SATURATION": 11,
+        "SHARPNESS": 10,
+        "CONTRAST": 10
+    },
+    "cinestill800t": {
+        "label": "CineStill 800T",
+        "R_COLOR": 95,
+        "G_COLOR": 104,
+        "B_COLOR": 112,
+        "HUE": 13,
+        "SATURATION": 12,
+        "SHARPNESS": 7,
+        "CONTRAST": 10
+    },
+    "vision250d": {
+        "label": "Vision3 250D",
+        "R_COLOR": 103,
+        "G_COLOR": 101,
+        "B_COLOR": 99,
+        "HUE": 11,
+        "SATURATION": 10,
+        "SHARPNESS": 8,
+        "CONTRAST": 9
+    },
+    "tmax400": {
+        "label": "T-MAX 400",
+        "R_COLOR": 100,
+        "G_COLOR": 100,
+        "B_COLOR": 100,
+        "HUE": 10,
+        "SATURATION": 0,
+        "SHARPNESS": 11,
+        "CONTRAST": 10
+    },
+    "acros100": {
+        "label": "Acros 100",
+        "R_COLOR": 100,
+        "G_COLOR": 100,
+        "B_COLOR": 100,
+        "HUE": 10,
+        "SATURATION": 0,
+        "SHARPNESS": 10,
+        "CONTRAST": 13
+    },
+    "fp4": {
+        "label": "FP4 Plus",
+        "R_COLOR": 100,
+        "G_COLOR": 100,
+        "B_COLOR": 100,
+        "HUE": 10,
+        "SATURATION": 0,
+        "SHARPNESS": 10,
+        "CONTRAST": 11
+    },
+    "xp2": {
+        "label": "XP2 Super",
+        "R_COLOR": 100,
+        "G_COLOR": 100,
+        "B_COLOR": 100,
+        "HUE": 10,
+        "SATURATION": 0,
+        "SHARPNESS": 9,
+        "CONTRAST": 9
+    },
+    "lomo100": {
+        "label": "Lomo 100",
+        "R_COLOR": 104,
+        "G_COLOR": 101,
+        "B_COLOR": 99,
+        "HUE": 12,
+        "SATURATION": 13,
+        "SHARPNESS": 9,
+        "CONTRAST": 11
+    },
+    "lomo800": {
+        "label": "Lomo 800",
+        "R_COLOR": 105,
+        "G_COLOR": 100,
+        "B_COLOR": 97,
+        "HUE": 13,
+        "SATURATION": 14,
+        "SHARPNESS": 8,
+        "CONTRAST": 11
+    },
+    "kodak_gold100": {
+        "label": "Gold 100",
+        "R_COLOR": 108,
+        "G_COLOR": 101,
+        "B_COLOR": 90,
+        "HUE": 12,
+        "SATURATION": 12,
+        "SHARPNESS": 10,
+        "CONTRAST": 10
+    },
+    "kodak_gold400": {
+        "label": "Gold 400",
+        "R_COLOR": 110,
+        "G_COLOR": 100,
+        "B_COLOR": 88,
+        "HUE": 13,
+        "SATURATION": 13,
+        "SHARPNESS": 9,
+        "CONTRAST": 11
+    },
+    "fujicolor100": {
+        "label": "Fujicolor 100",
+        "R_COLOR": 99,
+        "G_COLOR": 102,
+        "B_COLOR": 106,
+        "HUE": 12,
+        "SATURATION": 11,
+        "SHARPNESS": 9,
+        "CONTRAST": 9
+    },
+    "solaris100": {
+        "label": "Solaris 100",
+        "R_COLOR": 104,
+        "G_COLOR": 100,
+        "B_COLOR": 98,
+        "HUE": 11,
+        "SATURATION": 12,
+        "SHARPNESS": 9,
+        "CONTRAST": 11
+    },
+    "vista400": {
+        "label": "Vista 400",
+        "R_COLOR": 109,
+        "G_COLOR": 100,
+        "B_COLOR": 95,
+        "HUE": 12,
+        "SATURATION": 13,
+        "SHARPNESS": 8,
+        "CONTRAST": 10
+    },
+    "reala100": {
+        "label": "Reala 100",
+        "R_COLOR": 98,
+        "G_COLOR": 102,
+        "B_COLOR": 106,
+        "HUE": 11,
+        "SATURATION": 11,
+        "SHARPNESS": 10,
+        "CONTRAST": 9
+    },
+    "fuji9000": {
+        "label": "Fuji 9000",
+        "R_COLOR": 102,
+        "G_COLOR": 101,
+        "B_COLOR": 102,
+        "HUE": 12,
+        "SATURATION": 11,
+        "SHARPNESS": 9,
+        "CONTRAST": 9
+    },
+    "velvia50_land": {
+        "label": "Velvia 50 风光",
+        "R_COLOR": 100,
+        "G_COLOR": 112,
+        "B_COLOR": 112,
+        "HUE": 10,
+        "SATURATION": 15,
+        "SHARPNESS": 12,
+        "CONTRAST": 14
+    },
+    "provia1600": {
+        "label": "Provia 1600",
+        "R_COLOR": 100,
+        "G_COLOR": 103,
+        "B_COLOR": 106,
+        "HUE": 11,
+        "SATURATION": 12,
+        "SHARPNESS": 9,
+        "CONTRAST": 12
+    },
+    "sensia100": {
+        "label": "Sensia 100",
+        "R_COLOR": 102,
+        "G_COLOR": 102,
+        "B_COLOR": 104,
+        "HUE": 11,
+        "SATURATION": 11,
+        "SHARPNESS": 10,
+        "CONTRAST": 10
+    },
+    "elitechrome100": {
+        "label": "EliteChrome 100",
+        "R_COLOR": 100,
+        "G_COLOR": 104,
+        "B_COLOR": 106,
+        "HUE": 11,
+        "SATURATION": 12,
+        "SHARPNESS": 11,
+        "CONTRAST": 11
+    },
+    "velvia100f": {
+        "label": "Velvia 100F",
+        "R_COLOR": 103,
+        "G_COLOR": 106,
+        "B_COLOR": 108,
+        "HUE": 10,
+        "SATURATION": 14,
+        "SHARPNESS": 11,
+        "CONTRAST": 13
+    },
+    "trix400_push": {
+        "label": "TriX 400 推档",
+        "R_COLOR": 100,
+        "G_COLOR": 100,
+        "B_COLOR": 100,
+        "HUE": 10,
+        "SATURATION": 0,
+        "SHARPNESS": 12,
+        "CONTRAST": 15
+    },
+    "hp5_push1600": {
+        "label": "HP5 推1600",
+        "R_COLOR": 100,
+        "G_COLOR": 100,
+        "B_COLOR": 100,
+        "HUE": 10,
+        "SATURATION": 0,
+        "SHARPNESS": 13,
+        "CONTRAST": 16
+    },
+    "delta100": {
+        "label": "Delta 100",
+        "R_COLOR": 100,
+        "G_COLOR": 100,
+        "B_COLOR": 100,
+        "HUE": 10,
+        "SATURATION": 0,
+        "SHARPNESS": 13,
+        "CONTRAST": 12
+    },
+    "tmax100": {
+        "label": "T-MAX 100",
+        "R_COLOR": 100,
+        "G_COLOR": 100,
+        "B_COLOR": 100,
+        "HUE": 10,
+        "SATURATION": 0,
+        "SHARPNESS": 13,
+        "CONTRAST": 12
+    },
+    "panf50": {
+        "label": "Pan F Plus 50",
+        "R_COLOR": 100,
+        "G_COLOR": 100,
+        "B_COLOR": 100,
+        "HUE": 10,
+        "SATURATION": 0,
+        "SHARPNESS": 13,
+        "CONTRAST": 11
+    },
+    "neopan100": {
+        "label": "Neopan 100",
+        "R_COLOR": 100,
+        "G_COLOR": 100,
+        "B_COLOR": 100,
+        "HUE": 10,
+        "SATURATION": 0,
+        "SHARPNESS": 11,
+        "CONTRAST": 12
+    },
+    "kentmere400": {
+        "label": "Kentmere 400",
+        "R_COLOR": 100,
+        "G_COLOR": 100,
+        "B_COLOR": 100,
+        "HUE": 10,
+        "SATURATION": 0,
+        "SHARPNESS": 10,
+        "CONTRAST": 11
+    },
+    "vision500t": {
+        "label": "Vision3 500T",
+        "R_COLOR": 95,
+        "G_COLOR": 102,
+        "B_COLOR": 112,
+        "HUE": 13,
+        "SATURATION": 12,
+        "SHARPNESS": 8,
+        "CONTRAST": 10
+    },
+    "cinestill50d": {
+        "label": "CineStill 50D",
+        "R_COLOR": 103,
+        "G_COLOR": 101,
+        "B_COLOR": 100,
+        "HUE": 11,
+        "SATURATION": 12,
+        "SHARPNESS": 9,
+        "CONTRAST": 10
+    },
+    "double_x": {
+        "label": "Double-X 5222",
+        "R_COLOR": 100,
+        "G_COLOR": 100,
+        "B_COLOR": 100,
+        "HUE": 10,
+        "SATURATION": 0,
+        "SHARPNESS": 12,
+        "CONTRAST": 13
+    },
+    "teal_orange": {
+        "label": "青橙",
+        "R_COLOR": 106,
+        "G_COLOR": 97,
+        "B_COLOR": 107,
+        "HUE": 14,
+        "SATURATION": 13,
+        "SHARPNESS": 10,
+        "CONTRAST": 12
+    },
+    "warm_vintage": {
+        "label": "暖旧",
+        "R_COLOR": 110,
+        "G_COLOR": 100,
+        "B_COLOR": 88,
+        "HUE": 12,
+        "SATURATION": 9,
+        "SHARPNESS": 8,
+        "CONTRAST": 9
+    },
+    "cold_steel": {
+        "label": "冷峻",
+        "R_COLOR": 92,
+        "G_COLOR": 100,
+        "B_COLOR": 110,
+        "HUE": 11,
+        "SATURATION": 9,
+        "SHARPNESS": 11,
+        "CONTRAST": 12
+    },
+    "faded_film": {
+        "label": "褪色",
+        "R_COLOR": 102,
+        "G_COLOR": 100,
+        "B_COLOR": 102,
+        "HUE": 11,
+        "SATURATION": 6,
+        "SHARPNESS": 7,
+        "CONTRAST": 5
+    },
+    "highkey": {
+        "label": "高调",
+        "R_COLOR": 101,
+        "G_COLOR": 101,
+        "B_COLOR": 101,
+        "HUE": 10,
+        "SATURATION": 8,
+        "SHARPNESS": 9,
+        "CONTRAST": 3
+    },
+    "lowkey": {
+        "label": "低调",
+        "R_COLOR": 99,
+        "G_COLOR": 99,
+        "B_COLOR": 99,
+        "HUE": 10,
+        "SATURATION": 11,
+        "SHARPNESS": 10,
+        "CONTRAST": 16
+    },
+    "sepia_vintage": {
+        "label": "棕褐",
+        "R_COLOR": 114,
+        "G_COLOR": 102,
+        "B_COLOR": 80,
+        "HUE": 13,
+        "SATURATION": 7,
+        "SHARPNESS": 8,
+        "CONTRAST": 11
+    },
+    "bleach_bypass": {
+        "label": "漂白",
+        "R_COLOR": 102,
+        "G_COLOR": 101,
+        "B_COLOR": 103,
+        "HUE": 11,
+        "SATURATION": 5,
+        "SHARPNESS": 13,
+        "CONTRAST": 16
+    },
+    "blue_hour": {
+        "label": "蓝调时刻",
+        "R_COLOR": 90,
+        "G_COLOR": 100,
+        "B_COLOR": 112,
+        "HUE": 12,
+        "SATURATION": 12,
+        "SHARPNESS": 9,
+        "CONTRAST": 10
     }
   },
   "presets": {

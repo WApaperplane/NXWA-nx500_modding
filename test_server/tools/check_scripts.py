@@ -69,6 +69,18 @@ def main():
         # U1 只读上机脚本包（生成物，但同样要在相机上跑 ⇒ 同样受铁律 99 约束）
         + glob.glob("test_server/u1/*.sh")
         + glob.glob("test_server/u1/*.py")
+        # U6 3D LUT 上机包（含写类子命令 u6_lut.sh；相机端资产一视同仁）
+        + glob.glob("test_server/u6/*.sh")
+        + glob.glob("test_server/u6/*.py")
+        # PW 直推包（pwsend/pwcalib；上机跑，受铁律 99 约束）
+        + glob.glob("test_server/pwsend/*.sh")
+        + glob.glob("test_server/pwsend/*.py")
+        # LUT 链路包（lutpick.sh / deploy_luts.py）
+        + glob.glob("test_server/lutpipe/*.sh")
+        + glob.glob("test_server/lutpipe/*.py")
+        # FilmLab 包（flab.py 配方工具 / flab_sim.sh 离线回归 / nxfilmui 构建脚本）
+        + glob.glob("test_server/filmlab/*.sh")
+        + glob.glob("test_server/filmlab/*.py")
     ))
     files = [f for f in files if os.path.isfile(f)]
 

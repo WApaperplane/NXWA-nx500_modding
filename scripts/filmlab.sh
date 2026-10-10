@@ -1,6 +1,6 @@
 #!/bin/sh
 #=====================================================================
-# filmlab-apply.sh  —  FilmLab SD 卡配方引擎 v1
+# filmlab-apply.sh  —  FilmLab SD 卡配方引擎 v2（2026-10-10：全 7 维 id + apply --fast 提速）
 #---------------------------------------------------------------------
 # 设计前提（2026-10-04 实机定案）：
 #   · 配方库在 SD 卡（/mnt/mmc/filmlab/recipes.json），数量不限
@@ -130,14 +130,18 @@ get_wb() { prefman get 0 "$(printf 0x%05x $WB_K)" l 2>/dev/null | tr -d '\r' | s
 # ⇒ 本引擎的立场（诚实版，2026-10-09 更新）：
 #   · ① 写槽 + prefman save（持久化；★ 不 save 则重启回退，实测过）
 #   · ② 借道切到目标槽（保证"选择"真的发生，虽然它不搬参数）
-#   · ③ **已打通（待校准）**：2026-10-09 静态全解属性总线传输层
-#        （docs/current/ATTR_BUS_MCB_2026-10-09.md）：
+#   · ③ **已打通（10-10 全 7 维 id 已解）**：属性总线传输层全解
+#        （docs/current/ATTR_BUS_MCB_2026-10-09.md + PW_ID_MAP_FULL_2026-10-10.md）：
 #        set_attribute(id) == SetVariableDataMCB(id,&v,4) → MCB → p7 → ISP。
-#        工具 `pwsend.arm`（已编译，百名单 0x100..0x12b）+ 「值编码器」gen_pwpush.py。
-#        ⇒ 校准（pwcalib.sh，确定 R/G/B/HUE 的 id 与编码）完成后，
-#          置 FILMLAB_PW=1 即得【真·一键】：点配方 → 7 维直进 ISP → 画面立即变。
-#        ★ 未校准前保持 FILMLAB_PW=0（行为与旧版完全一致）；官方画面向导仍是
-#          保底链路（当前 slot9 已有正规数据，重选一遍即恢复）。
+#        工具 `pwsend.arm`（白名单已扩至 [0x100,0x13e]）+ 「值编码器」gen_pwpush.py。
+#        ★ id 全图（10-10 上机定案）：可外部直推 = SAT=0x110 / SHARP=0x111 / CON=0x112
+#          （经 p7 归一化 → 内部 0x10f/0x110/0x111）【三维回归已实测通过】。
+#          ★★ R/G/B/HUE 内部 id = 0x130-0x133，但**无外部 MCB 通路**（10-10 上机 probe3 负结论
+#             rc=0 而 varlist 无变化 + 静态铁证：外部归一化器 FUN_00051090 只覆盖 0x100-0x12e，
+#             其余一律 → 0xff 拒收）；只有机身侧「档位应用」路径（0x51b20）用内部 id 直写
+#             ⇒ 需 G4 改 p7 打通，或走官方画面向导（选「自定义1」= 全 7 维进入 ISP 的正路）。
+#        ⇒ 置 FILMLAB_PW=1 即得【三维一键】：点配方 → SAT/SHARP/CON 直进 ISP → 画面立即变。
+#        ★ 官方画面向导仍是保底链路（当前 slot9 已有正规数据，重选一遍即恢复）。
 #   · check 判据（只读）永远保留：ISP 手上的 7 维 vs prefman 槽位，一眼看出进没进。
 # =====================================================================
 
@@ -148,15 +152,21 @@ FILMLAB_MID=${FILMLAB_MID:-custom}  # custom(默认)=借道另一个自定义槽
 # ---- ③ PW 直推（2026-10-09 新增；校准前默认关）----
 PWSEND=${PWSEND:-/opt/usr/nx-ks/pwsend.arm}
 FILMLAB_PW=${FILMLAB_PW:-0}         # 1 = apply 后自动直推（pwcalib.sh 校准完成后置 1）
-# ★ PW id 表：铁证项 = libcapture-fw-prod.so setter 函数名对应；
-#   空 = 跳过（等 pwcalib.sh 校准后填入实测值）
-PWID_R=${PWID_R:-}        # 待校准（候选 0x10e——实测效果"偏蓝"，映射需指纹法定位）
-PWID_G=${PWID_G:-}        # 待校准（候选 0x10f）
-PWID_B=${PWID_B:-}        # 待校准
-PWID_H=${PWID_H:-}        # 待校准（候选 0x113）
-PWID_S=0x110              # ★ 铁证（setPWSaturation）
-PWID_P=0x111              # ★ 铁证（setPWSharpness）
-PWID_C=0x112              # ★ 铁证（setPWContrast）
+# ★ PW id 表（10-10 上机定案，PW_ID_MAP_FULL_2026-10-10.md §6）：
+#   S/P/C 三维 = 外部 id 0x110/0x111/0x112（经 p7 归一化 → 内部 SAT/SHARP/CON）【已实测】。
+#   R/G/B/HUE = 【默认空 = 跳过】：其内部 id 0x130-0x133 无外部 MCB 通路（probe3 负结论：
+#   rc=0 但 varlist 无变化；静态：归一化器只认 0x100-0x12e，其余一律 0xff 拒收）。
+#   ⇒ 若将来 G4 后改 p7 打通，再 flab.py conf --set PWID_R=0x130 打开（机制保留）。
+PWID_R=${PWID_R:-}        # 空 = 跳过（无外部通路；需 G4 或官方画面向导）
+PWID_G=${PWID_G:-}        # 空 = 跳过
+PWID_B=${PWID_B:-}        # 空 = 跳过
+PWID_H=${PWID_H:-}        # 空 = 跳过
+PWID_S=${PWID_S:-0x110}   # 已实测（PWSATURATION）
+PWID_P=${PWID_P:-0x111}   # 已实测（PWSHARPNESS）
+PWID_C=${PWID_C:-0x112}   # 已实测（PWCONTRAST）
+# R/G/B 的"发送值编码"（10-10 静态）：官方档位应用路径对 R/G/B 用 COLOR((gain<<16)|0x00FF)、
+# 对 HUE/SAT/SHARP/CON 用 SCALAR(0xD80A)。（当前 R/G/B/H 无外部通路，此项仅供 G4 后备用。）
+FILMLAB_ENC_RGB=${FILMLAB_ENC_RGB:-color}
 
 # ---- userdata(20) 读写（★ getusr/setusr 只认【十进制索引或名字】）----
 getusr20() {
@@ -179,33 +189,19 @@ _NEED_PW=0
 pw_force_reload() {
   TGT=$1
   CUR=$(getusr20)
-  _NEED_PW=$CUR
   if [ "$CUR" = "$TGT" ]; then
-    # 借道候选：必须既不等于 CUR(=TGT)、也不等于 TGT
-    if [ "$FILMLAB_MID" = "standard" ]; then
-      CAND="0x140000 0x14000a 0x140009"
-    else
-      CAND="0x14000a 0x14000c 0x140000"
-    fi
-    MID=""
-    for c in $CAND; do
-      [ "$c" = "$TGT" ] && continue
-      MID=$c; break
-    done
-    [ -z "$MID" ] && MID=0x140000
-    setusr20 $MID
-    $B sleep 1
-    setusr20 "$TGT"
-    $B sleep 1
-    RELOAD=via-$MID
-  else
-    setusr20 "$TGT"
-    $B sleep 1
-    RELOAD=direct
+    # ★ 快路径（2026-10-10）：目标已达成 —— 不借道、不 sleep。
+    #   依据：① "切换触发 p7 重读槽"已证伪（切换从不搬参数）；② 直推模式下画面靠
+    #   直推即时可见；③ 当前档=9（自定义1）是 apply 的常态 ⇒ apply 常路径 0 次切换。
+    #   "借道"只是旧假设的心理安慰，删除无损（重启恢复看的是"当前档=slot"这一事实）。
+    RELOAD="already"
+    return 0
   fi
+  setusr20 "$TGT"
+  $BB sleep 1
   # ★ 自证：切完回读，确认真的落在目标上（不信 setusr 的退出码）
   NOW=$(getusr20)
-  [ "$NOW" = "$TGT" ] || RELOAD="$RELOAD-VERIFY-FAIL(now=$NOW want=$TGT)"
+  [ "$NOW" = "$TGT" ] && RELOAD="direct" || RELOAD="direct-VERIFY-FAIL(now=$NOW want=$TGT)"
 }
 
 # ---- ③ PW 直推：值编码 + pwsend（2026-10-09，ATTR_BUS_MCB 通道）----
@@ -218,7 +214,8 @@ pw_raw_code()  { U=$(( ($1 * 16 - 145) & 0xFFFF )); printf "0x%04x%04x" "$U" 0xD
 pw_gain_code() { G=$(( ($1 * 2032 + 99) / 100 ));   printf "0x%04x%04x" "$G" 0x00FF; }
 
 # pw_direct <R> <G> <B> <HUE> <SAT> <SHARP> <CON> [--yes]
-#   默认 dry-run（只打印）；--yes 才真发。id 为空的维度自动跳过（未校准）。
+#   默认 dry-run（只打印）；--yes 才真发。id 为空的维度自动跳过。
+#   ★ 10-10 上机定案：R/G/B/HUE 无外部通路 ⇒ 默认只直推【三维】SAT/SHARP/CON。
 pw_direct() {
   [ -x "$PWSEND" ] || { echo "  ③ PW直推: 缺 $PWSEND（先部署）——跳过"; return 1; }
   case "" in
@@ -226,10 +223,17 @@ pw_direct() {
       echo "  ③ PW直推: 七维有空值 —— 拒绝发送（防静默坏值）"
       return 1 ;;
   esac
+  # ★ 编码选择（10-10）：R/G/B 默认 SCALAR（0xD80A，与 p7 内部档位应用路径一致、
+  #   与 pwcalib probe3 同格式）；FILMLAB_ENC_RGB=color 切回旧 0x00FF 编码（备选）。
+  if [ "$FILMLAB_ENC_RGB" = "color" ]; then
+    RCODE=$(pw_gain_code $1); GCODE=$(pw_gain_code $2); BCODE=$(pw_gain_code $3)
+  else
+    RCODE=$(pw_raw_code $1);  GCODE=$(pw_raw_code $2);  BCODE=$(pw_raw_code $3)
+  fi
   ARGS=""
-  [ -n "$PWID_R" ] && ARGS="$ARGS $PWID_R $(pw_gain_code $1)"
-  [ -n "$PWID_G" ] && ARGS="$ARGS $PWID_G $(pw_gain_code $2)"
-  [ -n "$PWID_B" ] && ARGS="$ARGS $PWID_B $(pw_gain_code $3)"
+  [ -n "$PWID_R" ] && ARGS="$ARGS $PWID_R $RCODE"
+  [ -n "$PWID_G" ] && ARGS="$ARGS $PWID_G $GCODE"
+  [ -n "$PWID_B" ] && ARGS="$ARGS $PWID_B $BCODE"
   [ -n "$PWID_H" ] && ARGS="$ARGS $PWID_H $(pw_raw_code $4)"
   ARGS="$ARGS $PWID_S $(pw_raw_code $5)"
   ARGS="$ARGS $PWID_P $(pw_raw_code $6)"
@@ -259,9 +263,9 @@ trigger_reload() {
     *) TMP=p ;;
   esac
   st app mode $TMP >/dev/null 2>&1
-  $B sleep 1
+  $BB sleep 1
   st app mode $M2  >/dev/null 2>&1
-  $B sleep 1
+  $BB sleep 1
   RELOAD2="mode-switch($TMP->$M2)"
 }
 
@@ -415,6 +419,31 @@ jtable() {
     }
   ' $RECIPE 2>/dev/null
 }
+# ★ jline —— 单配方一次提取（单 awk 进程，2026-10-10 apply 提速）
+#   输出: R|G|B|HUE|SAT|SHARP|CON（7 值一行）；替代 7 次 jval（7 进程 → 1 进程）
+jline() {
+  /opt/usr/nx-ks/busybox awk -v want="$1" '
+    BEGIN { inr=0; key="" }
+    /"recipes"/ { inr=1; next }
+    /"presets"/ { inr=0; next }
+    !inr { next }
+    /^    "/ {
+      key=$0; sub(/^    "/,"",key); sub(/": *\{.*$/,"",key); sub(/",? *$/,"",key)
+      delete F; next
+    }
+    /^        "/ && key == want {
+      name=$0; sub(/^ *"/,"",name); sub(/":.*$/,"",name)
+      val=$0; gsub(/[^0-9-]/,"",val)
+      F[name]=val; next
+    }
+    /^    \}/ {
+      if (key == want) {
+        printf "%s|%s|%s|%s|%s|%s|%s\n", F["R_COLOR"],F["G_COLOR"],F["B_COLOR"],F["HUE"],F["SATURATION"],F["SHARPNESS"],F["CONTRAST"]
+        exit
+      }
+    }
+  ' $RECIPE 2>/dev/null
+}
 # 列出所有配方名
 jlist() {
   /opt/usr/nx-ks/busybox awk '
@@ -456,6 +485,10 @@ log() { echo "$*" >> $LOG; }
 CMD=$1
 REC=$2
 SLOT=$3
+FAST=0
+# ★ --fast（10-10 提速）：菜单路径专用 —— 跳过 ISP 判据读与逐项回读（省 ~14 个进程）；
+#   详细判据仍可用 `filmlab.sh check`（只读）单独跑。
+case "$SLOT" in --fast) FAST=1; SLOT="" ;; esac
 [ -z "$CMD" ] && CMD=help
 mkdir -p $LAB 2>/dev/null
 
@@ -507,9 +540,13 @@ apply)
   #   起因（U2 上机实测，用户报告）：/mnt/mmc/filmlab/recipes.json 缺失时 jval 返回空串，
   #   set_r 把槽位写成 0 ⇒ slot9（UI 自定义1）全 0 ⇒ 相机【整屏黑】，只能靠 reset 救回。
   #   ★ 读不到就该报错退出，绝不该写入坏值 —— 这是"静默失败导致破坏性写入"的典型。
-  V0=$(jval $REC R_COLOR);   V1=$(jval $REC G_COLOR);    V2=$(jval $REC B_COLOR)
-  V3=$(jval $REC HUE);       V4=$(jval $REC SATURATION)
-  V5=$(jval $REC SHARPNESS); V6=$(jval $REC CONTRAST)
+  # ★ 10-10 提速：单次 awk（jline）提取全部 7 值 —— 替代 7×jval（7 进程 → 1 进程）
+  LINE=$(jline "$REC")
+  OIFS="$IFS"; IFS='|'
+  # shellcheck disable=SC2086
+  set -- $LINE
+  IFS="$OIFS"
+  V0=$1; V1=$2; V2=$3; V3=$4; V4=$5; V5=$6; V6=$7
   case "" in
     $V0|$V1|$V2|$V3|$V4|$V5|$V6)
       echo "★ 拒绝写入：配方 '$REC' 的字段读不到值。"
@@ -546,6 +583,12 @@ apply)
   RELOAD2="off"
   [ "$FILMLAB_MODE" = "1" ] && trigger_reload
   log "$(date '+%H:%M:%S') apply $REC -> slot$SLOT enum$ENUM reload=$RELOAD mode=$RELOAD2 pw=$PWSTAT $SAVED"
+  # ★ --fast 出口（10-10）：菜单路径 —— 只回一行结果，不做回读/判据（那 ~15 个进程省掉）
+  if [ "$FAST" = "1" ]; then
+    echo "✓ $REC -> slot$SLOT  (reload=$RELOAD pw=$PWSTAT $SAVED)"
+    case "$RELOAD" in *VERIFY-FAIL*) echo "  ★★ ② 通道自证失败：enum 未落到目标槽";; esac
+    exit 0
+  fi
   echo "  已写入($SAVED):"
   echo "  R=$(get_r 0 $SLOT) G=$(get_r 1 $SLOT) B=$(get_r 2 $SLOT) HUE=$(get_r 3 $SLOT) SAT=$(get_r 4 $SLOT) SHARP=$(get_r 5 $SLOT) CON=$(get_r 6 $SLOT)"
   echo "  PW_TYPE  = $(st cap capdtm getusr 20 2>/dev/null | tr -d '
@@ -560,10 +603,10 @@ apply)
       echo "  ★★ 画面**不会**变（① ② 两条通道不搬参数）。"
       if [ "$FILMLAB_PW" != "1" ]; then
         echo "     ⇒ 两个选择："
-        echo "       a) 人工（保底，已验证）：画面向导 → 选中「自定义1」"
-        echo "       b) 自动（待校准）：跑 pwcalib.sh 校准 → 置 FILMLAB_PW=1 后再 apply"
+        echo "       a) 人工（保底，已验证）：画面向导 → 选中「自定义1」（全 7 维）"
+        echo "       b) 自动：置 FILMLAB_PW=1 ⇒ 直推 SAT/SHARP/CON 三维（R/G/B/HUE 无外部通路）"
       else
-        echo "     ⇒ ③ 直推已开但 ISP 未跟上："
+        echo "     ⇒ ③ 直推已开（三维 SAT/SHARP/CON）但 ISP 未跟上："
         echo "        · pwcalib.sh readback 检查 id/编码是否与实测一致"
         echo "        · 或人工恢复：画面向导 → 选中「自定义1」"
       fi ;;
@@ -657,7 +700,7 @@ reset)
   #   ★ 不能连续两次都写 0x140000 —— 第二次是同值空操作，借道也借不动。
   #   先切到 CUSTOM_1(0x140009)，再让 pw_force_reload 切回 STANDARD。
   st cap capdtm setusr 20 0x140009 >/dev/null 2>&1
-  $B sleep 1
+  $BB sleep 1
   pw_force_reload 0x140000
   # 读回验证：任何一槽不中性就报出来（不要静默成功）
   BAD=0
@@ -793,39 +836,64 @@ pwpush)
 
 #---------------------------------------------------------------
 mkgui)
-  # ★ 从 SD 卡配方库生成 mod_gui 菜单页 —— 让"配方数不限"真正成立
-  # 手写菜单是死的：往 SD 卡加配方但不改菜单文件，界面上就看不到。
-  # 每次打开 mod_gui（EV_EV.sh）先跑一次本命令 → 菜单与 SD 卡永远同步。
-  # ★ 2026-10-09 分页版：每页 18 个 + 上/下页 + 返回/取消 = 22（mod_gui 上限）
-  #   页状态 /mnt/mmc/filmlab/page.idx；翻页用 filmlab_page.sh（改页→重生成→重开菜单）
+  # ★ 从 SD 卡配方库生成 mod_gui 菜单页（2026-10-10 提速版）
+  #   提速三招（把 ~60 次 fork 压到 ~4 次 —— 这是"菜单弹出 2 秒多"的头号来源）：
+  #     ① 干掉冗余的 jlist 预扫：TOTAL 直接用配方表行数，不再数两遍
+  #     ② 按钮生成改【单个 awk】：原来每行 fork 3 次（echo|tr|sed）× 18 行 = 54 次
+  #     ③ 菜单/配方表【带缓存】：源没变就直接退出（重复开菜单 / 翻页回看 ≈ 0 成本）
+  #   分页版：每页 18 个 + 上/下页 + 返回/取消 = 22（mod_gui 上限）
+  #   页状态 /mnt/mmc/filmlab/page.idx；翻页用 filmlab_page.sh
   OUT=/opt/usr/nx-ks/gui_filmlab1b.NX500
-  PERPAGE=18                   # 每页配方数（同步：flab.py 的 PERPAGE）
-  ST=/mnt/mmc/filmlab/cur.idx  # 当前配方索引，用来打 ★ 标记
-  PG=/mnt/mmc/filmlab/page.idx # ★ 页状态（0 基）
+  PERPAGE=18                   # 每页配方数（同步：flab.py / filmlab_page.sh）
+  ST=$LAB/cur.idx              # 当前配方索引（打 ★）
+  PG=$LAB/page.idx             # ★ 页状态（0 基）
+  TBL=$LAB/recipes.txt         # 扁平配方表（mkgui / nxfilmui 共用）
+  SIGF=$OUT.sig                # ★ 输入指纹（上次生成时的快照）
+  TMD5F=$TBL.md5               # ★ 配方表指纹
 
-  CUR=0
-  [ -f "$ST" ] && CUR=$(cat $ST 2>/dev/null)
-  case "$CUR" in ""|*[!0-9]*) CUR=0 ;; esac
-  PAGE=0
-  [ -f "$PG" ] && PAGE=$(cat $PG 2>/dev/null)
+  # ---- 输入指纹：用【内容哈希】，不用 mtime ----
+  #   ★ 踩坑记录：初版用 `[ "$PG" -ot "$OUT" ]` 判缓存 —— 在机上时灵时不灵。
+  #     真因：/opt/usr 是 ext4、SD 卡是 exFAT，两侧 mtime 粒度不同 ⇒ page.idx 与成品
+  #     会判成"同秒"（-ot 为假）⇒ 每次都全量重建。内容哈希是确定的，与文件系统无关。
+  RMD5=$($BB md5sum "$RECIPE" 2>/dev/null); RMD5=${RMD5%% *}
+  CUR=0;  [ -f "$ST" ] && read -r CUR  < "$ST"  2>/dev/null
+  PAGE=0; [ -f "$PG" ] && read -r PAGE < "$PG" 2>/dev/null
+  case "$CUR"  in ""|*[!0-9]*) CUR=0  ;; esac
   case "$PAGE" in ""|*[!0-9]*) PAGE=0 ;; esac
 
-  jlist > /tmp/fl.keys
-  [ -s /tmp/fl.keys ] || { echo "mkgui: 配方库为空，保持原菜单不动"; rm -f /tmp/fl.keys; exit 1; }
-  TOTAL=$(grep -c . /tmp/fl.keys 2>/dev/null)
+  # ---- 配方表：RECIPE 内容变了才重建（原子替换，绝不留半成品）----
+  TMD5=""
+  [ -f "$TMD5F" ] && read -r TMD5 < "$TMD5F" 2>/dev/null
+  if [ ! -s "$TBL" ] || [ "$RMD5" != "$TMD5" ]; then
+    jtable > "$TBL.tmp" 2>/dev/null
+    if [ -s "$TBL.tmp" ]; then
+      mv -f "$TBL.tmp" "$TBL"
+      printf '%s\n' "$RMD5" > "$TMD5F"
+    else
+      rm -f "$TBL.tmp"
+    fi
+  fi
+  [ -s "$TBL" ] || { echo "mkgui: 配方库为空（表为空），保持原菜单不动"; exit 1; }
+
+  TOTAL=$($BB grep -c . "$TBL" 2>/dev/null)
   case "$TOTAL" in ""|*[!0-9]*) TOTAL=0 ;; esac
-  rm -f /tmp/fl.keys
-  # ★ 配方表（单 awk 重建，<1s）；mkgui 直读 tbl 生成按钮（绕开逐字段 jval 进程风暴）
-  TBL=$LAB/recipes.txt
-  jtable > $TBL
-  TOTAL=$(grep -c . $TBL 2>/dev/null)
-  case "$TOTAL" in ""|*[!0-9]*) TOTAL=0 ;; esac
-  [ "$TOTAL" -lt 1 ] && { echo "mkgui: 配方库为空（表为空），保持原菜单不动"; exit 1; }
+  [ "$TOTAL" -lt 1 ] && { echo "mkgui: 配方库为空，保持原菜单不动"; exit 1; }
   PAGES=$(( (TOTAL + PERPAGE - 1) / PERPAGE ))
   [ "$PAGES" -lt 1 ] && PAGES=1
   [ "$PAGE" -ge "$PAGES" ] && PAGE=$((PAGES - 1))   # 越界归一（删配方后页数变少）
-  echo "$PAGE" > $PG
+  printf '%s\n' "$PAGE" > $PG
   START=$((PAGE * PERPAGE))
+  # 本页按钮数（纯算术，不额外 fork）
+  N=$((TOTAL - START)); [ "$N" -gt "$PERPAGE" ] && N=$PERPAGE; [ "$N" -lt 0 ] && N=0
+
+  # ---- 菜单缓存（★ 关键提速）：输入指纹一致 ⇒ 直接复用，不重建不写盘 ----
+  SIG="$RMD5 $PAGE $CUR"
+  OLD=""
+  [ -f "$SIGF" ] && read -r OLD < "$SIGF" 2>/dev/null
+  if [ -s "$OUT" ] && [ -n "$OLD" ] && [ "$OLD" = "$SIG" ]; then
+    echo "mkgui: 菜单已是最新（缓存命中），跳过重建"
+    exit 0
+  fi
 
   #先写头部（务必 LF 行尾 —— CRLF 会让 mod_gui 解析失败）
   {
@@ -837,22 +905,22 @@ mkgui)
     echo "#   然后重新打开 mod_gui（或 telnet 执行 filmlab.sh mkgui）"
     echo "#格式：button|标签|命令"
     echo ""
-  } > $OUT
+  } > "$OUT.tmp"
 
-  # 本页配方（取第 START+1 .. START+PERPAGE 个；tbl 行 = key|label|7维）
-  sed -n "$((START + 1)),$((START + PERPAGE))p" $TBL > /tmp/fl.page
-  N=0
-  while IFS='|' read -r KEY LBL _REST; do
-    [ -z "$KEY" ] && continue
-    N=$((N + 1))
-    [ -z "$LBL" ] && LBL=$KEY
-    # ★ 剥掉标签里可能混入的引号/逗号/CR —— 竖线会破坏菜单解析
-    LBL=$(echo "$LBL" | tr -d '"\r,' | sed 's/[|]//g')
-    # 当前生效的配方打★（静态标记；全局索引比较，本页无匹配则不打）
-    [ $((START + N - 1)) -eq "$CUR" ] && LBL="★ $LBL"
-    echo "button|$LBL|/opt/usr/nx-ks/filmlab.sh apply $KEY" >> $OUT
-  done < /tmp/fl.page
-  rm -f /tmp/fl.page
+  # ★ 单个 awk 生成本页按钮（原来每行 fork 3 次，18 行 = 54 次；这里 1 次）
+  #   标签剥离 引号/逗号/CR/竖线（竖线会破坏 mod_gui 解析）；当前配方打 ★
+  "$BB" awk -F'|' -v start="$START" -v per="$PERPAGE" -v cur="$CUR" '
+    NR <= start { next }
+    NR >  start + per { exit }
+    {
+      k = $1; if (k == "") next
+      l = $2; if (l == "") l = k
+      gsub(/["\r,|]/, "", l)
+      if (start + n == cur) l = "★ " l
+      n++
+      printf "button|%s|/opt/usr/nx-ks/filmlab.sh apply %s --fast\n", l, k
+    }
+  ' "$TBL" >> "$OUT.tmp"
 
   {
     echo ""
@@ -862,7 +930,12 @@ mkgui)
     fi
     echo "button|返回|@/opt/usr/nx-ks/gui_filmlab.NX500"
     echo "button|取消|/opt/usr/nx-ks/gui_exit.sh"
-  } >> $OUT
+  } >> "$OUT.tmp"
+
+  # ★ 原子替换：mod_gui 只会看到完整菜单文件，绝不读到半成品
+  mv -f "$OUT.tmp" "$OUT"
+  # ★ 记录本次生成所用的输入指纹（下次比对；内容哈希，跨文件系统可靠）
+  printf '%s\n' "$SIG" > "$SIGF"
 
   echo "mkgui: 已生成 $OUT — 第 $((PAGE+1))/$PAGES 页，$N 个配方按钮（配方库共 $TOTAL 个）"
   log "$(date '+%H:%M:%S') mkgui -> page $((PAGE+1))/$PAGES, $N buttons (of $TOTAL)"
@@ -895,7 +968,7 @@ export)
   echo
   echo "  list              列出 SD 卡全部配方"
   echo "  show <recipe>     查看配方内容"
-  echo "  apply <recipe> [slot]   写槽 + 切风格（实时生效，约 1 秒）"
+  echo "  apply <recipe> [slot] [--fast]   写槽 + 切风格（--fast=菜单提速路径，10-10）"
   echo "  quick <recipe>    只切风格（零写入，槽需已预写）"
   echo "  preset            预写 3 个可见槽并 save"
   echo "  dump [slot]       读回槽位值"
@@ -909,13 +982,13 @@ export)
   echo "  cycle              轮换到下一个配方（绑机身键用，零界面）"
   echo "  check [slot]      ★ 客观判据（只读）：ISP 手上的 7 维 vs prefman 槽位值"
   echo "  reload            ★ 只重触发（不写配方）+ 打印判据 —— 配方没变但画面没跟上时用"
-  echo "  pwpush <recipe> [--yes]  ★ ③ PW 直推（2026-10-09）：7 维直进 ISP（默认 dry-run）"
+  echo "  pwpush <recipe> [--yes]  ★ ③ PW 直推（2026-10-09）：SAT/SHARP/CON 三维直进 ISP（默认 dry-run）"
   echo "  quit               关闭 X11 选择器（已弃用，X11 在单核机上会吃满 CPU）"
   echo
-  echo "★ 生效通道（2026-10-09 更新）：①prefman 存储 ②setusr 选择 ③【PW 直推 / app 推参数】"
-  echo "  ① ② 到不了 ISP；③ 已打通（ATTR_BUS_MCB 通道：pwsend.arm + pwcalib.sh）"
-  echo "  · 校准完成前：EV+AEL → 点配方 → 画面向导 → 选中「自定义1」（保底链路）"
-  echo "  · 校准完成后：置 FILMLAB_PW=1 ⇒ apply 即一键生效（直推 7 维）"
+  echo "★ 生效通道（10-10 上机定案）：①prefman 存储 ②setusr 选择 ③【PW 直推 / app 推参数】"
+  echo "  ① ② 到不了 ISP；③ = 直推 SAT/SHARP/CON 三维（0x110/0x111/0x112）【已实测】"
+  echo "  · R/G/B/HUE（内部 0x130-0x133）无外部 MCB 通路 ⇒ 只有官方画面向导（自定义1）能全 7 维进 ISP"
+  echo "  · 置 FILMLAB_PW=1 ⇒ apply 即一键生效（自动直推三维 SAT/SHARP/CON）"
   ;;
 
 esac

@@ -31,6 +31,9 @@ backup_original/
 test_server/filmsim/_luttest/
 test_server/filmsim/*.arm
 
+# ===== LUT 链路构建产物（表可再生成；由 deploy_luts.py build 产出）=====
+test_server/lutpipe/build/
+
 # ===== 编辑器 / 系统 =====
 .DS_Store
 Thumbs.db
@@ -159,3 +162,6 @@ test_server/ssh/factory_*.bin
 test_server/ssh/id9248.bin
 test_server/ssh/id3ch_*.bin
 test_server/ssh/sig*.bin
+
+# ===== 发布产物（由 tools/pack_release.py 生成，只作 Release asset，不入库）=====
+dist/

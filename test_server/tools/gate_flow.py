@@ -78,6 +78,17 @@ CAM_SD_OUT = "/mnt/mmc/u1/out"
 U1_DIR = os.path.join("test_server", "u1")
 U1_RUNBOOK = os.path.join(U1_DIR, "runbook.txt")
 
+# U6 脚本包（3D LUT 上机包；手写资产，同样做 lint）
+U6_DIR = os.path.join("test_server", "u6")
+U6_RUNBOOK = os.path.join(U6_DIR, "runbook.txt")
+
+# PW 直推包（pwsend/pwcalib；上机跑，受同款 lint）
+PWSEND_DIR = os.path.join("test_server", "pwsend")
+PWSEND_RUNBOOK = os.path.join(PWSEND_DIR, "runbook.txt")
+
+# LUT 链路包（lutpick 产品工具；无 runbook —— 上机路径由 U6 runbook 覆盖）
+LUTPIPE_DIR = os.path.join("test_server", "lutpipe")
+
 # 证据落点（raw8/ 已在 .gitignore，属"本机证据"不入库）
 EV_ROOT = os.path.join("raw8", "gates")
 EV_U1 = os.path.join(EV_ROOT, "u1")
@@ -255,19 +266,26 @@ def parse_kv(s):
     return {k: v for k, v in KV.findall(s)}
 
 
-def lint_u1(repo):
-    """返回 dict：{'exists', 'scripts', 'segs', 'max_regs', 'readonly', 'one_shot',
-                  'lf_only', 'shebang', 'setsid_ok', 'waits', 'problems'}"""
-    out = {"exists": repo.has(U1_DIR), "scripts": [], "segs": [], "max_regs": 0,
+def lint_pack(repo, dirrel, runbook_rel=None, allow_rw=False):
+    """通用脚本包 lint（U1/U6/PW/LUT 共用）。
+    返回 dict：{'exists', 'scripts', 'segs', 'max_regs', 'readonly', 'one_shot',
+                  'lf_only', 'shebang', 'setsid_ok', 'waits', 'problems'}
+
+    allow_rw=False（U1）：所有脚本必须声明 opens=rdonly；
+    allow_rw=True （U6/PW/LUT）：接受 opens=rw，但必须标安全闸来源：
+        gate=cmasafe|cmapick|both —— 走 CMA 的写类（表写入）
+        gate=mcb                —— 走 MCB 白名单的写类（PW 直推）
+    runbook_rel=None：产品工具包（无 runbook）；有则严格核对 setsid/WAIT。"""
+    out = {"exists": repo.has(dirrel), "scripts": [], "segs": [], "max_regs": 0,
            "readonly": True, "one_shot": True, "lf_only": True, "shebang": True,
            "setsid_ok": True, "waits": [], "problems": []}
     if not out["exists"]:
         return out
 
-    shs = sorted(f for f in os.listdir(repo.p(U1_DIR)) if f.endswith(".sh"))
+    shs = sorted(f for f in os.listdir(repo.p(dirrel)) if f.endswith(".sh"))
     out["scripts"] = shs
     for f in shs:
-        rel = os.path.join(U1_DIR, f)
+        rel = os.path.join(dirrel, f)
         path = repo.p(rel)
         data = open(path, "rb").read()
         if b"\r\n" in data:
@@ -283,7 +301,15 @@ def lint_u1(repo):
             out["problems"].append(f"{f}: 缺 @gate 头注释（无法自证纪律）")
             continue
         meta = parse_kv(hdr.group("kv"))
-        if meta.get("opens", "").lower() not in ("rdonly", "read-only", "ro"):
+        opens = meta.get("opens", "").lower()
+        if opens in ("rdonly", "read-only", "ro"):
+            pass
+        elif allow_rw and opens == "rw":
+            # U6/PW/LUT：写类脚本放行，但必须打安全闸来源标记
+            if meta.get("gate", "").lower() not in ("cmasafe", "cmapick", "both", "mcb"):
+                out["problems"].append(
+                    f"{f}: opens=rw 但未标 gate=cmasafe|mcb（写类须内嵌安全闸）")
+        else:
             out["readonly"] = False
             out["problems"].append(f"{f}: opens={meta.get('opens')} 不是只读")
         if meta.get("one_shot") not in ("1", "true", "yes"):
@@ -304,25 +330,45 @@ def lint_u1(repo):
                                 "addr": kv.get("addr", "?"), "bytes": nbytes, "regs": regs})
             out["max_regs"] = max(out["max_regs"], regs)
 
-    # runbook：每条 RUN 必须 setsid；除第一条外每条 RUN 前必须有一次 >=60s 的 WAIT
-    rb = repo.text(U1_RUNBOOK)
-    if rb is not None:
-        ops = re.findall(r"^(RUN|WAIT):.*$", rb, re.M)
-        for ln in rb.splitlines():
-            m = RUN_LINE.match(ln)
-            if m and "setsid" not in m.group("cmd"):
-                out["setsid_ok"] = False
-                out["problems"].append(f"runbook: RUN 未用 /usr/bin/setsid -> {m.group('cmd')[:70]}")
-        for m in WAIT_LINE.finditer(rb):
-            out["waits"].append(int(m.group("sec")))
-        if out["waits"] and min(out["waits"]) < 60:
-            out["problems"].append("runbook: 存在 <60s 的段间等待（铁律 88）")
-        if "RUN" in ops and "WAIT" not in ops:
-            out["problems"].append("runbook: 有 RUN 但无 WAIT（段间必须让出）")
+    # runbook（可选）：每条 RUN 必须 setsid；除第一条外每条 RUN 前必须有一次 >=60s 的 WAIT
+    if runbook_rel is None:
+        pass          # 产品工具包（如 lutpipe）：无 runbook 属正常，不检查
     else:
-        out["setsid_ok"] = False
-        out["problems"].append("runbook.txt 缺失（无法核对 setsid / 段间等待）")
+        rb = repo.text(runbook_rel)
+        if rb is not None:
+            ops = re.findall(r"^(RUN|WAIT):.*$", rb, re.M)
+            for ln in rb.splitlines():
+                m = RUN_LINE.match(ln)
+                if m and "setsid" not in m.group("cmd"):
+                    out["setsid_ok"] = False
+                    out["problems"].append(f"runbook: RUN 未用 /usr/bin/setsid -> {m.group('cmd')[:70]}")
+            for m in WAIT_LINE.finditer(rb):
+                out["waits"].append(int(m.group("sec")))
+            if out["waits"] and min(out["waits"]) < 60:
+                out["problems"].append("runbook: 存在 <60s 的段间等待（铁律 88）")
+            if "RUN" in ops and "WAIT" not in ops:
+                out["problems"].append("runbook: 有 RUN 但无 WAIT（段间必须让出）")
+        else:
+            out["setsid_ok"] = False
+            out["problems"].append("runbook.txt 缺失（无法核对 setsid / 段间等待）")
     return out
+
+
+def lint_u1(repo):
+    return lint_pack(repo, U1_DIR, U1_RUNBOOK, allow_rw=False)
+
+
+def lint_u6(repo):
+    return lint_pack(repo, U6_DIR, U6_RUNBOOK, allow_rw=True)
+
+
+def lint_pwsend(repo):
+    return lint_pack(repo, PWSEND_DIR, PWSEND_RUNBOOK, allow_rw=True)
+
+
+def lint_lutpipe(repo):
+    # 产品工具包：无 runbook（上机路径由 U6 runbook 覆盖）
+    return lint_pack(repo, LUTPIPE_DIR, None, allow_rw=True)
 
 
 def run_check_scripts(repo):
@@ -437,6 +483,30 @@ def gate_g1(repo, ctx):
         if lint["problems"]:
             c.append(Check("G1-7b", "U1 包 lint 附加项", FAIL,
                            "；".join(lint["problems"][:6]), "修 gate_pack_u1 后重新生成"))
+
+    # --- 7c. 上机包 lint（U6/PW/LUT；写类子命令须内嵌安全闸）---
+    packs = [("U6", ctx.get("lint_u6")), ("PW", ctx.get("lint_pwsend")),
+             ("LUT", ctx.get("lint_lutpipe"))]
+    parts, probs, all_ok, any_exists = [], [], True, False
+    for tag, lp in packs:
+        if lp is None:
+            continue
+        if not lp["exists"]:
+            parts.append(tag + "=未生成")
+            continue
+        any_exists = True
+        ok = lp["setsid_ok"] and lp["one_shot"] and not lp["problems"]
+        all_ok = all_ok and ok
+        parts.append("%s=%d脚本/%s" % (tag, len(lp["scripts"]), "OK" if ok else "FAIL"))
+        probs += ["%s: %s" % (tag, x) for x in lp["problems"][:3]]
+    if not any_exists:
+        c.append(Check("G1-7c", "上机包 lint", MANUAL,
+                       "U6/PW/LUT 包均未生成", "资产就绪后重新跑本状态板"))
+    else:
+        c.append(Check("G1-7c", "上机包 lint（U6/PW/LUT：setsid/CRLF/安全闸标）",
+                       PASS if all_ok else FAIL,
+                       "；".join(parts),
+                       "；".join(probs[:5]) if probs else "写类内嵌安全闸（cmasafe/mcb）"))
 
     # --- 8. 脚本卫生 CI（铁律 99 的自动化）---
     res = run_check_scripts(repo)
@@ -731,7 +801,9 @@ def main():
     a = ap.parse_args()
 
     repo = Repo(a.root)
-    ctx = {"host": a.host, "probe": not a.no_probe, "lint": lint_u1(repo)}
+    ctx = {"host": a.host, "probe": not a.no_probe, "lint": lint_u1(repo),
+           "lint_u6": lint_u6(repo), "lint_pwsend": lint_pwsend(repo),
+           "lint_lutpipe": lint_lutpipe(repo)}
 
     gates = build_gates(repo, ctx)
     if a.only:
@@ -761,6 +833,9 @@ def main():
             "capabilities": [{"name": n, "state": s, "blocked_by": b, "note": nt}
                              for n, s, b, nt in caps],
             "u1_lint": ctx["lint"],
+            "u6_lint": ctx.get("lint_u6"),
+            "pwsend_lint": ctx.get("lint_pwsend"),
+            "lutpipe_lint": ctx.get("lint_lutpipe"),
         }
         p = repo.p(a.json)
         os.makedirs(os.path.dirname(p), exist_ok=True)

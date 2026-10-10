@@ -1,0 +1,120 @@
+##############################################################################
+# PW 一键滤镜 —— 上机校准 + 验证 runbook（2026-10-09）
+#   资产：test_server/pwsend/（pwsend.arm / pwcalib.sh / gen_pwpush.py）
+#   依据：docs/current/ATTR_BUS_MCB_2026-10-09.md（传输层全解）
+#   设计：docs/current/PW_ONECLICK_DESIGN_2026-10-09.md
+##############################################################################
+#
+# 进门条件：G0（21 端口可连）+ G1（preflight 全绿）。先跑：
+#     python test_server/tools/gate_flow.py
+#
+# 目标（三步）：
+#   ① 校准：确定 R/G/B/HUE 的 id 与值编码（probe1/probe2 + readback 客观判据）
+#   ② 验证：一键直推（filmlab.sh pwpush）读回严格对齐配方值
+#   ③ 落定：实测 id 写回 filmlab.sh 的 PWID_* 默认值 ⇒ FILMLAB_PW=1 一键生效
+#
+# 纪律（同 U6）：一次一条命令；RUN 全 setsid；WAIT >= 60s；
+#   任何 probe 后【必须】readback 对照；异常 → restore（或画面向导保底）。
+##############################################################################
+
+==============================================================================
+[0] 推送资产（PC 侧）
+==============================================================================
+PUT:  把以下文件送到相机（FTP 根 == SD 卡）：
+        test_server/pwsend/pwsend.arm       -> /mnt/mmc/filmlab/pwsend.arm
+        test_server/pwsend/pwcalib.sh       -> /mnt/mmc/filmlab/pwcalib.sh
+        scripts/filmlab.sh（新版，带 pwpush）-> /opt/usr/nx-ks/filmlab.sh
+CHMOD: /opt/usr/nx-ks/busybox chmod 755 /mnt/mmc/filmlab/pwsend.arm /mnt/mmc/filmlab/pwcalib.sh
+       （FTP 不保留 x 位；不 chmod 直接 Permission denied）
+前置：相机停在【菜单界面】；确认 filmlab.sh 新版已就位（grep pwpush /opt/usr/nx-ks/filmlab.sh）
+
+==============================================================================
+[1] 基线快照（1 条命令，只读）
+==============================================================================
+RUN: /usr/bin/setsid /bin/sh /mnt/mmc/filmlab/pwcalib.sh snap
+WAIT: 60
+验收：打印当前 7 维 + 备份落 /mnt/mmc/filmlab/pwcalib_backup.txt
+      （PWCOLOR_R/G/B、PWHUE、PWSATURATION、PWSHARPNESS、PWCONTRAST）
+
+==============================================================================
+[2] probe1：编码桥 + 三铁证（1 条命令，写）
+==============================================================================
+RUN: /usr/bin/setsid /bin/sh /mnt/mmc/filmlab/pwcalib.sh probe1
+WAIT: 60
+动作：0x110←95, 0x111←63, 0x112←47（= 值15/13/12 的 raw16 编码）
+验收：pwsend 打印逐条 rc；有非 0 也继续（readback 说话）
+
+==============================================================================
+[3] readback1：客观判定（1 条命令，只读）
+==============================================================================
+RUN: /usr/bin/setsid /bin/sh /mnt/mmc/filmlab/pwcalib.sh readback
+WAIT: 60
+判据（写死）：
+  * 三条全命中（SAT=15 / SHARP=13 / CON=12 或高16位 = 95/63/47）
+    ⇒ ★ 「发送值 = 读回高16位」假说成立 + 三个铁证 id 复验通过 ⇒ 进 [4]
+  * 全不中 ⇒ ★ 停：编码假说被否，带 pwcalib_status.txt 回离线轨重推
+  * 部分中 ⇒ 记录命中项，谨慎进 [4]（未命中项标记"无响应"）
+追加观察（可选）：取景器若有轻微变化→说明 ISP 实时响应（预期内）
+
+==============================================================================
+[4] probe2：未知 id 指纹（1 条命令，写）
+==============================================================================
+RUN: /usr/bin/setsid /bin/sh /mnt/mmc/filmlab/pwcalib.sh probe2
+WAIT: 60
+动作：0x10e←1000, 0x10f←1200, 0x113←79
+      （1000/1200 = COLOR 类温和值；79 = raw16(值14)，HUE 假说值）
+
+==============================================================================
+[5] readback2：映射判定 + 恢复前置（1 条命令，只读）
+==============================================================================
+RUN: /usr/bin/setsid /bin/sh /mnt/mmc/filmlab/pwcalib.sh readback
+WAIT: 60
+判据（写死；命中项 → 结论）：
+  * 0x10e←1000 命中某 PWCOLOR_x ⇒ 该 x 通道 = 0x10e
+  * 0x10f←1200 命中另一 PWCOLOR_y ⇒ y 通道 = 0x10f
+  * 0x113←79 命中 PWHUE ⇒ 0x113 = HUE（SCALAR 编码）
+  * 三条第三通道（R/G/B 剩下一维）仍未定 ⇒ 候选扫描：
+    以 1000 试 0x113/0x114/0x10d（★ 一次一个，间隔 >=60s，读回对照）
+  * 画面观察：0x10e/0x10f 命中时取景器会有轻微变化（正常）——
+    由 [6] 恢复
+
+==============================================================================
+[6] 恢复（1 条命令；或走画面向导保底）
+==============================================================================
+RUN: /usr/bin/setsid /bin/sh /mnt/mmc/filmlab/pwcalib.sh restore
+WAIT: 60
+验收：readback 显示 SAT/SHARP/CON 回到备份值；
+      COLOR/HUE 的完整恢复若未跟回 ⇒ 人工：画面向导 → 选中「自定义1」
+      （官方路径会重灌 slot9 完整 7 维——保底且已验证）
+
+==============================================================================
+[7] 一键验证：pwpush（1 条命令；需 PWID 已按 [5] 结果置环境变量）
+==============================================================================
+RUN: /usr/bin/setsid /bin/sh /mnt/mmc/filmlab/filmlab.sh pwpush portra400 --yes
+WAIT: 60
+前置：PWID_G / PWID_B / PWID_H 若已实测，则本次运行带上：
+      （例：PWID_G=0x10f PWID_B=0x113 PWID_H=0x114 ... 以实测为准）
+验收：filmlab.sh check → ISP 7 维 ≈ portra400 槽值（✓）
+  * COLOR 比例容差内；SCALAR 逐项相等
+
+==============================================================================
+[8] apply 一键（1 条命令；FILMLAB_PW=1 端到端）
+==============================================================================
+RUN: FILMLAB_PW=1 /usr/bin/setsid /bin/sh /mnt/mmc/filmlab/filmlab.sh apply portra400
+WAIT: 60
+验收（写死）：末尾出现「✓ 判据：ISP 手上的 7 维 = slot9」⇒ 【一键闭环成立】
+  * 若 ✗ 但 [7] 通过 ⇒ 检查 PWID 环境变量是否漏传（apply 走同一 pw_direct）
+  * 若画面仍未变 ⇒ 回读 last.log 的 pw=direct 行 + 记录负结论
+
+==============================================================================
+[9] 收尾：固化 + 拉回
+==============================================================================
+动作：把 [5] 实测的 id 表写回 scripts/filmlab.sh 的 PWID_* 默认值（PC 侧改，重推）
+      并把 FILMLAB_PW 默认值改为 1（或在 EV_*.sh 里 export FILMLAB_PW=1）
+PULL: /mnt/mmc/filmlab/pwcalib_backup.txt / pwcalib_sent.txt / pwcalib_status.txt / last.log
+台账：写 raw8/gates/pw/pw_calib_result.md：
+  * id 映射实测表（7 行：维度 → id → 编码 → 证据）
+  * 假说成立性（发送=读回高16位：Y/N）
+  * [7][8] 结果（一键闭环：Y/N）
+  * 异常/恢复动作记录
+##############################################################################
