@@ -16,6 +16,19 @@ Samsung NX500 / NX1 (Tizen / DRIMe5) 增强固件 mod —— 基于社区上游
 
 **发布物 / Releases**：见 [Releases](https://github.com/WApaperplane/NXWA-nx500_modding/releases)（含 SD 卡安装包 zip）。
 
+## 快速开始 / Quick start
+
+把以下文件放 SD 卡根目录，插入相机即自动执行（相机固件触发链：  
+`info.tg` → `nx_cs.adj` → 自动运行 `install.sh`），**初次安装请在显示“安装完成”后手动开启蓝牙以初始化mod。**
+```
+info.tg  nx_cs.adj  install.sh   <- 仓库根(智能引导器: 未装=全量安装, 已装=增量同步)
+scripts/                          <- 整个目录(模块母本, 会被同步到相机内部)
+```
+
+- 支持固件：NX500 **1.12** / NX1 **1.41**（其它版本会拒绝）。
+- **已装过后再插卡 = 增量同步**，只覆盖不删除、永不卸载；SD 上 `scripts/` 母本保留。
+- 卸载请用相机菜单里的 `uninstall.sh`。
+- ★ **一键包**：`NX-WA-<version>.zip`（见 Releases）= 上表全部内容，解压到 SD 卡根即可。
 ---
 
 ## 特性亮点 / Highlights
@@ -95,27 +108,6 @@ PC 端排障工具：`test_server/telnet_run.py <相机IP> '命令'`（非交互
 | 预览 | `lutpipe/lutpick.sh apply` — 落点探测 → 安全闸（`cmasafe` 四查）→ `lutapi load`，取景器秒级变化 |
 | 存活 | ★ **写表生效律**：写前必须处于"p7 抢回态"，否则写入不生效；快门必触发抢回 ⇒ `lutsentinel.arm` 守护 + 双通道隔离（表进 LUT1，p7 只碰 LUT0） |
 | 成片 | ★ **定式：预览直灌（LUT1 + 守护）/ 成片后处理（ksfilm）**。"成片直灌"已实测为死路（拍片流程会主动重配置 LUT 档位池） |
-
-## 快速开始 / Quick start
-
-把以下文件放 SD 卡根目录，插入相机即自动执行（相机固件触发链：  
-`info.tg` → `nx_cs.adj` → 自动运行 `install.sh`），**初次安装请在显示“安装完成”后手动开启蓝牙以初始化mod。**
-```
-info.tg  nx_cs.adj  install.sh   <- 仓库根(智能引导器: 未装=全量安装, 已装=增量同步)
-scripts/                          <- 整个目录(模块母本, 会被同步到相机内部)
-```
-
-- 支持固件：NX500 **1.12** / NX1 **1.41**（其它版本会拒绝）。
-- **已装过后再插卡 = 增量同步**，只覆盖不删除、永不卸载；SD 上 `scripts/` 母本保留。
-- 卸载请用相机菜单里的 `uninstall.sh`。
-- ★ **一键包**：`NX-WA-<version>.zip`（见 Releases）= 上表全部内容，解压到 SD 卡根即可。
-
-## 日常更新两条路 / Daily updates
-
-| 方式 | 命令 / 操作 | 适用 |
-| --- | --- | --- |
-| SD 智能引导器 | 最新 `scripts/` + `info.tg`/`nx_cs.adj`/`install.sh` 拷进 SD → 插卡自动同步 | 大版本 / 新增模块 |
-| WiFi push | `scripts/nx-rc/push/push.sh <相机IP>` | 只改 web 前端时，免拔卡 |
 
 详见 [SYNC.md](SYNC.md)（中英双语安装/同步/回滚指南）。
 
