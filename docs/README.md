@@ -1,7 +1,7 @@
 # NX-KS2 文档索引 / Documentation Index
 
 > 本目录按**时效**分区，避免"旧结论淹没新结论"。
-> 更新：2026-10-09 · 分支：`nxwa`
+> 更新：2026-10-11 · 分支：`nxwa`
 
 ## 目录结构
 
@@ -20,6 +20,8 @@ docs/
 | 文档 | 定位 |
 |---|---|
 | [`TASKFLOW_2026-10-10.md`](current/TASKFLOW_2026-10-10.md) | ★★★★★ **当前逆向任务流（新）**：按顺序的执行表 —— 离机轨 P1–P7 / 上机轨 W-1（U6 收尾）→W-2（U4）→W-3（U5）/ 门槛后 A。**"接下来做什么"只看这一页**；含编排决策记录与防漂移清单（取代 10-09 版，10-09 版留档执行轨迹） |
+| [`DICAM_MOD_DESIGN_2026-10-11.md`](current/DICAM_MOD_DESIGN_2026-10-11.md) | ★★★★★ **di-camera-app 修改设计（新）**：面向 X05/G-6/滚轮交互——五档路线（0/A/B/C/D）；★★ **`st app` = App 官方命令通道**（SysV 队列 0x8828 → App 命令表 @0x449d28，~30 条，零补丁，install.sh 生产已在用）；★★ systemd 骨架（裸 exec 无签名校验 / EnvironmentFile=/run/tizen-mobile-env / Restart 被注释）；★★ 投递三先例（remount rw / bluetoothd 开机钩子 / systemctl restart）；★ **G-6 结案**（App 无第 4 自定义槽）；★ **C-2 补丁规格**（13–16 字节 ⇒ `st app film …` 直达 mod）；实验 E-D1–E-D5 |
+| [`FILMLAB_WHEEL_PREVIEW_FEASIBILITY_2026-10-11.md`](current/FILMLAB_WHEEL_PREVIEW_FEASIBILITY_2026-10-11.md) | ★★★★ **「FilmLab 滚轮切换 + 实时预览」可行性（新）**：原生「画面向导」= 现成的"滚轮+预览"（自定义 1/2/3 槽内容由 mod 决定，已验 C2）；天花板=3 可见槽；**"迁到固件"是层次错误**（p7 无 UI）；三条零固件路（preset / 波轮钩子 E1 / 内置 9 档改写 E2）+ 手机 vs 相机物理差 |
 | [`ATTR_BUS_MCB_2026-10-09.md`](current/ATTR_BUS_MCB_2026-10-09.md) | ★★★★★ **属性总线传输层全解（新）**：★★★ **`set_attribute(0x10e/0x110/0x111/0x112)` = `SetVariableDataMCB`**（PLT 桩 #994 反查，`.plt`/`.rel.plt` 索引法自校验）⇒ 完整链 `SetVariableDataMCB → CMCBAdapter::SetParam(cmd=(id-0xff)\|0x1300) → CMulticoreBridge::Send(0x81,cmd,4,data) → CSender → ipcc_write_pkt → p7`（全字节级证据）；★★ **POC `pwsend.arm`**（dlopen+dlsym 直调，QEMU 实测符号解析成功）；★ 上机校准实验设计（id↔维度 / R/G/B 通道 / PWHUE 遗留）；新工具 `pltmap.py`（通用 PLT→符号映射器）|
 | [`PW_ID_MAP_FULL_2026-10-10.md`](current/PW_ID_MAP_FULL_2026-10-10.md) | ★★★★★ **PW 属性 id 全图（★ 10-10 上机定案）**：R/G/B/HUE **内部** id = `0x130–0x133`（三层静态铁证）—— **但上机 probe3 证伪"外部可直推"**（rc=0 而 varlist 无变化）+ **§6 机制铁证**：外部归一化器 `FUN_00051090` 跳转表**只覆盖 0x100–0x12e**，界外一律 `0xff` 拒收 ⇒ **外部可达 PW 直推 = 三维 SAT/SHARP/CON**；全 7 维只能走官方「画面向导→自定义1」；打通外部需改 p7（A1/G4）|
 | [`PW_APPLY_TRIGGER_CHAIN_2026-10-10.md`](current/PW_APPLY_TRIGGER_CHAIN_2026-10-10.md) | ★★★★★ **「画面向导→自定义1」在 p7 侧的触发链（新 · 离线）**：★ **真身 = 类别消息 `class=0x0107000E`**（`FUN_0004c924` 14 路跳表 @0x4c958，k=13 → `0xd26b8` 应用例程）；★ **档位应用 `FUN_00051ab8`@0x51ab8 是"值无参"的**（只读 p7 参数槽 218–226=0xda..0xe2）⇒ 推值永远够不到 R/G/B/HUE；★ **写槽本身即触发应用**（槽变更通知器 `FUN_00053330` 531 路跳表 @0x53368，selector 0xda–0xe2 → 0x545b8）；★ p7 **两个编号空间**（变量 id 0x100–0x12e ／ 类别 `cat<<16\|sub`）互不相通；**最短打通路 = RE `di-camera-app` 发送侧取 MCB 报文**（离线）；4 条新判据 + 判据/回滚 ｜ ★ **§7 路 A 已证伪**：AP↔p7 **不存在**"类别消息"实体（capfw 全库仅 `SetUserDataMCB`\|0x1100 与 `SetVariableDataMCB`\|0x1300 两扇门；class 0x107000E 在 p7 内**无任何静态引用**，5 路取证全 0）⇒ 全 7 维**只能改 p7** |
