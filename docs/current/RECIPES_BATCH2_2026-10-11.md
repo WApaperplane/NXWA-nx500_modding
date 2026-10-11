@@ -18,6 +18,20 @@
 | 引擎兼容 | `flab.py lint` **PASS**（0 FAIL / 1 warn=分页提示） |
 | 离线回归 | `flab_sim.sh` **12/12 PASS**；`check_scripts.py` **0 fail** |
 | 追加器 | `test_server/filmlab/add_batch2_recipes.py`（幂等，可重跑） |
+| 归档 | 分支 commit `9da9d0b` + tag `filmlab-recipes-v2`（已 push）；release 附件见 §6 |
+
+---
+
+## 1.5 归档状态（2026-10-11）
+
+| 步骤 | 状态 | 备注 |
+|---|---|---|
+| 仓库 commit（`scripts/filmlab/recipes.json` + 追加器 + 本文档） | ✅ 已 push | commit `9da9d0b`（`6adfa31..9da9d0b nxwa`） |
+| tag 锚定 | ✅ 已 push | `filmlab-recipes-v2` → `9da9d0b` |
+| Release 附件（`recipes.json` + `recipes.txt`） | ⏳ 待发布 | **本机出网网关拦截 `POST api.github.com`**（Caddy 403/502；`github.com` POST 正常但 API 只在 api.github.com）⇒ 换 API 可达处一键：`bash test_server/filmlab/publish_recipes_release.sh` |
+
+★ 说明：上一批 68 条只随 `v2.88.0-nxwa.1` 的 zip 交付，无独立入口；本批已把「配方库」沉淀为
+**分支文件 + tag + 独立 release 附件**三层，其中前两层已完成，第三层待网络放行。
 
 ---
 
@@ -94,6 +108,9 @@ bash test_server/filmlab/flab_sim.sh
 
 # 上机部署（相机在线时）
 python test_server/filmlab/flab.py deploy --host 192.168.0.103
+
+# 发布 release + 附件（需 API 可达 / 已登 gh）
+bash test_server/filmlab/publish_recipes_release.sh
 ```
 
 ---
