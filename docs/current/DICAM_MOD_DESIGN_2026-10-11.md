@@ -13,6 +13,7 @@
 
 1. ★★ **`st app` 是 App 的官方命令通道**（SysV 消息队列 `0x8828`；~30 条命令，覆盖换模式/驱动/滤镜/显示/计时器/变焦…）。**零补丁、今天可用**，且 mod 的 `install.sh` 里**早已在用它**（`st app disp lcd`，生产验证）。
 2. ★★ **投递侧三件套全部现成**：`mount -o remount,rw /`（install.sh 先例）＋ `bluetoothd` 开机钩子 → `/opt/usr/nx-ks/init.sh`（install.sh 先例）＋ systemd 管理（`systemctl restart di-camera-app`，**启动链无签名校验**）。⇒ **"改 App" ≠ "重刷固件"**。
+3. ★ **C-2 补丁本尊已在 QEMU 全链预跑通过**（T1–T4 全绿，含"真 `st app film …` → 队列 → 分派 → 桩 → `system()`"端到端）⇒ 上机前**只剩"投递 + 重启"两件环境动作**，补丁与分派链无未知量（§12 / `test_server/dicam/c2_qemu/RESULTS.md`）。
 
 对功能矩阵三条目的的结论：
 
@@ -360,4 +361,27 @@ App 内有一张 **{内部名 → MSG id} 的 8B 对表**（.text 常量区，fi
 
 ---
 
-*生成：2026-10-11 · 分支 `nxwa` · 全程离线（未新增上机动作）*
+## 12. ★ QEMU 预跑补记（2026-10-11 夜，已执行 ✅）
+
+> 详细结果 + 复现命令：`test_server/dicam/c2_qemu/RESULTS.md`（一页收口）
+
+**T1–T4 全绿**（补丁二进制 md5 `0e1da8b326f49728e9394f98a53ffd35`，源 `ae44293e…`）：
+
+| # | 测试 | 内容 | 结果 |
+|---|---|---|---|
+| T1 | 静态 | 桩反汇编 = 设计（`b` 精确落在 `system@plt`）；全文件仅 2 处差异（16B+5B）；无外部跳转进入桩区 | ✅ |
+| T2 | 单测 | 补丁后**真字节**映射回原 VA 0xca3a8 直接调用 → `system(cmd)` 生效 | ✅ |
+| T2b | 守卫 | `argc=1` 时直接返回、不执行（`bxcc lr`） | ✅ |
+| T3 | 分派 | **真 libshell-command.so** 的 `shell_exec` 匹配 `"film"` → 桩 | ✅ |
+| T4 | 端到端 | 真 `st app film "touch …"` → 队列 0x8828 → 注册回调（复刻 ui_shell_command）→ 桩 → 执行 → sem 回执，**`st rc=0`** | ✅ |
+
+**chroot 环境三件套（本次实测踩出；修正 10-08 笔记的表述）**：
+1. `mount -t proc proc <rootfs>/proc`（`sem_open` 的挂载探测路径需要）；
+2. ★★ **`/dev/shm` 必须是真 tmpfs** —— 仅"目录存在"不够：普通目录 ⇒ `statfs` 类型不过 ⇒ glibc `sem_open` 返回 NULL + `errno=38(ENOSYS)` ⇒ 随后 `sem_init(-1,…)` 段错误。`mount -t tmpfs tmpfs <rootfs>/dev/shm` 即通（探针实测：`sem_open→0x40804000 / sem_init→0 / sem_post→0`）；
+3. 测试期间临时停用 `<rootfs>/usr/bin/save_crash_info.sh` —— 崩溃处理器（`libsys-assert.so`，经 `/etc/ld.so.preload` 全局注入）会连锁执行一串 `st cap …`，形成**递归崩溃风暴**；改名 `.off` 再还原即可。
+
+**对上机计划的影响**：§9.2 的 **E-D5 只剩"环境动作 + 真身链路"**：投递（T1 remount rw 或 T2 bind-mount）＋ `systemctl restart` ＋ 真 App 验证；补丁本体与分派链已无未知量。另外 T4 顺带实测确认了消息槽 **单参数 ≤19 字符**约束（本次用 18 字符命令）。
+
+---
+
+*更新：2026-10-11 夜（补 §12：QEMU 预跑 T1–T4 全绿）· 分支 `nxwa` · 全程离线（未新增上机动作）*
