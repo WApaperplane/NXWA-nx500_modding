@@ -679,6 +679,276 @@
         "SATURATION": 12,
         "SHARPNESS": 9,
         "CONTRAST": 10
+    },
+    "portra400nc": {
+        "label": "Portra 400NC",
+        "R_COLOR": 104,
+        "G_COLOR": 100,
+        "B_COLOR": 95,
+        "HUE": 10,
+        "SATURATION": 8,
+        "SHARPNESS": 9,
+        "CONTRAST": 7
+    },
+    "portra400vc": {
+        "label": "Portra 400VC",
+        "R_COLOR": 107,
+        "G_COLOR": 100,
+        "B_COLOR": 92,
+        "HUE": 11,
+        "SATURATION": 12,
+        "SHARPNESS": 9,
+        "CONTRAST": 9
+    },
+    "portra800_push": {
+        "label": "Portra 800 推1600",
+        "R_COLOR": 110,
+        "G_COLOR": 102,
+        "B_COLOR": 95,
+        "HUE": 11,
+        "SATURATION": 10,
+        "SHARPNESS": 8,
+        "CONTRAST": 9
+    },
+    "kodak_max400": {
+        "label": "Kodak Max 400",
+        "R_COLOR": 110,
+        "G_COLOR": 101,
+        "B_COLOR": 90,
+        "HUE": 12,
+        "SATURATION": 12,
+        "SHARPNESS": 8,
+        "CONTRAST": 10
+    },
+    "fuji_xtra400": {
+        "label": "Fuji X-TRA 400",
+        "R_COLOR": 99,
+        "G_COLOR": 102,
+        "B_COLOR": 104,
+        "HUE": 12,
+        "SATURATION": 11,
+        "SHARPNESS": 9,
+        "CONTRAST": 9
+    },
+    "fuji_venus800": {
+        "label": "Fuji Venus 800",
+        "R_COLOR": 101,
+        "G_COLOR": 100,
+        "B_COLOR": 103,
+        "HUE": 12,
+        "SATURATION": 12,
+        "SHARPNESS": 8,
+        "CONTRAST": 10
+    },
+    "fuji_superia1600": {
+        "label": "Superia 1600",
+        "R_COLOR": 100,
+        "G_COLOR": 100,
+        "B_COLOR": 105,
+        "HUE": 13,
+        "SATURATION": 12,
+        "SHARPNESS": 8,
+        "CONTRAST": 11
+    },
+    "fuji_natura1600": {
+        "label": "Natura 1600",
+        "R_COLOR": 103,
+        "G_COLOR": 101,
+        "B_COLOR": 104,
+        "HUE": 12,
+        "SATURATION": 11,
+        "SHARPNESS": 8,
+        "CONTRAST": 10
+    },
+    "agfa_vista100": {
+        "label": "Agfa Vista 100",
+        "R_COLOR": 104,
+        "G_COLOR": 100,
+        "B_COLOR": 99,
+        "HUE": 11,
+        "SATURATION": 12,
+        "SHARPNESS": 10,
+        "CONTRAST": 10
+    },
+    "ferrania_solaris400": {
+        "label": "Solaris 400",
+        "R_COLOR": 103,
+        "G_COLOR": 100,
+        "B_COLOR": 99,
+        "HUE": 12,
+        "SATURATION": 13,
+        "SHARPNESS": 9,
+        "CONTRAST": 11
+    },
+    "lomography_color100": {
+        "label": "Lomo Color 100",
+        "R_COLOR": 105,
+        "G_COLOR": 101,
+        "B_COLOR": 97,
+        "HUE": 13,
+        "SATURATION": 13,
+        "SHARPNESS": 9,
+        "CONTRAST": 11
+    },
+    "konica_centuria400": {
+        "label": "Centuria 400",
+        "R_COLOR": 102,
+        "G_COLOR": 102,
+        "B_COLOR": 98,
+        "HUE": 12,
+        "SATURATION": 12,
+        "SHARPNESS": 9,
+        "CONTRAST": 10
+    },
+    "kodak_colorplus400": {
+        "label": "ColorPlus 400",
+        "R_COLOR": 108,
+        "G_COLOR": 101,
+        "B_COLOR": 89,
+        "HUE": 12,
+        "SATURATION": 12,
+        "SHARPNESS": 8,
+        "CONTRAST": 10
+    },
+    "rollei_cn200": {
+        "label": "Rollei CN 200",
+        "R_COLOR": 101,
+        "G_COLOR": 101,
+        "B_COLOR": 101,
+        "HUE": 11,
+        "SATURATION": 11,
+        "SHARPNESS": 10,
+        "CONTRAST": 10
+    },
+    "kodak_ektachrome64": {
+        "label": "Ektachrome 64",
+        "R_COLOR": 100,
+        "G_COLOR": 102,
+        "B_COLOR": 104,
+        "HUE": 11,
+        "SATURATION": 12,
+        "SHARPNESS": 11,
+        "CONTRAST": 12
+    },
+    "kodachrome25": {
+        "label": "Kodachrome 25",
+        "R_COLOR": 108,
+        "G_COLOR": 99,
+        "B_COLOR": 91,
+        "HUE": 12,
+        "SATURATION": 13,
+        "SHARPNESS": 13,
+        "CONTRAST": 14
+    },
+    "kodachrome200": {
+        "label": "Kodachrome 200",
+        "R_COLOR": 107,
+        "G_COLOR": 99,
+        "B_COLOR": 91,
+        "HUE": 12,
+        "SATURATION": 12,
+        "SHARPNESS": 11,
+        "CONTRAST": 13
+    },
+    "fuji_sensia200": {
+        "label": "Sensia 200",
+        "R_COLOR": 101,
+        "G_COLOR": 102,
+        "B_COLOR": 105,
+        "HUE": 11,
+        "SATURATION": 11,
+        "SHARPNESS": 10,
+        "CONTRAST": 10
+    },
+    "fuji_sensia400": {
+        "label": "Sensia 400",
+        "R_COLOR": 100,
+        "G_COLOR": 102,
+        "B_COLOR": 106,
+        "HUE": 11,
+        "SATURATION": 12,
+        "SHARPNESS": 10,
+        "CONTRAST": 11
+    },
+    "fuji_fortia": {
+        "label": "Fortia SP",
+        "R_COLOR": 102,
+        "G_COLOR": 110,
+        "B_COLOR": 109,
+        "HUE": 10,
+        "SATURATION": 15,
+        "SHARPNESS": 12,
+        "CONTRAST": 14
+    },
+    "agfachrome_ct100": {
+        "label": "Agfachrome CT100",
+        "R_COLOR": 102,
+        "G_COLOR": 100,
+        "B_COLOR": 101,
+        "HUE": 11,
+        "SATURATION": 12,
+        "SHARPNESS": 11,
+        "CONTRAST": 12
+    },
+    "agfachrome_rsx100": {
+        "label": "Agfachrome RSX100",
+        "R_COLOR": 103,
+        "G_COLOR": 99,
+        "B_COLOR": 99,
+        "HUE": 12,
+        "SATURATION": 13,
+        "SHARPNESS": 12,
+        "CONTRAST": 13
+    },
+    "ektachrome100d": {
+        "label": "Ektachrome 100D",
+        "R_COLOR": 99,
+        "G_COLOR": 102,
+        "B_COLOR": 106,
+        "HUE": 11,
+        "SATURATION": 12,
+        "SHARPNESS": 10,
+        "CONTRAST": 11
+    },
+    "vision3_50d": {
+        "label": "Vision3 50D",
+        "R_COLOR": 103,
+        "G_COLOR": 101,
+        "B_COLOR": 100,
+        "HUE": 11,
+        "SATURATION": 11,
+        "SHARPNESS": 10,
+        "CONTRAST": 10
+    },
+    "vision3_200t": {
+        "label": "Vision3 200T",
+        "R_COLOR": 96,
+        "G_COLOR": 102,
+        "B_COLOR": 111,
+        "HUE": 13,
+        "SATURATION": 12,
+        "SHARPNESS": 8,
+        "CONTRAST": 10
+    },
+    "fuji_eterna500": {
+        "label": "Eterna 500T",
+        "R_COLOR": 97,
+        "G_COLOR": 101,
+        "B_COLOR": 108,
+        "HUE": 12,
+        "SATURATION": 9,
+        "SHARPNESS": 7,
+        "CONTRAST": 8
+    },
+    "cinestill_400d": {
+        "label": "CineStill 400D",
+        "R_COLOR": 104,
+        "G_COLOR": 101,
+        "B_COLOR": 99,
+        "HUE": 11,
+        "SATURATION": 12,
+        "SHARPNESS": 9,
+        "CONTRAST": 10
     }
   },
   "presets": {
