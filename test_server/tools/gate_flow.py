@@ -109,7 +109,9 @@ UI_W, UI_H = 720, 480
 D7_REPORT = os.path.join("docs", "current", "D7_NXFILMUI_CJK_REBROADCAST_2026-10-08.md")
 
 # G4 的不可再生资产（硬前置：没有备份就不许碰 p7）
-ASSET_SLP = os.path.join(".uploads", "fw", "nx500_v1.13.bin")
+# ★ 2026-10-11 修正：NX500 官方固件序列最高即 1.12（无 1.13；经木一确认）。
+#   旧判据 nx500_v1.13.bin 系历史误设；恢复正解 = 与设备匹配的官方 1.12 完整件。
+ASSET_SLP = os.path.join(".uploads", "fw", "nx500_v1.12.bin")
 ASSET_EMMCBAK = os.path.join("raw8", "emmcbak")
 QUARANTINED = (
     (os.path.join("raw8", "p7", "quarantine", "p7_patched.bin.DO-NOT-FLASH"),
