@@ -38,7 +38,7 @@ An enhancement mod for the **Samsung NX500 / NX1** (Tizen / DRIMe5), built on th
 | --- | --- |
 | `IP: x.x.x.x [Telnet关]` | Shows the current WiFi IP; **tap = toggle Telnet(23) + FTP(21)**, with popup feedback |
 | `远程控制` (checkbox) | Toggles the web remote (port 80); also starts the port-8080 cluster and thumbnail warm-up |
-| **`EV + AEL`** (key combo) | ★ **FilmLab recipe menu** (4 pages / 22 items per page): tap a recipe → write slot + select slot + **three-dimension direct push**; press again = close. 【NX500 only】 |
+| **`EV + AEL`** (key combo) | ★ **FilmLab recipe menu** (6 pages / 18 recipes per page; + prev/next/back/cancel = 22 buttons): tap a recipe → write slot + select slot + **three-dimension direct push**; press again = close. 【NX500 only】 |
 
 The menu is regenerated every time it opens (`gen_menu.sh`), so the IP / Telnet state is always current.
 PC-side troubleshooting: `test_server/telnet_run.py <camera-ip> 'command'` (non-interactive telnet, root, empty password).
