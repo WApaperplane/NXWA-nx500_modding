@@ -308,8 +308,14 @@ def deploy(host, with_conf, sync_filmsim, idx=None):
                 f.retrbinary("RETR /_xfer/gui_filmlab1b.NX500", fh.write)
             nbtn = sum(1 for L in open(dst, encoding="utf-8", errors="replace")
                        if L.startswith("button|"))
-            print("[pull] 菜单 %d B, button 行 = %d（应 = 配方数 %d + 2）"
-                  % (os.path.getsize(dst), nbtn, len(d["recipes"])))
+            n = len(d["recipes"])
+            pages = max(1, (n + PERPAGE - 1) // PERPAGE)
+            # 分页模型：多页时每页 = PERPAGE 配方 + 上页/下页/返回/取消(4)；
+            # 单页时 = 全部配方 + 返回/取消(2)。断言须随分页变化，否则会持续误报。
+            want = (min(n, PERPAGE) + 4) if pages > 1 else (n + 2)
+            flag = "OK" if nbtn == want else "★不符"
+            print("[pull] 菜单 %d B, button 行 = %d（共 %d 页；本页应 = %d）%s"
+                  % (os.path.getsize(dst), nbtn, pages, want, flag))
         except Exception as e:
             print("[pull] 菜单回收失败:", e)
         f.quit()
