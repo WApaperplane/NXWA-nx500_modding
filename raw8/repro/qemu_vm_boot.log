@@ -1,0 +1,14 @@
+### qemu-system-arm 系统模式启动尝试 2026-10-11 21:41:43
+### kernel=/mnt/e/NXWA/fw/v1.12/vmlinux_02.bin  timeout=40s
+QEMU emulator version 8.2.2 (Debian 1:8.2.2+ds-0ubuntu1.18)
+Copyright (c) 2003-2023 Fabrice Bellard and the QEMU Project developers
+qemu-system-arm: terminating on signal 15 from pid 409 (timeout)
+### exit=124 （124 = 被 timeout 终止，说明虚拟机**没有退出**，即没有 panic 后自杀）
+### 追加：vexpress-a15 尝试
+[W][00516.598381] pw.conf      | [          conf.c: 1031 try_load_conf()] can't load config client.conf: No such file or directory
+[E][00516.598864] pw.conf      | [          conf.c: 1060 pw_conf_load_conf_for_context()] can't load config client.conf: No such file or directory
+pulseaudio: set_sink_input_volume() failed
+pulseaudio: Reason: Invalid argument
+pulseaudio: set_sink_input_mute() failed
+pulseaudio: Reason: Invalid argument
+qemu-system-arm: terminating on signal 15 from pid 415 (timeout)

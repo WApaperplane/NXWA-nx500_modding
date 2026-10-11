@@ -103,10 +103,30 @@ EIQLIST = os.path.join("raw8", "p7", "tuning_keys.txt")
 EIQ_MIN_IDS = 184
 
 # G3 的离线预渲染产物（.gitignore 排除 *.png，属本机证据）
-UI_PAGES = [os.path.join("raw8", "repro", f"ui_page_p{i}.png") for i in range(1, 6)]
-UI_LOG = os.path.join("raw8", "repro", "ui_pages.log")
+# ★ 2026-10-11 扩展：原生 UI 设计从「D2 五页」扩到「覆盖 mod 全部功能」的 N 页
+#   ⇒ 判据由"硬编码 5 个文件名"改为"按目录发现 + 与日志 PAGE 行一一对应"。
+#   （日志与图必须对得上：日志是渲染器自己写的，二者互证才算证据。）
+UI_REPRO_DIR = os.path.join("raw8", "repro")
+UI_PAGE_PREFIX = "ui_page_p"
+UI_PAGE_SUFFIX = ".png"
+UI_MIN_PAGES = 5
+UI_LOG = os.path.join(UI_REPRO_DIR, "ui_pages.log")
 UI_W, UI_H = 720, 480
 D7_REPORT = os.path.join("docs", "current", "D7_NXFILMUI_CJK_REBROADCAST_2026-10-08.md")
+
+
+def discover_ui_pages(repo):
+    """按目录发现 ui_page_pN.png，按 N 排序。返回 [(n, relpath), ...]"""
+    d = repo.p(UI_REPRO_DIR)
+    if not os.path.isdir(d):
+        return []
+    out = []
+    for f in os.listdir(d):
+        if f.startswith(UI_PAGE_PREFIX) and f.endswith(UI_PAGE_SUFFIX):
+            mid = f[len(UI_PAGE_PREFIX):-len(UI_PAGE_SUFFIX)]
+            if mid.isdigit():
+                out.append((int(mid), os.path.join(UI_REPRO_DIR, f)))
+    return sorted(out)
 
 # G4 的不可再生资产（硬前置：没有备份就不许碰 p7）
 # ★ 2026-10-11 修正：NX500 官方固件序列最高即 1.12（无 1.13；经木一确认）。
@@ -548,47 +568,57 @@ def gate_g2(repo, ctx):
 
 
 def gate_g3(repo, ctx):
-    """G3 是"进门条件"：离线五页预渲染出图 + 每处文本都设了字体。
-    ★ 注意：G3 判的是**能不能上机**，不是"上机成功了"。"""
+    """G3 是"进门条件"：离线 N 页预渲染出图 + 每处文本都设了字体。
+    ★ 注意：G3 判的是**能不能上机**，不是"上机成功了"。
+    ★ 2026-10-11：页数由 5 页扩到"覆盖 mod 全部功能"的 N 页，判据改为
+      「目录发现 + 与 ui_pages.log 的 PAGE 行一一对应 + md5 互不相同」。"""
     c = []
+    pages = discover_ui_pages(repo)
     seen = {}
     bad = []
-    for rel in UI_PAGES:
+    if len(pages) < UI_MIN_PAGES:
+        bad.append(f"只发现 {len(pages)} 张（要求 >= {UI_MIN_PAGES}）")
+    for n, rel in pages:
         sz = png_size(repo.p(rel))
         if sz is None:
             bad.append(f"{os.path.basename(rel)} 缺失/非 PNG")
             continue
         if sz != (UI_W, UI_H):
             bad.append(f"{os.path.basename(rel)} 尺寸 {sz[0]}x{sz[1]} != {UI_W}x{UI_H}")
-    for rel in UI_PAGES:
+    for n, rel in pages:
         h = repo.md5(rel)
         if h:
             seen.setdefault(h, []).append(os.path.basename(rel))
     dup = {h: v for h, v in seen.items() if len(v) > 1}
     if bad:
-        c.append(Check("G3-1", "五页离线预渲染出图", FAIL, "；".join(bad), "重跑 ui_pages_render"))
-    elif len(seen) != 5:
-        c.append(Check("G3-1", "五页离线预渲染出图", FAIL,
-                       f"只有 {len(seen)} 张互不相同的 PNG：{dup}", "五页必须内容各不相同"))
+        c.append(Check("G3-1", "离线 N 页预渲染出图", FAIL, "；".join(bad),
+                       "重跑 test_server/filmlab/src/build_modui.sh + run_modui_chroot.sh"))
+    elif dup:
+        c.append(Check("G3-1", "离线 N 页预渲染出图", FAIL,
+                       f"有内容重复的页：{dup}", "每页内容必须各不相同"))
     else:
-        c.append(Check("G3-1", "五页离线预渲染出图", PASS,
-                       f"5 张 {UI_W}x{UI_H} PNG，md5 互不相同", ""))
+        c.append(Check("G3-1", "离线 N 页预渲染出图", PASS,
+                       f"{len(pages)} 张 {UI_W}x{UI_H} PNG（ui_page_p{pages[0][0]}..p{pages[-1][0]}），md5 互不相同",
+                       ""))
 
     log = repo.text(UI_LOG)
     if log is None:
         c.append(Check("G3-2", "每处文本都设了字体", BLOCKED, f"缺 {UI_LOG}", "重跑渲染并保留日志"))
     else:
         m = re.search(r"total font_set calls\s*=\s*(\d+)", log)
-        pages = re.findall(r"PAGE (\d+) -> .*ink=(\d+)", log)
+        log_pages = re.findall(r"^PAGE (\d+) -> .*?ink=(\d+)", log, re.M)
         n_fs = int(m.group(1)) if m else 0
-        zero_ink = [p for p, ink in pages if int(ink) == 0]
-        if n_fs <= 0 or len(pages) != 5 or zero_ink:
+        zero_ink = [p for p, ink in log_pages if int(ink) == 0]
+        log_nums = sorted(int(p) for p, _ in log_pages)
+        png_nums = [n for n, _ in pages]
+        mismatch = log_nums != png_nums
+        if n_fs <= 0 or len(log_pages) < UI_MIN_PAGES or zero_ink or mismatch:
             c.append(Check("G3-2", "每处文本都设了字体", FAIL,
-                           f"font_set={n_fs}, PAGE 行={len(pages)}, 零墨页={zero_ink}",
+                           f"font_set={n_fs}, 日志 PAGE 行={log_nums}, 磁盘 PNG={png_nums}, 零墨页={zero_ink}",
                            "evas 真约束 = 必须调用一次 font_set（不设则几何 0x0 不画）"))
         else:
             c.append(Check("G3-2", "每处文本都设了字体", PASS,
-                           f"font_set 共 {n_fs} 次，5 页 ink 全 >0（{', '.join(i for _, i in pages)}）", ""))
+                           f"font_set 共 {n_fs} 次；{len(log_pages)} 页 ink 全 >0 且与磁盘 PNG 一一对应", ""))
 
     t = repo.text(D7_REPORT)
     if t is None:

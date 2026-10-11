@@ -1,0 +1,18 @@
+=== NX500 lutapi：官方 3D LUT API 工具 ===
+phase1: dlopen(libudd5.so)
+  ok
+phase2: 入口符号 全部解析｜DMA 中断等待 可用｜中断使能 可用
+phase3: d5_ep_open()（官方 API 的前置条件）
+  d5_ep_open() ... 返回 0 (首次打开成功)
+  ep_3dlut_reg_base = 0xb6ee3000 ★已初始化
+
+=== 读回：d5_ep_3dl_save_lut(virt, sel=0, fmt=1) ===
+  virt_to_phys(0xb6c52000) => 0x8f805000  (期望 0x8f805000) 匹配
+  返回 = 0  OK
+  读回前 32 字节 (32 字节):
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+    
+  非零字节 0 / 19712
+  ★ 读回全零 ⇒ 通路未通（不要据此否定前面的写入）
+  已保存 /mnt/mmc/u6/out/readback.bin (19712 字节)

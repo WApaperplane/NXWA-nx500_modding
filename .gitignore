@@ -62,7 +62,34 @@ test_server/sysarch/*.arm
 # 第九批：固件层整体框架爬取（89 份实机输出 798KB + 真机 libudd5.so 320KB）
 # 结论已提炼进 docs/NX500_FIRMWARE_FRAMEWORK_2026-10-05.md，原始输出不入库
 # ★ 注意：raw8/ 在仓库根目录，不在 test_server/sysarch/ 下（爬取时用相对路径输出）
-raw8/
+#
+# ===== ★ 2026-10-11：raw8/ 开「窄例外」——判据/证据入库，大二进制仍排除 =====
+# 背景：raw8/ 整体排除导致 2026-10-11 暴露 G3（ui_page_p*.png + ui_pages.log）与
+#       G5（tuning_keys.txt）的**证据随 D 盘永久丢失**（见 U5_ROLLBACK_DRILL_2026-10-11.md §4）。
+# 与铁律 86（"写不出验收判据不许开工"）直接冲突：判据件本身丢了，门控就变成不可复核。
+# ⇒ 规则：**凡决定门控/验收结论的小体积证据必须入库**；镜像、dump、备份等大件继续排除。
+/raw8/*
+!/raw8/gates/
+!/raw8/repro/
+!/raw8/p7/
+!/raw8/fw/
+# 门控证据里的镜像（如 p12_readback.bin 5MB）仍排除，只留文本判据
+/raw8/gates/**/*.bin
+/raw8/repro/**/*.bin
+# ★ 注意：第 16 行有一条全局 `*.png` —— 它同样会吃掉 raw8/repro 的出图证据。
+#   这里显式放回（git 规则后写覆盖先写）：
+!/raw8/repro/*.png
+# p7 目录只放行字符串面判据件（tuning_keys）+ 隔离标记（G4-0b 判据，<1KB 文本）
+/raw8/p7/*
+!/raw8/p7/tuning_keys.txt
+!/raw8/p7/tuning_keys_PROVENANCE.md
+!/raw8/p7/quarantine/
+# 备份目录：只放行「清单」（含全部 md5，是"丢了能不能补"的索引）+ 唯一非再生的小件 p12_pristine.bin
+!/raw8/emmcbak/
+/raw8/emmcbak/*
+!/raw8/emmcbak/MANIFEST.txt
+!/raw8/emmcbak/p12_pristine.bin
+
 
 # 2026-10-06：逆向产物里不该入库的
 __pycache__/

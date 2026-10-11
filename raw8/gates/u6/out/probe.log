@@ -1,0 +1,126 @@
+== version.info
+1.12
+NX500
+NX500GLU0APC1
+DSP_NX500GLU0APC1_SR1
+BABF43A
+== uname
+Linux drime5 3.5.0 #7 PREEMPT Wed Jun 3 14:40:29 KST 2015 armv7l GNU/Linux
+== uptime
+ 18:32:16 up 31 min,  1 users,  load average: 0.88, 1.02, 1.02
+== loadavg
+0.88 1.03 1.03 1/143 2998
+== ps lines
+100
+== which (自证：确认工具真实存在)
+/usr/bin/st
+/bin/dd
+PATH=/usr/share/scripts:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/usr/devel/usr/sbin:/opt/usr/devel/usr/bin:/opt/usr/devel/sbin:/opt/usr/devel/bin
+== EV_MOBILE.sh md5 (preflight 第 2 项：机上必须不是 55c47b89)
+54a308b8c55d8e3a313f63c33e06d0a5  /opt/usr/nx-ks/EV_MOBILE.sh
+== /dev/input
+total 0
+drwxr-xr-x    2 root     root            80 Mar 30  2016 by-path
+crw-rw----    1 root     input      13,  64 Mar 30  2016 event0
+crw-rw----    1 root     input      13,  65 Mar 30  2016 event1
+crw-rw----    1 root     input      13,  66 Mar 30  2016 event2
+crw-rw----    1 root     input      13,  63 Mar 30  2016 mice
+crw-rw----    1 root     input      13,  32 Mar 30  2016 mouse0
+== diskstats
+   1       0 ram0 0 0 0 0 0 0 0 0 0 0 0
+   1       1 ram1 0 0 0 0 0 0 0 0 0 0 0
+   1       2 ram2 0 0 0 0 0 0 0 0 0 0 0
+   1       3 ram3 0 0 0 0 0 0 0 0 0 0 0
+   1       4 ram4 0 0 0 0 0 0 0 0 0 0 0
+   1       5 ram5 0 0 0 0 0 0 0 0 0 0 0
+   1       6 ram6 0 0 0 0 0 0 0 0 0 0 0
+   1       7 ram7 0 0 0 0 0 0 0 0 0 0 0
+   1       8 ram8 0 0 0 0 0 0 0 0 0 0 0
+   1       9 ram9 0 0 0 0 0 0 0 0 0 0 0
+   1      10 ram10 0 0 0 0 0 0 0 0 0 0 0
+   1      11 ram11 0 0 0 0 0 0 0 0 0 0 0
+   1      12 ram12 0 0 0 0 0 0 0 0 0 0 0
+   1      13 ram13 0 0 0 0 0 0 0 0 0 0 0
+   1      14 ram14 0 0 0 0 0 0 0 0 0 0 0
+   1      15 ram15 0 0 0 0 0 0 0 0 0 0 0
+   7       0 loop0 0 0 0 0 0 0 0 0 0 0 0
+   7       1 loop1 0 0 0 0 0 0 0 0 0 0 0
+   7       2 loop2 0 0 0 0 0 0 0 0 0 0 0
+   7       3 loop3 0 0 0 0 0 0 0 0 0 0 0
+   7       4 loop4 0 0 0 0 0 0 0 0 0 0 0
+   7       5 loop5 0 0 0 0 0 0 0 0 0 0 0
+   7       6 loop6 0 0 0 0 0 0 0 0 0 0 0
+   7       7 loop7 0 0 0 0 0 0 0 0 0 0 0
+ 254       0 zram0 0 0 0 0 0 0 0 0 0 0 0
+ 179       0 mmcblk0 16028 315854 1214873 96310 445 463 8169 3880 0 27110 99780
+ 179       1 mmcblk0p1 92 118 735 170 0 0 0 0 0 160 170
+ 179       2 mmcblk0p2 136 0 1088 490 16 104 960 50 0 540 540
+ 179       3 mmcblk0p3 16 0 136 430 0 0 0 0 0 430 430
+ 179       4 mmcblk0p4 6 100 114 30 0 0 0 0 0 30 30
+ 179       5 mmcblk0p5 16 111 127 10 0 0 0 0 0 10 10
+ 179       6 mmcblk0p6 17 118 135 40 0 0 0 0 0 40 40
+ 179       7 mmcblk0p7 17 118 135 80 0 0 0 0 0 80 80
+ 179       8 mmcblk0p8 17 118 135 440 0 0 0 0 0 440 440
+ 179       9 mmcblk0p9 678 307457 308142 4760 2 7 9 0 0 3760 4750
+ 179      10 mmcblk0p10 13295 5784 805194 74350 9 1 80 80 0 21660 74060
+ 179      11 mmcblk0p11 530 986 10147 1590 276 276 5344 2310 0 2880 3880
+ 179      12 mmcblk0p12 24 118 191 560 0 0 0 0 0 550 560
+ 179      13 mmcblk0p13 17 118 135 430 0 0 0 0 0 430 430
+ 179      14 mmcblk0p14 1136 708 88211 12810 142 75 1776 1440 0 3990 14240
+ 179      30 mmcblk0boot1 20 0 160 980 0 0 0 0 0 970 980
+ 179      15 mmcblk0boot0 20 0 160 670 0 0 0 0 0 670 670
+ 179      45 mmcblk1 285 3222 47310 720 76 10 762 170 0 620 890
+ 179      46 mmcblk1p1 283 3219 47270 720 76 10 762 170 0 620 890
+== p8 sysfs (三路径)
+p8 class/ro=0
+p8 class/start=245761
+p8 class/size=102399
+p8 class/stat=      17      118      135      440        0        0        0        0        0      440      440
+p8 class/force_ro=N/A
+p8 disk/ro=0
+p8 disk/start=245761
+p8 disk/size=102399
+p8 disk/stat=      17      118      135      440        0        0        0        0        0      440      440
+p8 disk/force_ro=N/A
+p8 u1path/ro=N/A
+p8 u1path/start=N/A
+p8 u1path/size=N/A
+p8 u1path/stat=N/A
+p8 u1path/force_ro=N/A
+== p8 partition node
+brw-rw----    1 root     disk      179,   8 Mar 30  2016 /dev/mmcblk0p8
+== parttab
+# nx500 partition table
+# <vol>       <dev>       <size(M)>        <image>  <order> <compress>  <fs>  <mkfs-option>  <mount-point>
+#
+adj           /dev/mmcblk0p1     20             none   1    None        raw
+rtos          /dev/mmcblk0p7     30          rom.bin   2    None        raw
+rtos_data     /dev/mmcblk0p8     50             none   3    None        raw
+#extended     /dev/mmcblk0p4      0             none   4    None        raw
+platform      /dev/mmcblk0p10  1024       rootfs.img   5    LZO        ext4
+opt           /dev/mmcblk0p11   100          opt.img   6    LZO        ext4      -j              /opt
+pref          /dev/mmcblk0p2     10             none   7    None        raw
+pref_default  /dev/mmcblk0p3     30 pref_default.bin   8    None        raw
+pref_recovery /dev/mmcblk0p5     20             none   9    None        raw
+opt-usr       /dev/mmcblk0p14     0             none  10    None       ext4      -j              /opt/usr
+rImage        /dev/mmcblk0p13    10           rImage  11    None        raw
+pcache        /dev/mmcblk0p12     5      pcache.list  12    None        raw
+devicem4      /dev/mmcblk0boot1   4     devicem4.bin  13    None        raw
+snapshot      /dev/mmcblk0p9    100     snapshot.img  14    LZO         raw
+uImage        /dev/mmcblk0p6     10           uImage  15    None        raw
+bootloader    /dev/mmcblk0boot0   4   bootloader.bin  16    None        raw
+== df
+Filesystem           1K-blocks      Used Available Use% Mounted on
+/dev/root               519020    491248     22560  96% /
+devtmpfs                 71412         0     71412   0% /dev
+tmpfs                   255788        32    255756   0% /dev/shm
+tmpfs                   255788      1176    254612   0% /run
+tmpfs                   255788         0    255788   0% /sys/fs/cgroup
+tmpfs                   255788      2320    253468   1% /tmp
+tmpfs                   255788      2320    253468   1% /var/log
+tmpfs                   255788      2320    253468   1% /var/run
+/dev/loop0               21632     21632         0 100% /usr/share/locale
+/dev/mmcblk0p11          74864     34656     40208  46% /opt
+/dev/mmcblk0p14        2365180    127340   2119212   6% /opt/usr
+/dev/mmcblk1p1        60814464    479488  60334976   1% /opt/storage/sdcard
+== sync+done

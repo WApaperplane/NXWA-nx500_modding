@@ -1,0 +1,39 @@
+{
+  "test": "U4 · SLP 重打包最小实验（官方升级路径接受性）",
+  "date": "2026-10-11",
+  "operator": "木一（相机操作）+ 小A（工具链/分析）",
+  "package": {
+    "file_on_sdcard": "/mnt/mmc/nx500.bin",
+    "material": "NX500_v1.12.bin + version_user='1.13' + pcache(img8)[0]=0x01",
+    "local_name": "slp_test_pcache_112_v113.bin",
+    "md5": "910b9c28336d88bc39857576c6cb3a07",
+    "diff_vs_official": "6 bytes: version '2'->'3' @0x7; img8 JAMCRC @0x104..0x107 (df5622ef->6bd727bc); img8 data[0] 00->01 @0x12ac5612",
+    "new_jamcrc_img8": "0xbc27d76b"
+  },
+  "steps": [
+    "FTP 上传（2.8-3.25MB/s）+ 相机端 md5sum 双向核验一致",
+    "相机 UI: Settings -> Device Information -> Firmware Update -> Body Firmware Update",
+    "X 包（同版本 1.12）UI 灰色不可点 -> 现场切换 Y 包（version 1.13）后菜单变亮",
+    "点击更新：接受、完成、无报错、自动重启"
+  ],
+  "accepted": true,
+  "completed": true,
+  "telnet_alive_after": true,
+  "readback": {
+    "p12_first_byte": "0x01",
+    "p12_28672B_md5": "24d26fa1ed074ec03c68d8702001dee2",
+    "matches_local_patched_img8": true,
+    "note": "刷入内容与本地 pcache_patched.bin 逐字节一致（md5 全等）"
+  },
+  "side_checks": {
+    "uptime_after_reboot_s": 118,
+    "mod_intact_nxks": true,
+    "version_info_after": "1.12 (rootfs 未动，符合预期；SLP 版本串改动不影响设备版本显示)",
+    "loadavg_after": "1.86/0.83/0.31"
+  },
+  "notes": [
+    "X 包（同版本）被 UI 判灰、Y 包（version+1）变亮 —— 与 FW_UPGRADE_VERIFY_CHAIN 的版本检查分析一致（同版本行为与预判有出入，已实测修正）",
+    "重打包工具链（slp_tool.py 替换+JAMCRC 重算 / slp_version_bump.py）产物通过官方完整校验链（UI flag=1 逐段 JAMCRC），为后续改 p7 打包定基",
+    "改动仅 6 字节、等长；boot0/boot1 未涉及；如需回滚：重刷官方 NX500_v1.12.bin"
+  ]
+}

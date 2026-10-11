@@ -1,0 +1,55 @@
+{
+  "drill": "u5-rollback",
+  "drills": 1,
+  "ok": true,
+  "at": "2026-10-11 21:13:59",
+  "host": "192.168.0.105",
+  "scope": "p12（pcache / img8 承载分区）单分区闭环；boot0/boot1 全程未触碰",
+  "rounds": [
+    {
+      "n": 1,
+      "tag": "A'",
+      "action": "刷入 slp_u5_a_5a_v114.bin（img8[0] 0x00 -> 0x5A, version 1.14）",
+      "verified": true,
+      "evidence": "回读 p12[0] == 0x5A；first_byte=0x5a；md5(p12[0:28672]) == dc194f0558d09ca3458b8106c8654178 == pcache_5a.bin",
+      "flash_ui": "accepted, completed",
+      "telnet_alive_after": true
+    },
+    {
+      "n": 2,
+      "tag": "R",
+      "action": "刷入 slp_u5_r_orig_v115.bin（内容恢复原样, version 1.15）",
+      "verified": true,
+      "evidence": "回读 p12[0] == 0x00；md5(p12[0:28672]) == 11f6a32f874f7d74e61d0b987e67a1c6 == 纯净 img8",
+      "flash_ui": "accepted, completed",
+      "telnet_alive_after": true,
+      "note": "刷入后 telnet 短时 Refused（mod 初始化需机身侧动作），约 4 min 后自行恢复；uptime 计数从 0 重起，证明整机重启完成"
+    }
+  ],
+  "readback_full_partition": {
+    "size_bytes": 5242368,
+    "md5": "4b34d5e89d81ae3d9abeb1ceb4923a18",
+    "diff_count_vs_baseline": 1,
+    "diff_offsets": [0],
+    "baseline_file": "raw8/emmcbak/p12.bin",
+    "baseline_md5": "54b0d27c1fbbb2a8c28d58bf785243b7",
+    "baseline_first_byte": "0x01",
+    "readback_first_byte": "0x00",
+    "conclusion": "整块 p12 与基线逐字节仅差偏移 0 一处，且差值为 U4 补丁字节的回退（0x01 -> 0x00）；其余 5242367 字节完全一致 => 恢复完整、无残留"
+  },
+  "cross_check_pristine_derivation": {
+    "method": "把 pcache_patched.bin（U4 补丁件, byte0=0x01, md5 24d26fa1…）首字节归零后求 md5",
+    "result": "11f6a32f874f7d74e61d0b987e67a1c6",
+    "matches_camera_readback_first28672": true,
+    "note": "独立第二条路径证明 '相机现态 == 纯净 img8'"
+  },
+  "caveat": {
+    "baseline_is_post_u4": true,
+    "detail": "raw8/emmcbak/p12.bin 采集于 U4 刷写之后（MANIFEST 时间 2026-10-11 20:38:52），其 img8[0] 已为 0x01。故它不能直接当'纯净基线'，本演练改用'归零推导 + 双路径互证'。后续如需绝对纯净基线，应把 p12.bin 的 byte0 归零后另存为 p12_pristine.bin 并在 MANIFEST 标注。"
+  },
+  "artifacts": {
+    "readback_bin": "raw8/gates/u5/p12_readback.bin",
+    "slp_a": "E:/NXWA/fw/v1.12/u4/slp_u5_a_5a_v114.bin",
+    "slp_r": "E:/NXWA/fw/v1.12/u4/slp_u5_r_orig_v115.bin"
+  }
+}

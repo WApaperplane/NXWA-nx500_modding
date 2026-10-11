@@ -1,0 +1,14 @@
+== modui_render start pid=737 outdir=/tmp/modui/out 720x480 pages=10
+   font exist=1 (/usr/share/fonts/SDIC_GP_US_20120720.ttf)
+   evas=1 ecore=1 ecore_evas=1
+PAGE 1 -> /tmp/modui/out/ui_page_p1.png  name=配方库 Recipes rect_n=19 ink=26100
+PAGE 2 -> /tmp/modui/out/ui_page_p2.png  name=配方详情 Recipe rect_n=18 ink=30800
+PAGE 3 -> /tmp/modui/out/ui_page_p3.png  name=PW 七维 Picture Wizard rect_n=27 ink=29951
+PAGE 4 -> /tmp/modui/out/ui_page_p4.png  name=3D LUT 管理 rect_n=18 ink=25182
+PAGE 5 -> /tmp/modui/out/ui_page_p5.png  name=引擎与判据 Engine & Verdict rect_n=14 ink=28511
+PAGE 6 -> /tmp/modui/out/ui_page_p6.png  name=Web 遥控/相册 nx-rc rect_n=15 ink=33179
+PAGE 7 -> /tmp/modui/out/ui_page_p7.png  name=网络与连接 Network rect_n=17 ink=26840
+PAGE 8 -> /tmp/modui/out/ui_page_p8.png  name=拍摄参数/键位 Capture & Keys rect_n=17 ink=28498
+PAGE 9 -> /tmp/modui/out/ui_page_p9.png  name=同步与安装 Sync & Install rect_n=14 ink=29620
+PAGE 10 -> /tmp/modui/out/ui_page_p10.png  name=诊断/高危 Diagnostics rect_n=16 ink=28776
+== done, total font_set calls = 238

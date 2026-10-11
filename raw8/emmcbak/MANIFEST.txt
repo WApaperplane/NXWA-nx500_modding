@@ -1,0 +1,25 @@
+===== NX500 eMMC 关键分区备份清单（v2）=====
+时间: 2026-10-11 20:38:52
+主机: 192.168.0.105
+方式: 相机侧整块 dd → SD/emmcbak → FTP 拉回（逐一 md5 校验）
+总校验: ALL-OK
+
+boot0.bin    md5=ec406739bb8135bdd6c4c0681e55597b
+boot1.bin    md5=558471841e7014ec18b44db6680cfc2b
+p1.bin       md5=284c2ea5d72d6a90e23b2e0e5fc94d90
+p12.bin      md5=54b0d27c1fbbb2a8c28d58bf785243b7
+p13.bin      md5=ead68102a0dc43f4189e19cbb7169fd1
+p2.bin       md5=4d30d81b0c4e45963bc3b27f8e7ad6e5
+p3.bin       md5=39356155c20f2ec3a9a85441914362b1
+p5.bin       md5=284c2ea5d72d6a90e23b2e0e5fc94d90
+p6.bin       md5=1a43f1f26c9ca6686f75e13b595fe588
+p7.bin       md5=f19441df58f8c2b0116ce99773bd5143
+p7_orig.bin  md5=f19441df58f8c2b0116ce99773bd5143
+p8.bin       md5=721801b35c2c0097ca60ddbc70dfa45d
+
+===== 补充（2026-10-11 21:15，U5 回滚演练后）=====
+★ p12.bin 采集于 U4 刷写之后，其 byte0 = 0x01（U4 补丁态），**不是纯净基线**。
+  纯净基线另存为：
+  p12_pristine.bin  md5=4b34d5e89d81ae3d9abeb1ceb4923a18  (= p12.bin 且 byte0 归零)
+  ★ 该值与 U5 R 包刷入后相机回读逐字节一致（5242368 B，diff_count=1@offset0）。
+  L4 改 p7 前的回滚参照请用 p12_pristine.bin。
