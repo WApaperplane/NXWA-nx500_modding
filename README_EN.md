@@ -18,7 +18,7 @@ An enhancement mod for the **Samsung NX500 / NX1** (Tizen / DRIMe5), built on th
 
 ## Highlights
 
-- **FilmLab film recipes (68)** — negative / slide / B&W / cinema / stylised, five families, auto-generated 4-page menu. The recipe library lives on the SD card (editable, extensible).
+- **FilmLab film recipes (95)** — negative / slide / B&W / cinema / stylised, five families, auto-generated 6-page menu (18/page). The recipe library lives on the SD card (editable, extensible).
 - **PW direct push (three dimensions take effect instantly)**: `EV+AEL` → tap a recipe ⇒ **SAT / SHARP / CONTRAST are pushed straight into the ISP and the image changes within a second** (`pwsend.arm`, full 32-bit encoding, verified on-camera).
   ★ Honest limit: **all 7 dimensions (incl. R/G/B/HUE) have no external path** — p7's id normaliser only accepts `0x100–0x12e` and rejects `0x130–0x133` outright (on-camera negative result + static mechanism proof). For all 7, either confirm "Custom 1" once in the camera's Picture Wizard, or patch p7 (blocked by G4).
 - **Objective criterion**: `sh /opt/usr/nx-ks/filmlab.sh check` reads the 7 values the ISP is *actually* using and compares them with the recipe slot (read-only, zero risk) — **"the value changed" ≠ "the value is consumed"**, and that rule underpins the whole project.
@@ -50,14 +50,14 @@ PC-side troubleshooting: `test_server/telnet_run.py <camera-ip> 'command'` (non-
 > Step ③ makes the image change within a second; **R/G/B/HUE** cannot be pushed from a shell because p7's normaliser rejects them,
 > so confirm once in the camera's **Picture Wizard → "Custom 1"** (that step moves all 7 dimensions into the ISP).
 
-### The 68 built-in recipes (4-page menu)
+### The 95 built-in recipes (6-page menu, 18/page)
 
-| Family | Examples (68 total) |
+| Family | Examples (95 total) |
 | --- | --- |
-| Colour negative | Portra 400/800/160 · Gold 100/200/400 · Ektar 100 · UltraMax 400 · Superia 200/400 · ColorPlus 200 · ProImage 100 · Fuji C200/400H/9000 · Vista 200/400 · Lomo 100/800 · Reala 100 · Solaris 100 |
-| Slide | Velvia 50/50 风光/100/100F · Provia 100F/400X/1600 · Sensia 100 · Astia 100F · Ektachrome · Ektachrome E100 · EliteChrome 100 · Kodachrome · EK Cyan 冷调 |
+| Colour negative | Portra 400/400NC/400VC/800/800 推1600/160 · Gold 100/200/400 · Ektar 100 · UltraMax 400 · Kodak Max 400 · Superia 200/400/1600 · ColorPlus 200/400 · ProImage 100 · Fuji C200/400H/9000 · X-TRA 400 · Venus 800 · Natura 1600 · Vista 200/400/100 · Lomo 100/800/Color 100 · Reala 100 · Solaris 100/400 · Centuria 400 · Rollei CN 200 |
+| Slide | Velvia 50/50 风光/100/100F · Provia 100F/400X/1600 · Sensia 100/200/400 · Astia 100F · Ektachrome · Ektachrome E100/64/100D · EliteChrome 100 · Kodachrome · Kodachrome 25/200 · EK Cyan 冷调 · Fortia SP · Agfachrome CT100/RSX100 |
 | Black & white | TriX 400 · TriX 400 推档 · HP5 Plus · HP5 推1600 · Delta 100/3200 · T-MAX 100/400 · Acros 100 · FP4 Plus · Pan F Plus 50 · Neopan 100 · Kentmere 400 · XP2 Super · MonoWarm 暖调 · MonoCool 冷调 |
-| Cinema | CineStill 800T / 50D · Vision3 250D / 500T · Double-X 5222 · Cine Teal |
+| Cinema | CineStill 800T / 50D / 400D · Vision3 250D / 500T / 50D / 200T · Double-X 5222 · Eterna 500T · Cine Teal |
 | Stylised | 青橙 · 暖旧 · 冷峻 · 褪色 · 高调 · 低调 · 棕褐 · 漂白 · 蓝调时刻 · X-Pro 交叉 |
 
 - B&W recipes use `SAT=0` (true monochrome); **MonoWarm / MonoCool are the warm / cool monochromes** (they keep a R/B gain difference).
@@ -71,10 +71,10 @@ The authoritative recipe library (read directly by the engine): /mnt/mmc/filmlab
 To add one: edit that JSON -> copy back to the SD card -> reopen the menu (it regenerates itself)
 ```
 
-- Authoritative source in the repo: **`scripts/filmlab/recipes.json`** (68 recipes; `flab.py`'s `add/edit/rm/lint/conf/deploy` all work on it).
+- Authoritative source in the repo: **`scripts/filmlab/recipes.json`** (95 recipes; `flab.py`'s `add/edit/rm/lint/conf/deploy` all work on it).
 - One-shot deploy: `python test_server/filmlab/flab.py add …` → `lint` → `deploy` (push JSON + rebuild menu + verify readback).
 - Offline regression (no camera needed): `sh test_server/filmlab/flab_sim.sh` (12 assertions).
-- ⚠️ `test_server/filmsim/recipes/nx500_recipes.txt` is the **early 18-recipe table**, now stale — kept for history only. Do **not** treat it as the authoritative source.
+- ✅ `test_server/filmsim/recipes/nx500_recipes.txt` has been refreshed to a **95-recipe flat mirror** (2026-10-11, exported from the authoritative source); it feeds `mk_recipes_json.py` / `deploy_lab.py`, and the **authoritative source remains** `scripts/filmlab/recipes.json`.
 
 ### Known limits (honest notes)
 
@@ -178,8 +178,8 @@ The following corrections are authoritative; **where they conflict with older te
 | - | --- | --- | --- |
 | 1 | This fork = `github.com/WApaperplane/nxwa` | Canonical repo = **`github.com/WApaperplane/NXWA-nx500_modding`** (a fork; default branch `nxwa`; the old name still redirects) | `gh repo view`, measured |
 | 2 | Upstream = `github.com/SamsungNX500/nx500_nx1_modding` | GitHub fork parent (which itself has no parent) = **`ottokiksmaler/nx500_nx1_modding`**; the `SamsungNX500/...` repository **does not exist** | `gh repo view`, measured |
-| 3 | 18 built-in recipes | **68** (4-page menu) | `scripts/filmlab/recipes.json` |
-| 4 | Authoritative recipe source = `nx500_recipes.txt` | Authoritative source = **`scripts/filmlab/recipes.json`**; the `.txt` is the early 18-recipe table | `flab.py` data flow |
+| 3 | 18 built-in recipes | **95** (6-page menu, 18/page) | `scripts/filmlab/recipes.json` |
+| 4 | Authoritative recipe source = `nx500_recipes.txt` | Authoritative source = **`scripts/filmlab/recipes.json`**; the `.txt` is its 95-recipe flat mirror (synced 2026-10-11) | `flab.py` data flow |
 | 5 | "Tap a recipe and it applies instantly / two steps to a look" | **Three dimensions (SAT/SHARP/CON) push instantly; all 7 need one Picture-Wizard confirmation on the camera body** | `PW_PARAM_CHANNEL`, `PW_ID_MAP_FULL` |
 | 6 | "View and Still are independent ⇒ editing the View table does not affect photos" | ❌ **Disproven**: `View 4 profiles ⊆ Still 18` ⇒ both share one buffer pool; software-level isolation is impossible | `3DLUT_VIEW_STILL_ISOLATION_2026-10-08.md` |
 | 7 | "Userspace cannot write LUT data" | **Fixed**: userspace *can* `lutapi load` its own table (LUT1 + guard). What it cannot do is read/write p7's four built-in buffers (`0x81xxxxxx`, outside the Linux mapping) | `U6_ONMACHINE_RESULT`, `3DLUT_APPLY_PATHS` |

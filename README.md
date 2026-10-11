@@ -33,7 +33,7 @@ scripts/                          <- 整个目录(模块母本, 会被同步到�
 
 ## 特性亮点 / Highlights
 
-- **FilmLab 胶片配方（68 条）**：负片 / 反转 / 黑白 / 电影 / 风格五族，菜单分 4 页自动生成。配方库在 SD 卡（可编辑、可扩充）。
+- **FilmLab 胶片配方（95 条）**：负片 / 反转 / 黑白 / 电影 / 风格五族，菜单分 6 页自动生成。配方库在 SD 卡（可编辑、可扩充）。
 - **PW 直推（三维即时生效）**：`EV+AEL` → 点配方，**SAT / SHARP / CONTRAST 三维直接推送进 ISP，画面秒级变化**（`pwsend.arm` + 完整 32 位编码，已上机回归）。
   ★ 诚实边界：**全 7 维（含 R/G/B/HUE）无外部通路** —— p7 的归一化器只认 `0x100–0x12e`，`0x130–0x133` 一律拒收（上机负结论 + 静态机制铁证）。要全维生效，需在机身「画面向导」里选一次「自定义1」，或改 p7（待 G4）。
 - **客观判据**：`sh /opt/usr/nx-ks/filmlab.sh check` 直接读 ISP 手上那 7 维并与配方槽位比对（只读、零风险）——**"值变了" ≠ "被消费"**，这一条是全项目的判据基准。
@@ -64,14 +64,14 @@ PC 端排障工具：`test_server/telnet_run.py <相机IP> '命令'`（非交互
 > ③ 生效后画面秒级变化；**R/G/B/HUE 四维**因 p7 归一化器域外拒收而**无法由 shell 直推**，
 > 需机身「画面向导 → 自定义1」确认一次（该步同时把 7 维全部搬进 ISP）。
 
-### 内置 68 条配方（4 页菜单）
+### 内置 95 条配方（6 页菜单，18/页）
 
-| 族 | 示例（共 68 条） |
+| 族 | 示例（共 95 条） |
 | --- | --- |
-| 彩色负片 | Portra 400/800/160 / Gold 100/200/400 / Ektar 100 / UltraMax 400 / Superia 200/400 / ColorPlus 200 / ProImage 100 / Fuji C200/400H/9000 / Vista 200/400 / Lomo 100/800 / Reala 100 / Solaris 100 |
-| 反转片 | Velvia 50/50 风光/100/100F / Provia 100F/400X/1600 / Sensia 100 / Astia 100F / Ektachrome / Ektachrome E100 / EliteChrome 100 / Kodachrome / EK Cyan 冷调 |
+| 彩色负片 | Portra 400/400NC/400VC/800/800 推1600/160 / Gold 100/200/400 / Ektar 100 / UltraMax 400 / Kodak Max 400 / Superia 200/400/1600 / ColorPlus 200/400 / ProImage 100 / Fuji C200/400H/9000 / X-TRA 400 / Venus 800 / Natura 1600 / Vista 200/400/100 / Lomo 100/800/Color 100 / Reala 100 / Solaris 100/400 / Centuria 400 / Rollei CN 200 |
+| 反转片 | Velvia 50/50 风光/100/100F / Provia 100F/400X/1600 / Sensia 100/200/400 / Astia 100F / Ektachrome / Ektachrome E100/64/100D / EliteChrome 100 / Kodachrome / Kodachrome 25/200 / EK Cyan 冷调 / Fortia SP / Agfachrome CT100/RSX100 |
 | 黑白 | TriX 400 / TriX 400 推档 / HP5 Plus / HP5 推1600 / Delta 100 / Delta 3200 / T-MAX 100/400 / Acros 100 / FP4 Plus / Pan F Plus 50 / Neopan 100 / Kentmere 400 / XP2 Super / MonoWarm 暖调 / MonoCool 冷调 |
-| 电影卷 | CineStill 800T / CineStill 50D / Vision3 250D / Vision3 500T / Double-X 5222 / Cine Teal |
+| 电影卷 | CineStill 800T / CineStill 50D/400D / Vision3 250D/500T/50D/200T / Double-X 5222 / Eterna 500T / Cine Teal |
 | 风格 | 青橙 / 暖旧 / 冷峻 / 褪色 / 高调 / 低调 / 棕褐 / 漂白 / 蓝调时刻 / X-Pro 交叉 |
 
 - 黑白配方用 `SAT=0`（真黑白）；**MonoWarm / MonoCool 是暖调 / 冷调黑白**（保留 R/B 增益差）。
@@ -85,10 +85,10 @@ PC 端排障工具：`test_server/telnet_run.py <相机IP> '命令'`（非交互
 加一条：编辑该 JSON → 拷回 SD 卡 → 重新打开菜单（菜单自动重建）
 ```
 
-- 仓库中的**权威源**：`scripts/filmlab/recipes.json`（68 条；`flab.py` 的 `add/edit/rm/lint/conf/deploy` 一条龙都基于它）。
+- 仓库中的**权威源**：`scripts/filmlab/recipes.json`（95 条；`flab.py` 的 `add/edit/rm/lint/conf/deploy` 一条龙都基于它）。
 - 上机一条龙：`python test_server/filmlab/flab.py add …` → `lint` → `deploy`（推 JSON + 重建菜单 + 回收核对）。
 - 离线回归（无需相机）：`sh test_server/filmlab/flab_sim.sh`（12 断言）。
-- ⚠️ `test_server/filmsim/recipes/nx500_recipes.txt` 是**早期 18 条源表**，已滞后，仅供追溯；**不要**再以它为权威源。
+- ✅ `test_server/filmsim/recipes/nx500_recipes.txt` 已刷新为 **95 条扁平镜像**（2026-10-11，由权威源导出）；它是 `mk_recipes_json.py` / `deploy_lab.py` 的消费源，**权威源仍是** `scripts/filmlab/recipes.json`。
 
 ### 已知边界（诚实说明）
 
@@ -118,7 +118,7 @@ PC 端排障工具：`test_server/telnet_run.py <相机IP> '命令'`（非交互
 | `install.sh` `info.tg` `nx_cs.adj` | SD 卡根触发三件套（装机/同步入口） |
 | `scripts/` | 全部模块母本，同步目标 = 相机内部 `/opt/usr/nx-ks/` |
 | `scripts/filmlab.sh` | ★ **FilmLab 引擎**（相机端运行版）：配方读写 / 应用 / 菜单生成 / `apply --fast` |
-| `scripts/filmlab/recipes.json` | ★ **权威配方库**（68 条；首次安装时自动拷到 SD 卡 `/mnt/mmc/filmlab/`） |
+| `scripts/filmlab/recipes.json` | ★ **权威配方库**（95 条；首次安装时自动拷到 SD 卡 `/mnt/mmc/filmlab/`） |
 | `scripts/EV_AEL.sh` | FilmLab 入口（`EV+AEL` 组合键）；NX1 自动回退 `EV_AEL.community.sh` |
 | `scripts/gui_filmlab*.NX500` | FilmLab 菜单：`1b`=配方主菜单（默认）；`2/3/4`=预设槽 / WB / 诊断页 |
 | `scripts/nx-rc/` | Web 遥控：`web_root/`(前端)、`thumb/`(缩略图)、`capdtm/`(参数API)、`push/`(WiFi同步) |
@@ -169,8 +169,8 @@ PC 端排障工具：`test_server/telnet_run.py <相机IP> '命令'`（非交互
 | - | --- | --- | --- |
 | 1 | 本 fork 仓库 = `github.com/WApaperplane/nxwa` | 规范仓库 = **`github.com/WApaperplane/NXWA-nx500_modding`**（fork；默认分支 `nxwa`；旧名 URL 仍重定向） | `gh repo view` 实测 |
 | 2 | 上游 = `github.com/SamsungNX500/nx500_nx1_modding` | 上游（fork parent，其自身 parent 为空）= **`ottokiksmaler/nx500_nx1_modding`**；`SamsungNX500/...` 这个仓库**不存在** | `gh repo view` 实测 |
-| 3 | 内置 18 条配方 | **68 条**（4 页菜单） | `scripts/filmlab/recipes.json` |
-| 4 | 配方权威源 = `nx500_recipes.txt` | 权威源 = **`scripts/filmlab/recipes.json`**；`.txt` 为早期 18 条旧表 | `flab.py` 数据流 |
+| 3 | 内置 18 条配方 | **95 条**（6 页菜单，18/页） | `scripts/filmlab/recipes.json` |
+| 4 | 配方权威源 = `nx500_recipes.txt` | 权威源 = **`scripts/filmlab/recipes.json`**；`.txt` 为其 95 条扁平镜像（2026-10-11 已同步） | `flab.py` 数据流 |
 | 5 | 「点配方立即生效 / 两步出片」 | **三维（SAT/SHARP/CON）可直推即时生效；全 7 维需机身「画面向导→自定义1」确认一次** | `PW_PARAM_CHANNEL` / `PW_ID_MAP_FULL` |
 | 6 | 「View 与 Still 独立 ⇒ 改 View 表不影响照片」 | ❌ **已证伪**：`View 4 档 ⊆ Still 18 档`，View 独有 = 空 ⇒ 两路**共用同一缓冲池**，软件层无法隔离 | `3DLUT_VIEW_STILL_ISOLATION_2026-10-08.md` |
 | 7 | 「用户态写 LUT 数据不可行」 | **已修**：用户态可 `lutapi load` 自有表（LUT1 + 守护）；**不可**读写的是 p7 那 4 个内置缓冲（`0x81xxxxxx`，超出 Linux 映射） | `U6_ONMACHINE_RESULT` / `3DLUT_APPLY_PATHS` |

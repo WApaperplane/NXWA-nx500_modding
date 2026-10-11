@@ -106,8 +106,8 @@ python test_server/filmlab/add_batch2_recipes.py --apply
 python test_server/filmlab/flab.py lint
 bash test_server/filmlab/flab_sim.sh
 
-# 上机部署（相机在线时）
-python test_server/filmlab/flab.py deploy --host 192.168.0.103
+# 上机部署（相机在线时；默认 host 已为 192.168.0.105）
+python test_server/filmlab/flab.py deploy
 
 # 发布 release + 附件（需 API 可达 / 已登 gh）
 bash test_server/filmlab/publish_recipes_release.sh
@@ -115,4 +115,24 @@ bash test_server/filmlab/publish_recipes_release.sh
 
 ---
 
-*生成：2026-10-11 · 分支 `nxwa` · 设备离线（离线校验口径）*
+## 6. 归档闭环（2026-10-11 18:0x，已完成）
+
+| 项 | 状态 |
+| --- | --- |
+| 仓库 commit + tag | ✅ `9da9d0b` / `d5c9a09` / `f3d5bb5`，tag `filmlab-recipes-v2` |
+| Release `filmlab-recipes-v2` | ✅ 已建；附件 `recipes.json` 21216 B + `recipes.txt` 4359 B |
+| 相机上机 | ✅ `flab.py deploy` 跑通；机上 md5 = `7ee00bbd23aeb57b4eb61935cc6b1682`（与本地一致）；export 95 条；mkgui 第 2/6 页 |
+| filmsim 镜像 | ✅ `nx500_recipes.txt` + `recipes/recipes.json` 均已刷新到 95 条 |
+
+★ **对上批「Release 未存档」的根因修正**：当时的失败**不是** API 权限/网关能力问题，
+而是**线路未走 VPN**。用户开启 VPN 后，`publish_recipes_release.sh` **原样跑通**（HTTP 201×3）。
+⇒ 建 release 前先确认 VPN 在线，不必再改脚本或绕道。
+
+★ **filmsim 同步口径**：`test_server/filmsim/recipes/recipes.json` 是**生成物**
+（`mk_recipes_json.py` 从 `nx500_recipes.txt` 生成），因此同步必须"换源 + 重生成"，
+否则下次跑生成器会退回旧版。已确认重生成结果与 `flab.render(权威源)` **逐字节相同**
+（sha1 `0aaf1036571b247d02c7719b14d66375ea7e902d`，21216 B）。
+
+---
+
+*生成：2026-10-11 · 分支 `nxwa` · 离线校验 + 上机验证双口径*
