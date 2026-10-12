@@ -1,0 +1,7 @@
+== c2_harness (unit2) ==
+stub @000ca3a8 : 020050e3 1eff2f31 f0412de9 01dc4de2
+name @file 0x3656dc: 'film'
+trampoline @000add08 -> spy_system @0x107ac (real system=0x10710)
+SYSTEM_CMD[sh /opt/usr/nx-ks/f.sh apply 23 ]
+sh: apply: command not found
+unit2 ret=32512

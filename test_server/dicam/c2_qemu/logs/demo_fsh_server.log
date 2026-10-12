@@ -1,0 +1,62 @@
+== c2_harness (server) ==
+stub @000ca3a8 : 020050e3 1eff2f31 f0412de9 01dc4de2
+name @file 0x3656dc: 'film'
+trampoline @000add08 -> spy_system @0x107ac (real system=0x10710)
+server up: queue=0x8828 pid=2343
+SYSTEM_CMD[sh /opt/usr/nx-ks/f.sh help ]
+f.sh — NX-WA App 命令入口（经 `st app film` 调用）
+
+  help                                  显示本用法
+  status                                汇总状态（版本 / 模式 / PW 槽 / IP）
+  log [n]                               最近 n 行调用日志（默认 20）
+
+  recipe list                           列出配方库
+  recipe check                          读回 ISP 手上的 7 维并与配方比对
+  recipe apply <名称> [fast]             应用配方（fast = 跳过部分等待）
+  recipe cycle                          切到下一个配方
+  recipe reset                          恢复中性
+  recipe dump                           导出全部槽位
+  recipe wbdump                         白平衡段状态
+
+  pw <0-12|standard>                    PW 风格槽切换（画面向导的 3 槽 = 9/10/11）
+  shoot                                 拍一张（走 capdtm 通道，不经 App 队列）
+
+  ※ 需要"换模式 / 变焦 / 白平衡 / 质量"等 App 侧动作，请用：
+      EV 键菜单、机身 UI，或直接 `st app ...`（在 App 之外调用时）
+    —— 本入口内不能发 App 队列命令（会自我死锁，见脚本头注释）
+[mock app] shell_exec(argc=3, argv[1]=film) -> 0
+SYSTEM_CMD[sh /opt/usr/nx-ks/f.sh bogus ]
+f.sh: 不支持的命令: bogus
+f.sh: 输入 'st app film help' 查看可用命令
+[mock app] shell_exec(argc=3, argv[1]=film) -> 512
+SYSTEM_CMD[sh /opt/usr/nx-ks/f.sh recipe list ]
+stub-engine: list
+[mock app] shell_exec(argc=4, argv[1]=film) -> 0
+SYSTEM_CMD[sh /opt/usr/nx-ks/f.sh recipe apply portra400 ]
+stub-engine: apply portra400
+[mock app] shell_exec(argc=5, argv[1]=film) -> 0
+SYSTEM_CMD[sh /opt/usr/nx-ks/f.sh recipe apply fast-400 fast ]
+stub-engine: apply fast-400 --fast
+[mock app] shell_exec(argc=6, argv[1]=film) -> 0
+SYSTEM_CMD[sh /opt/usr/nx-ks/f.sh recipe_apply_bad_na ]
+f.sh: 不支持的命令: recipe_apply_bad_na
+f.sh: 输入 'st app film help' 查看可用命令
+[mock app] shell_exec(argc=3, argv[1]=film) -> 512
+SYSTEM_CMD[sh /opt/usr/nx-ks/f.sh recipe apply bad_name ]
+stub-engine: apply bad_name
+[mock app] shell_exec(argc=5, argv[1]=film) -> 0
+SYSTEM_CMD[sh /opt/usr/nx-ks/f.sh pw 9 ]
+pw -> 9
+[mock app] shell_exec(argc=4, argv[1]=film) -> 0
+SYSTEM_CMD[sh /opt/usr/nx-ks/f.sh log 4 ]
+== /opt/usr/nx-ks/f.log (尾巴 4 行) ==
+2026-10-12 10:32:00 recipe apply 'fast-400' --fast-> rc=0
+2026-10-12 10:32:00 DENY: recipe_apply_bad_na
+2026-10-12 10:32:00 recipe apply 'bad_name' -> rc=0
+2026-10-12 10:32:11 pw 9 -> rc=255
+[mock app] shell_exec(argc=4, argv[1]=film) -> 0
+SYSTEM_CMD[sh /opt/usr/nx-ks/f.sh probe ]
+[probe] 我在 App 的 shell 线程里，现在尝试 st app mode m ...
+[probe] ★ 8s 后 st app 仍在等待 ⇒ 队列无人服务（阻塞/死锁证实）
+[mock app] shell_exec(argc=3, argv[1]=film) -> 0
+[mock app] shell_exec(argc=3, argv[1]=mode) -> -1

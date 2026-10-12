@@ -1,0 +1,4 @@
+idx=8 phys=0x2082b000 size=0x1000 nreg=4 from=0x0000
+  +0x000: 00000001 00000100 00000000 81115200
+nonzero 3/4
+epmc_rc=0

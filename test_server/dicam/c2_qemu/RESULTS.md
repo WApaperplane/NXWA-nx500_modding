@@ -74,3 +74,145 @@ bash test_server/dicam/c2_qemu/run_c2_qemu.sh
 | `../mk_c2_patch.py` | 补丁生成器（含 bytepatch.json 供回滚） |
 
 *生成：2026-10-11 · 全部在 WSL NXKS2 + chroot(-112) 离线完成，未动相机*
+
+---
+
+## 6. ★ 追加：桩 v2（拼接版）QEMU 全链复跑（2026-10-12）
+
+> 背景：v1 桩执行 `system(argv[1])` **裸命令串**，需要短路径（`/f` 符号链接）或 PATH 依赖，
+> 且只能带一个参数。v2 桩把 `"sh /opt/usr/nx-ks/f.sh "` 前缀与 `argv[1..n]` 拼进静态缓冲
+> ⇒ `st app film apply 23` 自然可用，**零 PATH 依赖**。
+> 设计：`docs/current/MOD_DECISION_P7_APP_2026-10-12.md` D-6。
+
+### 6.1 载体改造（`c2_harness.c`）
+
+| 项 | v1 时代 | 现在 | 原因 |
+|---|---|---|---|
+| 桩长度 | 硬编码 16B | `STUB_LEN 256` | v2 桩 156B（含 `.ltorg` 字面量池 + 前缀串） |
+| 蹦床目标 | 直指 `system` | 指向 **`spy_system`** | 打印 `SYSTEM_CMD[...]` ⇒ v1/v2 行为差异一眼可辨 |
+| 新增模式 | — | **`unit2`**（3 参数） | 验证多参数拼接 |
+
+驱动脚本 `run_c2_qemu.sh` 相应支持 `C2BIN=<补丁路径>` 选择 v1/v2，并预置
+`/opt/usr/nx-ks/f.sh` 转发器（v2 走 `sh f.sh <args>`、v1 直接执行 cmd ⇒ **同一套判据对两版都成立**）。
+
+### 6.2 结果（★ 全绿）
+
+| # | 测试 | v1（16B 桩） | **v2（156B 拼接桩）** |
+|---|---|---|---|
+| T2 | 单测 unit | PASS | **PASS** |
+| T2b | 守卫 guard | PASS | **PASS** |
+| T3 | 分派 dispatch | PASS | **PASS** |
+| T4 | 端到端（真 `st` → 队列 0x8828 → 回调 → 桩） | PASS（`st rc=0`） | **PASS**（`st rc=0`） |
+| T5 | **v2 拼接（unit2）** | N/A（预期：只执行 argv[1]） | ★ **PASS** |
+
+**决定性证据（v2 T5）**：
+
+```
+SYSTEM_CMD[sh /opt/usr/nx-ks/f.sh apply 23 ]
+```
+
+`/tmp/fsh_calls` 转发器记录（= 端到端穿透证明）：
+
+```
+f.sh called: touch /tmp/c2_unit_ok
+f.sh called: touch /tmp/c2_dispatch_ok
+f.sh called: touch /tmp/c2e2eok
+f.sh called: apply 23          ← ★ 多参数拼接成功
+```
+
+v1 对照（T5）：`SYSTEM_CMD[apply]` —— 正是 v1 的"单参数、无前缀"特征。
+
+### 6.3 产物
+
+| 文件 | 说明 |
+|---|---|
+| `test_server/dicam/stub_v2.s` | v2 桩源码（ARM 汇编，位置相关，无 libc 依赖） |
+| `test_server/dicam/build_stub_v2.sh` | 构建 + 自检（校验 `bl 0xadd08`、长度 < 656B） |
+| `test_server/dicam/stub_v2.bin` | 机器码 **156 B**（可用空间 656 B） |
+| `di-camera-app.c2.v2` | v2 补丁二进制，md5 `697c57394f43e99ed07449ad9cb8a238` |
+| `c2_bytepatch.v2.json` | 逐项 old/new（含 156B 覆盖区间） |
+
+- 覆盖区间：**file `0xc23a8..0xc2444`（156 B），其中原非零字节 135 个**（= 原 FUN 遗体代码，非零区；该 FUN 仅 1 处引用=命令表项）。
+- 长度余量：156 / 656 B ⇒ 后续若要加逻辑，仍有 ~500B 空间。
+
+### 6.4 仍未覆盖（留给上机）
+
+- 真 App 的 `ui_shell_command` 本体（本测试用语义等价的 20B 复刻）。
+- 真机上 `/opt/usr/nx-ks/f.sh` 的实际存在性与权限（**上机前必须落盘该脚本**）。
+- I-cache：QEMU 用户态不模拟，真机自改代码需注意（本补丁是**整文件替换**，不涉及运行时自改，故不适用）。
+
+### 6.5 ★ 效果演示（2026-10-12，可复跑）
+
+脚本：`test_server/dicam/c2_qemu/demo_c2_app.sh`（前台跑，输出可见）
+```
+MSYS_NO_PATHCONV=1 wsl -d NXKS2 -- bash /mnt/e/tmp/NXWA-nx500_modding/test_server/dicam/c2_qemu/demo_c2_app.sh
+```
+
+链路（除 App 本体外全部为真）：**真 `st app film …`** → 真 SysV 队列 `0x8828` → 真 `libshell-command.so`
+→ 真补丁字节 → `f.sh` → 落盘。
+
+同一句 `st app film apply portra400` 的两版行为对照：
+
+| 桩 | `system()` 实际收到 | 结果 |
+|---|---|---|
+| **v1** | `SYSTEM_CMD[apply]` | 只在 PATH 找 `apply`：**参数丢失**，且**绕过 mod 脚本** |
+| **v2** | `SYSTEM_CMD[sh /opt/usr/nx-ks/f.sh apply portra400 ]` | `f.sh` 收到 `argv[1]=apply argv[2]=portra400` ⇒ **落盘 `applied_recipe.txt = portra400`** |
+
+v2 的 `f.sh` 记录（直接证据）：
+```
+argv_count=2
+  argv[1]=apply
+  argv[2]=portra400
+[f.sh] 应用配方: portra400
+```
+
+> ★ 为什么不用"真 VM"跑：`di-camera-app` 真身依赖 DRIMe5 硬件（EP / SMA / ISP / IPCC），
+> 在任何 QEMU 里都无法初始化。故取最真实的可行环境 = **相机 rootfs + `qemu-arm-static`**：
+> 真 `st`、真 `libshell`、真队列、真补丁字节，仅 App 用语义等价的 harness 顶替。
+
+### 6.6 ★ 参数净化 + f.sh 验证 + 死锁实验（2026-10-12 续）
+
+#### (1) 桩 v2 修订：参数净化（安全修复）
+
+**实测复现的注入面**：v2 桩把参数拼进命令行交 `system()`（=`/bin/sh -c`）⇒ 入参取得 shell 解释权。
+未净化时 `st app film recipe apply bad;name` 的 f.log 记录为 `recipe apply 'bad'` —— **`;` 被解释**。
+
+**修复**：桩内加字符白名单（`a-z A-Z 0-9 . _ + - /`），其余 → `_`。
+
+| 输入 | 修复后 |
+|---|---|
+| `recipe apply bad;name`（整串单参数） | `DENY: recipe_apply_bad_na` —— 注入阻断 |
+| `recipe apply 'bad;name'`（分开传） | 引擎收 `apply bad_name` —— 正常分发、元字符中和 |
+
+- 桩长 **156 B → 248 B**（上限 656 B）；新补丁 md5 **`48d94bd63e4479fc931ae1a1fee4e94b`**。
+
+#### (2) f.sh（App 命令入口）验证 —— A 段全通
+
+`scripts/f.sh`（白名单分发）经 `demo_fsh.sh` 实测：
+
+```
+>>> st app film recipe list            → 引擎 stub 收到: list
+>>> st app film recipe apply portra400 → 引擎 stub 收到: apply portra400
+>>> st app film bogus                  → f.log: DENY: bogus
+```
+引擎 stub 记录：
+```
+[stub-engine] argv: list
+[stub-engine] argv: apply portra400
+[stub-engine] argv: apply fast-400 --fast
+[stub-engine] argv: apply bad_name
+```
+
+#### (3) ★★ 铁律一实验证实：f.sh 内不能发 `st app`
+
+在 App 线程内执行 `st app mode m` ⇒ 探针输出：
+```
+[probe] ★ 8s 后 st app 仍在等待 ⇒ 队列无人服务（阻塞/死锁证实）
+```
+⇒ App 的 shell 线程被 `system(f.sh)` 阻塞期间无法服务队列 0x8828；`f.sh` 只许用 `st cap` / `prefman`。
+
+#### (4) 超时工具的现实约束
+
+相机 rootfs **无独立 `timeout`**；mod 自带 busybox 的 applet 集也需实测。`f.sh` 的 `run_tmo` 探测失败即降级直跑。
+
+*追加：2026-10-12 · 分支 `nxwa` · 上机顺序见 `TASKFLOW_2026-10-12.md` W-4*

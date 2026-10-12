@@ -1,0 +1,145 @@
+== version.info
+1.12
+NX500
+NX500GLU0APC1
+DSP_NX500GLU0APC1_SR1
+BABF43A
+== uname
+Linux drime5 3.5.0 #7 PREEMPT Wed Jun 3 14:40:29 KST 2015 armv7l GNU/Linux
+== uptime
+ 19:10:17 up 3 min,  1 users,  load average: 0.86, 0.60, 0.26
+== loadavg
+0.87 0.61 0.26 3/127 565
+== ps lines
+90
+== which (自证：确认工具真实存在)
+/usr/bin/st
+/bin/dd
+PATH=/usr/share/scripts:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/usr/devel/usr/sbin:/opt/usr/devel/usr/bin:/opt/usr/devel/sbin:/opt/usr/devel/bin
+== EV_MOBILE.sh md5 (preflight 第 2 项：机上必须不是 55c47b89)
+54a308b8c55d8e3a313f63c33e06d0a5  /opt/usr/nx-ks/EV_MOBILE.sh
+== /dev/input
+total 0
+drwxr-xr-x    2 root     root            80 Mar 30  2016 by-path
+crw-rw----    1 root     input      13,  64 Mar 30  2016 event0
+crw-rw----    1 root     input      13,  65 Mar 30  2016 event1
+crw-rw----    1 root     input      13,  66 Mar 30  2016 event2
+crw-rw----    1 root     input      13,  63 Mar 30  2016 mice
+crw-rw----    1 root     input      13,  32 Mar 30  2016 mouse0
+== input devices
+I: Bus=0019 Vendor=0001 Product=0001 Version=0100
+N: Name="Drime5 GPIO Keyboard"
+P: Phys=d5-keys/input0
+S: Sysfs=/devices/virtual/input/input0
+U: Uniq=
+H: Handlers=kbd event0 
+B: PROP=0
+B: EV=3
+B: KEY=800000 60028 10000000 6c180000 0 0 0
+
+I: Bus=0019 Vendor=0001 Product=0001 Version=0100
+N: Name="Drime5 ADC Keyboard"
+P: Phys=d5-keys/input0
+S: Sysfs=/devices/platform/d5-keys/input/input1
+U: Uniq=
+H: Handlers=kbd event1 
+B: PROP=0
+B: EV=3
+B: KEY=803800 0 80000001 9299f 48000000 0
+
+I: Bus=0018 Vendor=0000 Product=0000 Version=0000
+N: Name="Melfas MMS100s Touchscreen"
+P: Phys=2-0048/input0
+S: Sysfs=/devices/platform/drime5-i2c.2/i2c-2/2-0048/input/input2
+U: Uniq=
+H: Handlers=mouse0 event2 
+B: PROP=0
+B: EV=b
+B: KEY=400 0 0 0 0 0 0 0 0 0 0
+B: ABS=6618000 3
+
+== diskstats
+   1       0 ram0 0 0 0 0 0 0 0 0 0 0 0
+   1       1 ram1 0 0 0 0 0 0 0 0 0 0 0
+   1       2 ram2 0 0 0 0 0 0 0 0 0 0 0
+   1       3 ram3 0 0 0 0 0 0 0 0 0 0 0
+   1       4 ram4 0 0 0 0 0 0 0 0 0 0 0
+   1       5 ram5 0 0 0 0 0 0 0 0 0 0 0
+   1       6 ram6 0 0 0 0 0 0 0 0 0 0 0
+   1       7 ram7 0 0 0 0 0 0 0 0 0 0 0
+   1       8 ram8 0 0 0 0 0 0 0 0 0 0 0
+   1       9 ram9 0 0 0 0 0 0 0 0 0 0 0
+   1      10 ram10 0 0 0 0 0 0 0 0 0 0 0
+   1      11 ram11 0 0 0 0 0 0 0 0 0 0 0
+   1      12 ram12 0 0 0 0 0 0 0 0 0 0 0
+   1      13 ram13 0 0 0 0 0 0 0 0 0 0 0
+   1      14 ram14 0 0 0 0 0 0 0 0 0 0 0
+   1      15 ram15 0 0 0 0 0 0 0 0 0 0 0
+   7       0 loop0 0 0 0 0 0 0 0 0 0 0 0
+   7       1 loop1 0 0 0 0 0 0 0 0 0 0 0
+   7       2 loop2 0 0 0 0 0 0 0 0 0 0 0
+   7       3 loop3 0 0 0 0 0 0 0 0 0 0 0
+   7       4 loop4 0 0 0 0 0 0 0 0 0 0 0
+   7       5 loop5 0 0 0 0 0 0 0 0 0 0 0
+   7       6 loop6 0 0 0 0 0 0 0 0 0 0 0
+   7       7 loop7 0 0 0 0 0 0 0 0 0 0 0
+ 254       0 zram0 0 0 0 0 0 0 0 0 0 0 0
+ 179       0 mmcblk0 6421 312400 680633 43190 201 163 2873 1030 0 11550 44150
+ 179       1 mmcblk0p1 92 118 735 170 0 0 0 0 0 160 170
+ 179       2 mmcblk0p2 16 0 128 430 0 0 0 0 0 430 430
+ 179       3 mmcblk0p3 16 0 136 430 0 0 0 0 0 430 430
+ 179       4 mmcblk0p4 6 100 114 30 0 0 0 0 0 30 30
+ 179       5 mmcblk0p5 16 111 127 10 0 0 0 0 0 10 10
+ 179       6 mmcblk0p6 17 118 135 40 0 0 0 0 0 40 40
+ 179       7 mmcblk0p7 17 118 135 80 0 0 0 0 0 80 80
+ 179       8 mmcblk0p8 17 118 135 440 0 0 0 0 0 440 440
+ 179       9 mmcblk0p9 678 307457 308142 4770 2 7 9 0 0 3760 4760
+ 179      10 mmcblk0p10 4856 2397 351386 33580 9 1 80 80 0 8190 33620
+ 179      11 mmcblk0p11 468 958 9187 1440 166 146 2520 870 0 1700 2290
+ 179      12 mmcblk0p12 24 118 191 560 0 0 0 0 0 550 560
+ 179      13 mmcblk0p13 17 118 135 430 0 0 0 0 0 430 430
+ 179      14 mmcblk0p14 150 669 9699 670 24 9 264 80 0 690 750
+ 179      30 mmcblk0boot1 20 0 160 980 0 0 0 0 0 970 980
+ 179      15 mmcblk0boot0 20 0 160 670 0 0 0 0 0 670 670
+ 179      45 mmcblk1 387 1237 3013 290 14 2 57 0 0 230 280
+ 179      46 mmcblk1p1 308 1234 2357 260 14 2 57 0 0 200 250
+== p8 sysfs
+p8 ro=N/A
+p8 start=N/A
+p8 size=N/A
+p8 stat=N/A
+p8 force_ro=N/A
+== parttab
+# nx500 partition table
+# <vol>       <dev>       <size(M)>        <image>  <order> <compress>  <fs>  <mkfs-option>  <mount-point>
+#
+adj           /dev/mmcblk0p1     20             none   1    None        raw
+rtos          /dev/mmcblk0p7     30          rom.bin   2    None        raw
+rtos_data     /dev/mmcblk0p8     50             none   3    None        raw
+#extended     /dev/mmcblk0p4      0             none   4    None        raw
+platform      /dev/mmcblk0p10  1024       rootfs.img   5    LZO        ext4
+opt           /dev/mmcblk0p11   100          opt.img   6    LZO        ext4      -j              /opt
+pref          /dev/mmcblk0p2     10             none   7    None        raw
+pref_default  /dev/mmcblk0p3     30 pref_default.bin   8    None        raw
+pref_recovery /dev/mmcblk0p5     20             none   9    None        raw
+opt-usr       /dev/mmcblk0p14     0             none  10    None       ext4      -j              /opt/usr
+rImage        /dev/mmcblk0p13    10           rImage  11    None        raw
+pcache        /dev/mmcblk0p12     5      pcache.list  12    None        raw
+devicem4      /dev/mmcblk0boot1   4     devicem4.bin  13    None        raw
+snapshot      /dev/mmcblk0p9    100     snapshot.img  14    LZO         raw
+uImage        /dev/mmcblk0p6     10           uImage  15    None        raw
+bootloader    /dev/mmcblk0boot0   4   bootloader.bin  16    None        raw
+== df
+Filesystem           1K-blocks      Used Available Use% Mounted on
+/dev/root               519020    491248     22560  96% /
+devtmpfs                 71412         0     71412   0% /dev
+tmpfs                   255788        28    255760   0% /dev/shm
+tmpfs                   255788       832    254956   0% /run
+tmpfs                   255788         0    255788   0% /sys/fs/cgroup
+tmpfs                   255788      2200    253588   1% /tmp
+tmpfs                   255788      2200    253588   1% /var/log
+tmpfs                   255788      2200    253588   1% /var/run
+/dev/loop0               21632     21632         0 100% /usr/share/locale
+/dev/mmcblk0p11          74864     33536     41328  45% /opt
+/dev/mmcblk0p14        2365180    119720   2126832   5% /opt/usr
+/dev/mmcblk1p1        60814464   1027584  59786880   2% /opt/storage/sdcard

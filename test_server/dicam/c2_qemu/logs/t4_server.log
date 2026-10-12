@@ -1,6 +1,7 @@
 == c2_harness (server) ==
-stub @000ca3a8 : 020050e3 1eff2f31 040091e5 538effea
+stub @000ca3a8 : 020050e3 1eff2f31 f0412de9 01dc4de2
 name @file 0x3656dc: 'film'
-trampoline @000add08 -> system @0x106e0
-server up: queue=0x8828 pid=3702
+trampoline @000add08 -> spy_system @0x107ac (real system=0x10710)
+server up: queue=0x8828 pid=1102
+SYSTEM_CMD[sh /opt/usr/nx-ks/f.sh touch /tmp/c2e2eok ]
 [mock app] shell_exec(argc=3, argv[1]=film) -> 0

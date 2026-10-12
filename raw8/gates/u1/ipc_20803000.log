@@ -1,0 +1,2 @@
+dd: /dev/mem: Bad address
+dd_rc=1
