@@ -130,7 +130,9 @@ def main():
     if cur_full_md5 == OFFICIAL_P7_MD5:
         verdict = "未刷（读回 = 官方 p7）"
     elif identical:
-        verdict = "已刷且完整一致 ✓"
+        # 保持 Windows 默认 GBK 控制台也可安全输出；避免验证完成后仅因
+        # Unicode 符号编码失败而以异常退出。
+        verdict = "已刷且完整一致 [PASS]"
     else:
         verdict = "读回与待刷镜像不一致（差异 %d 字节）" % len(diffs)
 

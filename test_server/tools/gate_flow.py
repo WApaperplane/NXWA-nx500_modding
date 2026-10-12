@@ -39,6 +39,8 @@ import hashlib
 import json
 import os
 import re
+import shlex
+import shutil
 import socket
 import struct
 import subprocess
@@ -398,6 +400,36 @@ def run_check_scripts(repo):
     tool = repo.p("test_server", "tools", "check_scripts.py")
     if not os.path.exists(tool):
         return None
+
+    # Windows 上通常没有原生 bash；本项目的标准工具环境是 NXKS2 WSL。
+    # 直接让 check_scripts.py 在 Windows 下启动会因找不到 bash 而异常退出，
+    # 进而把“缺少执行器”误报成“脚本 CI 失败”。优先在 WSL 内完成整套检查。
+    # WindowsApps 提供的 bash.exe 只是 WSL 启动别名，不是能直接接收
+    # Windows 相对路径的原生 bash；因此 Windows 上有 WSL 时一律显式走它。
+    if os.name == "nt":
+        wsl = shutil.which("wsl.exe")
+        if wsl:
+            drive, tail = os.path.splitdrive(repo.root)
+            if drive and drive[0].isalpha():
+                wsl_root = "/mnt/%s/%s" % (
+                    drive[0].lower(), tail.lstrip("\\/").replace("\\", "/"))
+                distro = os.environ.get("NXWA_WSL_DISTRO", "NXKS2")
+                command = "cd %s && python3 test_server/tools/check_scripts.py --quiet" % (
+                    shlex.quote(wsl_root))
+                try:
+                    r = subprocess.run(
+                        [wsl, "-d", distro, "--", "bash", "-lc", command],
+                        capture_output=True, timeout=300)
+                except Exception as e:
+                    return ("ERR", "WSL 脚本 CI 无法启动：%s" % e)
+                # WSL 自身的启动告警在部分中文 Windows 上由 stderr 以 UTF-16
+                # 输出；项目 CI 的 stdout 则是 UTF-8。不要把两种编码拼接后解码。
+                raw_output = r.stdout if r.stdout.strip() else r.stderr
+                output = raw_output.decode("utf-8", "replace").replace("\x00", "")
+                last = [l for l in output.splitlines() if l.strip()]
+                return ("PASS" if r.returncode == 0 else "FAIL",
+                        last[-1] if last else "WSL 脚本 CI 无输出")
+
     try:
         r = subprocess.run([sys.executable, tool, repo.root], capture_output=True, timeout=300)
     except Exception as e:
@@ -536,8 +568,9 @@ def gate_g1(repo, ctx):
         c.append(Check("G1-8", "脚本 CRLF/语法/执行位 CI", BLOCKED, "check_scripts.py 不在位", ""))
     else:
         st, last = res
+        state = PASS if st == "PASS" else (BLOCKED if st == "ERR" else FAIL)
         c.append(Check("G1-8", "脚本 CRLF/语法/执行位 CI",
-                       PASS if st == "PASS" else FAIL, last, "python test_server/tools/apply_ci_fixes.py"))
+                       state, last, "python test_server/tools/apply_ci_fixes.py"))
     return c
 
 
