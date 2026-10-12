@@ -6,9 +6,14 @@
 #   全绿（或 MAN 项已人工确认）才允许进 W-2 刷机
 # 用法: bash test_server/u1/a1_preflight.sh [相机IP]
 # =====================================================================
-cd "$(dirname "$0")/../.." || exit 1
-ROOT=$(pwd)
-A1DIR="E:/NXWA/fw/v1.12/a1"
+SCRIPT_ROOT=$(cd "$(dirname "$0")/../.." && pwd) || exit 1
+ROOT="${NXWA_REPO_ROOT:-$SCRIPT_ROOT}"
+cd "$ROOT" || exit 1
+A1DIR="${NXWA_A1_DIR:-E:/NXWA/fw/v1.12/a1}"
+# Git Bash 直接识别 E:/...；WSL 下同一目录挂载为 /mnt/e/...
+if [ ! -d "$A1DIR" ] && [ -d /mnt/e/NXWA/fw/v1.12/a1 ]; then
+    A1DIR=/mnt/e/NXWA/fw/v1.12/a1
+fi
 S1="$A1DIR/slp_a1_p7_g_step1_v116.bin"
 F1="$A1DIR/slp_a1_p7_g_v116.bin"
 EXP_SIZE=352121435
@@ -17,7 +22,10 @@ EXP_F1_MD5=be2a908baf46261fd07ef1dd5b73951c
 EXP_P7_S1=1e0be7df0ed54c4b71cd6a6a0ea3b243
 EXP_P7_F1=2ee98811a60059353a82c46ee2d836bc
 EXP_OFFICIAL_P7=f19441df58f8c2b0116ce99773bd5143
-PY="C:/Users/31623/.workbuddy/binaries/python/versions/3.13.12/python.exe"
+PY="${NXWA_PYTHON:-C:/Users/31623/.workbuddy/binaries/python/versions/3.13.12/python.exe}"
+if [ ! -x "$PY" ] && ! command -v "$PY" >/dev/null 2>&1; then
+    command -v python3 >/dev/null 2>&1 && PY=python3 || PY=python
+fi
 
 pass=0; fail=0; man=0
 ok()   { echo "  [ OK ] $1"; pass=$((pass+1)); }
