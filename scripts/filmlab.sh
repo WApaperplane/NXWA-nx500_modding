@@ -84,12 +84,32 @@ get_r() { prefman get 0 "$(printf 0x%05x $((PW_BASE + $1 * PSTEP + $2 * SSTEP)))
 #   keep         → 不动 WB_TYPE，只写 K 与 tint
 # ★ 顺序关键：先切模式（决定 K 是否被采用），再写 K，最后写 tint。
 #   顺序反了会出现"模式已是manual 但 K 还是旧值"的窗口。
+# ---- ★ [同构 批次2] WB 模式写入：双路可切换（默认原路；FILMLAB_WB_APP=1 走 App 命令）----
+#   依据 docs/current/SHELL_TO_APP_ISOMORPHISM_2026-10-12.md §4 批次 2
+#   App 侧: `st app nx capture wb <name>` → cmd_set_white_balance → cmd_set_menu_option(0xd3, enum)
+#     App 名 → enum: (无参)=0  auto-tungsten=1  tungsten=2  day=3  cloud=4
+#                    fluorescent-w=5  fluorescent-n=6  fluorescent-d=7  flash=8  custom=9
+#   ★ 与本地 WB_TYPE 真值表（0/1/2/3/4/8/9/10）存在 ±1 错位疑点
+#     ⇒ 默认【仍走原路】，上机跑 test_server/dicam/wb_compare.sh 对照读回值后再决定是否切默认。
+wb_set_mode() {     # $1 = manual | auto
+    if [ "${FILMLAB_WB_APP:-0}" = "1" ]; then
+        case "$1" in
+            manual) st app nx capture wb custom >/dev/null 2>&1 && return 0 ;;
+            auto)   st app nx capture wb        >/dev/null 2>&1 && return 0 ;;
+        esac
+    fi
+    case "$1" in
+        manual) st cap capdtm setusr 6 0x06000a >/dev/null 2>&1 ;;
+        auto)   st cap capdtm setusr 6 0x060000 >/dev/null 2>&1 ;;
+    esac
+}
+
 set_wb() {
   K=$1; A=$2; B=$3; MODE=${4:-manual}
   case $MODE in
     manual) prefman set 0 "$(printf 0x%05x $WB_TYPE)" l "$WB_MANUAL" >/dev/null 2>&1
-            st cap capdtm setusr 6 0x06000a >/dev/null 2>&1 ;;
-    auto)   st cap capdtm setusr 6 0x060000 >/dev/null 2>&1 ;;
+            wb_set_mode manual ;;
+    auto)   wb_set_mode auto ;;
     keep)   ;;
   esac
   [ -n "$K" ] && [ "$K" != "0" ] && prefman set 0 "$(printf 0x%05x $WB_K)" l "$K" >/dev/null 2>&1

@@ -54,7 +54,7 @@ lapsing() {
 		[[ $nx500 = "good" ]] &&  prefman set 0 0xa340 l $exp_set
 		/usr/bin/st app mode m
 		sleep $(($2/2))
-		#st key push s1 && st key click s2 && st key release s1
+		# [同构 批次1] 原按键注入路径已废弃 ⇒ 统一走 App 命令通道（见下一行 stapp）
 		#/opt/usr/nx-ks/stapp "key push s1" && /opt/usr/nx-ks/stapp "key click s2" && /opt/usr/nx-ks/stapp "key release s1"
 		#[[ $nx500 = "good" ]] && st cap capt single start || $(/opt/usr/nx-ks/stapp "key push s1" && /opt/usr/nx-ks/stapp "key click s2" && /opt/usr/nx-ks/stapp "key release s1")
 		/opt/usr/nx-ks/stapp "app nx capture single"
