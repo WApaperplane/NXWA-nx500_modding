@@ -1,7 +1,7 @@
 # NX-KS2 文档索引 / Documentation Index
 
 > 本目录按**时效**分区，避免"旧结论淹没新结论"。
-> 更新：2026-10-11 · 分支：`nxwa`
+> 更新：2026-10-12 · 分支：`nxwa`
 
 ## 目录结构
 
@@ -19,7 +19,14 @@ docs/
 
 | 文档 | 定位 |
 |---|---|
-| [`TASKFLOW_2026-10-10.md`](current/TASKFLOW_2026-10-10.md) | ★★★★★ **当前逆向任务流（新）**：按顺序的执行表 —— 离机轨 P1–P7 / 上机轨 W-1（U6 收尾）→W-2（U4）→W-3（U5）/ 门槛后 A。**"接下来做什么"只看这一页**；含编排决策记录与防漂移清单（取代 10-09 版，10-09 版留档执行轨迹） |
+| [`W6_CAPABILITY_PROBE_2026-10-12.md`](current/W6_CAPABILITY_PROBE_2026-10-12.md) | ★★★★★ **W-6 能力探针结果（新 · 10-12 晚）**：★★★ **`st cap ref` = p7 的 T-Kernel 调试通道** —— `ref stack` 给出**任务表 + 栈地址**（LogTask/MCB_Sender/MCB_Receiver/AeMain/SmartAuto…）、`ref int` 给出**中断计数**（SSIF/PP/AWB/AF）；★ **对 A1 的直接价值**：所有任务栈在 `0x81823xxx`~`0x821a5xxx`，**远离特判块 `0x80011504`** ⇒ 排除"零区被栈覆盖"（旁证）；★ **`st cap path dump ep`** 零补丁读 EP 寄存器（`/dev/mem` 读不到的那片）| `st cap lockinfo` 实时曝光+场景 | `st cap seq` 拍摄 sequencer；★ **`st cap` 实有 23 条命令、mod 只用 6 条** |
+| [`U1_ONMACHINE_2026-10-12.md`](current/U1_ONMACHINE_2026-10-12.md) | ★★★★★ **U1 只读上机结果（新 · 10-12 晚）**：相机上线后补 u1 证据 ⇒ **门控 FAIL=2/BLOCKED=2 → FAIL=0/BLOCKED=1**；★ **`/dev/mem` 四点对照**（阳性对照 `0x94000000` 读到 3072 B ✓ / 阴性对照如预期 / **两个 p7 LUT 缓冲均 `Bad address`**）⇒ 判定 **G2b**，把死路 #6 从单点观察升级为**带对照的完整证明**；★ `st cap iqr` 184 ID ⇒ G5-2 转绿；G5-3 仍 BLOCKED（需"写入+槽号"实验，**未造表过门**）；含 4 条环境教训（路径转换 / 后台任务不可靠 / grep 二进制 / `epmc.arm` 编译） |
+| [`PATCH_SURFACE_REVIEW_2026-10-12.md`](current/PATCH_SURFACE_REVIEW_2026-10-12.md) | ★★★★★ **功能补丁化空间评估（新 · 10-12）**：把"哪些功能值得补丁化"整理成分层模型 **L0 零补丁接线 → L1 App 数据表 → L2 App 代码 → L3 p7（金矿）→ L4 其它固件 → L5 禁区**；★★ **L0 最被低估**——相机上的 `mcbtest` 能发任意 MCB 命令号，字典里 `SET_MF_POSITION`/`ZEBRA_CTRL`/`LOCK_AEAF`/`CIS_CLEANING` **从未接线**，加上 `nx capture quality/RAW`、`nx record pause/resume` 都是零补丁可得；★★ **p7 重点应从"A1 那 4 个 id"转向"归一化器扩表机制"**；184 维 tuning 建议**先只读映射再谈写**；附判据 J1–J5（零补丁穷尽/可判/可逆/机制>hack/不碰死路）与待验证清单 V1–V6 |
+| [`TASKFLOW_2026-10-12.md`](current/TASKFLOW_2026-10-12.md) | ★★★★★ **当前逆向任务流（新 · 10-12）**：★★ **门控实测 ≠ 文档口径**（10-12 08:31 实测放行 **1/5**：G0/G1 FAIL 相机离线、G2/G5 BLOCKED 缺 `raw8/gates/u1/` 证据；G3/G4 PASS）⇒ 今日第一优先级 = **修门控**；离机轨 O1–O5（C-2 桩 v2 / T2 投递件 / A1 回读判据脚本 / 刷机前检查单）；上机轨 W-1 开门补证据 →W-2 A1 step1 灰度→W-3 T2 机制演练→W-4 C-2 灰度→W-5 A1 full。**"接下来做什么"只看这一页** |
+| [`MOD_DECISION_P7_APP_2026-10-12.md`](current/MOD_DECISION_P7_APP_2026-10-12.md) | ★★★★★ **p7 与 App 修改决策记录（新 · 10-12）**：ADR 风格 8 条决策 —— D-1 p7 走**方案 G**（28B/2 处）｜D-2 **step1 灰度先行，禁直刷 full**｜D-3 选址 **候选 A `0x11504`**｜D-4 App 走 **C-2**（13B：`uscom`→`film` + 16B 桩）｜★ **D-5 补丁投递 T2 bind-mount 胜出**（SLP idx6=rootfs ⇒ T1 会被刷机冲掉）｜D-6 桩 **v2 为交付族**（v1 仅首验）｜D-7 两线**同批**上机｜D-8 明确不做（第 4 槽/长列表/全量重编/改状态机）；附 **5 条未验证项 U-1…U-5（含验证方法）** |
+| [`SHELL_TO_APP_ISOMORPHISM_2026-10-12.md`](current/SHELL_TO_APP_ISOMORPHISM_2026-10-12.md) | ★★★★★ **shell → App 同构替换设计（新 · 10-12）**：把 mod 脚本"绕过 App 直操底层"的三类脆弱做法（按键注入 / 裸数字 id 写属性 / systemctl 传状态）分批换成 App 官方命令；★ **新解出 App 命令表全表 32 条 + `st app nx` 命令树**（`capture single/quality/wb/af-mode`、`record pause/resume`、`key push/release`）；★ 直接增益：**白平衡与照片质量可脚本化**（可解除 README「WB 不在配方内」的已知限制）；**批次 1 已落地**（三级 fallback，行为最坏等于现状） |
+| [`DICAM_PATCH_INSTALL_PATHS_2026-10-12.md`](current/DICAM_PATCH_INSTALL_PATHS_2026-10-12.md) | ★★★★★ **di-camera-app 补丁：安装路径与 Release 布局（新 · 10-12）**：★ 相机端权威路径 `/opt/usr/nx-ks/dicam/`（p14，**刷固件不覆盖**）+ `init.sh` bind-mount 钩子 + 挂载点（rootfs 字节不变）；★ **两个包职责分离**（主包 `NX-WA-<ver>.zip` / 补丁包 `NX-WA-DICAM-PATCH-<ver>-<stub>.zip`），补丁包**刻意不含** `info.tg`/`nx_cs.adj`/`install.sh`（放同名 `install.sh` 会覆盖主包 SD 引导器）；两条投递路（SD 增量同步 / FTP+telnet）+ 打包器 `make_dicam_patch_pack.py` |
+| [`TASKFLOW_2026-10-10.md`](current/TASKFLOW_2026-10-10.md) | ★★★★ **前一版任务流（10-10 / 10-11 执行轨迹留档）**：按顺序的执行表 —— 离机轨 P1–P7 / 上机轨 W-1（U6 收尾）→W-2（U4）→W-3（U5）/ 门槛后 A。**"接下来做什么"只看这一页**；含编排决策记录与防漂移清单（取代 10-09 版，10-09 版留档执行轨迹） |
 | [`DICAM_MOD_DESIGN_2026-10-11.md`](current/DICAM_MOD_DESIGN_2026-10-11.md) | ★★★★★ **di-camera-app 修改设计（新）**：面向 X05/G-6/滚轮交互——五档路线（0/A/B/C/D）；★★ **`st app` = App 官方命令通道**（SysV 队列 0x8828 → App 命令表 @0x449d28，~30 条，零补丁，install.sh 生产已在用）；★★ systemd 骨架（裸 exec 无签名校验 / EnvironmentFile=/run/tizen-mobile-env / Restart 被注释）；★★ 投递三先例（remount rw / bluetoothd 开机钩子 / systemctl restart）；★ **G-6 结案**（App 无第 4 自定义槽）；★ **C-2 补丁规格**（13–16 字节 ⇒ `st app film …` 直达 mod）；实验 E-D1–E-D5 |
 | [`FILMLAB_WHEEL_PREVIEW_FEASIBILITY_2026-10-11.md`](current/FILMLAB_WHEEL_PREVIEW_FEASIBILITY_2026-10-11.md) | ★★★★ **「FilmLab 滚轮切换 + 实时预览」可行性（新）**：原生「画面向导」= 现成的"滚轮+预览"（自定义 1/2/3 槽内容由 mod 决定，已验 C2）；天花板=3 可见槽；**"迁到固件"是层次错误**（p7 无 UI）；三条零固件路（preset / 波轮钩子 E1 / 内置 9 档改写 E2）+ 手机 vs 相机物理差 |
 | [`ATTR_BUS_MCB_2026-10-09.md`](current/ATTR_BUS_MCB_2026-10-09.md) | ★★★★★ **属性总线传输层全解（新）**：★★★ **`set_attribute(0x10e/0x110/0x111/0x112)` = `SetVariableDataMCB`**（PLT 桩 #994 反查，`.plt`/`.rel.plt` 索引法自校验）⇒ 完整链 `SetVariableDataMCB → CMCBAdapter::SetParam(cmd=(id-0xff)\|0x1300) → CMulticoreBridge::Send(0x81,cmd,4,data) → CSender → ipcc_write_pkt → p7`（全字节级证据）；★★ **POC `pwsend.arm`**（dlopen+dlsym 直调，QEMU 实测符号解析成功）；★ 上机校准实验设计（id↔维度 / R/G/B 通道 / PWHUE 遗留）；新工具 `pltmap.py`（通用 PLT→符号映射器）|
@@ -106,7 +113,7 @@ docs/
 
 | 我想…… | 先看 |
 |---|---|
-| **知道"现在按什么顺序做什么"** | `current/TASKFLOW_2026-10-10.md`（当前任务流） |
+| **知道"现在按什么顺序做什么"** | `current/TASKFLOW_2026-10-12.md`（当前任务流）+ `current/MOD_DECISION_P7_APP_2026-10-12.md`（p7/App 改不改、怎么改） |
 | **一次看清全部逆向进度 / 对外介绍本项目** | `current/RE_PROGRESS_2026-10-08.md`（单文件收口） |
 | 弄清项目现在能做什么 / 不能做什么 | `current/HANDOVER_2026-10-07.md` |
 | 知道哪些旧结论是错的 | `current/ERROR_CORRECTIONS_2026-10-07.md` |
