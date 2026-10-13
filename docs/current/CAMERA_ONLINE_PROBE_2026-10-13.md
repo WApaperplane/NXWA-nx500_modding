@@ -151,7 +151,7 @@ kernel → systemd(PID 1)
 | U2 | `restart` 卡死的精确机理 | 🔶 **已收敛为 hibernation 联锁** | 见 **附 C**；❌ 不得再贸然 restart |
 | U3 | `onscreen_ks` / `a_init.sh` 的触发者 | ✅ **已定位**（与 U1 同链） | 见下 |
 | U4 | G4-0 缺 `.uploads/fw/nx500_v1.12.bin` | ⚠️ **实为克隆差异，非真缺失** | Codex 克隆缺 `.uploads/` 与 `raw8/emmcbak/p7_orig.bin` ⇒ 门控须在**小A克隆**跑（小A克隆 G4 = PASS） |
-| **U5** | **SLP 是否含 `/opt/usr/`** | ❓ **新增，A1 刷机前必查** | rootfs-112 提取物里出现 `/opt/usr/nx-ks/f.sh` ⇒ 刷 A1 SLP **可能覆盖 `/opt/usr/`**（mod 运行文件） |
+| **U5** | **SLP 是否含 `/opt/usr/`** | 🔶 **已定位（见附 D），待真机分区表复核** | **`idx9` = App 资源镜像（≈150 MiB，含 `/usr/apps/com.samsung.di-camera-app/…`）⇒ 刷 A1 SLP 很可能重置 `/opt/usr`（mod 运行目录 `/opt/usr/nx-ks/`）** |
 
 ### U1 结论：调用链定位完成（10-13 晚补测，纯只读）
 
@@ -224,6 +224,46 @@ boot+38.57 s  onscreen_ks 启动（starttick 3857）
 ⇒ 冷启动 → 存休眠快照 → **reboot 恢复**（`/sys/power/disk=reboot` 即此义）。
 **这很可能就是 `systemctl restart di-camera-app` 卡死整机的土壤**：App 的生命周期被卷进快照/恢复序列。
 🔶 仍属推断，**不得再以 restart 复现验证**（代价是整机卡死 + 物理重启）。
+
+## 附 D：SLP 分区结构与「刷机会不会抹掉 `/opt/usr`」（U5 核查，10-13 深夜）
+
+**方法**：`tools/nx-fw/slp-firmware.py --partitions` 列表 + WSL 内 `lzop -dc` 逐段解压定性（全程离线只读）。
+
+### D.1 分区表（A1 包与官方 1.12 **逐字段一致**）
+
+| idx | len | offset | flags | 定性（实测） |
+|---|---|---|---|---|
+| 0 | 6,160,624 | 304 | ffffffff | uImage（Linux-3.5.0） |
+| 1 | 56,289 | 6,160,928 | 7fffffff | ARM 向量表（`06 00 00 ea`） |
+| 2 | 3,176,040 | 6,217,217 | 65ffffff | uImage |
+| 3 | 6,169,816 | 9,393,257 | 543fffff | uImage |
+| 4 | 117,184 | 15,563,073 | 4321ffff | 偏移/长度表 |
+| **5** | **12,075,648** | 15,680,257 | 32100fff | **p7 / rtos**（crc `1ad42900` = A1 文档值 ✅） |
+| **6** | **280,505,658** | 27,755,905 | 210000ff | **rootfs**：LZOP → **ext4**（`/bin /etc /var /opt /smack /home …`） |
+| **7** | **5,022,551** | 308,261,563 | 1000000f | LZOP → **ext4**，解压 **104,857,088 B（100 MiB）**；含 `apps/ dbspace/ storage/ share/ ug/ driver/ data/ usr/ etc/ version` ⇒ **`/opt` 类结构** |
+| 8 | 28,672 | 313,284,114 | ffffffff | 全零 |
+| **9** | **38,808,649** | 313,312,786 | 7fffffff | LZOP → **157,285,888 B（≈150 MiB）原始数据，非 ext4**；含 `/usr/apps/com.samsung.di-camera-app/res/sounds/*.wav`、`res/edje/slp_edc_*.edj`、`/opt/usr/dbspace/.app-package.db`、`/opt/home/app/.e/e/fonts`、偏移 27,959,556 处有 cpio magic `070701` ⇒ **App 资源镜像** |
+
+### D.2 结论与推断
+
+- ✅ **已确证**：`idx6 = rootfs`；`idx7` 为 **ext4** 且结构属 `/opt`；`idx9` 为**含 App 资源的镜像**
+  （Tizen 上 `/usr/apps/…` 即 `/opt/usr/apps/…`）。
+- 🔶 **强推断**：`idx6/7/9` ↔ eMMC `p10(rootfs) / p11(/opt) / p14(/opt/usr)`
+  ⇒ **刷 A1 SLP 会重置 `/opt` 与 `/opt/usr`** ⇒ **mod 运行目录 `/opt/usr/nx-ks/` 会被抹掉**。
+- ⚠️ **未完全吻合处（待复核）**：解压尺寸与真机分区尺寸不完全对应（idx7 = 100 MiB vs `df` 显示 p11 = 74 M；
+  idx9 ≈ 150 MiB vs p14 used = 117 M）⇒ **需真机 `/proc/partitions` 逐分区大小与 SLP 记录对照**
+  （核查时相机已休眠，下次上线补测）。
+- ❌ **撤回一条旧推断**：先前据「rootfs-112 提取物含 `/opt/usr/nx-ks/f.sh`」怀疑 SLP 含 `/opt/usr` ——
+  该目录 **mtime = 10-12**（晚于 10-08 提取）且只有 4 个文件（`busybox / f.log / f.sh / filmlab.sh`）
+  ⇒ 系**后期手工投放的测试件**，非 SLP 原样，**不能作证据**。
+
+### D.3 对 A1 刷机的直接影响（★ 硬前置）
+
+1. **刷 A1 前必须备份** `/opt/usr/nx-ks/`（mod 全部运行文件）及 `/opt` 下自定义内容；
+   目标可选 SD 卡（`tar`，注意 exFAT 不保留符号链接/权限）或 FTP 拉回 PC。
+2. **刷 A1 后须重新部署 mod**（SD 卡 `scripts/` 即 `/opt/usr/nx-ks/` 的部署源镜像，可用 `install.sh` 或手工复制）。
+3. 与既有「C-2 投递走 T2 bind-mount」**是两件事**：T2 解决「补丁体放哪不被刷掉」，
+   本项说的是「**刷机会抹掉 p14 本身**」——两者须一并纳入 A1 波次前置检查表。
 
 ---
 *生成：2026-10-13 晚 · 分支 `nxwa` · 证据源：相机 192.168.0.105 实机探测（telnet/FTP）+ 现场确认*
