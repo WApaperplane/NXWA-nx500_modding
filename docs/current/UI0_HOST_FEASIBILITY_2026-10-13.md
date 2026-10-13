@@ -5,6 +5,10 @@
 > **性质**：**只读取证**（WSL rootfs-112 逐项实测 + 既有文档提炼），零写机、零固件修改。
 > **上游**：`REA_P7_V5_V6_2026-10-13.md`（Codex 提案：进程内宿主 + 模块运行时 + UI-0…UI-5 路线）。
 > **口径**：✅ = 本机实测 ｜ 🔶 = 版本/逻辑推断，待上机裁决 ｜ ❓ = 未知（附探查法）
+>
+> 🔴 **2026-10-13 晚修订**：§7 八项清单**已上机执行完毕**，结果见 **`CAMERA_ONLINE_PROBE_2026-10-13.md`**。
+> 其中 **§2 的「restart 兜底 / 单命令回滚」与 §4 的「启用 `Restart=always` 自愈」已被实测证伪**——
+> `systemctl restart di-camera-app` **会卡死整机**（须物理重启）。本文对应段落已就地加警告，**冲突处以新文档为准**。
 
 ---
 
@@ -19,6 +23,9 @@
    （注入与自愈一步完成，见 §4）。
 3. 全部结论止于"静态成立"：**仓内无任何"往 di-camera-app 注入 .so"的先例**（U2/全部实验都是独立 EFL 进程）。
    ⇒ 裁决必须由 **UI-1a 最小实验**（空 .so + 心跳）完成；在此之前**不得**在 App 进程内做任何 EFL 调用。
+   > 🔴 **10-13 晚实测补正**：`.so` 注入确无先例，但**「进程内注入」有先例**——
+   > `/opt/usr/nx-ks/auto/a_init.sh` 以 `poker $(pgrep di-camera-app) addr:value…`（9 组）对**运行中**的 App 打内存补丁。
+   > ⇒ 「必须早于 exec」这一硬约束**只对 LD_PRELOAD 成立**，对内存补丁通道不成立。详见新文档 §3。
 
 ---
 
@@ -91,9 +98,15 @@ EOF
 systemctl daemon-reload
 ```
 
-- **时序风险** 🔶：若 init.sh 晚于 di-camera-app 启动 ⇒ 首次注入靠 `systemctl restart di-camera-app` 兜底（重启先例已有）。
-- **回滚**（单命令级）：`rm -rf /run/systemd/system/di-camera-app.service.d && systemctl daemon-reload && systemctl restart di-camera-app`。
-- **待裁决** 🔶：systemd 208 对 drop-in 中 `LD_PRELOAD` 的实际传递（理论成立；UI-1a 一并裁决）。
+- **时序风险** ✅ **已坐实**（10-13 晚实测）：init.sh 在 **boot+37.8 s**、di-camera-app 在 **boot+12.2 s**
+  ⇒ **init.sh 永远晚 25 s**。
+  ~~首次注入靠 `systemctl restart di-camera-app` 兜底~~ —— 🔴 **该兜底手段已作废**（restart 会卡死整机）
+  ⇒ 注入必须在 App 首次 exec 之前就绪；「boot+12.2 s 之前的执行点」= 新文档 §5 的 **U1**（当前头号阻塞）。
+- **回滚**：`rm -rf /run/systemd/system/di-camera-app.service.d && systemctl daemon-reload`，
+  **然后走自然重启**（正常关机 / 开机）。
+  ~~`… && systemctl restart di-camera-app`~~ —— 🔴 **实测证伪：restart 该 unit 会卡死整机（须物理重启）**，见 §7 执行结果。
+- ✅ **原待裁决已结**（10-13 晚）：systemd **208 认** `/run/systemd/system/*.d/*.conf`——
+  `systemctl show -p DropInPaths` 成功登记该文件、`Environment=` 被采纳。**drop-in 通道的静态面成立。**
 
 ---
 
@@ -132,7 +145,7 @@ systemctl daemon-reload
 
 | 项 | 现状 | UI-1 前要求 |
 |---|---|---|
-| 进程自愈 | **`#Restart=always` 被注释** ⇒ 崩溃永久黑屏（U2 v9 教训：需物理重启） | drop-in 内启用 `Restart=always` + `RestartSec=3`（与注入一步完成） |
+| 进程自愈 | **`#Restart=always` 被注释** ⇒ 崩溃永久黑屏（U2 v9 教训：需物理重启） | 🔴 **~~drop-in 内启用 `Restart=always` + `RestartSec=3`~~ 已否决（10-13 晚实测）**：`restart` 该 unit 即卡死整机 ⇒ 启用后 = 「App 一异常就自动卡死」，**比不自愈更糟**。自愈须另寻机制（外部 watchdog 拉活 / 接受物理重启兜底） |
 | 宿主自身纪律 | — | constructor **最小化**：只写心跳（open/write/close），零 EFL 调用、零全局构造副作用 |
 | 心跳 | — | `/mnt/mmc/nxwa-hb.txt`（pid + 时间戳 + 版本串），供人查/供看门狗巡逻（后续可选） |
 | 兜底 | 物理重启可行（长按电源，U2 已验证） | 实验前确认回滚命令就绪（§2） |
@@ -151,7 +164,8 @@ systemctl daemon-reload
   1. ✅ 心跳文件出现，且 pid 对得上（`cat /proc/<pid>/comm == di-camera-app`）
   2. ✅ 屏幕正常出画面；telnet 21/23 可达；MENU 键进出菜单正常
   3. ✅ 30 秒 + 两轮 loadavg 观测，无可感劣化
-  4. ✅ 可逆：删 drop-in + reload + restart ⇒ 心跳不再出现、一切如旧
+  4. ✅ 可逆：删 drop-in + reload ⇒ **自然重启一次** ⇒ 心跳不再出现、一切如旧
+     （🔴 原写法 `… + restart` = 卡死整机，已按 §7 实测修正）
 - **裁决含义**：注入链（P1）+ 环境传递 + 无害性 + 可逆性，四项一次裁定。
 
 ### UI-1b —— 只读探测（不创建/不修改任何对象）
@@ -185,11 +199,17 @@ systemctl daemon-reload
 
 ## 7. 待上机核查清单（相机上线后）
 
+> ★ **10-13 晚已全部执行完毕**，逐项结果见 **`CAMERA_ONLINE_PROBE_2026-10-13.md` §1**。摘要：
+> 1 ✅ 208 ｜ 2 ✅ App boot+12.2 s vs init.sh boot+37.8 s（**慢 25 s，时序死锁**）｜ 3 ✅ 真机仅 4 个 .edj ｜
+> 4 ✅ slp_edc 非本 App 资源 ｜ **5 🔴 静态面成立，但 `restart` 卡死整机** ｜ 6 ✅ environ 与 §1 表逐条一致、**零注入** ｜
+> 7 ✅ rootfs ro（96 % 满）、`/opt/usr` rw（2.3 G 用 6 %）｜ 8 ✅ `/opt/usr/nx-ks/dicam/` 不存在
+
 1. `systemctl --version`（真机版本，对照 rootfs 208）
 2. `systemctl show -p ExecMainStartTimestamp bluetooth-frwk.service di-camera-app.service`（**时序裁决**）
 3. `ls -la /usr/apps/com.samsung.di-camera-app/res/edje/`（**slp_edc 之谜：真机实有几张**）
 4. `find / -name "slp_edc*.edj"`（`/opt` `/opt/usr` 排查）
-5. `/run/systemd/` 结构 + **无害 drop-in 实测**（`Environment=NXWA_TEST=1` + reload + restart → 查 `/proc/<pid>/environ`）
+5. `/run/systemd/` 结构 + 无害 drop-in 实测（`Environment=NXWA_TEST=1` + reload + ~~restart~~ → 查 `/proc/<pid>/environ`）
+   🔴 **`restart` 这步会卡死整机——勿照做**；改「reload + 自然重启」后查 environ。详见新文档 §2。
 6. `cat /proc/<pid>/environ | tr '\0' '\n'`（App 真实环境，对照 profile.d 清单）
 7. `mount | grep -E "root|opt|usr"`（rootfs ro/rw、/etc 写保护现状）
 8. `ls /opt/usr/nx-ks/dicam/`（T2 投递目录现状——C-2 波次共用）
@@ -209,7 +229,9 @@ systemctl daemon-reload
 | M2 | 菜单注入**先验 C4**（`UI_Manage_Development_Menu_Info_By_GUI`），不先碰 `setMenuList` 改码 |
 | M3 | **看门狗/Restart 前置**：任何进程内代码上线前，先恢复自愈（§4）——U2 物理重启的教训不可重演 |
 
-**下一动作**：相机上线 ⇒ 先跑 §7 清单（8 项，全只读+1 项无害 drop-in）⇒ 再启动 UI-1a。
+**下一动作**（10-13 晚更新）：~~相机上线 ⇒ 先跑 §7 清单（8 项）⇒ 再启动 UI-1a~~ —— **§7 已跑完**。
+⇒ 启动 UI-1a 之前，须先解 **`CAMERA_ONLINE_PROBE_2026-10-13.md` §5 的 U1**（boot+12.2 s 之前的执行点）
+与 **U2**（restart 卡死机理）；且 UI-1a 实验设计须按该文档 **§2.4** 修订（**禁用 restart / 否决 `Restart=always`**）。
 
 ---
 *生成：2026-10-13 · 分支 `nxwa` · 证据源：WSL `rootfs-112`/`rootfs-v113` 实测 + 5 份既有文档提炼（CAMERA_MENU_ARCHITECTURE / CAMERA_APP_STRUCTURE / U2_UI_DISPLAY / NATIVE_UI_DESIGN_FULL / FW_NATIVE_UI_ONEKEY_FEASIBILITY）*
