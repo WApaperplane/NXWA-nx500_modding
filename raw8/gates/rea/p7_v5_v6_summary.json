@@ -1,0 +1,75 @@
+{
+  "generated_at": "2026-10-13",
+  "scope": "P7 V5/V6 only; di-camera-app static analysis was not repeated",
+  "tool": {
+    "rea": "6.4.0",
+    "provider": "Ghidra 12.1.4",
+    "jdk": "21"
+  },
+  "target": {
+    "wrapped_elf": "p7_wrapped.elf",
+    "wrapped_sha256": "91c8f8cfcb7a9ddd086208d25aeb849cffe25abc7f1c8c8332bdc3fc44948724",
+    "payload": "parts/chunk-05.bin",
+    "payload_sha256": "f8e417cb5b55768851ba7e2b8017d3a98dc0b0c8444cc0a5061265cc08dbbf7f",
+    "payload_md5": "5fc4824f5b6a6a3caca1f9104238b8ac",
+    "load_base": "0x80000000"
+  },
+  "address_corrections": [
+    {
+      "symbol": "normalizer",
+      "file_offset": "0x51090",
+      "correct_va": "0x80051090",
+      "deprecated_wrong_va": "0x8051090"
+    },
+    {
+      "symbol": "slot_change_notifier",
+      "file_offset": "0x53330",
+      "correct_va": "0x80053330",
+      "deprecated_wrong_va": "0x8053330"
+    }
+  ],
+  "evidence": {
+    "instruction": {
+      "evidence_id": "ev_4c6a4cbfd74da216fcdc64eca9aa5371aab921b3e3f7e997f501447cc0198a11",
+      "address": "0x80053330",
+      "bytes": "10402de9",
+      "disassembly": "stmdb sp!,{r4,lr}",
+      "status": "decoded"
+    },
+    "function": {
+      "evidence_id": "ev_f298211bd8f7a6a1f8f29327cfaee8a0b3f6e71322e1ae282587f40254672acf",
+      "procedure": "FUN_80053330",
+      "body_total_bytes": 8932,
+      "body_span_bytes": 12288,
+      "body_non_contiguous": true,
+      "direct_callers": [
+        "0x8004cd74",
+        "0x80056330",
+        "0x80056898"
+      ],
+      "pw_cases": [
+        "0xda",
+        "0xdb",
+        "0xdc",
+        "0xdd",
+        "0xde",
+        "0xdf",
+        "0xe0",
+        "0xe1",
+        "0xe2"
+      ],
+      "pw_apply_callee": "0x80051ab8"
+    }
+  },
+  "findings": {
+    "v5_static_placement": "complete; candidate A at file offset 0x11504 remains selected",
+    "v5_runtime_survival": "pending A1 Step1 post-flash readback and zero-region survival probe",
+    "v6_internal_slot_to_apply": "confirmed",
+    "v6_external_linux_or_app_reachability": "unknown"
+  },
+  "limitations": [
+    "The wrapped ELF uses one synthetic RWE LOAD segment and cannot prove real runtime memory protection.",
+    "REA/Ghidra does not represent unresolved computed or indirect flows without target addresses as reference edges.",
+    "Absence of a static external caller is not proof that no runtime registration or callback path exists."
+  ]
+}
