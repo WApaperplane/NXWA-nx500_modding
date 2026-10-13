@@ -133,11 +133,11 @@ kernel → systemd(PID 1)
   内容 `if [ -x /opt/usr/nx-ks/init.sh ]; then /opt/usr/nx-ks/init.sh; fi`。
   `init.sh` 全文 = 纯 `export` 环境变量 + `nice -n +15 keyscan … &`（**无任何 drop-in / 注入逻辑**）。
 - ✅ **`init.sh` 本次开机确实执行过**：keyscan（PID 333/334）参数与 init.sh 第 40 行**逐字一致**。
-- ❓ **`onscreen_ks`(boot+38.6 s) 的启动者未确认**；`a_init.sh`（其唯一已知启动者之一）**不在**开机自启链中。
-  **探查法**：在 `/opt/usr/nx-ks/*` 与所有被替换二进制中 grep `onscreen_ks`/`a_init`；
-  或下次开机前给 `init.sh` 加一行 `date >> /mnt/mmc/boot.log`，逐脚本插桩。
-- ⚠️ `bluetooth-frwk.service` 实测 **disabled + inactive(dead)**（`ps` 无 bluetoothd）⇒ **init.sh 的实际调用者并非它**，
-  另有一处调用 `bluetoothd`（候选：开机早期某个 unit）❓。
+- ✅ **`onscreen_ks` / `a_init.sh` 的开机触发者 —— 已定位（10-13 晚 22:0x 补测）**，见 §5「U1 已解」。
+- ✅ **`bluetooth-frwk.service` 之谜已解**：它**是** `Type=forking`，其 ExecStart 脚本 `/etc/rc.d/init.d/bluetooth-frwk-service`
+  执行 `/usr/bin/bt-service &` 后**立即退出** ⇒ systemd 判定 forking 服务启动失败 ⇒ **journal 不记 `Started Bluetooth service`**。
+  而 `bluetooth.target` 无任何 unit 引用却被 reached（`StopWhenUnneeded=yes`）⇒ 早先据「`graphical.target.wants/` 为空」推断
+  「该服务从未启动」是**误导**。⚠️ 注：rootfs 是**只读挂载**，`atime` **不可用**（内核在 ro fs 上不更新 atime；`/opt` 又是 `noatime`）。
 - 系统 unit 实况：`hib_ready.service` / `wm_ready.service` 均为 **not-found**（但被 `di-camera-app.service` 的 `After=` 引用）；
   `hib_tmp.service` / `hibernation.service` = **active (exited)**，描述均为 "Preparing snapshot image…"。
 
@@ -145,23 +145,51 @@ kernel → systemd(PID 1)
 
 ## 5. 残留未知与下一步
 
-| # | 事项 | 影响 | 探查/解决法 |
+| # | 事项 | 状态 | 说明 |
 |---|---|---|---|
-| U1 | **boot+12.2 s 之前的执行点** | ★ **UI-1 头号阻塞** | 逐脚本插桩 `/mnt/mmc/boot.log`；查 rc3/rc5.d 全链、被替换二进制清单 |
-| U2 | `systemctl restart di-camera-app` 卡死的**精确机理** | 决定能否有安全重启路径 | 查 `amd` / `launchpad*` 守护逻辑；`st cap` 观察；❌ **不得再贸然 restart** |
-| U3 | `onscreen_ks` / `a_init.sh` 的开机触发者 | 决定能否复用该时机做注入驱动 | 见 §4 |
-| U4 | G4-0 缺 `.uploads/fw/nx500_v1.12.bin` | 门控 G4 **FAIL**，挡 L4（改 p7） | 补备份（工作区已有 `NX500_FW_v1.12.zip`，需解压就位） |
+| U1 | **boot+12.2 s 之前的执行点** | ✅ **已结：不存在** | 见下「U1 结论」 |
+| U2 | `restart` 卡死的精确机理 | 🔶 **已收敛为 hibernation 联锁** | 见 **附 C**；❌ 不得再贸然 restart |
+| U3 | `onscreen_ks` / `a_init.sh` 的触发者 | ✅ **已定位**（与 U1 同链） | 见下 |
+| U4 | G4-0 缺 `.uploads/fw/nx500_v1.12.bin` | ⚠️ **实为克隆差异，非真缺失** | Codex 克隆缺 `.uploads/` 与 `raw8/emmcbak/p7_orig.bin` ⇒ 门控须在**小A克隆**跑（小A克隆 G4 = PASS） |
+| **U5** | **SLP 是否含 `/opt/usr/`** | ❓ **新增，A1 刷机前必查** | rootfs-112 提取物里出现 `/opt/usr/nx-ks/f.sh` ⇒ 刷 A1 SLP **可能覆盖 `/opt/usr/`**（mod 运行文件） |
 
-**对 UI-1 的路线建议（本轮实测后）**：
+### U1 结论：调用链定位完成（10-13 晚补测，纯只读）
 
-- **通道 A｜内存补丁（poker 式）**：App 启动后可用，**零新机制、有先例**；但只能写内存数据（改参数/跳转），
+**完整链（journal + 进程时间线互证）**：
+
+```
+21:16:31 kernel: BT: Loading driver          ← insmod（= /var/log/8887_bt.log 的作者）
+21:16:32 kernel: BT: FW download over, size 653112 bytes
+21:16:33 kernel: BT: Driver loaded successfully
+21:16:33 systemd[1]: Reached target Bluetooth.
+    ↓ 3.4 s
+boot+37.83 s  keyscan     启动（starttick 3783）
+boot+38.57 s  onscreen_ks 启动（starttick 3857）
+```
+
+⇒ **`bt-service`（boot+35 s 加载 BT 驱动）→ `/usr/sbin/bluetoothd`（79B wrapper）→ `init.sh`（boot+37.8 s）→ `keyscan`**。
+
+**三项穷举否定**（说明此前为何找不到调用者）：
+
+1. **WSL rootfs-112 全盘 `grep -rF`**：无任何文件引用 `init.sh` / `keyscan` / `/opt/usr/nx-ks/init.sh`
+   （`enlightenment`、`license.txt` 两处命中均为 `. ` 正则通配符误报，用 `-F` 复核后消失）
+2. **`/opt/usr/nx-ks/` 全部顶层脚本 + `auto/` + `nx-rc/`**：**无一处**调用 `init.sh`
+3. **SD 卡 `scripts/`（= `/opt/usr/nx-ks/` 的部署源镜像）与 SD 根目录**：**无 `info.tg` / `nx_cs.adj`**
+   （已被 `uninstall_direct.sh` 删除）⇒ SD 触发链当前未激活
+
+⇒ **`boot+12.2 s` 之前不存在任何执行点**（rootfs 上 mod 仅 1 个改动点 = `bluetoothd`；App 的 25 s 初始化结束后才轮到 init.sh）。
+
+**对 UI-1 的路线建议（U1 已结后，据实修订）**：
+
+- **通道 B｜LD_PRELOAD（P1 `/run` drop-in）**：❌ **在「每次开机」场景下判死**——drop-in 由 init.sh 建立（boot+37.8 s），
+  永远晚于 App（boot+12.2 s）；且 `/run` 是 tmpfs，**重启即清**，无法跨重启携带；唯一激活手段 `restart` 又会卡死整机。
+- **通道 C｜改 unit 本体（P5）**：★ **唯一能保证「早于 App exec」的路径**——直接给
+  `/usr/lib/systemd/system/di-camera-app.service` 加 `Environment=LD_PRELOAD=…`，由 `init.sh` 幂等重建。
+  需 `mount -o remount,rw /`。**关键认识：mod 早已在 rootfs 写文件（`bluetoothd` wrapper + `bluetoothd.orig`），
+  「零 rootfs 写入」本就不是现状** ⇒ P5 与项目既有做法一致，**不是新增违例**。
+- **通道 A｜内存补丁（poker 式）**：App 启动后可用、**有先例、零新机制**；但只能写内存（改参数/跳转），
   **不能加载 .so**。适合「改参数/打小补丁」类需求。
-- **通道 B｜LD_PRELOAD（P1 drop-in）**：静态面已成立，但**受时序死锁**——除非找到 boot+12.2 s 前的执行点，
-  或改 unit 本体（rootfs 写，破坏「零 rootfs 写入」）。**U1 不清则此路不通。**
-- **通道 C｜改 unit 本体加 `ExecStartPre`（P5）**：时机天然正确，但需 `mount -o remount,rw /` ⇒
-  **放弃零写入**，且刷机重置。可作为「U1 长期无解时」的降级选项。
-- 另有 **P2（`EnvironmentFile=-/opt/usr/nx-ks/dicam/nxwa.env`）**：把环境值与代码分离，
-  **但仍需 drop-in 承载，时序问题同上**。
+- **P2（`EnvironmentFile=`）**：仍需 drop-in 承载 ⇒ 时序问题同通道 B。
 
 ---
 
@@ -182,6 +210,20 @@ kernel → systemd(PID 1)
 - ✅ 遵守 **G1-7**（探测用单条复合语句，无长驻进程）。
 - ❌ **教训**：写机项（§7-5）**未先评估「restart 该 unit 的副作用」**即执行。UI0 把它标为「无害」，
   实测并非无害。⇒ **凡涉及重启系统服务的动作，执行前须先查该服务的依赖/联锁（本机型尤其：hibernation 联锁）。**
+
+## 附 C：本机启动为「hibernation 快照式」（U2 的机理落点）
+
+| 证据 | 内容 |
+|---|---|
+| kernel cmdline | `mem=512M hibernate=nocompress root=/dev/mmcblk0p10 rw rootfstype=ext4 rootwait noresume user_debug=255` |
+| `/var/log/hib.txt` | `Mar 30 17:08:48 : echo reboot > /sys/power/disk` ／ `: > open done [/sys/power/state].` |
+| systemd units | `hib_tmp.service` / `hibernation.service` 均 `active (exited)`，描述 "Preparing snapshot image…"；`hib_post.path` 监控 `/tmp/.hib_post`；`hib_post.service` = `After=… di-camera-app.service` + `ExecStart=swapoff -a` |
+| dmesg 时间戳 | 形如 **`[代: 秒]`**：`[0: 1.22]`（冷启动）→ `[1: 23.06]`（**恢复代**，WiFi 此时才初始化） |
+| `/opt/usr/nx-ks/hibernate.sh` | `st cap iq af pos` → `st cap lens power off` → `systemctl hybrid-sleep` |
+
+⇒ 冷启动 → 存休眠快照 → **reboot 恢复**（`/sys/power/disk=reboot` 即此义）。
+**这很可能就是 `systemctl restart di-camera-app` 卡死整机的土壤**：App 的生命周期被卷进快照/恢复序列。
+🔶 仍属推断，**不得再以 restart 复现验证**（代价是整机卡死 + 物理重启）。
 
 ---
 *生成：2026-10-13 晚 · 分支 `nxwa` · 证据源：相机 192.168.0.105 实机探测（telnet/FTP）+ 现场确认*
