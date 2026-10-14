@@ -197,3 +197,6 @@ dist/
 
 # ===== A1 QEMU 载具构建产物（可由 build_a1_qemu.sh 重生成）=====
 test_server/slp/a1_qemu/logs/*.elf
+
+# ===== A2 QEMU 载具构建产物（可由 build_a2_qemu.sh 重生成）=====
+test_server/slp/a2_qemu/logs/*.elf

@@ -1,0 +1,16 @@
+ncase=13 nevent=16
+[OK  ] case# 0 id=0x134 val=0x6a ret=0 events=[(1, 220, 106, 0)]
+[OK  ] case# 1 id=0x135 val=0x61 ret=0 events=[(1, 221, 97, 0)]
+[OK  ] case# 2 id=0x136 val=0x6b ret=0 events=[(1, 222, 107, 0)]
+[OK  ] case# 3 id=0x137 val=0xe ret=0 events=[(1, 223, 14, 0)]
+[OK  ] case# 4 id=0x138 val=0xd ret=0 events=[(1, 224, 13, 0)]
+[OK  ] case# 5 id=0x139 val=0xa ret=0 events=[(1, 225, 10, 0)]
+[OK  ] case# 6 id=0x13a val=0xc ret=0 events=[(1, 226, 12, 0)]
+[OK  ] case# 7 id=0x13b val=0x0 ret=0 events=[(1, 218, 10, 0), (2, 0, 0, 0)]
+[OK  ] case# 8 id=0x110 val=0x3fd80a ret=0 events=[(3, 271, 4184074, 2168630048)]
+[OK  ] case# 9 id=0x100 val=0x12345678 ret=0 events=[(3, 256, 305419896, 2168630048)]
+[OK  ] case#10 id=0x130 val=0xabc ret=0 events=[(3, 304, 2748, 2168630048)]
+[OK  ] case#11 id=0x12f val=0x0 ret=-1 events=[(4, 0, 0, 0), (4, 0, 0, 0)]
+[OK  ] case#12 id=0x13c val=0x0 ret=-1 events=[(4, 0, 0, 0), (4, 0, 0, 0)]
+
+==== 总判定: PASS（13/13 用例全绿；16 事件全对）====
