@@ -40,6 +40,13 @@
 ★ 刷机后 telnet 有 ~4 min Refused 窗口（Ping 通、21/23 拒）—— 别急判砖，等 5 min 重试
 ```
 
+> ★ **10-14 损失面终审（刷前必读；详见 `CAMERA_ONLINE_PROBE_2026-10-13.md` 附 D）**：
+> ① **`/opt/usr/nx-ks/`（p14）不在升级写入面**（`parttab` `opt-usr=image:none` + 十段映射全锁定）⇒ **无需防刷备份**；T2 投递物同理；
+> ② rootfs（p10）与 `/opt`（p11）会被官方同内容重写：mod 的 `bluetoothd` hook 被抹——**但刷后自动装回**：
+> SD 卡放好主包 3 件套 `info.tg`/`nx_cs.adj`/`install.sh`（素材在本地工作副本 `E:/NXWA/NX-WA-2.88.0-nxwa.1/`）
+> ⇒ dfmsd 自动全量安装（U5 实测：重启后 boot+105 s 内完成，onboard 随后拉起 telnet）；
+> ③ 刷后预期节奏：~4 min 内 telnet 恢复；**别急判砖**。
+
 ### Step 1 —— 路径绕行自检（零行为变化）
 **目的**：验证 `0x11504` 所在的 254B 零区**在运行期不会被覆盖**。
 该档位把 `0x510b0` 重定向到 `0x11504`，而 `0x11504` 只有一条 `b 0x80051394` —— 与原路径**逐位等价**（多绕一跳）。
