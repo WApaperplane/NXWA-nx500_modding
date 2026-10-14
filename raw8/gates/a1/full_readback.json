@@ -1,0 +1,20 @@
+{
+ "host": "192.168.0.105",
+ "variant": "full",
+ "pack": "E:/NXWA/fw/v1.12/a1/slp_a1_p7_g_v116.bin",
+ "uptime": "cat /proc/uptime\r\n825.79 310.88\r\n[root@d",
+ "selftest": false,
+ "expect_p7_md5": "2ee98811a60059353a82c46ee2d836bc",
+ "readback_md5": "2ee98811a60059353a82c46ee2d836bc",
+ "readback_bytes": 12079104,
+ "diff_count": 0,
+ "diff_first": [],
+ "redirect_at_0x510b0": "1301ffea",
+ "redirect_ok": true,
+ "zone_block_ok": true,
+ "zone_tail_clean": true,
+ "zone_intact": true,
+ "identical": true,
+ "verdict": "已刷且完整一致 [PASS]",
+ "note": "readback 仅含前 12075648 B（改动点全部 < 0x60000）"
+}
