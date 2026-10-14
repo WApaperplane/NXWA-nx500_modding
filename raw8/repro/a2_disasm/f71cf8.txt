@@ -1,0 +1,139 @@
+
+p7.bin:     file format binary
+
+
+Disassembly of section .data:
+
+80071cf0 <.data+0x71cf0>:
+80071cf0:	e12fff33 	blx	r3
+80071cf4:	e8bd8010 	pop	{r4, pc}
+80071cf8:	e92d4008 	push	{r3, lr}
+80071cfc:	e7e73451 	ubfx	r3, r1, #8, #8
+80071d00:	e3530001 	cmp	r3, #1
+80071d04:	8a000005 	bhi	0x80071d20
+80071d08:	e0803103 	add	r3, r0, r3, lsl #2
+80071d0c:	e5930004 	ldr	r0, [r3, #4]
+80071d10:	e5903000 	ldr	r3, [r0]
+80071d14:	e5933014 	ldr	r3, [r3, #20]
+80071d18:	e12fff33 	blx	r3
+80071d1c:	e8bd8008 	pop	{r3, pc}
+80071d20:	e3a00000 	mov	r0, #0
+80071d24:	e34f0fee 	movt	r0, #65518	@ 0xffee
+80071d28:	e8bd8008 	pop	{r3, pc}
+80071d2c:	e92d4008 	push	{r3, lr}
+80071d30:	e7e73451 	ubfx	r3, r1, #8, #8
+80071d34:	e3530001 	cmp	r3, #1
+80071d38:	8a000005 	bhi	0x80071d54
+80071d3c:	e0803103 	add	r3, r0, r3, lsl #2
+80071d40:	e5930004 	ldr	r0, [r3, #4]
+80071d44:	e5903000 	ldr	r3, [r0]
+80071d48:	e5933014 	ldr	r3, [r3, #20]
+80071d4c:	e12fff33 	blx	r3
+80071d50:	e8bd8008 	pop	{r3, pc}
+80071d54:	e3a00000 	mov	r0, #0
+80071d58:	e34f0fee 	movt	r0, #65518	@ 0xffee
+80071d5c:	e8bd8008 	pop	{r3, pc}
+80071d60:	e92d4008 	push	{r3, lr}
+80071d64:	e7e73451 	ubfx	r3, r1, #8, #8
+80071d68:	e3530000 	cmp	r3, #0
+80071d6c:	1a000004 	bne	0x80071d84
+80071d70:	e5900004 	ldr	r0, [r0, #4]
+80071d74:	e5903000 	ldr	r3, [r0]
+80071d78:	e5933018 	ldr	r3, [r3, #24]
+80071d7c:	e12fff33 	blx	r3
+80071d80:	e8bd8008 	pop	{r3, pc}
+80071d84:	e3a00000 	mov	r0, #0
+80071d88:	e34f0fee 	movt	r0, #65518	@ 0xffee
+80071d8c:	e8bd8008 	pop	{r3, pc}
+80071d90:	e52de004 	push	{lr}		@ (str lr, [sp, #-4]!)
+80071d94:	e7e73451 	ubfx	r3, r1, #8, #8
+80071d98:	e3530001 	cmp	r3, #1
+80071d9c:	e24dd00c 	sub	sp, sp, #12
+80071da0:	1a000008 	bne	0x80071dc8
+80071da4:	e5900008 	ldr	r0, [r0, #8]
+80071da8:	e28d3008 	add	r3, sp, #8
+80071dac:	e590c000 	ldr	ip, [r0]
+80071db0:	e5232004 	str	r2, [r3, #-4]!
+80071db4:	e59cc014 	ldr	ip, [ip, #20]
+80071db8:	e1a02003 	mov	r2, r3
+80071dbc:	e12fff3c 	blx	ip
+80071dc0:	e28dd00c 	add	sp, sp, #12
+80071dc4:	e8bd8000 	ldmfd	sp!, {pc}
+80071dc8:	e3a00000 	mov	r0, #0
+80071dcc:	e34f0fee 	movt	r0, #65518	@ 0xffee
+80071dd0:	eafffffa 	b	0x80071dc0
+80071dd4:	e92d4008 	push	{r3, lr}
+80071dd8:	e7e73451 	ubfx	r3, r1, #8, #8
+80071ddc:	e3530001 	cmp	r3, #1
+80071de0:	8a000005 	bhi	0x80071dfc
+80071de4:	e0803103 	add	r3, r0, r3, lsl #2
+80071de8:	e5930004 	ldr	r0, [r3, #4]
+80071dec:	e5903000 	ldr	r3, [r0]
+80071df0:	e593301c 	ldr	r3, [r3, #28]
+80071df4:	e12fff33 	blx	r3
+80071df8:	e8bd8008 	pop	{r3, pc}
+80071dfc:	e3a00000 	mov	r0, #0
+80071e00:	e34f0fee 	movt	r0, #65518	@ 0xffee
+80071e04:	e8bd8008 	pop	{r3, pc}
+80071e08:	e92d4008 	push	{r3, lr}
+80071e0c:	e7e73451 	ubfx	r3, r1, #8, #8
+80071e10:	e3530001 	cmp	r3, #1
+80071e14:	8a000005 	bhi	0x80071e30
+80071e18:	e0803103 	add	r3, r0, r3, lsl #2
+80071e1c:	e5930004 	ldr	r0, [r3, #4]
+80071e20:	e5903000 	ldr	r3, [r0]
+80071e24:	e593301c 	ldr	r3, [r3, #28]
+80071e28:	e12fff33 	blx	r3
+80071e2c:	e8bd8008 	pop	{r3, pc}
+80071e30:	e3a00000 	mov	r0, #0
+80071e34:	e34f0fee 	movt	r0, #65518	@ 0xffee
+80071e38:	e8bd8008 	pop	{r3, pc}
+80071e3c:	e92d4070 	push	{r4, r5, r6, lr}
+80071e40:	e7e73451 	ubfx	r3, r1, #8, #8
+80071e44:	e24dd008 	sub	sp, sp, #8
+80071e48:	e3e04000 	mvn	r4, #0
+80071e4c:	e3530001 	cmp	r3, #1
+80071e50:	e1a05001 	mov	r5, r1
+80071e54:	e58d4004 	str	r4, [sp, #4]
+80071e58:	9a000002 	bls	0x80071e68
+80071e5c:	e1a00004 	mov	r0, r4
+80071e60:	e28dd008 	add	sp, sp, #8
+80071e64:	e8bd8070 	pop	{r4, r5, r6, pc}
+80071e68:	e0806103 	add	r6, r0, r3, lsl #2
+80071e6c:	e5960004 	ldr	r0, [r6, #4]
+80071e70:	e5903000 	ldr	r3, [r0]
+80071e74:	e5933024 	ldr	r3, [r3, #36]	@ 0x24
+80071e78:	e12fff33 	blx	r3
+80071e7c:	e3500004 	cmp	r0, #4
+80071e80:	8a000009 	bhi	0x80071eac
+80071e84:	e5960004 	ldr	r0, [r6, #4]
+80071e88:	e28d2008 	add	r2, sp, #8
+80071e8c:	e5903000 	ldr	r3, [r0]
+80071e90:	e3a01000 	mov	r1, #0
+80071e94:	e5221004 	str	r1, [r2, #-4]!
+80071e98:	e593301c 	ldr	r3, [r3, #28]
+80071e9c:	e1a01005 	mov	r1, r5
+80071ea0:	e12fff33 	blx	r3
+80071ea4:	e3500000 	cmp	r0, #0
+80071ea8:	1affffeb 	bne	0x80071e5c
+80071eac:	e59d0004 	ldr	r0, [sp, #4]
+80071eb0:	eaffffea 	b	0x80071e60
+80071eb4:	e92d4008 	push	{r3, lr}
+80071eb8:	e7e73451 	ubfx	r3, r1, #8, #8
+80071ebc:	e3530000 	cmp	r3, #0
+80071ec0:	0a000001 	beq	0x80071ecc
+80071ec4:	e3a00000 	mov	r0, #0
+80071ec8:	e8bd8008 	pop	{r3, pc}
+80071ecc:	e5900004 	ldr	r0, [r0, #4]
+80071ed0:	e5903000 	ldr	r3, [r0]
+80071ed4:	e5933020 	ldr	r3, [r3, #32]
+80071ed8:	e12fff33 	blx	r3
+80071edc:	e8bd8008 	pop	{r3, pc}
+80071ee0:	e92d4008 	push	{r3, lr}
+80071ee4:	e7e73451 	ubfx	r3, r1, #8, #8
+80071ee8:	e3530001 	cmp	r3, #1
+80071eec:	9a000001 	bls	0x80071ef8
+80071ef0:	e3a00000 	mov	r0, #0
+80071ef4:	e8bd8008 	pop	{r3, pc}
+80071ef8:	e0803103 	add	r3, r0, r3, lsl #2
+80071efc:	e5930004 	ldr	r0, [r3, #4]

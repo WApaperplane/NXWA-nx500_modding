@@ -1,0 +1,154 @@
+
+p7.bin:     file format binary
+
+
+Disassembly of section .data:
+
+80063eb4 <.data+0x63eb4>:
+80063eb4:	e92d4010 	push	{r4, lr}
+80063eb8:	e1a04000 	mov	r4, r0
+80063ebc:	ebfff70a 	bl	0x80061aec
+80063ec0:	e3500000 	cmp	r0, #0
+80063ec4:	15900000 	ldrne	r0, [r0]
+80063ec8:	e35400cf 	cmp	r4, #207	@ 0xcf
+80063ecc:	02000cff 	andeq	r0, r0, #65280	@ 0xff00
+80063ed0:	e8bd8010 	pop	{r4, pc}
+80063ed4:	e2400001 	sub	r0, r0, #1
+80063ed8:	e92d4008 	push	{r3, lr}
+80063edc:	e3500004 	cmp	r0, #4
+80063ee0:	979ff100 	ldrls	pc, [pc, r0, lsl #2]
+80063ee4:	ea000014 	b	0x80063f3c
+80063ee8:	80063f34 	andhi	r3, r6, r4, lsr pc
+80063eec:	80063f2c 	andhi	r3, r6, ip, lsr #30
+80063ef0:	80063f3c 	andhi	r3, r6, ip, lsr pc
+80063ef4:	80063f24 	andhi	r3, r6, r4, lsr #30
+80063ef8:	80063efc 	strdhi	r3, [r6], -ip
+80063efc:	e300013f 	movw	r0, #319	@ 0x13f
+80063f00:	ebffffeb 	bl	0x80063eb4
+80063f04:	e3500003 	cmp	r0, #3
+80063f08:	0a00000d 	beq	0x80063f44
+80063f0c:	e3500001 	cmp	r0, #1
+80063f10:	0a00000d 	beq	0x80063f4c
+80063f14:	e3500002 	cmp	r0, #2
+80063f18:	13a00005 	movne	r0, #5
+80063f1c:	03a00007 	moveq	r0, #7
+80063f20:	e8bd8008 	pop	{r3, pc}
+80063f24:	e3a00004 	mov	r0, #4
+80063f28:	e8bd8008 	pop	{r3, pc}
+80063f2c:	e3a00002 	mov	r0, #2
+80063f30:	e8bd8008 	pop	{r3, pc}
+80063f34:	e3a00001 	mov	r0, #1
+80063f38:	e8bd8008 	pop	{r3, pc}
+80063f3c:	e3a00000 	mov	r0, #0
+80063f40:	e8bd8008 	pop	{r3, pc}
+80063f44:	e3a00008 	mov	r0, #8
+80063f48:	e8bd8008 	pop	{r3, pc}
+80063f4c:	e3a00006 	mov	r0, #6
+80063f50:	e8bd8008 	pop	{r3, pc}
+80063f54:	e24000c9 	sub	r0, r0, #201	@ 0xc9
+80063f58:	e92d4008 	push	{r3, lr}
+80063f5c:	e3500e15 	cmp	r0, #336	@ 0x150
+80063f60:	979ff100 	ldrls	pc, [pc, r0, lsl #2]
+80063f64:	ea0003d3 	b	0x80064eb8
+80063f68:	80064eb0 			@ <UNDEFINED> instruction: 0x80064eb0
+80063f6c:	80064ea8 	andhi	r4, r6, r8, lsr #29
+80063f70:	80064ea0 	andhi	r4, r6, r0, lsr #29
+80063f74:	80064e98 	mulhi	r6, r8, lr
+80063f78:	80064e90 	mulhi	r6, r0, lr
+80063f7c:	80064e88 	andhi	r4, r6, r8, lsl #29
+80063f80:	80064e6c 	andhi	r4, r6, ip, ror #28
+80063f84:	80064e64 	andhi	r4, r6, r4, ror #28
+80063f88:	80064e5c 	andhi	r4, r6, ip, asr lr
+80063f8c:	80064e54 	andhi	r4, r6, r4, asr lr
+80063f90:	80064e40 	andhi	r4, r6, r0, asr #28
+80063f94:	80064e38 	andhi	r4, r6, r8, lsr lr
+80063f98:	80064e18 	andhi	r4, r6, r8, lsl lr
+80063f9c:	80064e10 	andhi	r4, r6, r0, lsl lr
+80063fa0:	80064e08 	andhi	r4, r6, r8, lsl #28
+80063fa4:	80064e00 	andhi	r4, r6, r0, lsl #28
+80063fa8:	80064df8 	strdhi	r4, [r6], -r8
+80063fac:	80064df0 	strdhi	r4, [r6], -r0
+80063fb0:	80064eb8 			@ <UNDEFINED> instruction: 0x80064eb8
+80063fb4:	80064dcc 	andhi	r4, r6, ip, asr #27
+80063fb8:	80064da8 	andhi	r4, r6, r8, lsr #27
+80063fbc:	80064d84 	andhi	r4, r6, r4, lsl #27
+80063fc0:	80064d60 	andhi	r4, r6, r0, ror #26
+80063fc4:	80064d3c 	andhi	r4, r6, ip, lsr sp
+80063fc8:	80064d18 	andhi	r4, r6, r8, lsl sp
+80063fcc:	80064cf4 	strdhi	r4, [r6], -r4	@ <UNPREDICTABLE>
+80063fd0:	80064cd8 	ldrdhi	r4, [r6], -r8
+80063fd4:	80064cc4 	andhi	r4, r6, r4, asr #25
+80063fd8:	80064cbc 			@ <UNDEFINED> instruction: 0x80064cbc
+80063fdc:	80064cb4 			@ <UNDEFINED> instruction: 0x80064cb4
+80063fe0:	80064cac 	andhi	r4, r6, ip, lsr #25
+80063fe4:	80064ca4 	andhi	r4, r6, r4, lsr #25
+80063fe8:	80064c9c 	mulhi	r6, ip, ip
+80063fec:	80064c94 	mulhi	r6, r4, ip
+80063ff0:	80064c8c 	andhi	r4, r6, ip, lsl #25
+80063ff4:	80064c84 	andhi	r4, r6, r4, lsl #25
+80063ff8:	80064c7c 	andhi	r4, r6, ip, ror ip
+80063ffc:	80064eb8 			@ <UNDEFINED> instruction: 0x80064eb8
+80064000:	80064eb8 			@ <UNDEFINED> instruction: 0x80064eb8
+80064004:	80064eb8 			@ <UNDEFINED> instruction: 0x80064eb8
+80064008:	80064c68 	andhi	r4, r6, r8, ror #24
+8006400c:	80064c60 	andhi	r4, r6, r0, ror #24
+80064010:	80064c58 	andhi	r4, r6, r8, asr ip
+80064014:	80064c48 	andhi	r4, r6, r8, asr #24
+80064018:	80064c40 	andhi	r4, r6, r0, asr #24
+8006401c:	80064c50 	andhi	r4, r6, r0, asr ip
+80064020:	80064c38 	andhi	r4, r6, r8, lsr ip
+80064024:	80064c1c 	andhi	r4, r6, ip, lsl ip
+80064028:	80064c08 	andhi	r4, r6, r8, lsl #24
+8006402c:	80064c00 	andhi	r4, r6, r0, lsl #24
+80064030:	80064bf8 	strdhi	r4, [r6], -r8
+80064034:	80064be0 	andhi	r4, r6, r0, ror #23
+80064038:	80064bd8 	ldrdhi	r4, [r6], -r8
+8006403c:	80064bd0 	ldrdhi	r4, [r6], -r0
+80064040:	80064bc8 	andhi	r4, r6, r8, asr #23
+80064044:	80064bf0 	strdhi	r4, [r6], -r0
+80064048:	80064be8 	andhi	r4, r6, r8, ror #23
+8006404c:	80064bc0 	andhi	r4, r6, r0, asr #23
+80064050:	80064ba8 	andhi	r4, r6, r8, lsr #23
+80064054:	80064ba0 	andhi	r4, r6, r0, lsr #23
+80064058:	80064b98 	mulhi	r6, r8, fp
+8006405c:	80064b90 	mulhi	r6, r0, fp
+80064060:	80064b88 	andhi	r4, r6, r8, lsl #23
+80064064:	80064b80 	andhi	r4, r6, r0, lsl #23
+80064068:	80064b6c 	andhi	r4, r6, ip, ror #22
+8006406c:	80064b64 	andhi	r4, r6, r4, ror #22
+80064070:	80064b3c 	andhi	r4, r6, ip, lsr fp
+80064074:	80064b34 	andhi	r4, r6, r4, lsr fp
+80064078:	80064b2c 	andhi	r4, r6, ip, lsr #22
+8006407c:	80064b24 	andhi	r4, r6, r4, lsr #22
+80064080:	80064b1c 	andhi	r4, r6, ip, lsl fp
+80064084:	80064b14 	andhi	r4, r6, r4, lsl fp
+80064088:	80064b0c 	andhi	r4, r6, ip, lsl #22
+8006408c:	80064b04 	andhi	r4, r6, r4, lsl #22
+80064090:	80064afc 	strdhi	r4, [r6], -ip
+80064094:	80064af4 	strdhi	r4, [r6], -r4	@ <UNPREDICTABLE>
+80064098:	80064aec 	andhi	r4, r6, ip, ror #21
+8006409c:	80064ae4 	andhi	r4, r6, r4, ror #21
+800640a0:	80064adc 	ldrdhi	r4, [r6], -ip
+800640a4:	80064ad4 	ldrdhi	r4, [r6], -r4	@ <UNPREDICTABLE>
+800640a8:	80064acc 	andhi	r4, r6, ip, asr #21
+800640ac:	80064ac4 	andhi	r4, r6, r4, asr #21
+800640b0:	80064abc 			@ <UNDEFINED> instruction: 0x80064abc
+800640b4:	80064ab4 			@ <UNDEFINED> instruction: 0x80064ab4
+800640b8:	80064aac 	andhi	r4, r6, ip, lsr #21
+800640bc:	80064aa4 	andhi	r4, r6, r4, lsr #21
+800640c0:	80064a9c 	mulhi	r6, ip, sl
+800640c4:	80064a94 	mulhi	r6, r4, sl
+800640c8:	80064a8c 	andhi	r4, r6, ip, lsl #21
+800640cc:	80064a84 	andhi	r4, r6, r4, lsl #21
+800640d0:	80064a7c 	andhi	r4, r6, ip, ror sl
+800640d4:	80064a74 	andhi	r4, r6, r4, ror sl
+800640d8:	80064a6c 	andhi	r4, r6, ip, ror #20
+800640dc:	80064a64 	andhi	r4, r6, r4, ror #20
+800640e0:	80064a5c 	andhi	r4, r6, ip, asr sl
+800640e4:	80064a54 	andhi	r4, r6, r4, asr sl
+800640e8:	80064a4c 	andhi	r4, r6, ip, asr #20
+800640ec:	80064a44 	andhi	r4, r6, r4, asr #20
+800640f0:	80064a3c 	andhi	r4, r6, ip, lsr sl
+800640f4:	80064a34 	andhi	r4, r6, r4, lsr sl
+800640f8:	80064a2c 	andhi	r4, r6, ip, lsr #20
+800640fc:	80064a24 	andhi	r4, r6, r4, lsr #20

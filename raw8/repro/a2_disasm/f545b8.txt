@@ -1,0 +1,41 @@
+
+p7.bin:     file format binary
+
+
+Disassembly of section .data:
+
+800545b8 <.data+0x545b8>:
+800545b8:	ebfff53e 	bl	0x80051ab8
+800545bc:	eafffd8c 	b	0x80053bf4
+800545c0:	e3500000 	cmp	r0, #0
+800545c4:	0a000004 	beq	0x800545dc
+800545c8:	e3500001 	cmp	r0, #1
+800545cc:	03a03001 	moveq	r3, #1
+800545d0:	03403011 	movteq	r3, #17
+800545d4:	058d3014 	streq	r3, [sp, #20]
+800545d8:	0a000001 	beq	0x800545e4
+800545dc:	e3a03811 	mov	r3, #1114112	@ 0x110000
+800545e0:	e58d3014 	str	r3, [sp, #20]
+800545e4:	eb0208f8 	bl	0x800d69cc
+800545e8:	e3a01011 	mov	r1, #17
+800545ec:	e59d2014 	ldr	r2, [sp, #20]
+800545f0:	eb020941 	bl	0x800d6afc
+800545f4:	eafffd7e 	b	0x80053bf4
+800545f8:	e3500008 	cmp	r0, #8
+800545fc:	979ff100 	ldrls	pc, [pc, r0, lsl #2]
+80054600:	ea000217 	b	0x80054e64
+80054604:	800554ac 	andhi	r5, r5, ip, lsr #9
+80054608:	8005548c 	andhi	r5, r5, ip, lsl #9
+8005460c:	8005547c 	andhi	r5, r5, ip, ror r4
+80054610:	8005544c 	andhi	r5, r5, ip, asr #8
+80054614:	8005543c 	andhi	r5, r5, ip, lsr r4
+80054618:	80054e64 	andhi	r4, r5, r4, ror #28
+8005461c:	8005545c 	andhi	r5, r5, ip, asr r4
+80054620:	8005549c 	mulhi	r5, ip, r4
+80054624:	8005546c 	andhi	r5, r5, ip, ror #8
+80054628:	e3500001 	cmp	r0, #1
+8005462c:	0a000005 	beq	0x80054648
+80054630:	e3500002 	cmp	r0, #2
+80054634:	0a000640 	beq	0x80055f3c
+80054638:	e3500000 	cmp	r0, #0
+8005463c:	03a03706 	moveq	r3, #1572864	@ 0x180000

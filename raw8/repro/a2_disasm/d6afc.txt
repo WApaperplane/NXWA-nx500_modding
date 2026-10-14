@@ -1,0 +1,16 @@
+
+p7.bin:     file format binary
+
+
+Disassembly of section .data:
+
+800d6afc <.data+0xd6afc>:
+800d6afc:	e92d4008 	push	{r3, lr}
+800d6b00:	e5900004 	ldr	r0, [r0, #4]
+800d6b04:	ebfe6c95 	bl	0x80071d60
+800d6b08:	e3500000 	cmp	r0, #0
+800d6b0c:	08bd8008 	popeq	{r3, pc}
+800d6b10:	e3700012 	cmn	r0, #18
+800d6b14:	13e00000 	mvnne	r0, #0
+800d6b18:	03e00001 	mvneq	r0, #1
+800d6b1c:	e8bd8008 	pop	{r3, pc}

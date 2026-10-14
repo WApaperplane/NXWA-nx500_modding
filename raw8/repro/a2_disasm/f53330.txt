@@ -1,0 +1,23 @@
+
+p7.bin:     file format binary
+
+
+Disassembly of section .data:
+
+80053330 <.data+0x53330>:
+80053330:	e92d4010 	push	{r4, lr}
+80053334:	e3a03000 	mov	r3, #0
+80053338:	e24dd020 	sub	sp, sp, #32
+8005333c:	e1a04000 	mov	r4, r0
+80053340:	e58d3014 	str	r3, [sp, #20]
+80053344:	e58d3018 	str	r3, [sp, #24]
+80053348:	eb0042d9 	bl	0x80063eb4
+8005334c:	e2443007 	sub	r3, r4, #7
+80053350:	e3002212 	movw	r2, #530	@ 0x212
+80053354:	e1a0c000 	mov	ip, r0
+80053358:	e58d001c 	str	r0, [sp, #28]
+8005335c:	e1530002 	cmp	r3, r2
+80053360:	979ff103 	ldrls	pc, [pc, r3, lsl #2]
+80053364:	ea000222 	b	0x80053bf4
+80053368:	8005491c 	andhi	r4, r5, ip, lsl r9
+8005336c:	80053bf4 	strdhi	r3, [r5], -r4

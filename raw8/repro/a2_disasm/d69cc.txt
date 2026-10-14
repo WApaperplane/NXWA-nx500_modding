@@ -1,0 +1,44 @@
+
+p7.bin:     file format binary
+
+
+Disassembly of section .data:
+
+800d69cc <.data+0xd69cc>:
+800d69cc:	e92d4010 	push	{r4, lr}
+800d69d0:	e59f4054 	ldr	r4, [pc, #84]	@ 0x800d6a2c
+800d69d4:	e5943000 	ldr	r3, [r4]
+800d69d8:	e3130001 	tst	r3, #1
+800d69dc:	0a000001 	beq	0x800d69e8
+800d69e0:	e59f0048 	ldr	r0, [pc, #72]	@ 0x800d6a30
+800d69e4:	e8bd8010 	pop	{r4, pc}
+800d69e8:	e1a00004 	mov	r0, r4
+800d69ec:	eb1136bd 	bl	0x805244e8
+800d69f0:	e3500000 	cmp	r0, #0
+800d69f4:	0afffff9 	beq	0x800d69e0
+800d69f8:	e2840004 	add	r0, r4, #4
+800d69fc:	ebfffe8d 	bl	0x800d6438
+800d6a00:	e1a00004 	mov	r0, r4
+800d6a04:	eb1136d2 	bl	0x80524554
+800d6a08:	e59f1024 	ldr	r1, [pc, #36]	@ 0x800d6a34
+800d6a0c:	e59f2024 	ldr	r2, [pc, #36]	@ 0x800d6a38
+800d6a10:	e2840004 	add	r0, r4, #4
+800d6a14:	eb10c4d8 	bl	0x80507d7c
+800d6a18:	e59f0010 	ldr	r0, [pc, #16]	@ 0x800d6a30
+800d6a1c:	e8bd8010 	pop	{r4, pc}
+800d6a20:	e59f0004 	ldr	r0, [pc, #4]	@ 0x800d6a2c
+800d6a24:	eb1136c7 	bl	0x80524548
+800d6a28:	eb11352a 	bl	0x80523ed8
+800d6a2c:	8142ab1c 	cmphi	r2, ip, lsl fp
+800d6a30:	8142ab20 	cmphi	r2, r0, lsr #22
+800d6a34:	800d6408 	andhi	r6, sp, r8, lsl #8
+800d6a38:	81006000 	mrshi	r6, (UNDEF: 0)
+800d6a3c:	e52de004 	push	{lr}		@ (str lr, [sp, #-4]!)
+800d6a40:	e590300c 	ldr	r3, [r0, #12]
+800d6a44:	e24dd00c 	sub	sp, sp, #12
+800d6a48:	e3530001 	cmp	r3, #1
+800d6a4c:	0a000002 	beq	0x800d6a5c
+800d6a50:	e3a00001 	mov	r0, #1
+800d6a54:	e28dd00c 	add	sp, sp, #12
+800d6a58:	e8bd8000 	ldmfd	sp!, {pc}
+800d6a5c:	e3a03005 	mov	r3, #5

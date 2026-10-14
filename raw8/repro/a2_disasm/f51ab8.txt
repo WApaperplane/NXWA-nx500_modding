@@ -1,0 +1,217 @@
+
+p7.bin:     file format binary
+
+
+Disassembly of section .data:
+
+80051ab8 <.data+0x51ab8>:
+80051ab8:	e92d4010 	push	{r4, lr}
+80051abc:	e3a03000 	mov	r3, #0
+80051ac0:	e24dd008 	sub	sp, sp, #8
+80051ac4:	e3a000da 	mov	r0, #218	@ 0xda
+80051ac8:	e58d3004 	str	r3, [sp, #4]
+80051acc:	eb0048f8 	bl	0x80063eb4
+80051ad0:	e350000d 	cmp	r0, #13
+80051ad4:	979ff100 	ldrls	pc, [pc, r0, lsl #2]
+80051ad8:	ea000010 	b	0x80051b20
+80051adc:	80051d7c 	andhi	r1, r5, ip, ror sp
+80051ae0:	80051d7c 	andhi	r1, r5, ip, ror sp
+80051ae4:	80051e08 	andhi	r1, r5, r8, lsl #28
+80051ae8:	80051e18 	andhi	r1, r5, r8, lsl lr
+80051aec:	80051dc8 	andhi	r1, r5, r8, asr #27
+80051af0:	80051dd8 	ldrdhi	r1, [r5], -r8
+80051af4:	80051de8 	andhi	r1, r5, r8, ror #27
+80051af8:	80051df8 	strdhi	r1, [r5], -r8
+80051afc:	80051d88 	andhi	r1, r5, r8, lsl #27
+80051b00:	80051d98 	mulhi	r5, r8, sp
+80051b04:	80051da8 	andhi	r1, r5, r8, lsr #27
+80051b08:	80051db8 			@ <UNDEFINED> instruction: 0x80051db8
+80051b0c:	80051b14 	andhi	r1, r5, r4, lsl fp
+80051b10:	80051e28 	andhi	r1, r5, r8, lsr #28
+80051b14:	e3a0300b 	mov	r3, #11
+80051b18:	e3403014 	movt	r3, #20
+80051b1c:	e58d3004 	str	r3, [sp, #4]
+80051b20:	eb0213a9 	bl	0x800d69cc
+80051b24:	e3a01014 	mov	r1, #20
+80051b28:	e59d2004 	ldr	r2, [sp, #4]
+80051b2c:	eb0213f2 	bl	0x800d6afc
+80051b30:	e3a000db 	mov	r0, #219	@ 0xdb
+80051b34:	eb0048de 	bl	0x80063eb4
+80051b38:	e3500000 	cmp	r0, #0
+80051b3c:	03e03000 	mvneq	r3, #0
+80051b40:	0a000005 	beq	0x80051b5c
+80051b44:	e3a03f5a 	mov	r3, #360	@ 0x168
+80051b48:	e0233390 	mla	r3, r0, r3, r3
+80051b4c:	e28320ff 	add	r2, r3, #255	@ 0xff
+80051b50:	e3530000 	cmp	r3, #0
+80051b54:	b1a03002 	movlt	r3, r2
+80051b58:	e1a03443 	asr	r3, r3, #8
+80051b5c:	e28d4008 	add	r4, sp, #8
+80051b60:	e5243004 	str	r3, [r4, #-4]!
+80051b64:	eb021398 	bl	0x800d69cc
+80051b68:	e300110e 	movw	r1, #270	@ 0x10e
+80051b6c:	e1a02004 	mov	r2, r4
+80051b70:	e3a03004 	mov	r3, #4
+80051b74:	eb0213e9 	bl	0x800d6b20
+80051b78:	e3a000dc 	mov	r0, #220	@ 0xdc
+80051b7c:	eb0048cc 	bl	0x80063eb4
+80051b80:	e3500000 	cmp	r0, #0
+80051b84:	ba000073 	blt	0x80051d58
+80051b88:	03a030ff 	moveq	r3, #255	@ 0xff
+80051b8c:	1a000068 	bne	0x80051d34
+80051b90:	e58d3004 	str	r3, [sp, #4]
+80051b94:	eb02138c 	bl	0x800d69cc
+80051b98:	e3a01e13 	mov	r1, #304	@ 0x130
+80051b9c:	e1a02004 	mov	r2, r4
+80051ba0:	e3a03004 	mov	r3, #4
+80051ba4:	eb0213dd 	bl	0x800d6b20
+80051ba8:	e3a000dd 	mov	r0, #221	@ 0xdd
+80051bac:	eb0048c0 	bl	0x80063eb4
+80051bb0:	e3500000 	cmp	r0, #0
+80051bb4:	ba00006d 	blt	0x80051d70
+80051bb8:	03a030ff 	moveq	r3, #255	@ 0xff
+80051bbc:	1a000053 	bne	0x80051d10
+80051bc0:	e58d3004 	str	r3, [sp, #4]
+80051bc4:	eb021380 	bl	0x800d69cc
+80051bc8:	e3001131 	movw	r1, #305	@ 0x131
+80051bcc:	e1a02004 	mov	r2, r4
+80051bd0:	e3a03004 	mov	r3, #4
+80051bd4:	eb0213d1 	bl	0x800d6b20
+80051bd8:	e3a000de 	mov	r0, #222	@ 0xde
+80051bdc:	eb0048b4 	bl	0x80063eb4
+80051be0:	e3500000 	cmp	r0, #0
+80051be4:	ba00005e 	blt	0x80051d64
+80051be8:	03a030ff 	moveq	r3, #255	@ 0xff
+80051bec:	0a000007 	beq	0x80051c10
+80051bf0:	e308351f 	movw	r3, #34079	@ 0x851f
+80051bf4:	e0600400 	rsb	r0, r0, r0, lsl #8
+80051bf8:	e34531eb 	movt	r3, #20971	@ 0x51eb
+80051bfc:	e0c32093 	smull	r2, r3, r3, r0
+80051c00:	e1a00fc0 	asr	r0, r0, #31
+80051c04:	e0603343 	rsb	r3, r0, r3, asr #6
+80051c08:	e1a03a03 	lsl	r3, r3, #20
+80051c0c:	e38330ff 	orr	r3, r3, #255	@ 0xff
+80051c10:	e58d3004 	str	r3, [sp, #4]
+80051c14:	eb02136c 	bl	0x800d69cc
+80051c18:	e3a03004 	mov	r3, #4
+80051c1c:	e1a02004 	mov	r2, r4
+80051c20:	e3001132 	movw	r1, #306	@ 0x132
+80051c24:	eb0213bd 	bl	0x800d6b20
+80051c28:	e3a000df 	mov	r0, #223	@ 0xdf
+80051c2c:	eb0048a0 	bl	0x80063eb4
+80051c30:	e3500014 	cmp	r0, #20
+80051c34:	959f31fc 	ldrls	r3, [pc, #508]	@ 0x80051e38
+80051c38:	830d380a 	movwhi	r3, #55306	@ 0xd80a
+80051c3c:	90830100 	addls	r0, r3, r0, lsl #2
+80051c40:	95903220 	ldrls	r3, [r0, #544]	@ 0x220
+80051c44:	8340300f 	movthi	r3, #15
+80051c48:	e58d3004 	str	r3, [sp, #4]
+80051c4c:	eb02135e 	bl	0x800d69cc
+80051c50:	e3a03004 	mov	r3, #4
+80051c54:	e1a02004 	mov	r2, r4
+80051c58:	e3001133 	movw	r1, #307	@ 0x133
+80051c5c:	eb0213af 	bl	0x800d6b20
+80051c60:	e3a000e0 	mov	r0, #224	@ 0xe0
+80051c64:	eb004892 	bl	0x80063eb4
+80051c68:	e3500014 	cmp	r0, #20
+80051c6c:	959f31c4 	ldrls	r3, [pc, #452]	@ 0x80051e38
+80051c70:	830d380a 	movwhi	r3, #55306	@ 0xd80a
+80051c74:	90830100 	addls	r0, r3, r0, lsl #2
+80051c78:	95903220 	ldrls	r3, [r0, #544]	@ 0x220
+80051c7c:	8340300f 	movthi	r3, #15
+80051c80:	e58d3004 	str	r3, [sp, #4]
+80051c84:	eb021350 	bl	0x800d69cc
+80051c88:	e3a03004 	mov	r3, #4
+80051c8c:	e1a02004 	mov	r2, r4
+80051c90:	e300110f 	movw	r1, #271	@ 0x10f
+80051c94:	eb0213a1 	bl	0x800d6b20
+80051c98:	e3a000e1 	mov	r0, #225	@ 0xe1
+80051c9c:	eb004884 	bl	0x80063eb4
+80051ca0:	e3500014 	cmp	r0, #20
+80051ca4:	959f318c 	ldrls	r3, [pc, #396]	@ 0x80051e38
+80051ca8:	830d380a 	movwhi	r3, #55306	@ 0xd80a
+80051cac:	90830100 	addls	r0, r3, r0, lsl #2
+80051cb0:	95903220 	ldrls	r3, [r0, #544]	@ 0x220
+80051cb4:	8340300f 	movthi	r3, #15
+80051cb8:	e58d3004 	str	r3, [sp, #4]
+80051cbc:	eb021342 	bl	0x800d69cc
+80051cc0:	e3a03004 	mov	r3, #4
+80051cc4:	e1a02004 	mov	r2, r4
+80051cc8:	e3a01e11 	mov	r1, #272	@ 0x110
+80051ccc:	eb021393 	bl	0x800d6b20
+80051cd0:	e3a000e2 	mov	r0, #226	@ 0xe2
+80051cd4:	eb004876 	bl	0x80063eb4
+80051cd8:	e3500014 	cmp	r0, #20
+80051cdc:	959f3154 	ldrls	r3, [pc, #340]	@ 0x80051e38
+80051ce0:	830d380a 	movwhi	r3, #55306	@ 0xd80a
+80051ce4:	90830100 	addls	r0, r3, r0, lsl #2
+80051ce8:	95903220 	ldrls	r3, [r0, #544]	@ 0x220
+80051cec:	8340300f 	movthi	r3, #15
+80051cf0:	e58d3004 	str	r3, [sp, #4]
+80051cf4:	eb021334 	bl	0x800d69cc
+80051cf8:	e3001111 	movw	r1, #273	@ 0x111
+80051cfc:	e1a02004 	mov	r2, r4
+80051d00:	e3a03004 	mov	r3, #4
+80051d04:	eb021385 	bl	0x800d6b20
+80051d08:	e28dd008 	add	sp, sp, #8
+80051d0c:	e8bd8010 	pop	{r4, pc}
+80051d10:	e308351f 	movw	r3, #34079	@ 0x851f
+80051d14:	e0600400 	rsb	r0, r0, r0, lsl #8
+80051d18:	e34531eb 	movt	r3, #20971	@ 0x51eb
+80051d1c:	e0c32093 	smull	r2, r3, r3, r0
+80051d20:	e1a00fc0 	asr	r0, r0, #31
+80051d24:	e0603343 	rsb	r3, r0, r3, asr #6
+80051d28:	e1a03a03 	lsl	r3, r3, #20
+80051d2c:	e38330ff 	orr	r3, r3, #255	@ 0xff
+80051d30:	eaffffa2 	b	0x80051bc0
+80051d34:	e308351f 	movw	r3, #34079	@ 0x851f
+80051d38:	e0600400 	rsb	r0, r0, r0, lsl #8
+80051d3c:	e34531eb 	movt	r3, #20971	@ 0x51eb
+80051d40:	e0c32093 	smull	r2, r3, r3, r0
+80051d44:	e1a00fc0 	asr	r0, r0, #31
+80051d48:	e0603343 	rsb	r3, r0, r3, asr #6
+80051d4c:	e1a03a03 	lsl	r3, r3, #20
+80051d50:	e38330ff 	orr	r3, r3, #255	@ 0xff
+80051d54:	eaffff8d 	b	0x80051b90
+80051d58:	e3a030ff 	mov	r3, #255	@ 0xff
+80051d5c:	e3403800 	movt	r3, #2048	@ 0x800
+80051d60:	eaffff8a 	b	0x80051b90
+80051d64:	e3a030ff 	mov	r3, #255	@ 0xff
+80051d68:	e3403800 	movt	r3, #2048	@ 0x800
+80051d6c:	eaffffa7 	b	0x80051c10
+80051d70:	e3a030ff 	mov	r3, #255	@ 0xff
+80051d74:	e3403800 	movt	r3, #2048	@ 0x800
+80051d78:	eaffff90 	b	0x80051bc0
+80051d7c:	e3a03705 	mov	r3, #1310720	@ 0x140000
+80051d80:	e58d3004 	str	r3, [sp, #4]
+80051d84:	eaffff65 	b	0x80051b20
+80051d88:	e3a03006 	mov	r3, #6
+80051d8c:	e3403014 	movt	r3, #20
+80051d90:	e58d3004 	str	r3, [sp, #4]
+80051d94:	eaffff61 	b	0x80051b20
+80051d98:	e3a03007 	mov	r3, #7
+80051d9c:	e3403014 	movt	r3, #20
+80051da0:	e58d3004 	str	r3, [sp, #4]
+80051da4:	eaffff5d 	b	0x80051b20
+80051da8:	e3a03009 	mov	r3, #9
+80051dac:	e3403014 	movt	r3, #20
+80051db0:	e58d3004 	str	r3, [sp, #4]
+80051db4:	eaffff59 	b	0x80051b20
+80051db8:	e3a0300a 	mov	r3, #10
+80051dbc:	e3403014 	movt	r3, #20
+80051dc0:	e58d3004 	str	r3, [sp, #4]
+80051dc4:	eaffff55 	b	0x80051b20
+80051dc8:	e3a03002 	mov	r3, #2
+80051dcc:	e3403014 	movt	r3, #20
+80051dd0:	e58d3004 	str	r3, [sp, #4]
+80051dd4:	eaffff51 	b	0x80051b20
+80051dd8:	e3a03003 	mov	r3, #3
+80051ddc:	e3403014 	movt	r3, #20
+80051de0:	e58d3004 	str	r3, [sp, #4]
+80051de4:	eaffff4d 	b	0x80051b20
+80051de8:	e3a03004 	mov	r3, #4
+80051dec:	e3403014 	movt	r3, #20
+80051df0:	e58d3004 	str	r3, [sp, #4]
+80051df4:	eaffff49 	b	0x80051b20
+80051df8:	e3a03005 	mov	r3, #5
+80051dfc:	e3403014 	movt	r3, #20

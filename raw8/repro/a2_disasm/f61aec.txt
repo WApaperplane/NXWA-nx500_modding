@@ -1,0 +1,44 @@
+
+p7.bin:     file format binary
+
+
+Disassembly of section .data:
+
+80061aec <.data+0x61aec>:
+80061aec:	e92d4010 	push	{r4, lr}
+80061af0:	e1a04000 	mov	r4, r0
+80061af4:	ebffff3e 	bl	0x800617f4
+80061af8:	e2440001 	sub	r0, r4, #1
+80061afc:	e3500f86 	cmp	r0, #536	@ 0x218
+80061b00:	979ff100 	ldrls	pc, [pc, r0, lsl #2]
+80061b04:	ea0008e0 	b	0x80063e8c
+80061b08:	80063e7c 	andhi	r3, r6, ip, ror lr
+80061b0c:	80063e6c 	andhi	r3, r6, ip, ror #28
+80061b10:	80063e5c 	andhi	r3, r6, ip, asr lr
+80061b14:	80063e4c 	andhi	r3, r6, ip, asr #28
+80061b18:	80063e3c 	andhi	r3, r6, ip, lsr lr
+80061b1c:	80063e2c 	andhi	r3, r6, ip, lsr #28
+80061b20:	80063e1c 	andhi	r3, r6, ip, lsl lr
+80061b24:	80063e8c 	andhi	r3, r6, ip, lsl #29
+80061b28:	80063e0c 	andhi	r3, r6, ip, lsl #28
+80061b2c:	80063dfc 	strdhi	r3, [r6], -ip
+80061b30:	80063dec 	andhi	r3, r6, ip, ror #27
+80061b34:	80063ddc 	ldrdhi	r3, [r6], -ip
+80061b38:	80063dcc 	andhi	r3, r6, ip, asr #27
+80061b3c:	80063dbc 			@ <UNDEFINED> instruction: 0x80063dbc
+80061b40:	80063dac 	andhi	r3, r6, ip, lsr #27
+80061b44:	80063d9c 	mulhi	r6, ip, sp
+80061b48:	80063d8c 	andhi	r3, r6, ip, lsl #27
+80061b4c:	80063d7c 	andhi	r3, r6, ip, ror sp
+80061b50:	80063e8c 	andhi	r3, r6, ip, lsl #29
+80061b54:	80063d6c 	andhi	r3, r6, ip, ror #26
+80061b58:	80063d5c 	andhi	r3, r6, ip, asr sp
+80061b5c:	80063d4c 	andhi	r3, r6, ip, asr #26
+80061b60:	80063e8c 	andhi	r3, r6, ip, lsl #29
+80061b64:	80063d3c 	andhi	r3, r6, ip, lsr sp
+80061b68:	80063d2c 	andhi	r3, r6, ip, lsr #26
+80061b6c:	80063d1c 	andhi	r3, r6, ip, lsl sp
+80061b70:	80063d0c 	andhi	r3, r6, ip, lsl #26
+80061b74:	80063cfc 	strdhi	r3, [r6], -ip
+80061b78:	80063cec 	andhi	r3, r6, ip, ror #25
+80061b7c:	80063e8c 	andhi	r3, r6, ip, lsl #29

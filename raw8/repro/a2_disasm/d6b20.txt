@@ -1,0 +1,191 @@
+
+p7.bin:     file format binary
+
+
+Disassembly of section .data:
+
+800d6b20 <.data+0xd6b20>:
+800d6b20:	e3520000 	cmp	r2, #0
+800d6b24:	13530000 	cmpne	r3, #0
+800d6b28:	e92d4008 	push	{r3, lr}
+800d6b2c:	0a000007 	beq	0x800d6b50
+800d6b30:	e5900004 	ldr	r0, [r0, #4]
+800d6b34:	ebfe6c6f 	bl	0x80071cf8
+800d6b38:	e3500000 	cmp	r0, #0
+800d6b3c:	08bd8008 	popeq	{r3, pc}
+800d6b40:	e3700012 	cmn	r0, #18
+800d6b44:	13e00000 	mvnne	r0, #0
+800d6b48:	03e00001 	mvneq	r0, #1
+800d6b4c:	e8bd8008 	pop	{r3, pc}
+800d6b50:	e3e00003 	mvn	r0, #3
+800d6b54:	e8bd8008 	pop	{r3, pc}
+800d6b58:	e5900004 	ldr	r0, [r0, #4]
+800d6b5c:	eafe6cd4 	b	0x80071eb4
+800d6b60:	e3520000 	cmp	r2, #0
+800d6b64:	13530000 	cmpne	r3, #0
+800d6b68:	e92d4008 	push	{r3, lr}
+800d6b6c:	0a000007 	beq	0x800d6b90
+800d6b70:	e5900004 	ldr	r0, [r0, #4]
+800d6b74:	ebfe6c96 	bl	0x80071dd4
+800d6b78:	e3500000 	cmp	r0, #0
+800d6b7c:	08bd8008 	popeq	{r3, pc}
+800d6b80:	e3700012 	cmn	r0, #18
+800d6b84:	13e00000 	mvnne	r0, #0
+800d6b88:	03e00001 	mvneq	r0, #1
+800d6b8c:	e8bd8008 	pop	{r3, pc}
+800d6b90:	e3e00003 	mvn	r0, #3
+800d6b94:	e8bd8008 	pop	{r3, pc}
+800d6b98:	e92d4008 	push	{r3, lr}
+800d6b9c:	e1a00001 	mov	r0, r1
+800d6ba0:	ebfdfde2 	bl	0x80056330
+800d6ba4:	e3a00000 	mov	r0, #0
+800d6ba8:	e8bd8008 	pop	{r3, pc}
+800d6bac:	e52de004 	push	{lr}		@ (str lr, [sp, #-4]!)
+800d6bb0:	e59f3be0 	ldr	r3, [pc, #3040]	@ 0x800d7798
+800d6bb4:	e24dd00c 	sub	sp, sp, #12
+800d6bb8:	e5803008 	str	r3, [r0, #8]
+800d6bbc:	e300313e 	movw	r3, #318	@ 0x13e
+800d6bc0:	e1510003 	cmp	r1, r3
+800d6bc4:	979ff101 	ldrls	pc, [pc, r1, lsl #2]
+800d6bc8:	ea0001f8 	b	0x800d73b0
+800d6bcc:	800d739c 	mulhi	sp, ip, r3
+800d6bd0:	800d7388 	andhi	r7, sp, r8, lsl #7
+800d6bd4:	800d7374 	andhi	r7, sp, r4, ror r3
+800d6bd8:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6bdc:	800d7360 	andhi	r7, sp, r0, ror #6
+800d6be0:	800d734c 	andhi	r7, sp, ip, asr #6
+800d6be4:	800d7338 	andhi	r7, sp, r8, lsr r3
+800d6be8:	800d7324 	andhi	r7, sp, r4, lsr #6
+800d6bec:	800d7310 	andhi	r7, sp, r0, lsl r3
+800d6bf0:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6bf4:	800d72fc 	strdhi	r7, [sp], -ip
+800d6bf8:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6bfc:	800d72e8 	andhi	r7, sp, r8, ror #5
+800d6c00:	800d72d4 	ldrdhi	r7, [sp], -r4
+800d6c04:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6c08:	800d72c0 	andhi	r7, sp, r0, asr #5
+800d6c0c:	800d72ac 	andhi	r7, sp, ip, lsr #5
+800d6c10:	800d7298 	mulhi	sp, r8, r2
+800d6c14:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6c18:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6c1c:	800d7284 	andhi	r7, sp, r4, lsl #5
+800d6c20:	800d7270 	andhi	r7, sp, r0, ror r2
+800d6c24:	800d725c 	andhi	r7, sp, ip, asr r2
+800d6c28:	800d7248 	andhi	r7, sp, r8, asr #4
+800d6c2c:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6c30:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6c34:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6c38:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6c3c:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6c40:	800d7234 	andhi	r7, sp, r4, lsr r2
+800d6c44:	800d7220 	andhi	r7, sp, r0, lsr #4
+800d6c48:	800d720c 	andhi	r7, sp, ip, lsl #4
+800d6c4c:	800d71f8 	strdhi	r7, [sp], -r8
+800d6c50:	800d71e4 	andhi	r7, sp, r4, ror #3
+800d6c54:	800d71d0 	ldrdhi	r7, [sp], -r0
+800d6c58:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6c5c:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6c60:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6c64:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6c68:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6c6c:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6c70:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6c74:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6c78:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6c7c:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6c80:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6c84:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6c88:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6c8c:	800d71bc 			@ <UNDEFINED> instruction: 0x800d71bc
+800d6c90:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6c94:	800d71a8 	andhi	r7, sp, r8, lsr #3
+800d6c98:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6c9c:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6ca0:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6ca4:	800d7194 	mulhi	sp, r4, r1
+800d6ca8:	800d7180 	andhi	r7, sp, r0, lsl #3
+800d6cac:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6cb0:	800d716c 	andhi	r7, sp, ip, ror #2
+800d6cb4:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6cb8:	800d7158 	andhi	r7, sp, r8, asr r1
+800d6cbc:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6cc0:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6cc4:	800d7144 	andhi	r7, sp, r4, asr #2
+800d6cc8:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6ccc:	800d7130 	andhi	r7, sp, r0, lsr r1
+800d6cd0:	800d711c 	andhi	r7, sp, ip, lsl r1
+800d6cd4:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6cd8:	800d70c8 	andhi	r7, sp, r8, asr #1
+800d6cdc:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6ce0:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6ce4:	800d70f4 	strdhi	r7, [sp], -r4
+800d6ce8:	800d70e0 	andhi	r7, sp, r0, ror #1
+800d6cec:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6cf0:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6cf4:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6cf8:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6cfc:	800d70c8 	andhi	r7, sp, r8, asr #1
+800d6d00:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6d04:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6d08:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6d0c:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6d10:	800d7784 	andhi	r7, sp, r4, lsl #15
+800d6d14:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6d18:	800d7770 	andhi	r7, sp, r0, ror r7
+800d6d1c:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6d20:	800d775c 	andhi	r7, sp, ip, asr r7
+800d6d24:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6d28:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6d2c:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6d30:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6d34:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6d38:	800d7748 	andhi	r7, sp, r8, asr #14
+800d6d3c:	800d7734 	andhi	r7, sp, r4, lsr r7
+800d6d40:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6d44:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6d48:	800d7720 	andhi	r7, sp, r0, lsr #14
+800d6d4c:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6d50:	800d770c 	andhi	r7, sp, ip, lsl #14
+800d6d54:	800d76f8 	strdhi	r7, [sp], -r8
+800d6d58:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6d5c:	800d76e4 	andhi	r7, sp, r4, ror #13
+800d6d60:	800d76d0 	ldrdhi	r7, [sp], -r0
+800d6d64:	800d76bc 			@ <UNDEFINED> instruction: 0x800d76bc
+800d6d68:	800d76a8 	andhi	r7, sp, r8, lsr #13
+800d6d6c:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6d70:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6d74:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6d78:	800d7694 	mulhi	sp, r4, r6
+800d6d7c:	800d7680 	andhi	r7, sp, r0, lsl #13
+800d6d80:	800d766c 	andhi	r7, sp, ip, ror #12
+800d6d84:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6d88:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6d8c:	800d7658 	andhi	r7, sp, r8, asr r6
+800d6d90:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6d94:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6d98:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6d9c:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6da0:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6da4:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6da8:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6dac:	800d7644 	andhi	r7, sp, r4, asr #12
+800d6db0:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6db4:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6db8:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6dbc:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6dc0:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6dc4:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6dc8:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6dcc:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6dd0:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6dd4:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6dd8:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6ddc:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6de0:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6de4:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6de8:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6dec:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6df0:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6df4:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6df8:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0
+800d6dfc:	800d73b0 			@ <UNDEFINED> instruction: 0x800d73b0

@@ -1,0 +1,47 @@
+
+p7.bin:     file format binary
+
+
+Disassembly of section .data:
+
+800d7100 <.data+0xd7100>:
+800d7100:	e5803008 	str	r3, [r0, #8]
+800d7104:	eafffff3 	b	0x800d70d8
+800d7108:	e3a0301f 	mov	r3, #31
+800d710c:	e1c230b0 	strh	r3, [r2]
+800d7110:	e59f3690 	ldr	r3, [pc, #1680]	@ 0x800d77a8
+800d7114:	e5803008 	str	r3, [r0, #8]
+800d7118:	eaffffee 	b	0x800d70d8
+800d711c:	e3a03002 	mov	r3, #2
+800d7120:	e1c230b0 	strh	r3, [r2]
+800d7124:	e59f3680 	ldr	r3, [pc, #1664]	@ 0x800d77ac
+800d7128:	e5803008 	str	r3, [r0, #8]
+800d712c:	eaffffe9 	b	0x800d70d8
+800d7130:	e3a0303f 	mov	r3, #63	@ 0x3f
+800d7134:	e1c230b0 	strh	r3, [r2]
+800d7138:	e59f3670 	ldr	r3, [pc, #1648]	@ 0x800d77b0
+800d713c:	e5803008 	str	r3, [r0, #8]
+800d7140:	eaffffe4 	b	0x800d70d8
+800d7144:	e3a030a6 	mov	r3, #166	@ 0xa6
+800d7148:	e1c230b0 	strh	r3, [r2]
+800d714c:	e59f3660 	ldr	r3, [pc, #1632]	@ 0x800d77b4
+800d7150:	e5803008 	str	r3, [r0, #8]
+800d7154:	eaffffdf 	b	0x800d70d8
+800d7158:	e3a03075 	mov	r3, #117	@ 0x75
+800d715c:	e1c230b0 	strh	r3, [r2]
+800d7160:	e59f3650 	ldr	r3, [pc, #1616]	@ 0x800d77b8
+800d7164:	e5803008 	str	r3, [r0, #8]
+800d7168:	eaffffda 	b	0x800d70d8
+800d716c:	e3a03025 	mov	r3, #37	@ 0x25
+800d7170:	e1c230b0 	strh	r3, [r2]
+800d7174:	e59f3640 	ldr	r3, [pc, #1600]	@ 0x800d77bc
+800d7178:	e5803008 	str	r3, [r0, #8]
+800d717c:	eaffffd5 	b	0x800d70d8
+800d7180:	e3a03079 	mov	r3, #121	@ 0x79
+800d7184:	e1c230b0 	strh	r3, [r2]
+800d7188:	e59f3630 	ldr	r3, [pc, #1584]	@ 0x800d77c0
+800d718c:	e5803008 	str	r3, [r0, #8]
+800d7190:	eaffffd0 	b	0x800d70d8
+800d7194:	e3a03078 	mov	r3, #120	@ 0x78
+800d7198:	e1c230b0 	strh	r3, [r2]
+800d719c:	e59f3620 	ldr	r3, [pc, #1568]	@ 0x800d77c4

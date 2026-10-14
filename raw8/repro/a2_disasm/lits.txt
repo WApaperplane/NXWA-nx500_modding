@@ -1,0 +1,59 @@
+
+p7.bin:     file format binary
+
+
+Disassembly of section .data:
+
+800d7790 <.data+0xd7790>:
+800d7790:	e5803008 	str	r3, [r0, #8]
+800d7794:	eafffe4f 	b	0x800d70d8
+800d7798:	8070beac 	rsbshi	fp, r0, ip, lsr #29
+800d779c:	806f44f0 	strdhi	r4, [pc], #-64	@ <UNPREDICTABLE>
+800d77a0:	806f4530 	rsbhi	r4, pc, r0, lsr r5	@ <UNPREDICTABLE>
+800d77a4:	806f4520 	rsbhi	r4, pc, r0, lsr #10
+800d77a8:	806f89bc 	strhthi	r8, [pc], #-156
+800d77ac:	806f44c4 	rsbhi	r4, pc, r4, asr #9
+800d77b0:	806f44b0 	strhthi	r4, [pc], #-64
+800d77b4:	806f4478 	rsbhi	r4, pc, r8, ror r4	@ <UNPREDICTABLE>
+800d77b8:	806f443c 	rsbhi	r4, pc, ip, lsr r4	@ <UNPREDICTABLE>
+800d77bc:	806f440c 	rsbhi	r4, pc, ip, lsl #8
+800d77c0:	806f43e0 	rsbhi	r4, pc, r0, ror #7
+800d77c4:	806f43cc 	rsbhi	r4, pc, ip, asr #7
+800d77c8:	806f4378 	rsbhi	r4, pc, r8, ror r3	@ <UNPREDICTABLE>
+800d77cc:	806f4354 	rsbhi	r4, pc, r4, asr r3	@ <UNPREDICTABLE>
+800d77d0:	806f4218 	rsbhi	r4, pc, r8, lsl r2	@ <UNPREDICTABLE>
+800d77d4:	806f4204 	rsbhi	r4, pc, r4, lsl #4
+800d77d8:	806f41f0 	strdhi	r4, [pc], #-16	@ <UNPREDICTABLE>
+800d77dc:	806f41e0 	rsbhi	r4, pc, r0, ror #3
+800d77e0:	806f41d0 	ldrdhi	r4, [pc], #-16	@ <UNPREDICTABLE>
+800d77e4:	806f41c0 	rsbhi	r4, pc, r0, asr #3
+800d77e8:	806f4140 	rsbhi	r4, pc, r0, asr #2
+800d77ec:	806f4124 	rsbhi	r4, pc, r4, lsr #2
+800d77f0:	806f4110 	rsbhi	r4, pc, r0, lsl r1	@ <UNPREDICTABLE>
+800d77f4:	806f4104 	rsbhi	r4, pc, r4, lsl #2
+800d77f8:	806f40b8 	strhthi	r4, [pc], #-8
+800d77fc:	806f4098 	mlshi	pc, r8, r0, r4	@ <UNPREDICTABLE>
+800d7800:	806f4084 	rsbhi	r4, pc, r4, lsl #1
+800d7804:	806f4058 	rsbhi	r4, pc, r8, asr r0	@ <UNPREDICTABLE>
+800d7808:	806f4044 	rsbhi	r4, pc, r4, asr #32
+800d780c:	806f4020 	rsbhi	r4, pc, r0, lsr #32
+800d7810:	806f3ffc 	strdhi	r3, [pc], #-252	@ <UNPREDICTABLE>
+800d7814:	806f3fec 	rsbhi	r3, pc, ip, ror #31
+800d7818:	806f3fe0 	rsbhi	r3, pc, r0, ror #31
+800d781c:	806f3fd0 	ldrdhi	r3, [pc], #-240	@ <UNPREDICTABLE>
+800d7820:	806f3fb8 	strhthi	r3, [pc], #-248
+800d7824:	806f3f88 	rsbhi	r3, pc, r8, lsl #31
+800d7828:	806f3f70 	rsbhi	r3, pc, r0, ror pc	@ <UNPREDICTABLE>
+800d782c:	806f3f5c 	rsbhi	r3, pc, ip, asr pc	@ <UNPREDICTABLE>
+800d7830:	8070beb8 	ldrhthi	fp, [r0], #-232	@ 0xffffff18
+800d7834:	806ed100 	rsbhi	sp, lr, r0, lsl #2
+800d7838:	8057d068 	subshi	sp, r7, r8, rrx
+800d783c:	806f8998 	mlshi	pc, r8, r9, r8	@ <UNPREDICTABLE>
+800d7840:	806f8920 	rsbhi	r8, pc, r0, lsr #18
+800d7844:	806f88c4 	rsbhi	r8, pc, r4, asr #17
+800d7848:	806f8890 	mlshi	pc, r0, r8, r8	@ <UNPREDICTABLE>
+800d784c:	806f887c 	rsbhi	r8, pc, ip, ror r8	@ <UNPREDICTABLE>
+800d7850:	806f8868 	rsbhi	r8, pc, r8, ror #16
+800d7854:	806f8854 	rsbhi	r8, pc, r4, asr r8	@ <UNPREDICTABLE>
+800d7858:	806f87dc 	ldrdhi	r8, [pc], #-124	@ <UNPREDICTABLE>
+800d785c:	806f87c4 	rsbhi	r8, pc, r4, asr #15
