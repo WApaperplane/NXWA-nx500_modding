@@ -1,0 +1,21 @@
+{
+  "ts": "2026-10-15T22:35+08:00",
+  "test": "filmlab one-key end-to-end (pwpush gold200 --yes)",
+  "chain": "filmlab.sh pwpush -> pw_direct(A2) -> pwsend seq 0x134..0x13B -> MCB -> p7 slot write + trigger -> ISP vars",
+  "sent": {
+    "R": 109,
+    "G": 101,
+    "B": 89,
+    "HUE": 12,
+    "SAT": 12,
+    "SHARP": 9,
+    "CON": 10
+  },
+  "varlist_after": {
+    "PWCOLOR_R": "0x08A000FF",
+    "PWCOLOR_G": "0x080000FF",
+    "PWCOLOR_B": "0x071000FF",
+    "PWHUE": "0x002FD80A"
+  },
+  "verdict": "PASS — one-key channel fully operational; filmlab.sh deployed (LF, md5 3497fba4b28575cf8ec39a8a568abdb0); camera backup = filmlab.sh.bak-20261015"
+}

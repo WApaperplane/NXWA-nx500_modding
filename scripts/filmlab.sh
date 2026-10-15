@@ -151,17 +151,16 @@ get_wb() { prefman get 0 "$(printf 0x%05x $WB_K)" l 2>/dev/null | tr -d '\r' | s
 #   · ① 写槽 + prefman save（持久化；★ 不 save 则重启回退，实测过）
 #   · ② 借道切到目标槽（保证"选择"真的发生，虽然它不搬参数）
 #   · ③ **已打通（10-10 全 7 维 id 已解）**：属性总线传输层全解
-#        （docs/current/ATTR_BUS_MCB_2026-10-09.md + PW_ID_MAP_FULL_2026-10-10.md）：
-#        set_attribute(id) == SetVariableDataMCB(id,&v,4) → MCB → p7 → ISP。
-#        工具 `pwsend.arm`（白名单已扩至 [0x100,0x13e]）+ 「值编码器」gen_pwpush.py。
-#        ★ id 全图（10-10 上机定案）：可外部直推 = SAT=0x110 / SHARP=0x111 / CON=0x112
-#          （经 p7 归一化 → 内部 0x10f/0x110/0x111）【三维回归已实测通过】。
-#          ★★ R/G/B/HUE 内部 id = 0x130-0x133，但**无外部 MCB 通路**（10-10 上机 probe3 负结论
-#             rc=0 而 varlist 无变化 + 静态铁证：外部归一化器 FUN_00051090 只覆盖 0x100-0x12e，
-#             其余一律 → 0xff 拒收）；只有机身侧「档位应用」路径（0x51b20）用内部 id 直写
-#             ⇒ 需 G4 改 p7 打通，或走官方画面向导（选「自定义1」= 全 7 维进入 ISP 的正路）。
-#        ⇒ 置 FILMLAB_PW=1 即得【三维一键】：点配方 → SAT/SHARP/CON 直进 ISP → 画面立即变。
-#        ★ 官方画面向导仍是保底链路（当前 slot9 已有正规数据，重选一遍即恢复）。
+#        （docs/current/ATTR_BUS_MCB_2026-10-09.md + PW_ID_MAP_FULL_2026-10-10.md；
+#         A2 通道见 docs/current/A2_PATCH_DESIGN_2026-10-14.md + A2_READBACK_VERDICT_2026-10-15.md）：
+#        set_var(id) == SetVariableDataMCB(id,&v,4) → MCB → p7 → ISP。
+#        工具 `pwsend.arm`（白名单 [0x100,0x13e]）。
+#        ★ 10-15 A2 通道（档位池直写，功能验证 PASS）：全 7 维一键 = seq 0x134..0x13A（原始值）
+#          + 0x13B 触发 → p7 写槽 0xdc..0xe2 → 全 8 项下发 ISP。**当前全维通路**。
+#        ★ 旧记录（A1/三维时代，保留备查）：可外部直推 = SAT/SHARP/CON（0x110-0x112 经归一化）；
+#          R/G/B/HUE（0x130-0x133）曾无外部通路（归一化器域界）——A2 前需改 p7 或走画面向导。
+#        ⇒ 置 FILMLAB_PW=1 即得【全 7 维一键】：点配方 → 七维直进 ISP → 画面立即变。
+#        ★ 官方画面向导仍是保底链路（重选一遍即恢复）。
 #   · check 判据（只读）永远保留：ISP 手上的 7 维 vs prefman 槽位，一眼看出进没进。
 # =====================================================================
 
@@ -171,21 +170,20 @@ FILMLAB_MID=${FILMLAB_MID:-custom}  # custom(默认)=借道另一个自定义槽
 
 # ---- ③ PW 直推（2026-10-09 新增；校准前默认关）----
 PWSEND=${PWSEND:-/opt/usr/nx-ks/pwsend.arm}
-FILMLAB_PW=${FILMLAB_PW:-0}         # 1 = apply 后自动直推（pwcalib.sh 校准完成后置 1）
-# ★ PW id 表（10-10 上机定案，PW_ID_MAP_FULL_2026-10-10.md §6）：
+FILMLAB_PW=${FILMLAB_PW:-0}         # 1 = apply 后自动直推（★ 10-15 A2 通道后无需 pwcalib 校准）
+# ★ 10-15 A2 通道（当前生效路径）：pw_direct 固定发 0x134..0x13B（原始值 + 触发），
+#   不再使用下方 PWID_*/编码（保留兼容：旧 conf 里的 PWID_* 将被忽略）。
+# ★ 旧 id 表（10-10 上机定案，保留备查，PW_ID_MAP_FULL_2026-10-10.md §6）：
 #   S/P/C 三维 = 外部 id 0x110/0x111/0x112（经 p7 归一化 → 内部 SAT/SHARP/CON）【已实测】。
-#   R/G/B/HUE = 【默认空 = 跳过】：其内部 id 0x130-0x133 无外部 MCB 通路（probe3 负结论：
-#   rc=0 但 varlist 无变化；静态：归一化器只认 0x100-0x12e，其余一律 0xff 拒收）。
-#   ⇒ 若将来 G4 后改 p7 打通，再 flab.py conf --set PWID_R=0x130 打开（机制保留）。
-PWID_R=${PWID_R:-}        # 空 = 跳过（无外部通路；需 G4 或官方画面向导）
-PWID_G=${PWID_G:-}        # 空 = 跳过
-PWID_B=${PWID_B:-}        # 空 = 跳过
-PWID_H=${PWID_H:-}        # 空 = 跳过
-PWID_S=${PWID_S:-0x110}   # 已实测（PWSATURATION）
-PWID_P=${PWID_P:-0x111}   # 已实测（PWSHARPNESS）
-PWID_C=${PWID_C:-0x112}   # 已实测（PWCONTRAST）
-# R/G/B 的"发送值编码"（10-10 静态）：官方档位应用路径对 R/G/B 用 COLOR((gain<<16)|0x00FF)、
-# 对 HUE/SAT/SHARP/CON 用 SCALAR(0xD80A)。（当前 R/G/B/H 无外部通路，此项仅供 G4 后备用。）
+#   R/G/B/HUE = 内部 id 0x130-0x133 曾无外部 MCB 通路（A2 前；归一化器域界）。
+PWID_R=${PWID_R:-}        # 旧路遗留（A2 后不参与）
+PWID_G=${PWID_G:-}        # 旧路遗留
+PWID_B=${PWID_B:-}        # 旧路遗留
+PWID_H=${PWID_H:-}        # 旧路遗留
+PWID_S=${PWID_S:-0x110}   # 旧路遗留（PWSATURATION）
+PWID_P=${PWID_P:-0x111}   # 旧路遗留（PWSHARPNESS）
+PWID_C=${PWID_C:-0x112}   # 旧路遗留（PWCONTRAST）
+# 旧编码开关（A1 时代；A2 后不参与发送）
 FILMLAB_ENC_RGB=${FILMLAB_ENC_RGB:-color}
 
 # ---- userdata(20) 读写（★ getusr/setusr 只认【十进制索引或名字】）----
@@ -224,18 +222,19 @@ pw_force_reload() {
   [ "$NOW" = "$TGT" ] && RELOAD="direct" || RELOAD="direct-VERIFY-FAIL(now=$NOW want=$TGT)"
 }
 
-# ---- ③ PW 直推：值编码 + pwsend（2026-10-09，ATTR_BUS_MCB 通道）----
-# ★ 编码（2026-10-09 夜真机实证，v2）：
+# ---- ③ PW 直推（2026-10-15 起 = A2 档位池直写通道；下方旧编码器为 A1/历史参考）----
+# ★★ A2 通道（功能验证 PASS，varlist 逐值命中）：
+#    seq 0x134 R 0x135 G 0x136 B 0x137 HUE 0x138 SAT 0x139 SHARP 0x13A CON 0x13B 1
+#    全 7 维【原始值】直发（无编码）；值语义：R/G/B 0-200、其余 0-20；0x13B=1 提交触发。
+#    （实测对照：发 106 → 内部 0x0870；发 11 → 0x001F；发 8 → 0xFFEF。）
+# ★ 旧编码器（A1 时代 0x130-0x133 / 三维路，保留备查）：
 #   SCALAR（H/S/S/C）: (raw16 << 16) | 0xD80A    raw16 = 16×值 - 145（补码 16 位）
 #   COLOR （R/G/B）  : (gain16 << 16) | 0x00FF   gain16 = ceil(值×2032/100)
-#   ★ 用 printf 分段拼接（"0x%04x%04x"）——32 位 ash 的 << 16 会溢出成负数，
-#     分段输出则任意平台安全（且 pwsend 用 strtoul 接收完整 32 位）。
 pw_raw_code()  { U=$(( ($1 * 16 - 145) & 0xFFFF )); printf "0x%04x%04x" "$U" 0xD80A; }
 pw_gain_code() { G=$(( ($1 * 2032 + 99) / 100 ));   printf "0x%04x%04x" "$G" 0x00FF; }
 
 # pw_direct <R> <G> <B> <HUE> <SAT> <SHARP> <CON> [--yes]
-#   默认 dry-run（只打印）；--yes 才真发。id 为空的维度自动跳过。
-#   ★ 10-10 上机定案：R/G/B/HUE 无外部通路 ⇒ 默认只直推【三维】SAT/SHARP/CON。
+#   默认 dry-run（只打印）；--yes 才真发。七维任一为空 ⇒ 拒绝（防静默坏值）。
 pw_direct() {
   [ -x "$PWSEND" ] || { echo "  ③ PW直推: 缺 $PWSEND（先部署）——跳过"; return 1; }
   case "" in
@@ -243,24 +242,11 @@ pw_direct() {
       echo "  ③ PW直推: 七维有空值 —— 拒绝发送（防静默坏值）"
       return 1 ;;
   esac
-  # ★ 编码选择（10-10）：R/G/B 默认 SCALAR（0xD80A，与 p7 内部档位应用路径一致、
-  #   与 pwcalib probe3 同格式）；FILMLAB_ENC_RGB=color 切回旧 0x00FF 编码（备选）。
-  if [ "$FILMLAB_ENC_RGB" = "color" ]; then
-    RCODE=$(pw_gain_code $1); GCODE=$(pw_gain_code $2); BCODE=$(pw_gain_code $3)
-  else
-    RCODE=$(pw_raw_code $1);  GCODE=$(pw_raw_code $2);  BCODE=$(pw_raw_code $3)
-  fi
-  ARGS=""
-  [ -n "$PWID_R" ] && ARGS="$ARGS $PWID_R $RCODE"
-  [ -n "$PWID_G" ] && ARGS="$ARGS $PWID_G $GCODE"
-  [ -n "$PWID_B" ] && ARGS="$ARGS $PWID_B $BCODE"
-  [ -n "$PWID_H" ] && ARGS="$ARGS $PWID_H $(pw_raw_code $4)"
-  ARGS="$ARGS $PWID_S $(pw_raw_code $5)"
-  ARGS="$ARGS $PWID_P $(pw_raw_code $6)"
-  ARGS="$ARGS $PWID_C $(pw_raw_code $7)"
+  # A2：固定 id + 原始值 + 提交位（0x13B=1）
+  ARGS="0x134 $1 0x135 $2 0x136 $3 0x137 $4 0x138 $5 0x139 $6 0x13A $7 0x13B 1"
   YES="$8"
-  echo "  ③ PW直推（$([ "$YES" = "--yes" ] && echo 真发 || echo dry-run)）:"
-  echo "     $PWSEND seq$ARGS $YES"
+  echo "  ③ PW直推（A2 档位池直写；$([ "$YES" = "--yes" ] && echo 真发 || echo dry-run)）:"
+  echo "     $PWSEND seq $ARGS $YES"
   # shellcheck disable=SC2086
   "$PWSEND" seq $ARGS $YES
 }
@@ -624,10 +610,10 @@ apply)
       if [ "$FILMLAB_PW" != "1" ]; then
         echo "     ⇒ 两个选择："
         echo "       a) 人工（保底，已验证）：画面向导 → 选中「自定义1」（全 7 维）"
-        echo "       b) 自动：置 FILMLAB_PW=1 ⇒ 直推 SAT/SHARP/CON 三维（R/G/B/HUE 无外部通路）"
+        echo "       b) 自动：置 FILMLAB_PW=1 ⇒ A2 全 7 维直推（0x134..0x13B 原始值）"
       else
-        echo "     ⇒ ③ 直推已开（三维 SAT/SHARP/CON）但 ISP 未跟上："
-        echo "        · pwcalib.sh readback 检查 id/编码是否与实测一致"
+        echo "     ⇒ ③ 直推已开（A2 全 7 维）但 ISP 未跟上："
+        echo "        · 重跑一次 pwpush <recipe> --yes；或看 pwsend 输出 rc"
         echo "        · 或人工恢复：画面向导 → 选中「自定义1」"
       fi ;;
     *) echo "  ★ 判据不可用，无法自动确认。" ;;
@@ -1002,13 +988,13 @@ export)
   echo "  cycle              轮换到下一个配方（绑机身键用，零界面）"
   echo "  check [slot]      ★ 客观判据（只读）：ISP 手上的 7 维 vs prefman 槽位值"
   echo "  reload            ★ 只重触发（不写配方）+ 打印判据 —— 配方没变但画面没跟上时用"
-  echo "  pwpush <recipe> [--yes]  ★ ③ PW 直推（2026-10-09）：SAT/SHARP/CON 三维直进 ISP（默认 dry-run）"
+  echo "  pwpush <recipe> [--yes]  ★ ③ PW 直推（10-15 = A2 全 7 维）：七维原始值直进 ISP（默认 dry-run）"
   echo "  quit               关闭 X11 选择器（已弃用，X11 在单核机上会吃满 CPU）"
   echo
-  echo "★ 生效通道（10-10 上机定案）：①prefman 存储 ②setusr 选择 ③【PW 直推 / app 推参数】"
-  echo "  ① ② 到不了 ISP；③ = 直推 SAT/SHARP/CON 三维（0x110/0x111/0x112）【已实测】"
-  echo "  · R/G/B/HUE（内部 0x130-0x133）无外部 MCB 通路 ⇒ 只有官方画面向导（自定义1）能全 7 维进 ISP"
-  echo "  · 置 FILMLAB_PW=1 ⇒ apply 即一键生效（自动直推三维 SAT/SHARP/CON）"
+  echo "★ 生效通道：①prefman 存储 ②setusr 选择 ③【PW 直推（A2 全 7 维）】"
+  echo "  ① ② 到不了 ISP；③ = A2 档位池直写 0x134..0x13B（R/G/B/HUE/SAT/SHARP/CON 全 7 维）【10-15 实测 PASS】"
+  echo "  · 全 7 维进 ISP 的自动路 = A2（已刷、已验证）；官方画面向导（自定义1）仍为保底"
+  echo "  · 置 FILMLAB_PW=1 ⇒ apply 即一键生效（自动直推全 7 维）"
   ;;
 
 esac

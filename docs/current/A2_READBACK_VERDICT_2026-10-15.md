@@ -33,7 +33,7 @@
 
 ## 4. 后续（待放行）
 
-1. **A2 功能验证（写操作）**：`seq 0x134…0x13B` + 画面观察——按 A2 设计判据；**待用户放行**。
+1. ~~A2 功能验证~~ ✅ **已完成（10-15 22:26 / 22:33）**：Portra 400 与 gold200 两轮全链验证（`pwsend seq` + `filmlab.sh pwpush`），varlist **逐维精确命中**；**filmlab.sh 已改造为 A2 八连发并部署**（md5 `3497fba4…`；详见 `functional_test_2026-10-15.json` 与 `filmlab_onekey_verify_2026-10-15.json`）。**「filmlab 一键」至此全链贯通。**
 2. **运行时存活观测**：重启后再次回读复核（「两次回读一致」= 运行期未覆盖的更强证据）。
 3. 归档：`raw8/gates/a2/readback_2026-10-15.bin` + `.json`（bin 本地留存，JSON 入库）。
 

@@ -1,0 +1,36 @@
+{
+  "ts": "2026-10-15T22:26+08:00",
+  "test": "A2 functional test — seq 0x134..0x13B with Portra400 recipe values",
+  "sent": {
+    "0x134 R": 106,
+    "0x135 G": 100,
+    "0x136 B": 93,
+    "0x137 HUE": 11,
+    "0x138 SAT": 9,
+    "0x139 SHARP": 9,
+    "0x13A CON": 8,
+    "0x13B trigger": 1
+  },
+  "send_result": "8/8 rc=0 OK (mcb destAlive=1)",
+  "varlist_before": {
+    "PWCOLOR_R": "0x08C000FF",
+    "PWCOLOR_G": "0x07F000FF",
+    "PWCOLOR_B": "0x070000FF",
+    "PWHUE": "0x002FD80A",
+    "PWSATURATION": "0xFFFFD80A",
+    "PWSHARPNESS": "0xFFEFD80A",
+    "PWCONTRAST": "0xFFFFD80A"
+  },
+  "varlist_after": {
+    "PWCOLOR_R": "0x087000FF",
+    "PWCOLOR_G": "0x07F000FF",
+    "PWCOLOR_B": "0x076000FF",
+    "PWHUE": "0x001FD80A",
+    "PWSATURATION": "0xFFFFD80A",
+    "PWSHARPNESS": "0xFFFFD80A",
+    "PWCONTRAST": "0xFFEFD80A"
+  },
+  "encoding_decoded": "RGB: ((v*255/200) 取整)<<4 |0（16bit）; SCALAR/HUE: 16*(v-10)+15（补码16bit）；后缀 0x00FF / 0xD80A 固定",
+  "verdict": "PASS — all 7 dims byte-exact match sent values + trigger applied. A2 channel fully functional (incl. runtime survival of patched region).",
+  "tool": "pwsend.arm (820156B, md5 003e7365dbd4a20c64bdcf7ba3bc836b) @ /opt/usr/nx-ks/"
+}
