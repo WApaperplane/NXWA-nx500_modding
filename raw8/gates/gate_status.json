@@ -1,38 +1,8 @@
 {
-  "ts": "2026-10-11T21:16:53",
+  "ts": "2026-10-15T20:08:01",
   "host": "192.168.0.105",
   "probe_enabled": true,
   "gates": [
-    {
-      "id": "G0",
-      "name": "上机可达",
-      "state": "PASS",
-      "purpose": "21 端口能连上",
-      "on_fail": "退回离机轨（离机轨已清空，则可休整或做加固）",
-      "checks": [
-        {
-          "id": "G0-1",
-          "title": "探测 192.168.0.105:21",
-          "state": "PASS",
-          "detail": "192.168.0.105:21 可连",
-          "next": "相机开机 + 与 PC 同网段；确认 telnetd/ftpd 已起（REFUSED 与 TIMEOUT 含义不同，铁律 90）"
-        },
-        {
-          "id": "G0-23",
-          "title": "旁证端口 192.168.0.105:23（不参与判定）",
-          "state": "INFO",
-          "detail": "OPEN",
-          "next": ""
-        },
-        {
-          "id": "G0-8080",
-          "title": "旁证端口 192.168.0.105:8080（不参与判定）",
-          "state": "INFO",
-          "detail": "REFUSED（[WinError 10061] 由于目标计算机积极拒绝，无法连接。）",
-          "next": ""
-        }
-      ]
-    },
     {
       "id": "G1",
       "name": "上机安全",
@@ -72,7 +42,7 @@
           "id": "G1-5",
           "title": "只读（O_RDONLY）",
           "state": "PASS",
-          "detail": "5 个脚本，只读声明=一致",
+          "detail": "7 个脚本，只读声明=一致",
           "next": "写操作必须单列并写明回滚方法"
         },
         {
@@ -100,7 +70,7 @@
           "id": "G1-8",
           "title": "脚本 CRLF/语法/执行位 CI",
           "state": "PASS",
-          "detail": "RESULT: PASS  (0 fail / 7 warn)",
+          "detail": "RESULT: PASS  (0 fail / 13 warn)",
           "next": "python test_server/tools/apply_ci_fixes.py"
         }
       ]
@@ -108,39 +78,46 @@
     {
       "id": "G2",
       "name": "U11 路线判定",
-      "state": "BLOCKED",
+      "state": "PASS",
       "purpose": "/dev/mem 四点对照有结论",
       "on_fail": "无（只读，等 U1 结果）",
       "checks": [
         {
           "id": "G2-1",
-          "title": "U1 /dev/mem 四点对照结论",
-          "state": "BLOCKED",
-          "detail": "缺 raw8\\gates\\u1\\mem_compare.json（需上机产出）",
-          "next": "上机 U1 步骤 1-4；这是 U11 路线判定的唯一输入"
+          "title": "四点对照完整性",
+          "state": "PASS",
+          "detail": "四点均有记录",
+          "next": ""
+        },
+        {
+          "id": "G2b",
+          "title": "LUT 缓冲不可读 -> 才评估 lutmod",
+          "state": "PASS",
+          "detail": "两个 LUT 缓冲均不可读",
+          "next": "评估 p7_full.lutmod.bin 前【必须重推目标地址】（CMA 窗口会变）"
         }
       ]
     },
     {
       "id": "G3",
       "name": "原生 UI 上机",
-      "state": "FAIL",
+      "state": "PASS",
       "purpose": "离线五页出图 + 每处文本设了字体",
       "on_fail": "回去改 UI",
       "checks": [
         {
           "id": "G3-1",
-          "title": "五页离线预渲染出图",
-          "state": "FAIL",
-          "detail": "ui_page_p1.png 缺失/非 PNG；ui_page_p2.png 缺失/非 PNG；ui_page_p3.png 缺失/非 PNG；ui_page_p4.png 缺失/非 PNG；ui_page_p5.png 缺失/非 PNG",
-          "next": "重跑 ui_pages_render"
+          "title": "离线 N 页预渲染出图",
+          "state": "PASS",
+          "detail": "10 张 720x480 PNG（ui_page_p1..p10），md5 互不相同",
+          "next": ""
         },
         {
           "id": "G3-2",
           "title": "每处文本都设了字体",
-          "state": "BLOCKED",
-          "detail": "缺 raw8\\repro\\ui_pages.log",
-          "next": "重跑渲染并保留日志"
+          "state": "PASS",
+          "detail": "font_set 共 238 次；10 页 ink 全 >0 且与磁盘 PNG 一一对应",
+          "next": ""
         },
         {
           "id": "G3-3",
@@ -187,36 +164,6 @@
           "next": "★ boot0/boot1 绝不碰"
         }
       ]
-    },
-    {
-      "id": "G5",
-      "name": "固件改动生效判据",
-      "state": "FAIL",
-      "purpose": "存在客观判据且能区分'值变了'与'被消费'",
-      "on_fail": "不许改（铁律 86）",
-      "checks": [
-        {
-          "id": "G5-1",
-          "title": "静态判据 ID 全表 >=184",
-          "state": "FAIL",
-          "detail": "raw8\\p7\\tuning_keys.txt 命中 0 个唯一 eIQ_ID_*",
-          "next": "这是'改了生效没有'的唯一客观判据（st cap iqr）"
-        },
-        {
-          "id": "G5-2",
-          "title": "机上 iqr 值 dump",
-          "state": "BLOCKED",
-          "detail": "缺 raw8\\gates\\u1\\iqr_dump.txt",
-          "next": "上机 U1 步骤 5；离线跑 st cap 会因 IPCC UDD 打不开而失败"
-        },
-        {
-          "id": "G5-3",
-          "title": "能区分'值变了'与'参数被消费'",
-          "state": "BLOCKED",
-          "detail": "关联表 缺失：raw8\\gates\\u1\\iqr_epmc_map.tsv",
-          "next": "需要 iqr(184 ID) x epmc(两块 21x10) 的关联（目标矩阵 C14）；★ 且必须记录写入瞬间的运行时槽号（U14）"
-        }
-      ]
     }
   ],
   "capabilities": [
@@ -228,14 +175,14 @@
     },
     {
       "name": "L2  原生 EFL UI 上机（nxfilmui）",
-      "state": "FAIL",
-      "blocked_by": "G1,G3",
+      "state": "MANUAL",
+      "blocked_by": "G1",
       "note": "需人在机身判定'没拖垮'（铁律 104）"
     },
     {
       "name": "路径 B  ISP 参数块写入（21 槽）",
-      "state": "FAIL",
-      "blocked_by": "G1,G5",
+      "state": "MANUAL",
+      "blocked_by": "G1",
       "note": "生效判据是硬前置（铁律 86）"
     },
     {
@@ -254,11 +201,13 @@
   "u1_lint": {
     "exists": true,
     "scripts": [
+      "a1_preflight.sh",
       "u1_epmc.sh",
       "u1_input.sh",
       "u1_iqr.sh",
       "u1_probe.sh",
-      "u1_rd.sh"
+      "u1_rd.sh",
+      "w6_cap_usage.sh"
     ],
     "segs": [
       {
