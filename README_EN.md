@@ -19,8 +19,8 @@ An enhancement mod for the **Samsung NX500 / NX1** (Tizen / DRIMe5), built on th
 ## Highlights
 
 - **FilmLab film recipes (95)** — negative / slide / B&W / cinema / stylised, five families, auto-generated 6-page menu (18/page). The recipe library lives on the SD card (editable, extensible).
-- **PW direct push (three dimensions take effect instantly)**: `EV+AEL` → tap a recipe ⇒ **SAT / SHARP / CONTRAST are pushed straight into the ISP and the image changes within a second** (`pwsend.arm`, full 32-bit encoding, verified on-camera).
-  ★ Honest limit: **all 7 dimensions (incl. R/G/B/HUE) have no external path** — p7's id normaliser only accepts `0x100–0x12e` and rejects `0x130–0x133` outright (on-camera negative result + static mechanism proof). For all 7, either confirm "Custom 1" once in the camera's Picture Wizard, or patch p7 (blocked by G4).
+- **PW all-7-dimension one-tap**: `EV+AEL` → tap a recipe ⇒ **R/G/B/HUE/SAT/SHARP/CON are all pushed straight into the ISP and the image changes within a second** (A2 "slot-pool direct write" channel, `0x134..0x13B`; verified on-camera dimension by dimension, 2026-10-15).
+  ★ Requires: **NXWA-A2 p7 firmware**; without A2 the push step is silently ineffective (it does not crash) — use "Picture Wizard → Custom 1" as the fallback for a full-range effect.
 - **Objective criterion**: `sh /opt/usr/nx-ks/filmlab.sh check` reads the 7 values the ISP is *actually* using and compares them with the recipe slot (read-only, zero risk) — **"the value changed" ≠ "the value is consumed"**, and that rule underpins the whole project.
 - **3D LUT pipeline** — any `.cube` → native table → preview direct-load (LUT1 + `lutsentinel` guard); `.cube ⇄ native table` converters included.
 - **Web remote (`nx-rc`) photo gallery** — *collapsed directory model*: directories in reverse order, only the newest expanded by default, lazy loading + thumbnail cache. Fixes the first-paint stall on a single-core CPU when the SD card holds many directories.
@@ -38,17 +38,17 @@ An enhancement mod for the **Samsung NX500 / NX1** (Tizen / DRIMe5), built on th
 | --- | --- |
 | `IP: x.x.x.x [Telnet关]` | Shows the current WiFi IP; **tap = toggle Telnet(23) + FTP(21)**, with popup feedback |
 | `远程控制` (checkbox) | Toggles the web remote (port 80); also starts the port-8080 cluster and thumbnail warm-up |
-| **`EV + AEL`** (key combo) | ★ **FilmLab recipe menu** (6 pages / 18 recipes per page; + prev/next/back/cancel = 22 buttons): tap a recipe → write slot + select slot + **three-dimension direct push**; press again = close. 【NX500 only】 |
+| **`EV + AEL`** (key combo) | ★ **FilmLab recipe menu** (6 pages / 18 recipes per page; + prev/next/back/cancel = 22 buttons): tap a recipe → write slot + select slot + **all-7-dimension direct push (A2 channel)**; press again = close. 【NX500 only】 |
 
 The menu is regenerated every time it opens (`gen_menu.sh`), so the IP / Telnet state is always current.
 PC-side troubleshooting: `test_server/telnet_run.py <camera-ip> 'command'` (non-interactive telnet, root, empty password).
 
 ## FilmLab recipes
 
-> **The actual flow (since 2026-10-09)**: `EV + AEL` opens the recipe menu → tap a recipe
-> → `apply` performs **① write slot (prefman slot9), ② select slot (setusr), ③ PW three-dimension direct push** (`FILMLAB_PW=1`).
-> Step ③ makes the image change within a second; **R/G/B/HUE** cannot be pushed from a shell because p7's normaliser rejects them,
-> so confirm once in the camera's **Picture Wizard → "Custom 1"** (that step moves all 7 dimensions into the ISP).
+> **The actual flow (updated 2026-10-15)**: `EV + AEL` opens the recipe menu → tap a recipe
+> → `apply` performs **① write slot (prefman slot9), ② select slot (setusr), ③ PW all-7-dimension direct push** (`FILMLAB_PW=1`).
+> Step ③ goes through the A2 channel (`seq 0x134..0x13B`, raw values) and pushes **all seven dimensions into the ISP at once** — the image changes within a second.
+> On machines without the A2 firmware: step ③ is silently ineffective (safe degradation); for a full-range effect confirm once in the camera's **Picture Wizard → "Custom 1"**.
 
 ### The 95 built-in recipes (6-page menu, 18/page)
 
@@ -79,7 +79,7 @@ To add one: edit that JSON -> copy back to the SD card -> reopen the menu (it re
 ### Known limits (honest notes)
 
 - `mod_gui` inherently exits on click: you cannot scroll-compare; to compare, tap two recipes in a row and watch the change.
-- **All 7 dimensions are not one-tap**: `R/G/B/HUE` require a Picture-Wizard confirmation on the camera body (reason above). This is a structural limit of the p7 firmware, not a script bug.
+- **All-7 one-tap requires the A2 firmware**: it relies on the NXWA-A2 p7 patch (`0x134..0x13B` direct-write channel, achieved 2026-10-15); on **official firmware** `R/G/B/HUE` require a Picture-Wizard confirmation on the camera body — a structural limit of p7's normaliser domain, not a script bug.
 - White balance is not part of a recipe: adjust WB in the camera UI.
 - A recipe is a **global colour vector** — no highlight roll-off, no zone-based exposure.
 - Recipes are **NX500-only** (the prefman offsets were only measured on NX500 1.12); on NX1, `EV+AEL` automatically falls back to the community long-recording script (`EV_AEL.community.sh`).
@@ -180,7 +180,7 @@ The following corrections are authoritative; **where they conflict with older te
 | 2 | Upstream = `github.com/SamsungNX500/nx500_nx1_modding` | GitHub fork parent (which itself has no parent) = **`ottokiksmaler/nx500_nx1_modding`**; the `SamsungNX500/...` repository **does not exist** | `gh repo view`, measured |
 | 3 | 18 built-in recipes | **95** (6-page menu, 18/page) | `scripts/filmlab/recipes.json` |
 | 4 | Authoritative recipe source = `nx500_recipes.txt` | Authoritative source = **`scripts/filmlab/recipes.json`**; the `.txt` is its 95-recipe flat mirror (synced 2026-10-11) | `flab.py` data flow |
-| 5 | "Tap a recipe and it applies instantly / two steps to a look" | **Three dimensions (SAT/SHARP/CON) push instantly; all 7 need one Picture-Wizard confirmation on the camera body** | `PW_PARAM_CHANNEL`, `PW_ID_MAP_FULL` |
+| 5 | "Tap a recipe and it applies instantly / two steps to a look" | **All 7 dimensions push instantly (2026-10-15, A2 channel); on official firmware one Picture-Wizard confirmation on the camera body is needed** | `PW_PARAM_CHANNEL`, `PW_ID_MAP_FULL`, `A2_*` |
 | 6 | "View and Still are independent ⇒ editing the View table does not affect photos" | ❌ **Disproven**: `View 4 profiles ⊆ Still 18` ⇒ both share one buffer pool; software-level isolation is impossible | `3DLUT_VIEW_STILL_ISOLATION_2026-10-08.md` |
 | 7 | "Userspace cannot write LUT data" | **Fixed**: userspace *can* `lutapi load` its own table (LUT1 + guard). What it cannot do is read/write p7's four built-in buffers (`0x81xxxxxx`, outside the Linux mapping) | `U6_ONMACHINE_RESULT`, `3DLUT_APPLY_PATHS` |
 | 8 | "One built-in LUT is pure identity / usable as a neutral baseline" | ❌ **Criterion void**: every factory table is a *style* table (the so-called identity slot is a low-contrast grey look) | `U6_ONMACHINE_RESULT` |
@@ -192,7 +192,7 @@ The following corrections are authoritative; **where they conflict with older te
 
 | Capability | Status |
 | --- | --- |
-| PW three-dimension direct push | ✅ on-camera regression 3/3 (full 32-bit encoding; matches the official 17-entry encoding LUT bit-for-bit) |
+| PW all-7-dimension direct push | ✅ verified on-camera (2026-10-15, A2 channel `0x134..0x13B`, dimension by dimension; legacy three-dimension channel regression 3/3 kept) |
 | 3D LUT userspace load | ✅ `lutapi load` (requires p7 "reclaimed" state) + dual-channel isolation + guard |
 | `.cube ⇄ native table` | ✅ format solved (4913×4B, `0x4D00` slot stride) |
 | Camera system-menu extension | ✅ mod_gui overlay (4 widgets / 4 keysyms; replaces, cannot iterate) |
@@ -200,7 +200,7 @@ The following corrections are authoritative; **where they conflict with older te
 
 **Structural ceilings (stated honestly)**
 
-- **All 7 PW dimensions have no external path** (p7 normaliser domain `0x100–0x12e`) — needs one on-body confirmation or a p7 patch.
+- **All-7 PW one-tap requires the A2 firmware** (p7 patch direct-write channel, achieved 2026-10-15); on official firmware the normaliser domain `0x100–0x12e` rejects the rest — one on-body confirmation needed.
 - **p7 has no UI** (Font / DrawText / Dialog / Widget: zero hits) ⇒ system menus can only be changed in the Linux-side `di-camera-app` (no source, very expensive).
 - **Long-press / multi-tap / key combos are architecturally impossible** (the kernel consumes keys first) ⇒ "one-key" tops out at one key = one action.
 - **Direct-loading LUTs into stills is a dead end** (the capture flow reconfigures the slot pool) ⇒ rule: preview direct-load / stills post-processing.
