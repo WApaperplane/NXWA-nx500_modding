@@ -1,7 +1,7 @@
 # NX-WA 2.88.0-nxwa.2
 
 > 基于 2.88.0-nxwa.1：**全 7 维 PW 一键直推达成**（A2 通道）+ 投递链修订 + 大量逆向成果。
-> 构建自 commit `77173c8`（分支 `nxwa`）。
+> 构建自 commit `a379fd2`（分支 `nxwa`）。
 
 ## 这个包是什么
 
@@ -23,7 +23,7 @@
 
 ## ★ 诚实边界（务必先读）
 
-- ★★ **全 7 维一键依赖 NXWA-A2 固件**：`slp_a2_p7_v117.bin`（md5 `44b61efc0625874b62ef6a45517ffda8`）；p7 段 `p7_a2.bin`（md5 `712c6fd0a49371ec05ce94c367b0d5c7`）。**固件体积（352 MB SLP）超 GitHub 分发限制，不经本 Release 提供**——请从项目渠道获取并**自担风险**。
+- ★★ **全 7 维一键依赖 NXWA-A2 固件**：**p7 段镜像 `p7_a2.bin`（md5 `712c6fd0a49371ec05ce94c367b0d5c7`）已随包提供——见 zip 内 `patch-a2/`（含中英文刷入教程）**。另有完整刷机包 `slp_a2_p7_v117.bin`（md5 `44b61efc0625874b62ef6a45517ffda8`，352 MB，走官方 SD 刷机链）因体积超限不经 Release 提供——如需请从项目渠道获取，**自担风险**。刷入前务必按教程备份 p7（可回退）。
 - **未刷 A2 的机器**：`apply` 的「直推段」静默无效（旧固件对 `0x134-0x13B` 拒收，不会崩）——其余功能不受影响；全维效果请继续用「**画面向导 → 自定义1**」保底。
 - **3D LUT**：预览可直灌；**成片需后处理**（ksfilm）。「成片直灌」为死路（已实测）。
 - **菜单是 mod_gui 覆盖层**：点击即退，不能滚动对比；只取代不迭代。
@@ -42,14 +42,15 @@
 ## 校验
 
 ```
-md5: 812fec339ce4cf11f3cb7c7593b5abaa   NX-WA-2.88.0-nxwa.2.zip
+md5: 137dd1354e169208179c654ca50ab1cc   NX-WA-2.88.0-nxwa.2.zip
 ```
 
-包内 `NX-WA-MANIFEST.txt` 含**逐文件 md5**、版本号与构建提交（本包构建自 commit `77173c8`，分支 `nxwa`）。
+包内 `NX-WA-MANIFEST.txt` 含**逐文件 md5**、版本号与构建提交（本包构建自 commit `a379fd2`，分支 `nxwa`）。
 
 ## 本版变更台账
 
 - `scripts/filmlab.sh`：`pw_direct` → A2 八连发（`0x134..0x13A` 原始值 + `0x13B` 触发）；弃用 `PWID_*`/编码依赖
 - `scripts/dicam/`：**新增** `t2_premount.sh`、`dicam_p5_install.sh`、`dicam_p5_rollback.sh`；`dicam_patch_install/rollback.sh` 去 restart
 - `VERSION`：`2.88.0-nxwa.1` → `2.88.0-nxwa.2`
+- **打包侧**：`tools/pack_release.py` 新增「额外附件」机制；包内新增 **`patch-a2/`**（`p7_a2.bin` + 中英刷入教程 `README-A2.md` / `README-A2_EN.md`）
 - 文档：`docs/current/` 新增 UI_R0 / UI_R1A–C / UI_R1_SUPPLEMENT / UI_R2R3_DESIGN / T2_DELIVERY_REVISION / A2_READBACK_VERDICT / MEM_INJECTION_EVAL / NATIVE_UI_ROADMAP（10-15）、A2 验证证据等
