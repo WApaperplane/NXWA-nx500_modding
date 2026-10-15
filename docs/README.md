@@ -21,6 +21,7 @@ docs/
 |---|---|
 | [`NATIVE_UI_ROADMAP_2026-10-15.md`](current/NATIVE_UI_ROADMAP_2026-10-15.md) | **原生 UI 任务规划**：复用官方菜单/事件/控件；M1 原生入口 → M2 三槽配方映射 → M3 实机一键效果 → M4 原生配方浏览。含定向 RE、投递选型、逐项完成标准及 A2 依赖；取代旧“独立窗口优先”和 restart 注入建议。当前为规划，未实施新补丁。 |
 | [`HANDOVER_2026-10-15.md`](current/HANDOVER_2026-10-15.md) | **10-15交接**：A1 full 实机回读通过，A2效果及刷后状态待核实；源码级资产与整包哈希台账。原生 UI 后续任务看同日路线规划。 |
+| [`SESSION_SUMMARY_2026-10-15.md`](current/SESSION_SUMMARY_2026-10-15.md) | ★★★★★ **10-15 全记录与下一步（新）**：A2 在机实证 → 离线任务全批 → **filmlab 全 7 维一键达成（双轮上机验证）** → **发布 v2.88.0-nxwa.2**；含任务台账/能力现状/下一步任务序/已知边界。 |
 | [`T2_DELIVERY_REVISION_2026-10-15.md`](current/T2_DELIVERY_REVISION_2026-10-15.md) | ★★★★ **T2 投递链修订（10-15）**：吸收 10-13 实机发现（init.sh 晚 25s；`restart` 卡死）——scripts/dicam 去 restart、语义改「只就位」；★ **生效路径裁决 = a（P5 前置）**：unit 注入 `ExecStartPre` + `t2_premount.sh`，实施三件套就绪（§6）。 |
 | [`MEM_INJECTION_EVAL_2026-10-15.md`](current/MEM_INJECTION_EVAL_2026-10-15.md) | ★★★★ **内存注入路线评估（10-15）**：poker 退出 UI 投递主候选（能力错配 + 可验证性劣后）；首度指出 T2 两缺口（时序/restart）；执行序调整。 |
 | [`UI_R0_TARGET_INVENTORY_2026-10-15.md`](current/UI_R0_TARGET_INVENTORY_2026-10-15.md) | ★★★★ **UI-R0 目标样本**：原版 App md5 `ae44293e…`（双镜像互证）/ 4×.edj / EFL 1.7.99 库版本 / **地址三体系 readelf 实证** / C-2 变体哈希 / Ghidra dump md5 台账。 |
