@@ -20,7 +20,7 @@ An enhancement mod for the **Samsung NX500 / NX1** (Tizen / DRIMe5), built on th
 
 - **FilmLab film recipes (95)** — negative / slide / B&W / cinema / stylised, five families, auto-generated 6-page menu (18/page). The recipe library lives on the SD card (editable, extensible).
 - **PW all-7-dimension one-tap**: `EV+AEL` → tap a recipe ⇒ **R/G/B/HUE/SAT/SHARP/CON are all pushed straight into the ISP and the image changes within a second** (A2 "slot-pool direct write" channel, `0x134..0x13B`; verified on-camera dimension by dimension, 2026-10-15).
-  ★ Requires: **NXWA-A2 p7 firmware**; without A2 the push step is silently ineffective (it does not crash) — use "Picture Wizard → Custom 1" as the fallback for a full-range effect.
+  ★ Requires: **NXWA-A2 p7 firmware — shipped in this package (`patch-a2/`, with CN/EN flashing guide and md5)**; without A2 the push step is silently ineffective (it does not crash) — use "Picture Wizard → Custom 1" as the fallback for a full-range effect.
 - **Objective criterion**: `sh /opt/usr/nx-ks/filmlab.sh check` reads the 7 values the ISP is *actually* using and compares them with the recipe slot (read-only, zero risk) — **"the value changed" ≠ "the value is consumed"**, and that rule underpins the whole project.
 - **3D LUT pipeline** — any `.cube` → native table → preview direct-load (LUT1 + `lutsentinel` guard); `.cube ⇄ native table` converters included.
 - **Web remote (`nx-rc`) photo gallery** — *collapsed directory model*: directories in reverse order, only the newest expanded by default, lazy loading + thumbnail cache. Fixes the first-paint stall on a single-core CPU when the SD card holds many directories.
@@ -79,7 +79,7 @@ To add one: edit that JSON -> copy back to the SD card -> reopen the menu (it re
 ### Known limits (honest notes)
 
 - `mod_gui` inherently exits on click: you cannot scroll-compare; to compare, tap two recipes in a row and watch the change.
-- **All-7 one-tap requires the A2 firmware**: it relies on the NXWA-A2 p7 patch (`0x134..0x13B` direct-write channel, achieved 2026-10-15); on **official firmware** `R/G/B/HUE` require a Picture-Wizard confirmation on the camera body — a structural limit of p7's normaliser domain, not a script bug.
+- **All-7 one-tap requires the A2 firmware** (**shipped in this package: `patch-a2/`**, with flashing guide): it relies on the NXWA-A2 p7 patch (`0x134..0x13B` direct-write channel, achieved 2026-10-15); on **official firmware** `R/G/B/HUE` require a Picture-Wizard confirmation on the camera body — a structural limit of p7's normaliser domain, not a script bug.
 - White balance is not part of a recipe: adjust WB in the camera UI.
 - A recipe is a **global colour vector** — no highlight roll-off, no zone-based exposure.
 - Recipes are **NX500-only** (the prefman offsets were only measured on NX500 1.12); on NX1, `EV+AEL` automatically falls back to the community long-recording script (`EV_AEL.community.sh`).

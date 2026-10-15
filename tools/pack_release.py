@@ -38,6 +38,13 @@ EXCLUDE_FILE_RE = re.compile(
     r'(\.pyc$|\.pyo$|\.swp$|\.orig$|\.rej$|~$|^\.DS_Store$|^Thumbs\.db$|^\.gitignore$|\.log$)'
 )
 
+# 额外附件（源路径 → zip 内路径）：随包分发、但不属于 SD 根主树（如 A2 固件补丁镜像）
+EXTRA_ASSETS = [
+    ('fw/v1.12/a2/p7_a2.bin', 'patch-a2/p7_a2.bin'),
+    ('fw/v1.12/a2/README-A2.md', 'patch-a2/README-A2.md'),
+    ('fw/v1.12/a2/README-A2_EN.md', 'patch-a2/README-A2_EN.md'),
+]
+
 
 def version():
     for line in open('VERSION', encoding='utf-8'):
@@ -84,10 +91,13 @@ def md5(path):
 def main():
     ver = version()
     files = collect()
+    extras = [(s, d) for s, d in EXTRA_ASSETS if os.path.isfile(s)]
     if '--list' in sys.argv:
         for f in files:
             print('%9d  %s' % (os.path.getsize(f), f))
-        print('共 %d 个文件' % len(files))
+        for s, d in extras:
+            print('%9d  %s  <- %s' % (os.path.getsize(s), d, s))
+        print('共 %d 个文件' % (len(files) + len(extras)))
         return
 
     os.makedirs('dist', exist_ok=True)
@@ -109,6 +119,8 @@ def main():
     ]
     for f in files:
         manifest.append('%9d  %-32s  %s' % (os.path.getsize(f), md5(f), f))
+    for s, d in extras:
+        manifest.append('%9d  %-32s  %s' % (os.path.getsize(s), md5(s), d))
     manifest.append('')
     manifest.append('共 %d 个文件' % len(files))
     manifest.append('本包不含 raw8/ .uploads/ docs/ test_server/ 等逆向产物（见仓库）。')
@@ -116,6 +128,8 @@ def main():
     with zipfile.ZipFile(zpath, 'w', zipfile.ZIP_DEFLATED, compresslevel=9) as z:
         for f in files:
             z.write(f, f)
+        for s, d in extras:
+            z.write(s, d)
         z.writestr('NX-WA-MANIFEST.txt', '\n'.join(manifest) + '\n')
 
     size = os.path.getsize(zpath)
