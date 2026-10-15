@@ -1,0 +1,44 @@
+{
+  "desc": "UI-R2b 首探样本：di-camera-app 字符串/指针替换两工艺（离线生成 + 离线验证于 2026-10-15，未上机）",
+  "src": "di-camera-app (NX500 v1.12)",
+  "src_md5": "ae44293e969101d1cf0a93cbe9b99f75",
+  "src_note": "E:/NXWA/fw/v1.12/extract/di-camera-app/com.samsung.di-camera-app/bin/di-camera-app",
+  "samples": [
+    {
+      "id": "A-equal-length",
+      "name": "CUSTOM1 图标等长替换（'1'->'2'，1 字节）",
+      "target": "字符串 'list icon/picture_wizard/icon_pw_custom01.png' @ file 0x3D0974",
+      "patches": [
+        {
+          "file_off": 4000156,
+          "file_off_hex": "0x3D099C",
+          "vaddr": "0x3D899C",
+          "old": "31",
+          "new": "32"
+        }
+      ],
+      "note": "该字符串被 表①(OSD-Draw_pw) 与 表②(SmartPanel-GetButtonInfo) 的 CUSTOM1 记录共同引用 ⇒ 一处改动、两个消费面同步变化（验证点）"
+    },
+    {
+      "id": "B-pointer",
+      "name": "CUSTOM1 图标指针替换 -> smart_filter OFF 图标（4 字节，净差 2 字节）",
+      "patches": [
+        {
+          "file_off": 4247920,
+          "file_off_hex": "0x40D170",
+          "vaddr": "0x415170",
+          "old": "74893d00",
+          "new": "30763d00",
+          "note": "表① CUSTOM1 记录 icon 指针 0x3D8974->0x3D7630（VA）；新目标 = 'list icon/smart_filter/icon_sf_off.png'（file 0x3CF630）；跨组可见变化"
+        }
+      ]
+    }
+  ],
+  "verify": {
+    "mapping": "file<0x4384AC => VA=file+0x8000",
+    "table1_record": "file 0x40C6A8 起、步长 0x114；CUSTOM1=第 10 条（0x40C6A8+10*0x114=0x40D170）；[+0x00]=icon ptr / [+0x04]=id / [+0x08]=name ptr",
+    "offline_result": "两样本应用后逐字节复验 OK；净差字节 = 0x3D099C(A) + 0x40D170/0x40D171(B) 共 3 个",
+    "conflict_check": "与 C-2 补丁点（0x3656DC 名字串 / 0xC23A8 桩）无重叠（实测）"
+  },
+  "rollback": "按 old 字节逆写；或恢复官方件（md5 ae44293e...）"
+}

@@ -50,6 +50,14 @@ echo
 echo "-- init.sh 重挂块 --"
 grep -n "dicam-T2" "$D/init.sh" 2>/dev/null && echo "  ✓ 块在位（开机自动重挂）" || echo "  ✗ 块不在 ⇒ 刷机后不会自动重挂"
 echo
+echo "-- P5 前置（unit ExecStartPre，10-15 裁决） --"
+if grep -q "t2_premount.sh" /usr/lib/systemd/system/di-camera-app.service 2>/dev/null; then
+    echo "  ✓ unit 含前置挂载行（P5 已就位 ⇒ mount 保证先于 App exec）"
+else
+    echo "  ✗ unit 未含 P5 前置（仅靠 init.sh 复挂 = 晚于 App exec 约 25s）"
+    echo "    如需启用：sh /opt/usr/nx-ks/dicam/dicam_p5_install.sh"
+fi
+echo
 echo "-- 命令通道探活 --"
 st app help >/dev/null 2>&1 && echo "  st app 通道 OK" || echo "  st app 无响应（App 未起或队列不在）"
 echo "===== end ====="

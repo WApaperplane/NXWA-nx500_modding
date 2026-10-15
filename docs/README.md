@@ -1,7 +1,7 @@
 # NX-KS2 文档索引 / Documentation Index
 
 > 本目录按**时效**分区，避免"旧结论淹没新结论"。
-> 更新：2026-10-13 · 分支：`nxwa`
+> 更新：2026-10-15 · 分支：`nxwa`
 
 ## 目录结构
 
@@ -19,9 +19,19 @@ docs/
 
 | 文档 | 定位 |
 |---|---|
+| [`NATIVE_UI_ROADMAP_2026-10-15.md`](current/NATIVE_UI_ROADMAP_2026-10-15.md) | **原生 UI 任务规划**：复用官方菜单/事件/控件；M1 原生入口 → M2 三槽配方映射 → M3 实机一键效果 → M4 原生配方浏览。含定向 RE、投递选型、逐项完成标准及 A2 依赖；取代旧“独立窗口优先”和 restart 注入建议。当前为规划，未实施新补丁。 |
+| [`HANDOVER_2026-10-15.md`](current/HANDOVER_2026-10-15.md) | **10-15交接**：A1 full 实机回读通过，A2效果及刷后状态待核实；源码级资产与整包哈希台账。原生 UI 后续任务看同日路线规划。 |
+| [`T2_DELIVERY_REVISION_2026-10-15.md`](current/T2_DELIVERY_REVISION_2026-10-15.md) | ★★★★ **T2 投递链修订（10-15）**：吸收 10-13 实机发现（init.sh 晚 25s；`restart` 卡死）——scripts/dicam 去 restart、语义改「只就位」；★ **生效路径裁决 = a（P5 前置）**：unit 注入 `ExecStartPre` + `t2_premount.sh`，实施三件套就绪（§6）。 |
+| [`MEM_INJECTION_EVAL_2026-10-15.md`](current/MEM_INJECTION_EVAL_2026-10-15.md) | ★★★★ **内存注入路线评估（10-15）**：poker 退出 UI 投递主候选（能力错配 + 可验证性劣后）；首度指出 T2 两缺口（时序/restart）；执行序调整。 |
+| [`UI_R0_TARGET_INVENTORY_2026-10-15.md`](current/UI_R0_TARGET_INVENTORY_2026-10-15.md) | ★★★★ **UI-R0 目标样本**：原版 App md5 `ae44293e…`（双镜像互证）/ 4×.edj / EFL 1.7.99 库版本 / **地址三体系 readelf 实证** / C-2 变体哈希 / Ghidra dump md5 台账。 |
+| [`UI_R1A_PW_DATAFLOW_2026-10-15.md`](current/UI_R1A_PW_DATAFLOW_2026-10-15.md) | ★★★★★ **UI-R1a PW 数据流地址图**：三条消费链（`Draw_pw` OSD 图标 / `GetButtonInfo` SmartPanel / `GetDescriptionByTitle` 名称链）；值源 `UI_Get_Value(0xda)`→`User_Spec_Get_Value`；表 0x114B×14。 |
+| [`UI_R1B_MENU_ABI_2026-10-15.md`](current/UI_R1B_MENU_ABI_2026-10-15.md) | ★★★★ **UI-R1b 菜单记录 ABI**：0x114B×N 无计数/哨兵（消费点常量 0xE）；两表=OSD 面 vs SmartPanel 面（修正旧「两副本」）；写入安全规则 6 条。 |
+| [`UI_R1C_APPLY_TRANSACTION_2026-10-15.md`](current/UI_R1C_APPLY_TRANSACTION_2026-10-15.md) | ★★★★★ **UI-R1c 原厂应用事务图**：★ **7 维 UI 值项 id 锁定**（`0xDC/DD/DE`=R/G/B、`0xDF`=HUE、`0xE0-E2` 标量；域 0..199/0..20）；写值最小动作 `GUI_Set_System_Value(4,4,id,v)`；PWB 下发链。 |
+| [`UI_R1_SUPPLEMENT_MENU_CHAIN_2026-10-15.md`](current/UI_R1_SUPPLEMENT_MENU_CHAIN_2026-10-15.md) | ★★★★★ **UI-R1 补充：菜单面与文案链**：主菜单全解（4 页签 CAMERA/MOVIE/CUSTOM/SETTING；`_INIT_105` 子项={名,域id,选项数,选项表}）；选项表结构；文案链=`dcgettext`（.mo 待真机核实）；★ **§8 `0xF00xx` 全解**（=`0xF0000`+枚举双向置换 →`STILL_START_CAPTURE(0x0201)` 48B 载荷）。 |
+| [`UI_R2R3_DESIGN_2026-10-15.md`](current/UI_R2R3_DESIGN_2026-10-15.md) | ★★★★ **UI-R2a/R2b+R3a 设计包**：入口 3 候选（OSD 面首探）；两工艺 + **实物样本**（等长 1B / 指针 4B，离线验证）；投递设计 + §5 五问逐条。 |
 | [`HANDOVER_2026-10-12.md`](current/HANDOVER_2026-10-12.md) | ★★★★★ **项目交接文档（新 · 10-12 版，取代 10-11 版）**：30 秒接手摘要 / 资产地图（★ 含 **10-12 新增资产索引** 25+ 项）/ 四层能力栈 / **关键地址与接口表** / ★★ **零补丁通道表**（`ref` / `path dump ep` / `lockinfo` / `seq`）——**动二进制前先查这里** / ★ **死路清单 13 → 15 条**（新增 #14 `f.sh` 内调 `st app` 自我死锁、#15 参数拼进 `system()` 的注入面）/ 门控快照（FAIL=0 BLOCKED=1）/ **A1 Step1 runbook** / ★ **10-12 新增教训 8 条** / 按问题找文档 |
 | [`REA_P7_V5_V6_2026-10-13.md`](current/REA_P7_V5_V6_2026-10-13.md) | ★★★★★ **REA 对 P7 待验证项 V5/V6 的定向复核（新 · 10-13）**：不重跑已完成的 `di-camera-app` 静态；修正包装 ELF 查询地址少一个 `0` 的错误（`0x53330 → 0x80053330`）；确认 `FUN_80053330` 的 `0xda..0xe2 → FUN_80051ab8` 内部应用链；外部/App 可达性因间接流边界仍未知；V5 静态选址已完成，运行时存活仍由 A1 Step1 裁决；附“原生 App UI + P7 能力层 + p14 数据层”方案 |
-| [`UI0_HOST_FEASIBILITY_2026-10-13.md`](current/UI0_HOST_FEASIBILITY_2026-10-13.md) | ★★★★★ **UI-0 进程内宿主可行性审计（新 · 10-13）**：审计「在 `di-camera-app` 进程内加载 `libnxwa-host.so`、复用其 Canvas」的全部前置——★ **注入链静态成立**（systemd **208** 支持 drop-in ／ App **非 setuid** ／ **不链 libdl、不调 dlopen** ⇒ 必须外部注入；**首选 P1 = `/run/systemd/system/*.d/` drop-in（tmpfs ⇒ 零 rootfs 写入、刷机免清）**，由 `init.sh` 幂等维护）；★ **硬前置：`#Restart=always` 被注释（崩了不自愈）⇒ UI-1 前必须同一 drop-in 一并恢复自愈**；★ UI 能力盘点（EFL 1.7.99 全系 / 官方 `.edj` 4 个 / **slp_edc×21 在 rootfs 缺失之谜待上机** / `edje_cc` 不在机内 / elm_ U 230 符号面 / `DISPLAY=:0`=Xorg 栈）；★ **UI-1a/1b 分级最小实验 + 4 条判据**（心跳/存活/观测纪律/可逆）+ 8 项开机核查清单 + 风险 R1–R7 |
+| [`UI0_HOST_FEASIBILITY_2026-10-13.md`](current/UI0_HOST_FEASIBILITY_2026-10-13.md) | **进程内宿主早期审计**：保留App/ABI/EFL资产盘点。P1晚建drop-in、restart回滚和 `Restart=always` 建议已被实机结果否决；8项核查已完成，真机仅4个 `.edj`。后续按 `NATIVE_UI_ROADMAP_2026-10-15.md` 逐项补证，宿主加载与原生菜单接入均未被证明可用。 |
 | [`W6_CAPABILITY_PROBE_2026-10-12.md`](current/W6_CAPABILITY_PROBE_2026-10-12.md) | ★★★★★ **W-6 能力探针结果（新 · 10-12 晚）**：★★★ **`st cap ref` = p7 的 T-Kernel 调试通道** —— `ref stack` 给出**任务表 + 栈地址**（LogTask/MCB_Sender/MCB_Receiver/AeMain/SmartAuto…）、`ref int` 给出**中断计数**（SSIF/PP/AWB/AF）；★ **对 A1 的直接价值**：所有任务栈在 `0x81823xxx`~`0x821a5xxx`，**远离特判块 `0x80011504`** ⇒ 排除"零区被栈覆盖"（旁证）；★ **`st cap path dump ep`** 零补丁读 EP 寄存器（`/dev/mem` 读不到的那片）| `st cap lockinfo` 实时曝光+场景 | `st cap seq` 拍摄 sequencer；★ **`st cap` 实有 23 条命令、mod 只用 6 条** |
 | [`U1_ONMACHINE_2026-10-12.md`](current/U1_ONMACHINE_2026-10-12.md) | ★★★★★ **U1 只读上机结果（新 · 10-12 晚）**：相机上线后补 u1 证据 ⇒ **门控 FAIL=2/BLOCKED=2 → FAIL=0/BLOCKED=1**；★ **`/dev/mem` 四点对照**（阳性对照 `0x94000000` 读到 3072 B ✓ / 阴性对照如预期 / **两个 p7 LUT 缓冲均 `Bad address`**）⇒ 判定 **G2b**，把死路 #6 从单点观察升级为**带对照的完整证明**；★ `st cap iqr` 184 ID ⇒ G5-2 转绿；G5-3 仍 BLOCKED（需"写入+槽号"实验，**未造表过门**）；含 4 条环境教训（路径转换 / 后台任务不可靠 / grep 二进制 / `epmc.arm` 编译） |
 | [`PATCH_SURFACE_REVIEW_2026-10-12.md`](current/PATCH_SURFACE_REVIEW_2026-10-12.md) | ★★★★★ **功能补丁化空间评估（新 · 10-12）**：把"哪些功能值得补丁化"整理成分层模型 **L0 零补丁接线 → L1 App 数据表 → L2 App 代码 → L3 p7（金矿）→ L4 其它固件 → L5 禁区**；★★ **L0 最被低估**——相机上的 `mcbtest` 能发任意 MCB 命令号，字典里 `SET_MF_POSITION`/`ZEBRA_CTRL`/`LOCK_AEAF`/`CIS_CLEANING` **从未接线**，加上 `nx capture quality/RAW`、`nx record pause/resume` 都是零补丁可得；★★ **p7 重点应从"A1 那 4 个 id"转向"归一化器扩表机制"**；184 维 tuning 建议**先只读映射再谈写**；附判据 J1–J5（零补丁穷尽/可判/可逆/机制>hack/不碰死路）与待验证清单 V1–V6 |
@@ -125,7 +135,7 @@ docs/
 | **"原生 UI 一键滤镜"能不能做 / 要不要重写固件** | `current/FW_NATIVE_UI_ONEKEY_FEASIBILITY_2026-10-10.md` |
 | **PW 全 7 维能不能外部一键 / "画面向导自定义1"靠什么触发** | `current/PW_APPLY_TRIGGER_CHAIN_2026-10-10.md` |
 | **REA 对 P7 V5/V6 复核到了哪 / 原生 UI 与 P7 怎么分层** | `current/REA_P7_V5_V6_2026-10-13.md` |
-| **"魔灯式原生 UI"怎么落地 / 宿主 `.so` 怎么注入 di-camera-app** | `current/UI0_HOST_FEASIBILITY_2026-10-13.md` |
+| **原生 UI 下一步做什么 / 如何复用官方菜单、是否需要宿主** | `current/NATIVE_UI_ROADMAP_2026-10-15.md`（当前任务与验收）+ `current/CAMERA_ONLINE_PROBE_2026-10-13.md`（实机约束） |
 | **开发相机 App / 复用官方 UI 能力** | `current/CAMERA_APP_STRUCTURE_2026-10-07.md` |
 | **搞懂刷机原理 / 本地刷固件** | `current/ILAUNCHER_FIRMWARE_FLASH_2026-10-07.md` |
 | 用 3D LUT 的 API | `current/3DLUT_API_GUIDE.md` |
