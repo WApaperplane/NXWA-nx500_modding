@@ -144,7 +144,7 @@ find / -name 'di-camera-app.mo' 2>/dev/null | head -5   # 若耗时长可缩到 
 
 | # | 项 | 验证法 | 状态 |
 |---|---|---|---|
-| U-mo | `.mo` 真机存在性 | §5 只读清单 | ⏸ 暂缓 |
+| U-mo | `.mo` 真机存在性 | ✅ **已解（§10）**：真机有完整 locale 树（副本不完整）；文案链 = gettext 结案 | ✅ |
 | U-msg | `MSG_名` 是否还有第二层解析 | 搜更多消费者；上机 hook | ❓ |
 | U-cus | CUSTOM 槽动态名机制（若有） | .mo 核实后定向 | ❓ |
 | U-hide | `isSub1HideItem` 的完整判定表 | 读 VA 对应函数 | ❓（低优先）|
@@ -243,6 +243,53 @@ mm_camera_capture_still（capfw VA 0x2897C）
 
 ---
 *§9 追加：2026-10-15 · 全离线（p7 固件全量反汇编 + 调用图）；零写机。命令：`arm-linux-gnueabi-objdump -D -b binary -m arm --adjust-vma=0x80000000 /mnt/e/NXWA/fw/v1.12/parts/chunk-05.bin`（**路径须写死，勿用 shell 变量**——WSL 参数层会吞）。*
+
+---
+
+## 10. ★ 文案链全解：.mo 真机抓取 + CUSTOM1 之谜结案（2026-10-15 上机只读）
+
+> 手段：**真机（相机在线）**抓取 `/usr/share/locale/zh_CN/LC_MESSAGES/di-camera-app.mo`（172,850 B）→ 手动 MO 解析（**2194 词条**）。**§5 待办②结案；§3.3-1「CUSTOM1 之谜」结案。**
+
+### 10.1 真机 vs 副本（教训再记）
+- **真机 `/usr/share/locale/` 完整**：104 语言目录 + `locale-archive`（47MB）+ 各语言 `di-camera-app.mo`（树内共 580 个 .mo）。
+- **rootfs-112 副本缺 locale 内容**（此前全盘 `find -L` 为 0 的原因）——「副本不完整」教训再添一例（与 `.edj` 之谜同类）。
+- `res/locale` = symlink → `/usr/share/locale`（真机亦然，但**目标存在**）。
+
+### 10.2 文案机制结案 ✅（修正旧表述）
+
+- **主显示名链**：数据表 name 字段（如 `CAP_MENU_CUSTOM_MODE_1`）→ **`dcgettext(msgid=name)` 直接查 .mo** → 文案。
+  ⇒ **CUSTOM1「零代码引用」之谜解开**：**并非动态机制——根本不需要代码引用**（数据表 → gettext 直达）。
+- **描述链**（选项表 +0x20 的 MSG 名）同样 = gettext（如 `MSG_MENU_PW_CUSTOM03`）。
+- **三个 CUSTOM 共享 `MSG_MENU_PW_CUSTOM03`**：该 msgid 文案 = 「**应用用户定义的风格。**」（通用描述）——三槽描述本来相同 ⇒ 共享合理（非 bug、非占位）。
+- `GetDescriptionByTitle`（strcmp 链）的角色收窄 = **instruction/帮助视图的 title→description**——**不是主显示名路径**（修正 §3 相关表述）。
+
+### 10.3 实测文案摘录（zh_CN）
+
+| msgid | 文案 |
+|---|---|
+| `CAP_FN_PW` | **图片向导** |
+| `CAP_MENU_CUSTOM_MODE_1 / 2 / 3` | **自定义 1 / 2 / 3** |
+| `CAP_MENU_CUSTOM_MODE_PRO` | 自定义专业模式 |
+| `MSG_MENU_PW_OFF` | 不使用图片向导风格。 |
+| `MSG_MENU_PW` | 通过调整逐项列出的细节，用户可选择希望的效果。 |
+| `MSG_MENU_PW_VIVID` | 应用高饱和颜色。 |
+
+### 10.4 ★ 对 mod 的价值（M2 接口明确化）
+
+**「配方名显示」补丁面候选（排名更新）**：
+1. ★ **改 .mo 的 msgstr**（`CAP_MENU_CUSTOM_MODE_1/2/3` → 配方名）——**文件级替换**，路径 `/usr/share/locale/<lang>/LC_MESSAGES/di-camera-app.mo`（rootfs；刷机需重放；体量小、可逆、需重编 .mo 或等长字节替换）。
+2. 改选项表/图标表 name 指针 → 指向**另一个已有 msgid**（复用文案；零 .mo 改动）。
+3. ~~改 strcmp 链~~——**不必要**（主显示名不走它）。
+
+- 「每槽不同名（动态）」的最直路 = msgstr 静态替换 + 运行时值层（App 值系统）分层设计——M2 设计待细化。
+
+### 10.5 复现与归档
+
+- 抓取：`nx-fetch.py` / probe（telnet cp → SD → FTP 拉）；解析：**手动 MO**（`struct` 读 header + 双表；node：charset 头可能 ascii 误标 ⇒ 自行按 UTF-8 解码）。
+- 本地归档：`E:/tmp/dicam_zh_CN.mo`（172,850 B，md5 `f2d60cd2…`）。
+
+---
+*§10 追加：2026-10-15 · 上机只读（cp→SD→FTP）+ 离线解析；零写机（相机端临时文件已清理）。*
 
 ---
 *生成：2026-10-15 · 分支工作树（Codex 克隆）· 全离线（反编译 + 转储 + WSL 全盘搜索）；零写机。*

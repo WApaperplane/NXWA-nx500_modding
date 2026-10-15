@@ -1,0 +1,12 @@
+{
+  "ts": "2026-10-15T22:15+08:00",
+  "method": "telnet dd if=/dev/mmcblk0p7 of=/mnt/mmc/p7_rb.bin bs=1M → FTP pull → PC compare",
+  "partition_size": 31456768,
+  "image_size": 12075648,
+  "readback_first12M_md5": "712c6fd0a49371ec05ce94c367b0d5c7",
+  "a2_pack_md5": "712c6fd0a49371ec05ce94c367b0d5c7",
+  "diff_bytes_vs_a2": 0,
+  "tail_note": "partition tail beyond 12,075,648 B: 19381120 bytes; nonzero 4K-blocks sampled: 0",
+  "verdict": "A2 fully present on device (byte-identical); H2/H4 excluded; H1 essentially excluded; likely H3 (window/misjudge)",
+  "followup": "A2 functional seq test (0x134..0x13B) pending user go-ahead"
+}
