@@ -1,0 +1,28 @@
+{
+ "src": "E:\\NXWA\\fw\\v1.12\\extract\\di-camera-app\\com.samsung.di-camera-app\\bin\\di-camera-app",
+ "src_md5": "ae44293e969101d1cf0a93cbe9b99f75",
+ "out": "E:\\tmp\\dicam_strings\\c2\\di-camera-app.c2",
+ "out_md5": "0e1da8b326f49728e9394f98a53ffd35",
+ "patches": [
+  {
+   "name": "P1 \"uscom\"->\"film\"",
+   "file_off": 3561180,
+   "vaddr": 3593948,
+   "old": "7573636f6d00",
+   "new": "66696c6d0000"
+  },
+  {
+   "name": "P2 stub@FUN_000ca3a8",
+   "file_off": 795560,
+   "vaddr": 828328,
+   "old": "f8452de9010050e3350000da040091e5",
+   "new": "020050e31eff2f31040091e5538effea",
+   "stub_words": [
+    "0xe3500002",
+    "0x312fff1e",
+    "0xe5910004",
+    "0xeaff8e53"
+   ]
+  }
+ ]
+}

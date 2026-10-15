@@ -1,0 +1,258 @@
+{
+  "evidence_id": "ev_e00d195e3286fd6062e6fa9f32bee2ee2cdf0dd18f2430256e68fddd155c0a49",
+  "subject": {
+    "name": "libmulticore-bridge.so",
+    "digest": {
+      "sha256": "f14a12e4d9172989d73c8dff0fd59580c65ccd1972264c9d94c8d1a736820390"
+    },
+    "format": "elf",
+    "architecture": "arm",
+    "local_path": "/mnt/e/NXWA/fw/v1.12/extract/usr-lib/libmulticore-bridge.so"
+  },
+  "provider": {
+    "id": "rea-workflow",
+    "name": "REA composed investigation workflow",
+    "version": "1"
+  },
+  "analysis_profile": {
+    "provider": {
+      "id": "rea-workflow",
+      "name": "REA composed investigation workflow",
+      "version": "1"
+    },
+    "parameters": {
+      "upstream_analysis_profile": {
+        "provider": {
+          "id": "ghidra",
+          "name": "Ghidra",
+          "version": "12.1.4"
+        },
+        "parameters": {
+          "target_kind": "executable",
+          "target_format": "elf",
+          "architecture": "arm",
+          "available_architectures": [
+            "arm"
+          ],
+          "import_mode": "ephemeral-source-immutable",
+          "annotation_policy": "atomic-function-entry-metadata-v1",
+          "load_image_observations": "source-mappings-entry-context-v2",
+          "function_body_evidence": "complete-inclusive-ranges-v1",
+          "function_references": "complete-body-and-entry-reference-manager-v2",
+          "location_resolution": "explicit-address-exact-entry-symbol-first-v3",
+          "instruction_flow_evidence": "decoded-return-pcode-v1",
+          "process_launch": "inspected-jvm-launch-support-v1",
+          "jump_table_evidence": "typed-case-default-blocks-v1",
+          "decompiler_jump_loads": true,
+          "loader": "auto-from-header",
+          "language_id": "auto-from-header",
+          "compiler_spec_id": "auto-default",
+          "analyzer_preset": "ghidra-default"
+        },
+        "digest": "d6dcc035b9648ba2aa59ab7f114beeb9f76c9c94e5566de048b8c0495492de26"
+      },
+      "workflow_revision": 2
+    },
+    "digest": "539ae87a089f8e9cc48d8dfe6045113a342d9c0b239d427d77365e4fe1d5cf26"
+  },
+  "predicate_type": "rea.analysis",
+  "operation": "binary_overview",
+  "parameters": {},
+  "raw_result": null,
+  "normalized_result": {
+    "document": "target-f14a12e4d917.so",
+    "segments": [
+      {
+        "name": "segment_1.1",
+        "start": "0x10000",
+        "end": "0x100f4",
+        "length": 244
+      },
+      {
+        "name": ".note.gnu.build-id",
+        "start": "0x100f4",
+        "end": "0x10118",
+        "length": 36
+      },
+      {
+        "name": ".hash",
+        "start": "0x10118",
+        "end": "0x109f4",
+        "length": 2268
+      },
+      {
+        "name": ".dynsym",
+        "start": "0x109f4",
+        "end": "0x11cd4",
+        "length": 4832
+      },
+      {
+        "name": ".dynstr",
+        "start": "0x11cd4",
+        "end": "0x13b58",
+        "length": 7812
+      },
+      {
+        "name": ".gnu.version",
+        "start": "0x13b58",
+        "end": "0x13db4",
+        "length": 604
+      },
+      {
+        "name": ".gnu.version_r",
+        "start": "0x13db4",
+        "end": "0x13e34",
+        "length": 128
+      },
+      {
+        "name": ".rel.dyn",
+        "start": "0x13e34",
+        "end": "0x1413c",
+        "length": 776
+      },
+      {
+        "name": ".rel.plt",
+        "start": "0x1413c",
+        "end": "0x146c4",
+        "length": 1416
+      },
+      {
+        "name": ".init",
+        "start": "0x146c4",
+        "end": "0x146d0",
+        "length": 12
+      },
+      {
+        "name": ".plt",
+        "start": "0x146d0",
+        "end": "0x14f30",
+        "length": 2144
+      },
+      {
+        "name": ".text",
+        "start": "0x14f30",
+        "end": "0x186d8",
+        "length": 14248
+      },
+      {
+        "name": ".fini",
+        "start": "0x186d8",
+        "end": "0x186e0",
+        "length": 8
+      },
+      {
+        "name": ".rodata",
+        "start": "0x186e0",
+        "end": "0x190f4",
+        "length": 2580
+      },
+      {
+        "name": ".ARM.extab",
+        "start": "0x190f4",
+        "end": "0x1933c",
+        "length": 584
+      },
+      {
+        "name": ".ARM.exidx",
+        "start": "0x1933c",
+        "end": "0x19724",
+        "length": 1000
+      },
+      {
+        "name": ".eh_frame",
+        "start": "0x19724",
+        "end": "0x19728",
+        "length": 4
+      },
+      {
+        "name": ".init_array",
+        "start": "0x22000",
+        "end": "0x22008",
+        "length": 8
+      },
+      {
+        "name": ".fini_array",
+        "start": "0x22008",
+        "end": "0x2200c",
+        "length": 4
+      },
+      {
+        "name": ".jcr",
+        "start": "0x2200c",
+        "end": "0x22010",
+        "length": 4
+      },
+      {
+        "name": ".data.rel.ro",
+        "start": "0x22010",
+        "end": "0x22168",
+        "length": 344
+      },
+      {
+        "name": ".dynamic",
+        "start": "0x22168",
+        "end": "0x22298",
+        "length": 304
+      },
+      {
+        "name": ".got",
+        "start": "0x22298",
+        "end": "0x225dc",
+        "length": 836
+      },
+      {
+        "name": ".data",
+        "start": "0x225dc",
+        "end": "0x225e8",
+        "length": 12
+      },
+      {
+        "name": ".bss",
+        "start": "0x225e8",
+        "end": "0x22ccc",
+        "length": 1764
+      },
+      {
+        "name": "EXTERNAL",
+        "start": "0x23000",
+        "end": "0x230fc",
+        "length": 252
+      },
+      {
+        "name": ".ARM.attributes",
+        "start": ".ARM.attributes:0x0",
+        "end": ".ARM.attributes:0x35",
+        "length": 53
+      },
+      {
+        "name": ".gnu_debuglink",
+        "start": ".gnu_debuglink:0x0",
+        "end": ".gnu_debuglink:0x24",
+        "length": 36
+      },
+      {
+        "name": ".shstrtab",
+        "start": ".shstrtab:0x0",
+        "end": ".shstrtab:0xfe",
+        "length": 254
+      },
+      {
+        "name": "_elfSectionHeaders",
+        "start": "_elfSectionHeaders:0x0",
+        "end": "_elfSectionHeaders:0x460",
+        "length": 1120
+      }
+    ],
+    "segment_count": 30,
+    "procedure_count": 447,
+    "string_count": 432
+  },
+  "confidence": "derived",
+  "authority": "shipped-artifact",
+  "environment": null,
+  "limitations": [
+    "Derived by an REA composed workflow."
+  ],
+  "locations": [],
+  "evidence_links": []
+}

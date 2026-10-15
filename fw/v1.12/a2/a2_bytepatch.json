@@ -1,0 +1,27 @@
+{
+ "src": "E:/NXWA/fw/v1.12/parts/chunk-05.bin",
+ "dst": "E:/NXWA/fw/v1.12/a2\\p7_a2.bin",
+ "md5": "712c6fd0a49371ec05ce94c367b0d5c7",
+ "patches": [
+  {
+   "off": 331952,
+   "old": "b70000ea",
+   "new": "1301ffea"
+  },
+  {
+   "off": 314672,
+   "old": "7a2702eb",
+   "new": "fe11ffeb"
+  }
+ ],
+ "block1": {
+  "off": 70916,
+  "len": 24,
+  "bytes": "133e40e20b0053e3a0ff008a000081e50000a0e317ff00ea"
+ },
+ "block2": {
+  "off": 70960,
+  "len": 80,
+  "bytes": "70402de94d4f41e2060054e30300009a070054e30700000a7040bde8731503ea005092e5dc0084e20510a0e16a4e01eb0000a0e37080bde8da00a0e30a10a0e3654e01eb4f0101eb0000a0e37080bde8"
+ }
+}

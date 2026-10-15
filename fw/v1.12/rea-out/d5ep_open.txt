@@ -1,0 +1,187 @@
+
+libudd5.so:     file format elf32-littlearm
+
+
+Disassembly of section .text:
+
+0001bcc0 <d5_ep_open@@Base>:
+   1bcc0:	e92d4810 	push	{r4, fp, lr}
+   1bcc4:	e28db008 	add	fp, sp, #8
+   1bcc8:	e24dd00c 	sub	sp, sp, #12
+   1bccc:	e59f40ec 	ldr	r4, [pc, #236]	@ 1bdc0 <d5_ep_open@@Base+0x100>
+   1bcd0:	e08f4004 	add	r4, pc, r4
+   1bcd4:	e59f30e8 	ldr	r3, [pc, #232]	@ 1bdc4 <d5_ep_open@@Base+0x104>
+   1bcd8:	e08f3003 	add	r3, pc, r3
+   1bcdc:	e1a00003 	mov	r0, r3
+   1bce0:	ebffb200 	bl	84e8 <pthread_mutex_lock@plt>
+   1bce4:	e59f30dc 	ldr	r3, [pc, #220]	@ 1bdc8 <d5_ep_open@@Base+0x108>
+   1bce8:	e08f3003 	add	r3, pc, r3
+   1bcec:	e1a00003 	mov	r0, r3
+   1bcf0:	e3a01002 	mov	r1, #2
+   1bcf4:	e3a02000 	mov	r2, #0
+   1bcf8:	e59f30cc 	ldr	r3, [pc, #204]	@ 1bdcc <d5_ep_open@@Base+0x10c>
+   1bcfc:	e7943003 	ldr	r3, [r4, r3]
+   1bd00:	ebffb38a 	bl	8b30 <d5_udd_open@plt>
+   1bd04:	e50b0010 	str	r0, [fp, #-16]
+   1bd08:	e51b3010 	ldr	r3, [fp, #-16]
+   1bd0c:	e3530001 	cmp	r3, #1
+   1bd10:	0a00001f 	beq	1bd94 <d5_ep_open@@Base+0xd4>
+   1bd14:	e3530002 	cmp	r3, #2
+   1bd18:	0a000011 	beq	1bd64 <d5_ep_open@@Base+0xa4>
+   1bd1c:	e3530000 	cmp	r3, #0
+   1bd20:	1a000015 	bne	1bd7c <d5_ep_open@@Base+0xbc>
+   1bd24:	e59f30a0 	ldr	r3, [pc, #160]	@ 1bdcc <d5_ep_open@@Base+0x10c>
+   1bd28:	e7943003 	ldr	r3, [r4, r3]
+   1bd2c:	e5933000 	ldr	r3, [r3]
+   1bd30:	e1a00003 	mov	r0, r3
+   1bd34:	ebfffdc7 	bl	1b458 <dump_memory@@Base+0x63c>
+   1bd38:	ebffb41b 	bl	8dac <d5_ep_top_udd_open@plt>
+   1bd3c:	ebffff38 	bl	1ba24 <dump_memory@@Base+0xc08>
+   1bd40:	e1a03000 	mov	r3, r0
+   1bd44:	e3530000 	cmp	r3, #0
+   1bd48:	0a000013 	beq	1bd9c <d5_ep_open@@Base+0xdc>
+   1bd4c:	e59f307c 	ldr	r3, [pc, #124]	@ 1bdd0 <d5_ep_open@@Base+0x110>
+   1bd50:	e08f3003 	add	r3, pc, r3
+   1bd54:	e1a00003 	mov	r0, r3
+   1bd58:	ebffb170 	bl	8320 <pthread_mutex_unlock@plt>
+   1bd5c:	e3e03063 	mvn	r3, #99	@ 0x63
+   1bd60:	ea000013 	b	1bdb4 <d5_ep_open@@Base+0xf4>
+   1bd64:	e59f3068 	ldr	r3, [pc, #104]	@ 1bdd4 <d5_ep_open@@Base+0x114>
+   1bd68:	e08f3003 	add	r3, pc, r3
+   1bd6c:	e1a00003 	mov	r0, r3
+   1bd70:	ebffb16a 	bl	8320 <pthread_mutex_unlock@plt>
+   1bd74:	e3e03000 	mvn	r3, #0
+   1bd78:	ea00000d 	b	1bdb4 <d5_ep_open@@Base+0xf4>
+   1bd7c:	e59f3054 	ldr	r3, [pc, #84]	@ 1bdd8 <d5_ep_open@@Base+0x118>
+   1bd80:	e08f3003 	add	r3, pc, r3
+   1bd84:	e1a00003 	mov	r0, r3
+   1bd88:	ebffb164 	bl	8320 <pthread_mutex_unlock@plt>
+   1bd8c:	e3e03001 	mvn	r3, #1
+   1bd90:	ea000007 	b	1bdb4 <d5_ep_open@@Base+0xf4>
+   1bd94:	e1a00000 	nop			@ (mov r0, r0)
+   1bd98:	ea000000 	b	1bda0 <d5_ep_open@@Base+0xe0>
+   1bd9c:	e1a00000 	nop			@ (mov r0, r0)
+   1bda0:	e59f3034 	ldr	r3, [pc, #52]	@ 1bddc <d5_ep_open@@Base+0x11c>
+   1bda4:	e08f3003 	add	r3, pc, r3
+   1bda8:	e1a00003 	mov	r0, r3
+   1bdac:	ebffb15b 	bl	8320 <pthread_mutex_unlock@plt>
+   1bdb0:	e3a03000 	mov	r3, #0
+   1bdb4:	e1a00003 	mov	r0, r3
+   1bdb8:	e24bd008 	sub	sp, fp, #8
+   1bdbc:	e8bd8810 	pop	{r4, fp, pc}
+   1bdc0:	00038680 	andeq	r8, r3, r0, lsl #13
+   1bdc4:	0003a128 	andeq	sl, r3, r8, lsr #2
+   1bdc8:	0002ed7c 	andeq	lr, r2, ip, ror sp
+   1bdcc:	00000568 	andeq	r0, r0, r8, ror #10
+   1bdd0:	0003a0b0 	strheq	sl, [r3], -r0
+   1bdd4:	0003a098 	muleq	r3, r8, r0
+   1bdd8:	0003a080 	andeq	sl, r3, r0, lsl #1
+   1bddc:	0003a05c 	andeq	sl, r3, ip, asr r0
+
+0001bde0 <d5_ep_close@@Base>:
+   1bde0:	e92d4810 	push	{r4, fp, lr}
+   1bde4:	e28db008 	add	fp, sp, #8
+   1bde8:	e24dd00c 	sub	sp, sp, #12
+   1bdec:	e59f4090 	ldr	r4, [pc, #144]	@ 1be84 <d5_ep_close@@Base+0xa4>
+   1bdf0:	e08f4004 	add	r4, pc, r4
+   1bdf4:	e59f308c 	ldr	r3, [pc, #140]	@ 1be88 <d5_ep_close@@Base+0xa8>
+   1bdf8:	e08f3003 	add	r3, pc, r3
+   1bdfc:	e1a00003 	mov	r0, r3
+   1be00:	ebffb1b8 	bl	84e8 <pthread_mutex_lock@plt>
+   1be04:	e3a00000 	mov	r0, #0
+   1be08:	ebffb270 	bl	87d0 <d5_udd_close@plt>
+   1be0c:	e50b0010 	str	r0, [fp, #-16]
+   1be10:	e51b3010 	ldr	r3, [fp, #-16]
+   1be14:	e3530000 	cmp	r3, #0
+   1be18:	0a000002 	beq	1be28 <d5_ep_close@@Base+0x48>
+   1be1c:	e3530001 	cmp	r3, #1
+   1be20:	0a000010 	beq	1be68 <d5_ep_close@@Base+0x88>
+   1be24:	ea00000e 	b	1be64 <d5_ep_close@@Base+0x84>
+   1be28:	e59f305c 	ldr	r3, [pc, #92]	@ 1be8c <d5_ep_close@@Base+0xac>
+   1be2c:	e7943003 	ldr	r3, [r4, r3]
+   1be30:	e5933000 	ldr	r3, [r3]
+   1be34:	e1a00003 	mov	r0, r3
+   1be38:	ebfffe91 	bl	1b884 <dump_memory@@Base+0xa68>
+   1be3c:	e59f3048 	ldr	r3, [pc, #72]	@ 1be8c <d5_ep_close@@Base+0xac>
+   1be40:	e7943003 	ldr	r3, [r4, r3]
+   1be44:	e5933000 	ldr	r3, [r3]
+   1be48:	e1a00003 	mov	r0, r3
+   1be4c:	ebffb4b4 	bl	9124 <close@plt>
+   1be50:	e59f3034 	ldr	r3, [pc, #52]	@ 1be8c <d5_ep_close@@Base+0xac>
+   1be54:	e7943003 	ldr	r3, [r4, r3]
+   1be58:	e3e02000 	mvn	r2, #0
+   1be5c:	e5832000 	str	r2, [r3]
+   1be60:	ea000001 	b	1be6c <d5_ep_close@@Base+0x8c>
+   1be64:	ea000000 	b	1be6c <d5_ep_close@@Base+0x8c>
+   1be68:	e1a00000 	nop			@ (mov r0, r0)
+   1be6c:	e59f301c 	ldr	r3, [pc, #28]	@ 1be90 <d5_ep_close@@Base+0xb0>
+   1be70:	e08f3003 	add	r3, pc, r3
+   1be74:	e1a00003 	mov	r0, r3
+   1be78:	ebffb128 	bl	8320 <pthread_mutex_unlock@plt>
+   1be7c:	e24bd008 	sub	sp, fp, #8
+   1be80:	e8bd8810 	pop	{r4, fp, pc}
+   1be84:	00038560 	andeq	r8, r3, r0, ror #10
+   1be88:	0003a008 	andeq	sl, r3, r8
+   1be8c:	00000568 	andeq	r0, r0, r8, ror #10
+   1be90:	00039f90 	muleq	r3, r0, pc	@ <UNPREDICTABLE>
+
+0001be94 <d5_ep_udd_set_clk_rate@@Base>:
+   1be94:	e92d4810 	push	{r4, fp, lr}
+   1be98:	e28db008 	add	fp, sp, #8
+   1be9c:	e24ddf4b 	sub	sp, sp, #300	@ 0x12c
+   1bea0:	e50b0120 	str	r0, [fp, #-288]	@ 0xfffffee0
+   1bea4:	e59f41e8 	ldr	r4, [pc, #488]	@ 1c094 <d5_ep_udd_set_clk_rate@@Base+0x200>
+   1bea8:	e08f4004 	add	r4, pc, r4
+   1beac:	e3a03000 	mov	r3, #0
+   1beb0:	e50b3010 	str	r3, [fp, #-16]
+   1beb4:	e51b3120 	ldr	r3, [fp, #-288]	@ 0xfffffee0
+   1beb8:	e3530000 	cmp	r3, #0
+   1bebc:	ba000004 	blt	1bed4 <d5_ep_udd_set_clk_rate@@Base+0x40>
+   1bec0:	e51b2120 	ldr	r2, [fp, #-288]	@ 0xfffffee0
+   1bec4:	e3a03ca3 	mov	r3, #41728	@ 0xa300
+   1bec8:	e34131e1 	movt	r3, #4577	@ 0x11e1
+   1becc:	e1520003 	cmp	r2, r3
+   1bed0:	da000001 	ble	1bedc <d5_ep_udd_set_clk_rate@@Base+0x48>
+   1bed4:	e3e03000 	mvn	r3, #0
+   1bed8:	ea00006a 	b	1c088 <d5_ep_udd_set_clk_rate@@Base+0x1f4>
+   1bedc:	e59f31b4 	ldr	r3, [pc, #436]	@ 1c098 <d5_ep_udd_set_clk_rate@@Base+0x204>
+   1bee0:	e7943003 	ldr	r3, [r4, r3]
+   1bee4:	e5932000 	ldr	r2, [r3]
+   1bee8:	e24b3e12 	sub	r3, fp, #288	@ 0x120
+   1beec:	e1a00002 	mov	r0, r2
+   1bef0:	e3061832 	movw	r1, #26674	@ 0x6832
+   1bef4:	e3441004 	movt	r1, #16388	@ 0x4004
+   1bef8:	e1a02003 	mov	r2, r3
+   1befc:	ebffb23c 	bl	87f4 <ioctl@plt>
+   1bf00:	e50b0010 	str	r0, [fp, #-16]
+   1bf04:	e51b3010 	ldr	r3, [fp, #-16]
+   1bf08:	e3530000 	cmp	r3, #0
+   1bf0c:	aa00005c 	bge	1c084 <d5_ep_udd_set_clk_rate@@Base+0x1f0>
+   1bf10:	e59f2184 	ldr	r2, [pc, #388]	@ 1c09c <d5_ep_udd_set_clk_rate@@Base+0x208>
+   1bf14:	e08f2002 	add	r2, pc, r2
+   1bf18:	e24b3f46 	sub	r3, fp, #280	@ 0x118
+   1bf1c:	e8920003 	ldm	r2, {r0, r1}
+   1bf20:	e5830000 	str	r0, [r3]
+   1bf24:	e2833004 	add	r3, r3, #4
+   1bf28:	e1c310b0 	strh	r1, [r3]
+   1bf2c:	e24b3e11 	sub	r3, fp, #272	@ 0x110
+   1bf30:	e2433002 	sub	r3, r3, #2
+   1bf34:	e3a020fa 	mov	r2, #250	@ 0xfa
+   1bf38:	e1a00003 	mov	r0, r3
+   1bf3c:	e3a01000 	mov	r1, #0
+   1bf40:	ebffb31b 	bl	8bb4 <memset@plt>
+   1bf44:	e3a03005 	mov	r3, #5
+   1bf48:	e50b3014 	str	r3, [fp, #-20]	@ 0xffffffec
+   1bf4c:	e51b3014 	ldr	r3, [fp, #-20]	@ 0xffffffec
+   1bf50:	e24b2f46 	sub	r2, fp, #280	@ 0x118
+   1bf54:	e0821003 	add	r1, r2, r3
+   1bf58:	e51b3014 	ldr	r3, [fp, #-20]	@ 0xffffffec
+   1bf5c:	e26320fb 	rsb	r2, r3, #251	@ 0xfb
+   1bf60:	e59f3138 	ldr	r3, [pc, #312]	@ 1c0a0 <d5_ep_udd_set_clk_rate@@Base+0x20c>
+   1bf64:	e08f3003 	add	r3, pc, r3
+   1bf68:	e3000166 	movw	r0, #358	@ 0x166
+   1bf6c:	e58d0000 	str	r0, [sp]
+   1bf70:	e51b0010 	ldr	r0, [fp, #-16]
+   1bf74:	e58d0004 	str	r0, [sp, #4]
+   1bf78:	e1a00001 	mov	r0, r1
+   1bf7c:	e1a01002 	mov	r1, r2

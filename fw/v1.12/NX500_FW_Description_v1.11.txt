@@ -1,0 +1,69 @@
+﻿
+1. Title : Firmware version 1.12
+2. Applicable Model : NX500
+3. Description
+Please use i-Launcher program when you want to upgrade your camera.
+Refer to Firmware upgrade guide.
+
+[Caution] During upgrading firmware, a camera turns itself on and off two times.
+Do not cut off the power and Do not remove battery before complete message.
+
+
+[v1.12]
+Fixed Bluetooth connection problem with Smart phone(Android Marshmallow(Android6.0 version)).
+
+※ Update together camera firmware and Samsnung Camera Manager App
+   - Camera Firm ware : v1.12 or later version
+   - Samsung Camera Manager App : v1.6.07.160510  or later version
+
+
+[v1.11]
+1. Added MP4 Video transmission at Mobile Link
+
+2. Added capture icon on Playback Exif mode
+3. Improved AF/AE performance
+   - Improved AF to work during zooming
+     (6 Supporting Lens : 16-50mm S, 50-150mm S, 16-50mm PZ, 18-55mm Ⅲ, 12-24mm, 50-200mm Ⅲ)
+    ※ Please updated Lens together with Latest version
+       Lens Firmware can be updated by iLauncher
+
+   - Improved side face recognition performance
+   - Improved spot light AF speed and performance
+   - Improved object motion estimation performance
+
+4. Overall fixed minor bugs
+
+
+[v1.10]
+1. Still Photo Enhancements:
+   - Improvements to the overall Auto Focus:
+     . Enhanced AF performance in low light condition
+     . Enhanced AF performance in backlit and spot light
+     . Enhanced AF performance in the corners when utilizing 16-50mm PZ lens
+     . Enhanced Face Detection AF performance
+     . Enhanced AF performance in movie mode
+   - Added Zone AF mode
+   - Increased the size of AF to 5 steps in AF  Area Size
+   - Increased the Face Detection Area of the sensor
+   - Includes 4 most popular Pro Suggest presets (Cinematic, Memories, Gorgeous night, and High Speed)
+   - Added  Selfie as Flipped  mode
+     . The image is flipped to capture as in the preview.
+   - Improved Selfie AF function in Timer mode
+     . Continuous AF is default in Selfie Timer.
+   - Simplified EXIF data preview 
+
+2. Video Recording Enhancements:
+   - Added  Pro  mode in movie quality and increased the bit rates for movie size and quality (up to 70Mbps)
+     ** Movie Recording Time changed to 25 minutes at FHD 60P/50P
+   - Larger sensor read out data size with improved FHD quality up to 60P
+   - Remains in Stand By mode after recording
+   - 1280x720 (120P) setting in the Movie Size Menu for easy access
+     . Sound recording is available
+   - Capture individual 4K frame forward & backward with precision
+     . Embedded EXIF data in jpeg
+   - Added NEW MF Responsiveness mode
+     (Capable of setting to Low, Medium, High focus angle in manual focus mode)
+
+3. Overall fixed minor bugs
+
+* Refer to the latest User manual for new function explanation.
