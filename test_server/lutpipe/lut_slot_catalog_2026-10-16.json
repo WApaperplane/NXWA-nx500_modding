@@ -366,7 +366,7 @@
    "fingerprint_ok": true,
    "pad_zero_ok": true,
    "is_gray": false,
-   "guess": "identity"
+   "guess": "黑点0（**非**identity——严格比对见 lut_slot_verify.py）"
   },
   {
    "block": "A",
@@ -470,7 +470,7 @@
    "fingerprint_ok": true,
    "pad_zero_ok": true,
    "is_gray": false,
-   "guess": "identity"
+   "guess": "黑点0（**非**identity——严格比对见 lut_slot_verify.py）"
   },
   {
    "block": "A",
@@ -496,7 +496,7 @@
    "fingerprint_ok": true,
    "pad_zero_ok": true,
    "is_gray": false,
-   "guess": "identity"
+   "guess": "黑点0（**非**identity——严格比对见 lut_slot_verify.py）"
   },
   {
    "block": "A",
@@ -522,7 +522,7 @@
    "fingerprint_ok": false,
    "pad_zero_ok": true,
    "is_gray": false,
-   "guess": "identity"
+   "guess": "黑点0（**非**identity——严格比对见 lut_slot_verify.py）"
   },
   {
    "block": "B",
@@ -886,7 +886,7 @@
    "fingerprint_ok": true,
    "pad_zero_ok": true,
    "is_gray": false,
-   "guess": "identity"
+   "guess": "黑点0（**非**identity——严格比对见 lut_slot_verify.py）"
   },
   {
    "block": "B",
@@ -938,7 +938,7 @@
    "fingerprint_ok": true,
    "pad_zero_ok": true,
    "is_gray": false,
-   "guess": "identity"
+   "guess": "黑点0（**非**identity——严格比对见 lut_slot_verify.py）"
   },
   {
    "block": "B",
@@ -990,7 +990,7 @@
    "fingerprint_ok": true,
    "pad_zero_ok": true,
    "is_gray": false,
-   "guess": "identity"
+   "guess": "黑点0（**非**identity——严格比对见 lut_slot_verify.py）"
   },
   {
    "block": "B",
@@ -1042,7 +1042,7 @@
    "fingerprint_ok": true,
    "pad_zero_ok": true,
    "is_gray": false,
-   "guess": "identity"
+   "guess": "黑点0（**非**identity——严格比对见 lut_slot_verify.py）"
   },
   {
    "block": "B",
@@ -1094,7 +1094,7 @@
    "fingerprint_ok": true,
    "pad_zero_ok": true,
    "is_gray": false,
-   "guess": "identity"
+   "guess": "黑点0（**非**identity——严格比对见 lut_slot_verify.py）"
   }
  ]
 }

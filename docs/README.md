@@ -1,7 +1,7 @@
 # NX-KS2 文档索引 / Documentation Index
 
 > 本目录按**时效**分区，避免"旧结论淹没新结论"。
-> 更新：2026-10-15 · 分支：`nxwa`
+> 更新：2026-10-16 · 分支：`nxwa`
 
 ## 目录结构
 
@@ -19,6 +19,9 @@ docs/
 
 | 文档 | 定位 |
 |---|---|
+| [`FILMLAB_LUT_NATIVE_UI_GOALS_2026-10-16.md`](current/FILMLAB_LUT_NATIVE_UI_GOALS_2026-10-16.md) | **FilmLab + LUT 原生 UI 目标与任务设计**：统一预设、原生入口和状态；保留已有LUT预览成果，成片单独验收；C1验证表消费机制，运行时换表为长期候选；含T1–T8任务、依赖及完成标准，修正重启方案中历史实验与identity口径。 |
+| [`T1_LUT_SEMANTICS_2026-10-16.md`](current/T1_LUT_SEMANTICS_2026-10-16.md) | **T1 证据收口（已执行）**：42 槽严格 identity 校验（=0，最接近 1045/4913）、轴序同序确认、槽边界/长度；**写表测试 / identity 诊断 / 恢复原厂**三概念分离；能力矩阵（E1✓/E3✓/E4✗）。工具 `lut_slot_verify.py`。 |
+| [`T2_PRESET_PROTOCOL_2026-10-16.md`](current/T2_PRESET_PROTOCOL_2026-10-16.md) | **T2 统一预设与适配器协议 v1**：`nxwa.preset/1` 格式（稳定 ID/能力标记/still 机制与验收分离）、状态机（含 partial/external_modified）、适配器接口、关闭=恢复原厂（禁 identity 冒充）；模拟后端 `preset_sim.py` 6/6 场景 PASS。 |
 | [`NATIVE_UI_ROADMAP_2026-10-15.md`](current/NATIVE_UI_ROADMAP_2026-10-15.md) | **原生 UI 任务规划**：复用官方菜单/事件/控件；M1 原生入口 → M2 三槽配方映射 → M3 实机一键效果 → M4 原生配方浏览。含定向 RE、投递选型、逐项完成标准及 A2 依赖；取代旧“独立窗口优先”和 restart 注入建议。当前为规划，未实施新补丁。 |
 | [`HANDOVER_2026-10-15.md`](current/HANDOVER_2026-10-15.md) | **10-15交接**：A1 full 实机回读通过；**A2 已实证在机 + 功能验证 PASS（详见 SESSION_SUMMARY）**；源码级资产与整包哈希台账。 |
 | [`SESSION_SUMMARY_2026-10-15.md`](current/SESSION_SUMMARY_2026-10-15.md) | ★★★★★ **10-15 全记录与下一步（新）**：A2 在机实证 → 离线任务全批 → **filmlab 全 7 维一键达成（双轮上机验证）** → **发布 v2.88.0-nxwa.2**；含任务台账/能力现状/下一步任务序/已知边界。 |

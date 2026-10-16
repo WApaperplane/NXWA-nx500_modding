@@ -180,9 +180,9 @@ sh /opt/usr/nx-ks/filmlab.sh apply portra400   （或 pwpush gold200 …）
 |---|---|---|---|
 | 1 | `busybox sh /mnt/mmc/filmlab/lutpick.sh list` | 表目录列出（空 ⇒ 先 `deploy_luts.py push`） | — |
 | 2 | `lutpick.sh apply <identity> --dry` | 落点探测 + cmasafe 四查全过（不写） | 失败 ⇒ 换时机，**不换地址硬上** |
-| 3 | `lutpick.sh apply <identity>`（**sel=1**） | ★ **E1 首发**（sel=1 从未实测）：Cfg 终态 `SelLUT=1`；取景器**中性** | `lutpick.sh off` / `lutload.arm restore` |
-| 4 | `lutpick.sh apply <Portra 400>` | 取景器出胶片风格（R3-B 目视判据） | 同上 |
-| 5 | ★★ **Still 判据**：**不半按** → 直拍 1-2 张 → 比对成片 vs 取景器 | 一致 ⇒ **所见即所得闭环**；不一致 ⇒ 保底（ksfilm）或转 R-C | — |
+| 3 | `lutpick.sh apply <identity>`（**sel=1**） | **回归**（E1 已于 10-09 通过）：Cfg 终态 `SelLUT=1`；画面变化。★ **写表需前置「抢回态」**——先对焦/半按一次再写（10-09 §2 规律；非抢回态写入不生效） | `lutpick.sh off` / `lutload.arm restore` |
+| 4 | `lutpick.sh apply <Portra 400>` | 取景器出**可分辨、与表语义一致**的风格（新判据；「写 identity→中性」已作废） | 同上 |
+| 5 | Still：直拍 1-2 张 → 比对成片 vs 取景器 | **E4 已判负**（直灌不跟随）⇒ 本步为**复核记录**（记 Still 流程 Cfg `0x0→0x1100` 重配置序列），不作为闭环期望 | — |
 | 6 | `lutsentinel.arm --sel 1 --count 120`（约 1 分钟，500ms 间隔） | 半按/切档后**画面自动恢复**（日志有恢复行）；无不稳定告警 | `--count 1` 体检模式先试 |
 | 7 | 叠加观察：PW 一键（A2）与 LUT 同开 | 记录观感（是否过强/共振） | 二者独立可分别关 |
 | 8 | 回退演练：`off` + `restore` + 重启 | 画面回中性、参数回官方 | — |

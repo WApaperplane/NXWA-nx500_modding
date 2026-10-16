@@ -17,7 +17,8 @@ import os
 SLOT = 0x4D00
 TABLE = 4913 * 4           # 19652
 BLOCKS = [("A", 0x808592C0, 20), ("B", 0x808B9AC0, 22)]
-KNOWN = {(21, 0, 13): "标准(已知)", (0, 0, 0): "identity"}
+KNOWN = {(21, 0, 13): "标准(已知)",
+         (0, 0, 0): "黑点0（**非**identity——严格比对见 lut_slot_verify.py）"}
 
 
 def item(blk, idx):
@@ -29,7 +30,8 @@ def guess_type(e0, is_gray, is_id):
     if e0 in KNOWN:
         return KNOWN[e0]
     if is_id:
-        return "identity"
+        # 注意：黑点为零 ≠ identity（2026-10-16 修正；严格 identity 全池为 0）
+        return f"黑点0（非identity；E0={e0}）"
     if is_gray:
         return f"灰阶类（E0={e0}）"
     if e0[0] == e0[1] and e0[2] != e0[0]:
@@ -78,7 +80,7 @@ def main():
     n_std = sum(1 for r in rows if r["guess"].startswith("标准"))
     n_id = sum(1 for r in rows if r["e0"] == (0, 0, 0))
     print("-" * 92)
-    print(f"合计 {len(rows)} 槽；标准类 {n_std}；E0=(0,0,0)（identity 候选）{n_id}；"
+    print(f"合计 {len(rows)} 槽；标准类 {n_std}；E0=(0,0,0)（黑点0，**非 identity**）{n_id}；"
           f"指纹异常 {sum(1 for r in rows if not r['fingerprint_ok'])}")
 
     if a.json_out:
