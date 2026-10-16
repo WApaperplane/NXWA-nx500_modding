@@ -1,0 +1,20 @@
+== T5 契约自测与模拟（2026-10-16）==
+
+== T5 契约自测（模拟后端）==
+[OK  ] probe JSON 契约
+   {"ok": true, "tools": {"cmasafe": 1, "cmapick2": 1, "lutapi": 1, "lutload": 1, "lutsentinel": 1, "lutpick": 1}, "luts_count": 4, "guard": 0, "precondition": "apply 前需前置抢回态（先对焦一次）"}
+[OK  ] apply 成功 → level=full / sel=1
+[OK  ] apply 后 status：guard=1 / current=portra400
+[OK  ] 表不存在 → failed/table_not_found
+[OK  ] dry-run 不改变状态
+[OK  ] ★ rollback 的 identity_used == false（关闭≠identity）
+[OK  ] rollback 走 factory_restore 且停守护
+[OK  ] rollback 后状态清空
+
+== 结果：PASS ==
+
+### 模拟输出示例 ###
+{"ok": true, "tools": {"cmasafe": 1, "cmapick2": 1, "lutapi": 1, "lutload": 1, "lutsentinel": 1, "lutpick": 1}, "luts_count": 4, "guard": 0, "precondition": "apply 前需前置抢回态（先对焦一次）"}
+{"ok": true, "level": "full", "table": "portra400", "sel": 1, "dry": false, "note": "预览生效（LUT1）；成片走 postproc（E4 口径）"}
+{"ok": true, "guard": 0, "current": "", "sel": 0, "note": "current 为软件记账（非硬件读回）"}
+{"ok": true, "path": "factory_restore", "identity_used": false, "guard_stopped": false, "restore_rc": 0, "note": "关闭=停守护+恢复出厂表指针（非 identity）"}

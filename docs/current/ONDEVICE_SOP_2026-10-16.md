@@ -190,6 +190,8 @@ sh /opt/usr/nx-ks/filmlab.sh apply portra400   （或 pwpush gold200 …）
 
 ⛔ 纪律：单会话单命令 + FTP 拉结果 + `setsid`；禁 `systemctl restart di-camera-app`。
 ⛔ LUT 专属：写表时**不在拍摄态**；看取景器**决不半按**（半按 = p7 抢回，正常现象，不是回滚失败）。
+★ **推荐执行方式**（T5 后端，JSON 判据）：`busybox sh /mnt/mmc/filmlab/lut_backend.sh probe|apply <名>|rollback|status`
+—— `rollback` 走 factory_restore（**identity_used:false**，关闭≠identity）；`apply` 前需**先对焦一次**（抢回态）。
 
 ## 11. 证据落点约定
 
