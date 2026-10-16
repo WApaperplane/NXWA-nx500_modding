@@ -1,0 +1,20 @@
+{
+  "schema": "nxwa.preset/1",
+  "id": "_identity_diag",
+  "display_name": "(诊断) 数学恒等表",
+  "capability": {
+    "pw": false,
+    "lut": true,
+    "preview": true,
+    "still": "none",
+    "requires_firmware": null
+  },
+  "lut": {
+    "file": "identity.bin",
+    "sha256": "PENDING_BUILD",
+    "format": "nx17q4",
+    "purpose": "diagnostic",
+    "input_color": { "gamut": "sRGB", "verified": true }
+  },
+  "meta": { "notes": "★ 仅诊断：用于验证写入链与「移除风格处理」的差异；**不得**用作「关闭 LUT / 恢复原厂」手段（T1 §4）——关闭走 rollback/restore_factory" }
+}

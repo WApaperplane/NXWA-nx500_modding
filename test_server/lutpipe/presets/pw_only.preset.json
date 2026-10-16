@@ -1,0 +1,25 @@
+{
+  "schema": "nxwa.preset/1",
+  "id": "velia50",
+  "display_name": "Velia 50",
+  "capability": {
+    "pw": true,
+    "lut": false,
+    "preview": true,
+    "still": "native",
+    "requires_firmware": "A2",
+    "still_verified": false
+  },
+  "pw": {
+    "R": 104,
+    "G": 101,
+    "B": 96,
+    "HUE": 10,
+    "SAT": 10,
+    "SHARP": 9,
+    "CON": 9
+  },
+  "meta": {
+    "notes": "纯 PW 预设：A2 直推 7 维即时生效（预览=成片同一 ISP 参数链，still=native 的前提是实机验收）"
+  }
+}

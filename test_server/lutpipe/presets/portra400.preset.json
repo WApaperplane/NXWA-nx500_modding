@@ -1,0 +1,40 @@
+{
+  "schema": "nxwa.preset/1",
+  "id": "portra400",
+  "display_name": "Portra 400",
+  "capability": {
+    "pw": true,
+    "lut": true,
+    "preview": true,
+    "still": "postproc",
+    "requires_firmware": "A2",
+    "still_verified": false
+  },
+  "pw": {
+    "R": 106,
+    "G": 100,
+    "B": 93,
+    "HUE": 11,
+    "SAT": 9,
+    "SHARP": 9,
+    "CON": 8
+  },
+  "lut": {
+    "file": "portra400.bin",
+    "sha256": "PENDING_BUILD",
+    "format": "nx17q4",
+    "purpose": "style",
+    "input_color": {
+      "gamut": "sRGB",
+      "transfer": "gamma2.2",
+      "verified": false
+    }
+  },
+  "slot_map": {
+    "slot": 1,
+    "verified": false
+  },
+  "meta": {
+    "notes": "成片走 postproc（E4：LUT 直灌不跟随）；lut.input_color.verified=false ⇒ UI 不得宣称色彩准确"
+  }
+}

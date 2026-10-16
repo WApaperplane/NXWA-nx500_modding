@@ -1,0 +1,78 @@
+
+== S1 全成功 ==
+   [state] -> selected
+   [state] -> applying
+   [apply:pw] -> full {'values': {'R': 106, 'G': 100, 'B': 93, 'HUE': 11, 'SAT': 9, 'SHARP': 9, 'CON': 8}}
+   [apply:lut] -> full {'sel': 1, 'guard': True}
+   [state] -> applied
+   [state] -> preview_only
+   [cap] 成片=postproc ⇒ 仅预览生效（如实标注）
+   ✅ S1 PASS
+
+== S2 部分失败（PW 成功 / LUT 失败）==
+   [state] -> selected
+   [state] -> applying
+   [apply:pw] -> full {'values': {'R': 106, 'G': 100, 'B': 93, 'HUE': 11, 'SAT': 9, 'SHARP': 9, 'CON': 8}}
+   [apply:lut] -> failed {'err': '落点/四查被拒'}
+   [state] -> partial
+   [partial] 成功=['pw'] 未达成=['lut']（如实显示；不做原子化包装）
+   -- retry（清除故障后）--
+   [retry] 重试未达成部分
+   [state] -> applying
+   [apply:pw] -> full {'values': {'R': 106, 'G': 100, 'B': 93, 'HUE': 11, 'SAT': 9, 'SHARP': 9, 'CON': 8}}
+   [apply:lut] -> full {'sel': 1, 'guard': True}
+   [state] -> applied
+   [state] -> preview_only
+   [cap] 成片=postproc ⇒ 仅预览生效（如实标注）
+   ✅ S2 PASS
+
+== S3 取消（apply 中途）==
+   [state] -> selected
+   [state] -> applying
+   [cancel] 置取消标志（已提交步骤不回滚；取消≠回滚）
+   [apply:lut] -> failed {'err': 'cancelled_before_commit'}
+   [state] -> partial
+   [partial] 成功=['pw'] 未达成=['lut']（如实显示；不做原子化包装）
+   -- 显式回滚 --
+   [rollback] 回滚（逐适配器）
+   [state] -> rolled_back
+   ✅ S3 PASS
+
+== S4 外部改参 ==
+== S1 全成功 ==
+   [state] -> selected
+   [state] -> applying
+   [apply:pw] -> full {'values': {'R': 106, 'G': 100, 'B': 93, 'HUE': 11, 'SAT': 9, 'SHARP': 9, 'CON': 8}}
+   [apply:lut] -> full {'sel': 1, 'guard': True}
+   [state] -> applied
+   [state] -> preview_only
+   [cap] 成片=postproc ⇒ 仅预览生效（如实标注）
+   [state] -> external_modified
+   [external] 检测到原厂改参（原厂菜单改了 PW 值）⇒ 不再宣称精确匹配
+   ✅ S4 PASS
+
+== S5 固件缺失（requires_firmware=A2）==
+   [state] -> selected
+   [state] -> applying
+   [apply:pw] -> skipped {'reason': 'firmware_missing'}
+   [apply:lut] -> full {'sel': 1, 'guard': True}
+   [state] -> partial
+   [partial] 成功=['lut'] 未达成=['pw']（如实显示；不做原子化包装）
+   ⇒ pw=skipped 如实标注（不是 failed，也不是成功）
+   ✅ S5 PASS
+
+== S6 关闭语义（不得写 identity）==
+== S1 全成功 ==
+   [state] -> selected
+   [state] -> applying
+   [apply:pw] -> full {'values': {'R': 106, 'G': 100, 'B': 93, 'HUE': 11, 'SAT': 9, 'SHARP': 9, 'CON': 8}}
+   [apply:lut] -> full {'sel': 1, 'guard': True}
+   [state] -> applied
+   [state] -> preview_only
+   [cap] 成片=postproc ⇒ 仅预览生效（如实标注）
+   [close_lut] 停止守护 + 恢复确认过的原厂选表/配置
+   [close_lut] path=restore_factory(sel=0 + lutload restore) identity_used=False
+   [state] -> rolled_back
+   ✅ S6 PASS
+
+== 汇总：6/6 场景 PASS ==
