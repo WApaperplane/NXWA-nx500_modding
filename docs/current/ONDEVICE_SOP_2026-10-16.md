@@ -69,6 +69,16 @@ mount | grep -E "di-camera-app|LC_MESSAGES"      # 清净（让"开关机后新�
 
 ## 3. U1 —— P5 部署（开关机 1 次）
 
+> ⛔⛔ **10-16 晚实测：本批判据 5-7 全灭 —— P5 的 `ExecStartPre` 在本机正常开机路径上根本不执行。**
+> 根因（决定性证据见 `raw8/gates/dicam/u1_p5_failure_2026-10-16.md`）：本机是「内核冷启 + 用户态恢复」休眠机型
+> （`/proc/cmdline` 含 `hibernate=nocompress`/`noresume`、`/etc/snapshot`、`hib_exjob`/`hibernation.sh`、p9 当 swap 装镜像、
+> 开机早期时钟 = 2016-03-30），**PID 1 的内存状态（含已解析的 unit 表）随之恢复 ⇒ systemd 不重读 unit 文件**。
+> 实测：文件正确（`md5 b227c619…`，ctime/mtime 18:07 未被改）、PID 1 视图与 shell 视图一致、`show` 里连条目都没有，
+> 但 `systemctl daemon-reload` 后**立刻出现**该行（`start_time=[n/a]`）。同时 App 仍是 **boot+12.2s 被重新 exec**（pid 247 starttime=12.24s）。
+> ⇒ **改 unit / 依赖 systemd 每次开机重读配置的投递方式，在本机不成立。** 交付机制需在下列三者中重裁：
+> ① 恢复链钩子（`hib_exjob` / 写 `/tmp/.hib_post` 的那一环）｜② **就地落盘**（App 在 p10 可写、M2 的 `.mo` 需替换 p10 上的 `usr_share_locale.squash`）｜③ 刷机式（改 SLP 内 p10 镜像，L4）。
+> ⛔ 在机制重裁前，**不要再靠"开关机"验证 §3 序 5-7**。
+
 | 序 | 动作 | 判据/记录 |
 |---|---|---|
 | 1 | `sh /opt/usr/nx-ks/dicam/dicam_patch_status.sh` | **基线**：无 bind-mount、P5 行 ✗、M2 未挂载（存证） |
