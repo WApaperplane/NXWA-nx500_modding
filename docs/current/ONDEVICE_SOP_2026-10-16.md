@@ -134,7 +134,8 @@ dd if=/dev/mmcblk0p7 bs=1M count=12 2>/dev/null | md5sum
 # 期望：69050a17ea9fdbcdab4cf32e7b5ffdb2
 ```
 - 与 10-15 首读结果（`raw8/gates/a2/readback_2026-10-15.json`）比对：**一致 ⇒ 运行期未覆盖**（「两次一致」= 更强证据）。
-- 不符时：拉回本地逐字节比对（`nx-fetch.py`；比对前 12,075,648B 与 `p7_a2.bin`）。
+- 不符或需强证据时：拉回本地精查（`nx-fetch.py`）→ `python tools/a2_readback_check.py <拉回件> --json raw8/gates/a2/readback2_2026-10-16.json`
+  （双判据：head 12,075,648B 逐字节 + 尾部零区；**已用 10-15 真机件回归 PASS**）。
 - 落点：`raw8/gates/a2/readback2_2026-10-16.json`。
 
 ### 7.2 多配方体验（用户日常）
