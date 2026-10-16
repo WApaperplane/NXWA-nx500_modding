@@ -22,6 +22,15 @@
 
 ---
 
+## Two installation channels (pick one)
+
+| Channel | How | Suits |
+|---|---|---|
+| **A. Lightweight (this document)** | p7 segment image `p7_a2.bin` + telnet `dd` | Machines with telnet enabled; write takes ~1 s |
+| **B. Full package** | Download release asset `slp_a2_p7_v117.bin` → put in SD root as `nx500.bin` → camera menu "Settings → Device Information → Firmware Update" | No telnet needed; uses the official flashing chain |
+
+> Both write the **same** p7 content. Channel B download: GitHub `v2.88.0-nxwa.2` release page, **Assets** section (a `.md5` file is included).
+
 ## Flashing steps (run one by one over telnet)
 
 ```sh
@@ -36,9 +45,12 @@ sync
 dd if=/mnt/mmc/patch-a2/p7_a2.bin of=/dev/mmcblk0p7 bs=1M
 sync; sync; sync
 
-# 3) Read-back verification (first 12 MB must match the image exactly)
+# 3) Read-back verification
+#    12 MiB read = image 12,075,648 B + 507,264 B zero padding at the partition tail
 dd if=/dev/mmcblk0p7 bs=1M count=12 2>/dev/null | md5sum
-#    expected: 712c6fd0a49371ec05ce94c367b0d5c7
+#    standard case expected: 69050a17ea9fdbcdab4cf32e7b5ffdb2
+#    If mismatch: (1) re-run this step once; (2) still fails → pull it back and
+#    byte-compare with p7_a2.bin (FTP to SD, then use tools/nx-fetch.py)
 ```
 
 ⚠️ **Double-check that the device is `/dev/mmcblk0p7`** (the ISP-firmware partition; measured on NX500) both before and after writing. On other models/environments **do not copy blindly** — confirm first (`cat /proc/partitions` or existing documentation).
@@ -83,7 +95,7 @@ Then **normal power off → power on**. Alternatively re-flash official 1.12 via
 | Artifact | md5 |
 | --- | --- |
 | `p7_a2.bin` (this folder) | `712c6fd0a49371ec05ce94c367b0d5c7` |
-| Full flashing package `slp_a2_p7_v117.bin` (352 MB, official SD chain, **not shipped in this package**) | `44b61efc0625874b62ef6a45517ffda8` |
+| Full flashing package `slp_a2_p7_v117.bin` (352 MB, official SD chain, **available as a Release asset since 2026-10-16**: `v2.88.0-nxwa.2` page, Assets section) | `44b61efc0625874b62ef6a45517ffda8` |
 
 ## One-line mechanism
 

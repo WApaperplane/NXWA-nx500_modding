@@ -22,6 +22,15 @@
 
 ---
 
+## 两条安装通道（二选一）
+
+| 通道 | 做法 | 适合 |
+|---|---|---|
+| **A. 轻量（本文档正文）** | p7 段镜像 `p7_a2.bin` + telnet `dd` 写入 | 已开 telnet 的机器；写入约 1 秒 |
+| **B. 完整整包** | 下载 Release 附件 `slp_a2_p7_v117.bin` → 放 SD 卡根、改名 `nx500.bin` → 机身菜单「设置 → 设备信息 → 固件更新」刷入 | 不想动 telnet；走官方刷机链 |
+
+> 二者刷入的 p7 内容**等价**。通道 B 下载入口：GitHub `v2.88.0-nxwa.2` Release 页下方 **Assets** 区（含 `.md5` 校验文件）。
+
 ## 刷入步骤（telnet 下逐条执行）
 
 ```sh
@@ -36,9 +45,12 @@ sync
 dd if=/mnt/mmc/patch-a2/p7_a2.bin of=/dev/mmcblk0p7 bs=1M
 sync; sync; sync
 
-# 3) 回读校验（前 12 MB 必须与镜像完全一致才继续）
+# 3) 回读校验
+#    12 MiB 读回 = 镜像 12,075,648 B + 分区尾部 507,264 B 零区
 dd if=/dev/mmcblk0p7 bs=1M count=12 2>/dev/null | md5sum
-#    应输出 712c6fd0a49371ec05ce94c367b0d5c7
+#    标准情况应输出：69050a17ea9fdbcdab4cf32e7b5ffdb2
+#    若不符：① 重跑本步一次；② 仍不符 → 拉回本地与 p7_a2.bin 逐字节比对
+#    （FTP 到 SD 后用仓库 tools/nx-fetch.py；常见原因 = 分区尾部有历史非零数据或写入不完整）
 ```
 
 ⚠️ **写入前后各核对该设备名是 `/dev/mmcblk0p7`**（p7 = ISP 固件分区；NX500 实测）。机型/环境不同时**不要盲抄**，先用 `cat /proc/partitions` 或既有资料确认。
@@ -83,7 +95,7 @@ sync; sync; sync
 | 物件 | md5 |
 | --- | --- |
 | `p7_a2.bin`（本目录） | `712c6fd0a49371ec05ce94c367b0d5c7` |
-| 完整刷机包 `slp_a2_p7_v117.bin`（352 MB，走官方 SD 刷机链，**不随本包分发**） | `44b61efc0625874b62ef6a45517ffda8` |
+| 完整刷机包 `slp_a2_p7_v117.bin`（352 MB，走官方 SD 刷机链，**自 2026-10-16 起作为 Release 附件提供**：`v2.88.0-nxwa.2` 页 Assets 区） | `44b61efc0625874b62ef6a45517ffda8` |
 
 ## 原理一句话
 
