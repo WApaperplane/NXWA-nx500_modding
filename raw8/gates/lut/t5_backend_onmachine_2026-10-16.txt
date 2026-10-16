@@ -1,0 +1,21 @@
+## T5 backend probe (v2, after fix)
+{"ok":true,"tools":{"cmasafe":1,"cmapick2":1,"lutapi":1,"lutload":1,"lutsentinel":1,"lutpick":1},"luts_count":10,"guard":0,"precondition":"apply 前需前置抢回态（先对焦一次）"}
+## T5 backend status
+{"ok":true,"guard":0,"current":"Kodak_Portra_400","sel":1,"note":"current 为软件记账（非硬件读回）"}
+## lutpick list
+=== LUT 目录：/mnt/mmc/filmlab/luts ===
+  A00_color.bin  (19712 B)
+  A01_color.bin  (19712 B)
+  A02_color.bin  (19712 B)
+  Kodak_Ektachrome_100_VS.bin  (19712 B)
+  Kodak_Elite_Chrome_400.bin  (19712 B)
+  Kodak_Kodachrome_64_Generic.bin  (19712 B)
+  Kodak_Portra_160.bin  (19712 B)
+  Kodak_Portra_400.bin  (19712 B)
+  Kodak_Portra_800.bin  (19712 B)
+  _identity.bin  (19712 B)
+  共 10 个表
+  当前记账: Kodak_Portra_400  （软件记账，非硬件读回）
+## deployed md5
+c2c04f2db529a69dce63eb1ba3f82a35  /mnt/mmc/filmlab/lut_backend.sh
+-rwxr-xr-x 1 root root 5529 Oct 16 18:20 /mnt/mmc/filmlab/lut_backend.sh

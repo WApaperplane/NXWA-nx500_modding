@@ -178,8 +178,8 @@ sh /opt/usr/nx-ks/filmlab.sh apply portra400   （或 pwpush gold200 …）
 
 | 序 | 动作 | 判据 | 回退 |
 |---|---|---|---|
-| 1 | `busybox sh /mnt/mmc/filmlab/lutpick.sh list` | 表目录列出（空 ⇒ 先 `deploy_luts.py push`） | — |
-| 2 | `lutpick.sh apply <identity> --dry` | 落点探测 + cmasafe 四查全过（不写） | 失败 ⇒ 换时机，**不换地址硬上** |
+| 1 | `/opt/usr/nx-ks/busybox sh /mnt/mmc/filmlab/lutpick.sh list` | 表目录列出（10 张，10-16 已验证；空 ⇒ 先 `deploy_luts.py push`） | — |
+| 2 | `/opt/usr/nx-ks/busybox sh /mnt/mmc/filmlab/lut_backend.sh apply <identity> --dry` | 落点探测 + cmasafe 四查全过（**不写**）；10-16 已通过（落点 `0x8f800000`） | 失败 ⇒ 换时机，**不换地址硬上** |
 | 3 | `lutpick.sh apply <identity>`（**sel=1**） | **回归**（E1 已于 10-09 通过）：Cfg 终态 `SelLUT=1`；画面变化。★ **写表需前置「抢回态」**——先对焦/半按一次再写（10-09 §2 规律；非抢回态写入不生效） | `lutpick.sh off` / `lutload.arm restore` |
 | 4 | `lutpick.sh apply <Portra 400>` | 取景器出**可分辨、与表语义一致**的风格（新判据；「写 identity→中性」已作废） | 同上 |
 | 5 | Still：直拍 1-2 张 → 比对成片 vs 取景器 | **E4 已判负**（直灌不跟随）⇒ 本步为**复核记录**（记 Still 流程 Cfg `0x0→0x1100` 重配置序列），不作为闭环期望 | — |
@@ -190,8 +190,14 @@ sh /opt/usr/nx-ks/filmlab.sh apply portra400   （或 pwpush gold200 …）
 
 ⛔ 纪律：单会话单命令 + FTP 拉结果 + `setsid`；禁 `systemctl restart di-camera-app`。
 ⛔ LUT 专属：写表时**不在拍摄态**；看取景器**决不半按**（半按 = p7 抢回，正常现象，不是回滚失败）。
-★ **推荐执行方式**（T5 后端，JSON 判据）：`busybox sh /mnt/mmc/filmlab/lut_backend.sh probe|apply <名>|rollback|status`
+★ **推荐执行方式**（T5 后端，JSON 判据）：`/opt/usr/nx-ks/busybox sh /mnt/mmc/filmlab/lut_backend.sh probe|apply <名>|rollback|status`
 —— `rollback` 走 factory_restore（**identity_used:false**，关闭≠identity）；`apply` 前需**先对焦一次**（抢回态）。
+
+★★ **上机实测修正（10-16 晚）**：
+1. 相机**无 PATH 上的 `busybox`**（只有 `/opt/usr/nx-ks/busybox`；`/bin/sh` 是 bash）⇒ 一律用绝对路径或直接 `sh`。
+2. LUT 工具全在 **SD `/mnt/mmc/filmlab/`**（`/opt/usr/nx-ks/` 无）；后端已按此修正 `lutload` 落点（双端 md5 `c2c04f2d…`）。
+3. **长命令（≥10s）勿经 telnet 直跑**：会话超时会把输出截断（只剩首行）⇒ 用 `setsid … > /mnt/mmc/xxx.log 2>&1 &` 后轮询取回。
+4. 序 2 干跑已通过，落点 = **`0x8f800000`（区起点）**，而 10-09 成功那次为 `0x8f81e000` ⇒ **写表前先裁决「区起点是否可用」**（见 `raw8/gates/lut/t5_backend_onmachine_2026-10-16.md` §5）。
 
 ## 11. 证据落点约定
 

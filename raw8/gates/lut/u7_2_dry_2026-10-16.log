@@ -1,0 +1,17 @@
+-- apply _identity (--dry)（sel=1 通道）--
+  === lutpick apply：/mnt/mmc/filmlab/luts/_identity.bin ===
+  >>> [1/3] cmapick2 探测落点（只读）
+      落点 = 0x8f800000
+  >>> [2/3] cmasafe 安全闸
+  === cmasafe：CMA 落点安全闸（只读） ===
+    目标 phys = 0x8f800000  检查 20480 字节
+    [1] 范围: CMA#2 (0x8f800000+72MB) OK
+    [2] 4KB 对齐 OK
+    [3] 黑名单 OK（避开 0x94000000..0x94005000）
+    [4] 全零 OK（20480 字节逐字节扫过）
+  *** cmasafe 通过：0x8f800000 可作一次性落点 ***
+      ★ 提醒：本闸只证『此刻全零』，不证『长期可独占』（铁律 61）。
+      ★ 落点选用后应尽快完成 load/save，不要隔很久再回来用。
+  >>> [3/3] --dry：跳过 load（闸已通过，落点可用）
+{"ok":true,"level":"full","table":"_identity","sel":1,"dry":true,"note":"预览生效（LUT1）；成片走 postproc（E4 口径）"}
+RC=0

@@ -26,11 +26,16 @@
 D=/opt/usr/nx-ks
 BB=$D/busybox
 [ -x "$BB" ] || BB=/bin/busybox
+[ -x "$BB" ] || BB=$(command -v busybox 2>/dev/null)
+[ -x "$BB" ] || BB=""                    # 无 busybox ⇒ RUNNER 退化为系统 sh
+if [ -n "$BB" ]; then RUNNER="$BB sh"; else RUNNER="sh"; fi
 MOD=/mnt/mmc/filmlab
 [ -d "$MOD" ] || MOD=$D
 PICK=$MOD/lutpick.sh
 LUTS=$MOD/luts
+# ★ 上机实测（10-16）：工具实际部署在 SD $MOD/，不在 $D/（/opt/usr/nx-ks/）
 LOAD=$D/lutload.arm
+[ -f "$LOAD" ] || LOAD=$MOD/lutload.arm
 SENTPID=/tmp/lutsentinel.pid
 
 log(){ echo "$*" >&2; }
@@ -67,9 +72,9 @@ cmd_apply(){
 
     log "-- apply $name ${dry:+($dry)}（sel=1 通道）--"
     if [ "$dry" = "--dry" ]; then
-        out=$($BB sh "$PICK" apply "$name" --dry 2>&1); rc=$?
+        out=$($RUNNER "$PICK" apply "$name" --dry 2>&1); rc=$?
     else
-        out=$($BB sh "$PICK" apply "$name" 2>&1); rc=$?
+        out=$($RUNNER "$PICK" apply "$name" 2>&1); rc=$?
     fi
     echo "$out" | sed 's/^/  /' >&2
     if [ "$rc" = "0" ]; then
@@ -89,7 +94,7 @@ cmd_rollback(){
             kill "$(cat "$SENTPID" 2>/dev/null)" 2>/dev/null
             rm -f "$SENTPID"
         fi
-        pkill -f lutsentinel.arm 2>/dev/null
+        if [ -n "$BB" ]; then "$BB" pkill -f lutsentinel.arm 2>/dev/null; else pkill -f lutsentinel.arm 2>/dev/null; fi
     fi
     rc_r=255
     if [ -f "$LOAD" ]; then

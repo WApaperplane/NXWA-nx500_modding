@@ -1,5 +1,5 @@
 {
-  "ts": "2026-10-16T18:01:34",
+  "ts": "2026-10-16T18:15:28",
   "host": "192.168.0.105",
   "probe_enabled": true,
   "gates": [
@@ -36,7 +36,7 @@
     {
       "id": "G1",
       "name": "上机安全",
-      "state": "FAIL",
+      "state": "MANUAL",
       "purpose": "preflight 8 项全绿",
       "on_fail": "修完再上机；绝不在红门下开机身",
       "checks": [
@@ -92,15 +92,15 @@
         {
           "id": "G1-7c",
           "title": "上机包 lint（U6/PW/LUT：setsid/CRLF/安全闸标）",
-          "state": "FAIL",
-          "detail": "U6=2脚本/OK；PW=1脚本/OK；LUT=3脚本/FAIL",
-          "next": "LUT: build_lut_tools.sh: 缺 @gate 头注释（无法自证纪律）；LUT: lut_backend.sh: 缺 @gate 头注释（无法自证纪律）"
+          "state": "PASS",
+          "detail": "U6=2脚本/OK；PW=1脚本/OK；LUT=3脚本/OK",
+          "next": "写类内嵌安全闸（cmasafe/mcb）"
         },
         {
           "id": "G1-8",
           "title": "脚本 CRLF/语法/执行位 CI",
-          "state": "FAIL",
-          "detail": "RESULT: FAIL  (1 fail / 19 warn)",
+          "state": "PASS",
+          "detail": "RESULT: PASS  (0 fail / 0 warn)",
           "next": "python test_server/tools/apply_ci_fixes.py"
         }
       ]
@@ -161,16 +161,16 @@
     {
       "id": "G4",
       "name": "允许改 p7",
-      "state": "FAIL",
+      "state": "PASS",
       "purpose": "U4 通过 且 U5 回滚演练成功",
       "on_fail": "永远停在'用户态 + ISP 参数块'层",
       "checks": [
         {
           "id": "G4-0",
           "title": "不可再生资产在手",
-          "state": "FAIL",
-          "detail": "emmcbak/ 已备份",
-          "next": "缺：['.uploads\\\\fw\\\\nx500_v1.12.bin'] -> 没备份不许碰 p7"
+          "state": "PASS",
+          "detail": "官方 SLP 335MB；emmcbak/ 已备份",
+          "next": "缺：[] -> 没备份不许碰 p7"
         },
         {
           "id": "G4-0b",
@@ -235,26 +235,26 @@
     },
     {
       "name": "L2  原生 EFL UI 上机（nxfilmui）",
-      "state": "FAIL",
+      "state": "MANUAL",
       "blocked_by": "G1",
       "note": "需人在机身判定'没拖垮'（铁律 104）"
     },
     {
       "name": "路径 B  ISP 参数块写入（21 槽）",
-      "state": "FAIL",
+      "state": "BLOCKED",
       "blocked_by": "G1,G5",
       "note": "生效判据是硬前置（铁律 86）"
     },
     {
       "name": "U4  SLP 重打包无害实验",
-      "state": "FAIL",
+      "state": "MANUAL",
       "blocked_by": "G1",
       "note": "D3 已完成；先做等长只改 1 字节的最小实验"
     },
     {
       "name": "L4  改 p7 分区",
-      "state": "FAIL",
-      "blocked_by": "G1,G4",
+      "state": "MANUAL",
+      "blocked_by": "G1",
       "note": "★ 唯一不可逆的一层"
     }
   ],
@@ -728,9 +728,6 @@
     "shebang": true,
     "setsid_ok": true,
     "waits": [],
-    "problems": [
-      "build_lut_tools.sh: 缺 @gate 头注释（无法自证纪律）",
-      "lut_backend.sh: 缺 @gate 头注释（无法自证纪律）"
-    ]
+    "problems": []
   }
 }

@@ -67,19 +67,19 @@
 ```sh
 # 0) 部署：SD /mnt/mmc/filmlab/ 放工具 5 件 + lutpick.sh + lut_backend.sh + 表包
 # 1) 探测
-busybox sh /mnt/mmc/filmlab/lut_backend.sh probe
+/opt/usr/nx-ks/busybox sh /mnt/mmc/filmlab/lut_backend.sh probe
 # 2) 演练（不写）
-busybox sh /mnt/mmc/filmlab/lut_backend.sh apply _identity --dry
+/opt/usr/nx-ks/busybox sh /mnt/mmc/filmlab/lut_backend.sh apply _identity --dry
 # 3) 首测（E1 回归；★ 前置：先对焦一次以进入「抢回态」）
-busybox sh /mnt/mmc/filmlab/lut_backend.sh apply _identity
+/opt/usr/nx-ks/busybox sh /mnt/mmc/filmlab/lut_backend.sh apply _identity
 # 4) 风格表（可辨效果）
-busybox sh /mnt/mmc/filmlab/lut_backend.sh apply portra400
+/opt/usr/nx-ks/busybox sh /mnt/mmc/filmlab/lut_backend.sh apply portra400
 # 5) 状态/记账
-busybox sh /mnt/mmc/filmlab/lut_backend.sh status
+/opt/usr/nx-ks/busybox sh /mnt/mmc/filmlab/lut_backend.sh status
 # 6) 守护实测（半按触发抢回→恢复）
 /opt/usr/nx-ks/lutsentinel.arm --sel 1 --count 120
 # 7) 关闭（★ factory_restore；判 identity_used:false + 画面回原厂）
-busybox sh /mnt/mmc/filmlab/lut_backend.sh rollback
+/opt/usr/nx-ks/busybox sh /mnt/mmc/filmlab/lut_backend.sh rollback
 # 8) 切换测试（A→B→A）+ 负载采样（两轮）
 ```
 - 判据落点：`raw8/gates/lut/`（JSON 原文 + 目视照片）。
@@ -98,5 +98,23 @@ busybox sh /mnt/mmc/filmlab/lut_backend.sh rollback
 | 3 | Cfg 读回能力（`status` 目前为软件记账）——若 `st cap` 可读 Cfg，升级 `status` 为硬件判据 |
 | 4 | 与 U7 合并执行时的**变量隔离**（LUT 实验不要与 C1 刷机同趟混测——见 T6 §5） |
 
+## 8. 上机首验（2026-10-16 晚 · 相机在线）
+
+> 完整记录与原始输出：`raw8/gates/lut/t5_backend_onmachine_2026-10-16.md`（+ `u7_2_dry_*.log` / `t5_backend_onmachine_2026-10-16.txt`）
+
+| 项 | 结果 |
+|---|---|
+| `probe`（修复前） | `lutload:0` —— 工具在 SD，脚本只找 `/opt/usr/nx-ks/`，**`rollback`（factory_restore）会失效**（离线模拟覆盖不到的致命路径） |
+| 修复 | `LOAD` 加 SD 回退；`BB/RUNNER` 解释器探测（无 busybox ⇒ 退化为 `sh`）；`pkill` 走 busybox |
+| `probe`（修复后） | `lutload:1`；6 工具全在；`luts_count:10`；双端 md5 `c2c04f2db529a69dce63eb1ba3f82a35` |
+| `status` | `{"ok":true,"guard":0,"current":"Kodak_Portra_400","sel":1,…}` |
+| `apply _identity --dry` | **通过**：落点 `0x8f800000` + cmasafe 四查全过（范围/对齐/黑名单/全零 20480B）+ `RC=0`，**零写入** |
+| `lut_backend.py --selftest` | 8/8 PASS（修复后复跑） |
+
+★ **调用口径修正（实测）**：相机**没有** PATH 上的 `busybox`（只在 `/opt/usr/nx-ks/busybox`）；`/bin/sh` 是 bash。
+本文所有示例已改为 `/opt/usr/nx-ks/busybox sh …`；直接 `sh …` 亦可。
+
+★ **写表前置仍成立**：cmapick2 末行告警「有 2 个候选落点 —— 不要尝试，先退出拍摄态让 ISP 释放」，且本次报的落点是**区起点 `0x8f800000`**（10-09 成功那次为 `0x8f81e000`）⇒ 序 3-4 写表须：相机进**菜单界面** + **先对焦一次**（抢回态）+ 落点口径裁决后再执行。
+
 ---
-*生成：2026-10-16 · 后端实现 + 契约自测（离线）；上机回归（U7）待放行。*
+*生成：2026-10-16 · 后端实现 + 契约自测（离线）；上机首验 probe/status/--dry 已通过；写表回归（U7 序 3-8）待放行。*

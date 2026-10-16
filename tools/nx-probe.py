@@ -69,13 +69,21 @@ def telnet_send(line, prompt=b"NXWA# ", timeout=90):
     return buf
 
 
-def ftp_get(remote):
-    f = ftplib.FTP(); f.connect(HOST, 21, timeout=20)
-    f.login("root", "")
-    buf = io.BytesIO()
-    f.retrbinary(f"RETR {remote}", buf.write)
-    f.quit()
-    return buf.getvalue()
+def ftp_get(remote, tries=4):
+    """RETR 带重试：SD(exFAT) 新建文件目录项落盘有延迟 ⇒ FTP 可能瞬时 550。"""
+    last = None
+    for i in range(tries):
+        try:
+            f = ftplib.FTP(); f.connect(HOST, 21, timeout=20)
+            f.login("root", "")
+            buf = io.BytesIO()
+            f.retrbinary(f"RETR {remote}", buf.write)
+            f.quit()
+            return buf.getvalue()
+        except Exception as e:
+            last = e
+            time.sleep(1.0 + i)
+    raise last
 
 
 def main():
@@ -91,7 +99,7 @@ def main():
     if not cmds:
         print("no commands", file=sys.stderr); sys.exit(2)
     body = " ; ".join(cmds) if len(cmds) == 1 else "\n".join(cmds)
-    wrapped = "{\n" + body + "\n} > /mnt/mmc/" + REMOTE + " 2>&1"
+    wrapped = "{\n" + body + "\n} > /mnt/mmc/" + REMOTE + " 2>&1\nsync"
     telnet_send(wrapped)
     time.sleep(0.4)
     try:

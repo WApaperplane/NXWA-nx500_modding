@@ -67,11 +67,23 @@ def telnet_run(line, timeout=180):
     return buf.decode("utf-8", "replace")
 
 
-def ftp_pull(remote_name, local_path):
-    f = ftplib.FTP(); f.connect(HOST, 21, timeout=30); f.login("root", "")
-    with open(local_path, "wb") as fh:
-        f.retrbinary("RETR " + remote_name, fh.write)
-    f.quit()
+def ftp_pull(remote_name, local_path, tries=4):
+    """RETR 带重试：SD(exFAT) 新建文件的目录项落盘有延迟，FTP 可能瞬时 550。"""
+    last = None
+    for i in range(tries):
+        try:
+            f = ftplib.FTP(); f.connect(HOST, 21, timeout=30); f.login("root", "")
+            try:
+                with open(local_path, "wb") as fh:
+                    f.retrbinary("RETR " + remote_name, fh.write)
+            finally:
+                try: f.quit()
+                except Exception: pass
+            return
+        except Exception as e:      # 550 / 瞬断
+            last = e
+            time.sleep(1.0 + i)
+    raise last
 
 
 def ftp_delete(remote_name):
@@ -96,8 +108,17 @@ def main():
             print("usage: nx-fetch.py <remote_path> <local_path>  |  nx-fetch.py --cmd '...' <local_path>", file=sys.stderr)
             sys.exit(2)
         remote, local = args[0], args[1]
+        # ★ 路径口径统一（10-16 实测）：telnet 侧 CWD 不是 /mnt/mmc ⇒ 必须绝对路径；
+        #   而 FTP 已 chroot 到 /mnt/mmc ⇒ 只认相对根。此处统一以「FTP 相对」为入参，内部转换。
+        if remote.startswith("/"):
+            remote_rel = remote[len("/mnt/mmc/"):] if remote.startswith("/mnt/mmc/") else remote.lstrip("/")
+            remote_abs = remote if remote.startswith("/mnt/mmc/") else "/mnt/mmc/" + remote.lstrip("/")
+        else:
+            remote_rel = remote
+            remote_abs = "/mnt/mmc/" + remote
         tmp = "/mnt/mmc/nxwa_fetch_%d.bin" % os.getpid()
-        prep = "cp -f '%s' '%s' && ls -la '%s' && md5sum '%s'" % (remote, tmp, tmp, tmp)
+        # sync：强制 SD 落盘（exFAT 目录项延迟会让 FTP 瞬时 550，见 10-16 实测）
+        prep = "cp -f '%s' '%s' && sync && ls -la '%s' && md5sum '%s'" % (remote_abs, tmp, tmp, tmp)
 
     out = telnet_run(prep)
     sys.stderr.write("--- telnet ---\n" + out + "\n")
