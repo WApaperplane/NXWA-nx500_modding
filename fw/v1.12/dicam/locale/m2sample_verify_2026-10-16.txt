@@ -1,0 +1,53 @@
+======================================================================
+ M2 配方名样机 — 生成与验证证据（2026-10-16）
+ 工具: tools/mo_patch.py v1 · 源: 真机 zh_CN di-camera-app.mo (f2d60cd2…)
+======================================================================
+
+### [1] 逐条对比验证 + 交叉检查 ###
+  (no --expect; inferred 3 changed entr(ies))
+== verify ==
+  orig: E:/tmp/dicam_zh_CN.mo  (172850B, md5 f2d60cd2f2687de43089729fb06f436c)
+  new : fw/v1.12/dicam/locale/di-camera-app.zh_CN.m2sample.mo  (172879B, md5 e531bd5fe7ff4c97d1f01991af932f5b)
+  expected replacements: 3
+    CAP_MENU_CUSTOM_MODE_1 -> 'Portra 400'
+    CAP_MENU_CUSTOM_MODE_2 -> 'Gold 200'
+    CAP_MENU_CUSTOM_MODE_3 -> 'TriX 400'
+  RESULT: PASS (逐条对比：除预期目标外 msgid/msgstr 全同)
+  -- python gettext cross-check --
+    skipped: orig & patched both fail identically (UnicodeDecodeError) — file-inherent (e.g. no header metadata), NOT introduced by patch; see --glibc-sim for mechanism-level check
+  -- glibc path simulation (hash + binary) --
+  [orig] hash: size=2927 coverage=2194/2194 dup=0 hash-reachable=1389/2194
+    OK CAP_MENU_CUSTOM_MODE_1: hash_idx=175(steps=0) bin_idx=175 -> '自定义 1' / '自定义 1'
+    OK CAP_MENU_CUSTOM_MODE_2: hash_idx=176(steps=0) bin_idx=176 -> '自定义 2' / '自定义 2'
+    OK CAP_MENU_CUSTOM_MODE_3: hash_idx=177(steps=0) bin_idx=177 -> '自定义 3' / '自定义 3'
+  [new ] hash: size=2927 coverage=2194/2194 dup=0 hash-reachable=1389/2194
+    OK CAP_MENU_CUSTOM_MODE_1: hash_idx=175(steps=0) bin_idx=175 -> 'Portra 400' / 'Portra 400'
+    OK CAP_MENU_CUSTOM_MODE_2: hash_idx=176(steps=0) bin_idx=176 -> 'Gold 200' / 'Gold 200'
+    OK CAP_MENU_CUSTOM_MODE_3: hash_idx=177(steps=0) bin_idx=177 -> 'TriX 400' / 'TriX 400'
+    note: hash 表字节两文件全同（未被替换触碰）；msgid→index 映射不变，仅 index→msgstr 的目标条目指向新值。hash 表若因构建环境差异被 glibc 加载期弃用，则走二分路径——两路径对本替换同样成立。
+
+### [2] 字节级差异概览 ###
+== byte diff ==
+  sizes: 172850 -> 172879  (delta +29)
+  differing regions in common prefix: 6  (total 12 bytes)
+    0x004a24..0x004a25  (1B)  a=0b b=0a
+    0x004a28..0x004a2b  (3B)  a=879801 b=32a302
+    0x004a2c..0x004a2d  (1B)  a=0b b=08
+    0x004a30..0x004a33  (3B)  a=939801 b=3da302
+    0x004a34..0x004a35  (1B)  a=0b b=08
+    0x004a38..0x004a3b  (3B)  a=9f9801 b=46a302
+  appended tail: 0x2a332..0x2a34f  (29B)
+    hex: 506f727472612034303000476f6c642032303000547269582034303000 ...
+
+### [3] 端到端冒烟测试（合成规范文件 → 标准解析器） ###
+[0] baseline: python-gettext loads hand-built MO, query OK
+== set done ==
+  src : C:\Users\31623\AppData\Local\Temp\mopatch_smoke_4vi2nm_k\test.mo  (295B, md5 5959464747da78e5bcd23fb6ff220137)
+  out : C:\Users\31623\AppData\Local\Temp\mopatch_smoke_4vi2nm_k\out.mo  (306B, md5 7a95d854909a072be63335725b8e1f35)
+  * CAP_MENU_CUSTOM_MODE_1: '自定义 1' -> 'Portra 400'  (len 11->10, off 0xff->0x127)
+  self-verify: PASS (逐条对比，除目标外全同)
+    OK  CAP_MENU_CUSTOM_MODE_1: 'Portra 400' (want 'Portra 400')
+    OK  CAP_MENU_CUSTOM_MODE_2: '自定义 2' (want '自定义 2')
+    OK  CAP_FN_PW: '图片向导' (want '图片向导')
+    OK  OTHER_KEY: 'unchanged value' (want 'unchanged value')
+SMOKE TEST PASS: build -> patch -> python-gettext load -> query OK

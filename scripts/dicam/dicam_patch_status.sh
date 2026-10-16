@@ -58,6 +58,17 @@ else
     echo "    如需启用：sh /opt/usr/nx-ks/dicam/dicam_p5_install.sh"
 fi
 echo
+echo "-- M2 locale（配方名样机，10-16 新增；详见 M2_RECIPE_NAME_DESIGN） --"
+MDEP=/opt/usr/nx-ks/locale/zh_CN/di-camera-app.mo
+if [ -f "$MDEP" ]; then
+    echo "  $(md5of "$MDEP")  $MDEP"
+    mount | grep -q "LC_MESSAGES/di-camera-app.mo" \
+        && echo "  ⇒ 已挂载（M2 生效中：菜单自定义项显示配方名）" \
+        || echo "  ⇒ 未挂载（下次正常开机生效；或 P5 未装）"
+else
+    echo "  <缺失>（未部署/已回退；语义 = 自定义项保持官方名）"
+fi
+echo
 echo "-- 命令通道探活 --"
 st app help >/dev/null 2>&1 && echo "  st app 通道 OK" || echo "  st app 无响应（App 未起或队列不在）"
 echo "===== end ====="
