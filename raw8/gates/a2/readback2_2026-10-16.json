@@ -1,0 +1,13 @@
+{
+  "ts": "2026-10-16T18:14",
+  "batch": "U4-7.1",
+  "host": "192.168.0.105",
+  "method": "dd if=/dev/mmcblk0p7 bs=1M count=12 2>/dev/null | md5sum",
+  "partition": "mmcblk0p7 (=30719 blocks ×512B ≈ 15MiB; 镜像 12,075,648 B + 尾部零区)",
+  "md5_observed": "69050a17ea9fdbcdab4cf32e7b5ffdb2",
+  "md5_expected": "69050a17ea9fdbcdab4cf32e7b5ffdb2",
+  "verdict": "PASS",
+  "comparison": "与 10-15 首读 (raw8/gates/a2/readback_2026-10-15.json) 同值",
+  "conclusion": "两次一致 ⇒ A2 补丁在机逐字节存活，运行期未被 p7 自身覆写",
+  "note": "只读操作（dd 读块设备），零写风险；未拉回本地（md5 已足判据；如需逐字节双判据再跑 tools/a2_readback_check.py）"
+}

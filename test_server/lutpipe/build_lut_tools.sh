@@ -1,4 +1,5 @@
 #!/bin/bash
+# @gate script=build_lut_tools.sh opens=rdonly one_shot=1 gate=none pconly=1
 # build_lut_tools.sh — 补齐 LUT 链路缺失部署件（cmasafe.arm / lutsentinel.arm）
 #
 # 背景（2026-10-16）：「LUT 路线重启」资产盘点发现——deploy_luts.py 期望的两个工具

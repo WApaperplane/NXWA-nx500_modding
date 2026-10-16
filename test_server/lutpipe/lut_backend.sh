@@ -1,4 +1,5 @@
 #!/bin/sh
+# @gate script=lut_backend.sh opens=rw one_shot=1 gate=cmasafe
 # =====================================================================
 # lut_backend.sh — LUT 预览后端（T5 产品化 v1 · 2026-10-16）
 #

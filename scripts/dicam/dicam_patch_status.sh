@@ -41,8 +41,18 @@ else
 fi
 echo
 echo "-- App 进程 --"
-if pidof di-camera-app >/dev/null 2>&1; then
-    echo "  di-camera-app 在跑（pid $(pidof di-camera-app)）"
+# 进程判定：不依赖 pidof/pgrep applet（该机型 busybox PATH 不全 ⇒ 曾误报"未在跑"）
+_APP_PID=""
+for _p in /proc/[0-9]*; do
+    _c=$(cat "$_p/cmdline" 2>/dev/null | tr '\0' ' ')
+    case "$_c" in
+        *di-camera-app*) _APP_PID=${_p#/proc/}; break ;;
+    esac
+done
+[ -z "$_APP_PID" ] && _APP_PID=$(pidof di-camera-app 2>/dev/null | awk '{print $1}')
+[ -z "$_APP_PID" ] && _APP_PID=$(pgrep -f di-camera-app 2>/dev/null | head -1)
+if [ -n "$_APP_PID" ]; then
+    echo "  di-camera-app 在跑（pid $_APP_PID）"
 else
     echo "  ★ di-camera-app 未在跑 —— 注意 unit 里 Restart=always 被注释，崩了不自愈，需手动 start"
 fi

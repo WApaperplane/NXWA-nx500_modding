@@ -1,12 +1,42 @@
 {
-  "ts": "2026-10-15T20:08:01",
+  "ts": "2026-10-16T18:01:34",
   "host": "192.168.0.105",
   "probe_enabled": true,
   "gates": [
     {
+      "id": "G0",
+      "name": "上机可达",
+      "state": "PASS",
+      "purpose": "21 端口能连上",
+      "on_fail": "退回离机轨（离机轨已清空，则可休整或做加固）",
+      "checks": [
+        {
+          "id": "G0-1",
+          "title": "探测 192.168.0.105:21",
+          "state": "PASS",
+          "detail": "192.168.0.105:21 可连",
+          "next": "相机开机 + 与 PC 同网段；确认 telnetd/ftpd 已起（REFUSED 与 TIMEOUT 含义不同，铁律 90）"
+        },
+        {
+          "id": "G0-23",
+          "title": "旁证端口 192.168.0.105:23（不参与判定）",
+          "state": "INFO",
+          "detail": "OPEN",
+          "next": ""
+        },
+        {
+          "id": "G0-8080",
+          "title": "旁证端口 192.168.0.105:8080（不参与判定）",
+          "state": "INFO",
+          "detail": "REFUSED（[WinError 10061] 由于目标计算机积极拒绝，无法连接。）",
+          "next": ""
+        }
+      ]
+    },
+    {
       "id": "G1",
       "name": "上机安全",
-      "state": "MANUAL",
+      "state": "FAIL",
       "purpose": "preflight 8 项全绿",
       "on_fail": "修完再上机；绝不在红门下开机身",
       "checks": [
@@ -62,15 +92,15 @@
         {
           "id": "G1-7c",
           "title": "上机包 lint（U6/PW/LUT：setsid/CRLF/安全闸标）",
-          "state": "PASS",
-          "detail": "U6=2脚本/OK；PW=1脚本/OK；LUT=1脚本/OK",
-          "next": "写类内嵌安全闸（cmasafe/mcb）"
+          "state": "FAIL",
+          "detail": "U6=2脚本/OK；PW=1脚本/OK；LUT=3脚本/FAIL",
+          "next": "LUT: build_lut_tools.sh: 缺 @gate 头注释（无法自证纪律）；LUT: lut_backend.sh: 缺 @gate 头注释（无法自证纪律）"
         },
         {
           "id": "G1-8",
           "title": "脚本 CRLF/语法/执行位 CI",
-          "state": "PASS",
-          "detail": "RESULT: PASS  (0 fail / 13 warn)",
+          "state": "FAIL",
+          "detail": "RESULT: FAIL  (1 fail / 19 warn)",
           "next": "python test_server/tools/apply_ci_fixes.py"
         }
       ]
@@ -131,16 +161,16 @@
     {
       "id": "G4",
       "name": "允许改 p7",
-      "state": "PASS",
+      "state": "FAIL",
       "purpose": "U4 通过 且 U5 回滚演练成功",
       "on_fail": "永远停在'用户态 + ISP 参数块'层",
       "checks": [
         {
           "id": "G4-0",
           "title": "不可再生资产在手",
-          "state": "PASS",
-          "detail": "官方 SLP 335MB；emmcbak/ 已备份",
-          "next": "缺：[] -> 没备份不许碰 p7"
+          "state": "FAIL",
+          "detail": "emmcbak/ 已备份",
+          "next": "缺：['.uploads\\\\fw\\\\nx500_v1.12.bin'] -> 没备份不许碰 p7"
         },
         {
           "id": "G4-0b",
@@ -164,6 +194,36 @@
           "next": "★ boot0/boot1 绝不碰"
         }
       ]
+    },
+    {
+      "id": "G5",
+      "name": "固件改动生效判据",
+      "state": "BLOCKED",
+      "purpose": "存在客观判据且能区分'值变了'与'被消费'",
+      "on_fail": "不许改（铁律 86）",
+      "checks": [
+        {
+          "id": "G5-1",
+          "title": "静态判据 ID 全表 >=184",
+          "state": "PASS",
+          "detail": "raw8\\p7\\tuning_keys.txt 命中 184 个唯一 eIQ_ID_*",
+          "next": "这是'改了生效没有'的唯一客观判据（st cap iqr）"
+        },
+        {
+          "id": "G5-2",
+          "title": "机上 iqr 值 dump",
+          "state": "PASS",
+          "detail": "dump 含 184 个唯一 ID",
+          "next": "不足则确认是否被截断（铁律 94）"
+        },
+        {
+          "id": "G5-3",
+          "title": "能区分'值变了'与'参数被消费'",
+          "state": "BLOCKED",
+          "detail": "关联表 缺失：raw8\\gates\\u1\\iqr_epmc_map.tsv",
+          "next": "需要 iqr(184 ID) x epmc(两块 21x10) 的关联（目标矩阵 C14）；★ 且必须记录写入瞬间的运行时槽号（U14）"
+        }
+      ]
     }
   ],
   "capabilities": [
@@ -175,26 +235,26 @@
     },
     {
       "name": "L2  原生 EFL UI 上机（nxfilmui）",
-      "state": "MANUAL",
+      "state": "FAIL",
       "blocked_by": "G1",
       "note": "需人在机身判定'没拖垮'（铁律 104）"
     },
     {
       "name": "路径 B  ISP 参数块写入（21 槽）",
-      "state": "MANUAL",
-      "blocked_by": "G1",
+      "state": "FAIL",
+      "blocked_by": "G1,G5",
       "note": "生效判据是硬前置（铁律 86）"
     },
     {
       "name": "U4  SLP 重打包无害实验",
-      "state": "MANUAL",
+      "state": "FAIL",
       "blocked_by": "G1",
       "note": "D3 已完成；先做等长只改 1 字节的最小实验"
     },
     {
       "name": "L4  改 p7 分区",
-      "state": "MANUAL",
-      "blocked_by": "G1",
+      "state": "FAIL",
+      "blocked_by": "G1,G4",
       "note": "★ 唯一不可逆的一层"
     }
   ],
@@ -656,6 +716,8 @@
   "lutpipe_lint": {
     "exists": true,
     "scripts": [
+      "build_lut_tools.sh",
+      "lut_backend.sh",
       "lutpick.sh"
     ],
     "segs": [],
@@ -666,6 +728,9 @@
     "shebang": true,
     "setsid_ok": true,
     "waits": [],
-    "problems": []
+    "problems": [
+      "build_lut_tools.sh: 缺 @gate 头注释（无法自证纪律）",
+      "lut_backend.sh: 缺 @gate 头注释（无法自证纪律）"
+    ]
   }
 }
