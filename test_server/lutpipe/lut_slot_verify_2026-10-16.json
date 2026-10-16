@@ -1,0 +1,1525 @@
+{
+ "image": "E:/NXWA/fw/v1.12/parts/chunk-05.bin",
+ "slot": "0x4d00",
+ "table_bytes": 19652,
+ "criterion": "strict identity = 4913/4913 items equal",
+ "summary": {
+  "n_slots": 42,
+  "n_strict_identity": 0,
+  "n_near_identity": 0
+ },
+ "slots": [
+  {
+   "block": "A",
+   "idx": 0,
+   "va": "0x808592c0",
+   "e0": [
+    8,
+    8,
+    16
+   ],
+   "white": [
+    182,
+    182,
+    254
+   ],
+   "strict_identity": false,
+   "n_identical": 0,
+   "max_deviation": 74,
+   "fingerprint_ok": true,
+   "axis_response": {
+    "axisR": [
+     253,
+     13,
+     7
+    ],
+    "axisG": [
+     0,
+     251,
+     0
+    ],
+    "axisB": [
+     0,
+     0,
+     238
+    ]
+   }
+  },
+  {
+   "block": "A",
+   "idx": 1,
+   "va": "0x8085dfc0",
+   "e0": [
+    16,
+    16,
+    16
+   ],
+   "white": [
+    178,
+    178,
+    254
+   ],
+   "strict_identity": false,
+   "n_identical": 0,
+   "max_deviation": 77,
+   "fingerprint_ok": true,
+   "axis_response": {
+    "axisR": [
+     244,
+     12,
+     6
+    ],
+    "axisG": [
+     0,
+     235,
+     0
+    ],
+    "axisB": [
+     0,
+     0,
+     238
+    ]
+   }
+  },
+  {
+   "block": "A",
+   "idx": 2,
+   "va": "0x80862cc0",
+   "e0": [
+    1,
+    1,
+    1
+   ],
+   "white": [
+    185,
+    185,
+    254
+   ],
+   "strict_identity": false,
+   "n_identical": 132,
+   "max_deviation": 70,
+   "fingerprint_ok": true,
+   "axis_response": {
+    "axisR": [
+     253,
+     14,
+     8
+    ],
+    "axisG": [
+     0,
+     253,
+     0
+    ],
+    "axisB": [
+     0,
+     0,
+     253
+    ]
+   }
+  },
+  {
+   "block": "A",
+   "idx": 3,
+   "va": "0x808679c0",
+   "e0": [
+    8,
+    8,
+    16
+   ],
+   "white": [
+    182,
+    182,
+    254
+   ],
+   "strict_identity": false,
+   "n_identical": 0,
+   "max_deviation": 74,
+   "fingerprint_ok": true,
+   "axis_response": {
+    "axisR": [
+     253,
+     9,
+     6
+    ],
+    "axisG": [
+     0,
+     250,
+     0
+    ],
+    "axisB": [
+     0,
+     0,
+     238
+    ]
+   }
+  },
+  {
+   "block": "A",
+   "idx": 4,
+   "va": "0x8086c6c0",
+   "e0": [
+    16,
+    16,
+    16
+   ],
+   "white": [
+    178,
+    178,
+    254
+   ],
+   "strict_identity": false,
+   "n_identical": 0,
+   "max_deviation": 77,
+   "fingerprint_ok": true,
+   "axis_response": {
+    "axisR": [
+     242,
+     8,
+     5
+    ],
+    "axisG": [
+     0,
+     234,
+     0
+    ],
+    "axisB": [
+     0,
+     0,
+     238
+    ]
+   }
+  },
+  {
+   "block": "A",
+   "idx": 5,
+   "va": "0x808713c0",
+   "e0": [
+    1,
+    1,
+    1
+   ],
+   "white": [
+    185,
+    185,
+    254
+   ],
+   "strict_identity": false,
+   "n_identical": 161,
+   "max_deviation": 70,
+   "fingerprint_ok": true,
+   "axis_response": {
+    "axisR": [
+     253,
+     9,
+     8
+    ],
+    "axisG": [
+     0,
+     253,
+     0
+    ],
+    "axisB": [
+     0,
+     0,
+     253
+    ]
+   }
+  },
+  {
+   "block": "A",
+   "idx": 6,
+   "va": "0x808760c0",
+   "e0": [
+    8,
+    8,
+    16
+   ],
+   "white": [
+    182,
+    182,
+    254
+   ],
+   "strict_identity": false,
+   "n_identical": 0,
+   "max_deviation": 74,
+   "fingerprint_ok": true,
+   "axis_response": {
+    "axisR": [
+     240,
+     5,
+     6
+    ],
+    "axisG": [
+     4,
+     242,
+     0
+    ],
+    "axisB": [
+     0,
+     0,
+     238
+    ]
+   }
+  },
+  {
+   "block": "A",
+   "idx": 7,
+   "va": "0x8087adc0",
+   "e0": [
+    16,
+    16,
+    16
+   ],
+   "white": [
+    178,
+    178,
+    254
+   ],
+   "strict_identity": false,
+   "n_identical": 0,
+   "max_deviation": 77,
+   "fingerprint_ok": true,
+   "axis_response": {
+    "axisR": [
+     223,
+     4,
+     5
+    ],
+    "axisG": [
+     3,
+     226,
+     0
+    ],
+    "axisB": [
+     0,
+     0,
+     238
+    ]
+   }
+  },
+  {
+   "block": "A",
+   "idx": 8,
+   "va": "0x8087fac0",
+   "e0": [
+    1,
+    1,
+    1
+   ],
+   "white": [
+    185,
+    185,
+    254
+   ],
+   "strict_identity": false,
+   "n_identical": 382,
+   "max_deviation": 70,
+   "fingerprint_ok": true,
+   "axis_response": {
+    "axisR": [
+     251,
+     5,
+     8
+    ],
+    "axisG": [
+     4,
+     253,
+     0
+    ],
+    "axisB": [
+     0,
+     0,
+     253
+    ]
+   }
+  },
+  {
+   "block": "A",
+   "idx": 9,
+   "va": "0x808847c0",
+   "e0": [
+    8,
+    8,
+    16
+   ],
+   "white": [
+    182,
+    182,
+    254
+   ],
+   "strict_identity": false,
+   "n_identical": 0,
+   "max_deviation": 74,
+   "fingerprint_ok": true,
+   "axis_response": {
+    "axisR": [
+     239,
+     3,
+     5
+    ],
+    "axisG": [
+     2,
+     241,
+     0
+    ],
+    "axisB": [
+     0,
+     0,
+     238
+    ]
+   }
+  },
+  {
+   "block": "A",
+   "idx": 10,
+   "va": "0x808894c0",
+   "e0": [
+    16,
+    16,
+    16
+   ],
+   "white": [
+    178,
+    178,
+    254
+   ],
+   "strict_identity": false,
+   "n_identical": 0,
+   "max_deviation": 77,
+   "fingerprint_ok": true,
+   "axis_response": {
+    "axisR": [
+     222,
+     3,
+     4
+    ],
+    "axisG": [
+     2,
+     225,
+     0
+    ],
+    "axisB": [
+     0,
+     0,
+     238
+    ]
+   }
+  },
+  {
+   "block": "A",
+   "idx": 11,
+   "va": "0x8088e1c0",
+   "e0": [
+    1,
+    1,
+    1
+   ],
+   "white": [
+    185,
+    185,
+    254
+   ],
+   "strict_identity": false,
+   "n_identical": 430,
+   "max_deviation": 70,
+   "fingerprint_ok": true,
+   "axis_response": {
+    "axisR": [
+     251,
+     4,
+     6
+    ],
+    "axisG": [
+     2,
+     253,
+     0
+    ],
+    "axisB": [
+     0,
+     0,
+     253
+    ]
+   }
+  },
+  {
+   "block": "A",
+   "idx": 12,
+   "va": "0x80892ec0",
+   "e0": [
+    21,
+    0,
+    13
+   ],
+   "white": [
+    171,
+    190,
+    245
+   ],
+   "strict_identity": false,
+   "n_identical": 11,
+   "max_deviation": 97,
+   "fingerprint_ok": true,
+   "axis_response": {
+    "axisR": [
+     148,
+     41,
+     67
+    ],
+    "axisG": [
+     12,
+     252,
+     10
+    ],
+    "axisB": [
+     0,
+     0,
+     255
+    ]
+   }
+  },
+  {
+   "block": "A",
+   "idx": 13,
+   "va": "0x80897bc0",
+   "e0": [
+    0,
+    0,
+    0
+   ],
+   "white": [
+    185,
+    185,
+    255
+   ],
+   "strict_identity": false,
+   "n_identical": 821,
+   "max_deviation": 70,
+   "fingerprint_ok": true,
+   "axis_response": {
+    "axisR": [
+     255,
+     14,
+     8
+    ],
+    "axisG": [
+     0,
+     255,
+     0
+    ],
+    "axisB": [
+     0,
+     0,
+     255
+    ]
+   }
+  },
+  {
+   "block": "A",
+   "idx": 14,
+   "va": "0x8089c8c0",
+   "e0": [
+    21,
+    0,
+    13
+   ],
+   "white": [
+    171,
+    190,
+    245
+   ],
+   "strict_identity": false,
+   "n_identical": 5,
+   "max_deviation": 97,
+   "fingerprint_ok": true,
+   "axis_response": {
+    "axisR": [
+     148,
+     35,
+     66
+    ],
+    "axisG": [
+     15,
+     252,
+     9
+    ],
+    "axisB": [
+     0,
+     0,
+     255
+    ]
+   }
+  },
+  {
+   "block": "A",
+   "idx": 15,
+   "va": "0x808a15c0",
+   "e0": [
+    21,
+    0,
+    13
+   ],
+   "white": [
+    171,
+    190,
+    245
+   ],
+   "strict_identity": false,
+   "n_identical": 5,
+   "max_deviation": 97,
+   "fingerprint_ok": true,
+   "axis_response": {
+    "axisR": [
+     148,
+     33,
+     66
+    ],
+    "axisG": [
+     15,
+     252,
+     9
+    ],
+    "axisB": [
+     0,
+     0,
+     255
+    ]
+   }
+  },
+  {
+   "block": "A",
+   "idx": 16,
+   "va": "0x808a62c0",
+   "e0": [
+    21,
+    0,
+    13
+   ],
+   "white": [
+    171,
+    190,
+    245
+   ],
+   "strict_identity": false,
+   "n_identical": 5,
+   "max_deviation": 97,
+   "fingerprint_ok": true,
+   "axis_response": {
+    "axisR": [
+     148,
+     37,
+     67
+    ],
+    "axisG": [
+     15,
+     252,
+     9
+    ],
+    "axisB": [
+     0,
+     0,
+     255
+    ]
+   }
+  },
+  {
+   "block": "A",
+   "idx": 17,
+   "va": "0x808aafc0",
+   "e0": [
+    0,
+    0,
+    0
+   ],
+   "white": [
+    185,
+    185,
+    255
+   ],
+   "strict_identity": false,
+   "n_identical": 977,
+   "max_deviation": 70,
+   "fingerprint_ok": true,
+   "axis_response": {
+    "axisR": [
+     252,
+     7,
+     8
+    ],
+    "axisG": [
+     4,
+     255,
+     0
+    ],
+    "axisB": [
+     0,
+     0,
+     255
+    ]
+   }
+  },
+  {
+   "block": "A",
+   "idx": 18,
+   "va": "0x808afcc0",
+   "e0": [
+    0,
+    0,
+    0
+   ],
+   "white": [
+    185,
+    185,
+    255
+   ],
+   "strict_identity": false,
+   "n_identical": 950,
+   "max_deviation": 70,
+   "fingerprint_ok": true,
+   "axis_response": {
+    "axisR": [
+     252,
+     5,
+     8
+    ],
+    "axisG": [
+     4,
+     255,
+     0
+    ],
+    "axisB": [
+     0,
+     0,
+     255
+    ]
+   }
+  },
+  {
+   "block": "A",
+   "idx": 19,
+   "va": "0x808b49c0",
+   "e0": [
+    0,
+    0,
+    0
+   ],
+   "white": [
+    185,
+    185,
+    255
+   ],
+   "strict_identity": false,
+   "n_identical": 947,
+   "max_deviation": 70,
+   "fingerprint_ok": false,
+   "axis_response": {
+    "axisR": [
+     253,
+     10,
+     8
+    ],
+    "axisG": [
+     4,
+     255,
+     0
+    ],
+    "axisB": [
+     0,
+     0,
+     255
+    ]
+   }
+  },
+  {
+   "block": "B",
+   "idx": 0,
+   "va": "0x808b9ac0",
+   "e0": [
+    8,
+    8,
+    16
+   ],
+   "white": [
+    182,
+    182,
+    254
+   ],
+   "strict_identity": false,
+   "n_identical": 0,
+   "max_deviation": 74,
+   "fingerprint_ok": true,
+   "axis_response": {
+    "axisR": [
+     242,
+     10,
+     6
+    ],
+    "axisG": [
+     4,
+     242,
+     0
+    ],
+    "axisB": [
+     0,
+     0,
+     238
+    ]
+   }
+  },
+  {
+   "block": "B",
+   "idx": 1,
+   "va": "0x808be7c0",
+   "e0": [
+    8,
+    8,
+    16
+   ],
+   "white": [
+    182,
+    182,
+    254
+   ],
+   "strict_identity": false,
+   "n_identical": 0,
+   "max_deviation": 74,
+   "fingerprint_ok": true,
+   "axis_response": {
+    "axisR": [
+     241,
+     8,
+     5
+    ],
+    "axisG": [
+     2,
+     241,
+     0
+    ],
+    "axisB": [
+     0,
+     0,
+     238
+    ]
+   }
+  },
+  {
+   "block": "B",
+   "idx": 2,
+   "va": "0x808c34c0",
+   "e0": [
+    16,
+    16,
+    16
+   ],
+   "white": [
+    178,
+    178,
+    254
+   ],
+   "strict_identity": false,
+   "n_identical": 0,
+   "max_deviation": 77,
+   "fingerprint_ok": true,
+   "axis_response": {
+    "axisR": [
+     224,
+     9,
+     5
+    ],
+    "axisG": [
+     3,
+     226,
+     0
+    ],
+    "axisB": [
+     0,
+     0,
+     238
+    ]
+   }
+  },
+  {
+   "block": "B",
+   "idx": 3,
+   "va": "0x808c81c0",
+   "e0": [
+    16,
+    16,
+    16
+   ],
+   "white": [
+    178,
+    178,
+    254
+   ],
+   "strict_identity": false,
+   "n_identical": 0,
+   "max_deviation": 77,
+   "fingerprint_ok": true,
+   "axis_response": {
+    "axisR": [
+     224,
+     8,
+     4
+    ],
+    "axisG": [
+     2,
+     225,
+     0
+    ],
+    "axisB": [
+     0,
+     0,
+     238
+    ]
+   }
+  },
+  {
+   "block": "B",
+   "idx": 4,
+   "va": "0x808ccec0",
+   "e0": [
+    1,
+    1,
+    1
+   ],
+   "white": [
+    185,
+    185,
+    254
+   ],
+   "strict_identity": false,
+   "n_identical": 382,
+   "max_deviation": 70,
+   "fingerprint_ok": true,
+   "axis_response": {
+    "axisR": [
+     252,
+     10,
+     8
+    ],
+    "axisG": [
+     4,
+     253,
+     0
+    ],
+    "axisB": [
+     0,
+     0,
+     253
+    ]
+   }
+  },
+  {
+   "block": "B",
+   "idx": 5,
+   "va": "0x808d1bc0",
+   "e0": [
+    1,
+    1,
+    1
+   ],
+   "white": [
+    185,
+    185,
+    254
+   ],
+   "strict_identity": false,
+   "n_identical": 420,
+   "max_deviation": 70,
+   "fingerprint_ok": true,
+   "axis_response": {
+    "axisR": [
+     252,
+     9,
+     6
+    ],
+    "axisG": [
+     2,
+     253,
+     0
+    ],
+    "axisB": [
+     0,
+     0,
+     253
+    ]
+   }
+  },
+  {
+   "block": "B",
+   "idx": 6,
+   "va": "0x808d68c0",
+   "e0": [
+    8,
+    8,
+    16
+   ],
+   "white": [
+    182,
+    182,
+    254
+   ],
+   "strict_identity": false,
+   "n_identical": 0,
+   "max_deviation": 74,
+   "fingerprint_ok": true,
+   "axis_response": {
+    "axisR": [
+     241,
+     7,
+     6
+    ],
+    "axisG": [
+     4,
+     242,
+     0
+    ],
+    "axisB": [
+     0,
+     0,
+     238
+    ]
+   }
+  },
+  {
+   "block": "B",
+   "idx": 7,
+   "va": "0x808db5c0",
+   "e0": [
+    8,
+    8,
+    16
+   ],
+   "white": [
+    182,
+    182,
+    254
+   ],
+   "strict_identity": false,
+   "n_identical": 0,
+   "max_deviation": 74,
+   "fingerprint_ok": true,
+   "axis_response": {
+    "axisR": [
+     240,
+     5,
+     5
+    ],
+    "axisG": [
+     2,
+     241,
+     0
+    ],
+    "axisB": [
+     0,
+     0,
+     238
+    ]
+   }
+  },
+  {
+   "block": "B",
+   "idx": 8,
+   "va": "0x808e02c0",
+   "e0": [
+    16,
+    16,
+    16
+   ],
+   "white": [
+    178,
+    178,
+    254
+   ],
+   "strict_identity": false,
+   "n_identical": 0,
+   "max_deviation": 77,
+   "fingerprint_ok": true,
+   "axis_response": {
+    "axisR": [
+     224,
+     7,
+     5
+    ],
+    "axisG": [
+     3,
+     226,
+     0
+    ],
+    "axisB": [
+     0,
+     0,
+     238
+    ]
+   }
+  },
+  {
+   "block": "B",
+   "idx": 9,
+   "va": "0x808e4fc0",
+   "e0": [
+    16,
+    16,
+    16
+   ],
+   "white": [
+    178,
+    178,
+    254
+   ],
+   "strict_identity": false,
+   "n_identical": 0,
+   "max_deviation": 77,
+   "fingerprint_ok": true,
+   "axis_response": {
+    "axisR": [
+     223,
+     5,
+     4
+    ],
+    "axisG": [
+     2,
+     225,
+     0
+    ],
+    "axisB": [
+     0,
+     0,
+     238
+    ]
+   }
+  },
+  {
+   "block": "B",
+   "idx": 10,
+   "va": "0x808e9cc0",
+   "e0": [
+    1,
+    1,
+    1
+   ],
+   "white": [
+    185,
+    185,
+    254
+   ],
+   "strict_identity": false,
+   "n_identical": 403,
+   "max_deviation": 70,
+   "fingerprint_ok": true,
+   "axis_response": {
+    "axisR": [
+     251,
+     7,
+     8
+    ],
+    "axisG": [
+     4,
+     253,
+     0
+    ],
+    "axisB": [
+     0,
+     0,
+     253
+    ]
+   }
+  },
+  {
+   "block": "B",
+   "idx": 11,
+   "va": "0x808ee9c0",
+   "e0": [
+    1,
+    1,
+    1
+   ],
+   "white": [
+    185,
+    185,
+    254
+   ],
+   "strict_identity": false,
+   "n_identical": 442,
+   "max_deviation": 70,
+   "fingerprint_ok": true,
+   "axis_response": {
+    "axisR": [
+     252,
+     6,
+     6
+    ],
+    "axisG": [
+     2,
+     253,
+     0
+    ],
+    "axisB": [
+     0,
+     0,
+     253
+    ]
+   }
+  },
+  {
+   "block": "B",
+   "idx": 12,
+   "va": "0x808f36c0",
+   "e0": [
+    21,
+    0,
+    13
+   ],
+   "white": [
+    171,
+    190,
+    245
+   ],
+   "strict_identity": false,
+   "n_identical": 5,
+   "max_deviation": 97,
+   "fingerprint_ok": true,
+   "axis_response": {
+    "axisR": [
+     148,
+     40,
+     61
+    ],
+    "axisG": [
+     12,
+     252,
+     9
+    ],
+    "axisB": [
+     0,
+     0,
+     255
+    ]
+   }
+  },
+  {
+   "block": "B",
+   "idx": 13,
+   "va": "0x808f83c0",
+   "e0": [
+    0,
+    0,
+    0
+   ],
+   "white": [
+    185,
+    185,
+    255
+   ],
+   "strict_identity": false,
+   "n_identical": 1045,
+   "max_deviation": 70,
+   "fingerprint_ok": true,
+   "axis_response": {
+    "axisR": [
+     255,
+     13,
+     7
+    ],
+    "axisG": [
+     0,
+     255,
+     0
+    ],
+    "axisB": [
+     0,
+     0,
+     255
+    ]
+   }
+  },
+  {
+   "block": "B",
+   "idx": 14,
+   "va": "0x808fd0c0",
+   "e0": [
+    21,
+    0,
+    13
+   ],
+   "white": [
+    171,
+    190,
+    245
+   ],
+   "strict_identity": false,
+   "n_identical": 5,
+   "max_deviation": 97,
+   "fingerprint_ok": true,
+   "axis_response": {
+    "axisR": [
+     148,
+     40,
+     61
+    ],
+    "axisG": [
+     12,
+     252,
+     9
+    ],
+    "axisB": [
+     0,
+     0,
+     255
+    ]
+   }
+  },
+  {
+   "block": "B",
+   "idx": 15,
+   "va": "0x80901dc0",
+   "e0": [
+    0,
+    0,
+    0
+   ],
+   "white": [
+    185,
+    185,
+    255
+   ],
+   "strict_identity": false,
+   "n_identical": 1038,
+   "max_deviation": 70,
+   "fingerprint_ok": true,
+   "axis_response": {
+    "axisR": [
+     255,
+     13,
+     7
+    ],
+    "axisG": [
+     0,
+     255,
+     0
+    ],
+    "axisB": [
+     0,
+     0,
+     255
+    ]
+   }
+  },
+  {
+   "block": "B",
+   "idx": 16,
+   "va": "0x80906ac0",
+   "e0": [
+    21,
+    0,
+    13
+   ],
+   "white": [
+    171,
+    190,
+    245
+   ],
+   "strict_identity": false,
+   "n_identical": 5,
+   "max_deviation": 97,
+   "fingerprint_ok": true,
+   "axis_response": {
+    "axisR": [
+     148,
+     40,
+     60
+    ],
+    "axisG": [
+     12,
+     252,
+     9
+    ],
+    "axisB": [
+     0,
+     0,
+     255
+    ]
+   }
+  },
+  {
+   "block": "B",
+   "idx": 17,
+   "va": "0x8090b7c0",
+   "e0": [
+    0,
+    0,
+    0
+   ],
+   "white": [
+    185,
+    185,
+    255
+   ],
+   "strict_identity": false,
+   "n_identical": 940,
+   "max_deviation": 70,
+   "fingerprint_ok": true,
+   "axis_response": {
+    "axisR": [
+     255,
+     13,
+     8
+    ],
+    "axisG": [
+     0,
+     255,
+     0
+    ],
+    "axisB": [
+     0,
+     0,
+     255
+    ]
+   }
+  },
+  {
+   "block": "B",
+   "idx": 18,
+   "va": "0x809104c0",
+   "e0": [
+    21,
+    0,
+    13
+   ],
+   "white": [
+    171,
+    190,
+    245
+   ],
+   "strict_identity": false,
+   "n_identical": 7,
+   "max_deviation": 97,
+   "fingerprint_ok": true,
+   "axis_response": {
+    "axisR": [
+     148,
+     40,
+     60
+    ],
+    "axisG": [
+     11,
+     252,
+     10
+    ],
+    "axisB": [
+     0,
+     0,
+     255
+    ]
+   }
+  },
+  {
+   "block": "B",
+   "idx": 19,
+   "va": "0x809151c0",
+   "e0": [
+    0,
+    0,
+    0
+   ],
+   "white": [
+    185,
+    185,
+    255
+   ],
+   "strict_identity": false,
+   "n_identical": 810,
+   "max_deviation": 70,
+   "fingerprint_ok": true,
+   "axis_response": {
+    "axisR": [
+     255,
+     13,
+     9
+    ],
+    "axisG": [
+     1,
+     255,
+     0
+    ],
+    "axisB": [
+     0,
+     0,
+     255
+    ]
+   }
+  },
+  {
+   "block": "B",
+   "idx": 20,
+   "va": "0x80919ec0",
+   "e0": [
+    21,
+    0,
+    13
+   ],
+   "white": [
+    171,
+    190,
+    245
+   ],
+   "strict_identity": false,
+   "n_identical": 8,
+   "max_deviation": 97,
+   "fingerprint_ok": true,
+   "axis_response": {
+    "axisR": [
+     148,
+     41,
+     60
+    ],
+    "axisG": [
+     11,
+     252,
+     10
+    ],
+    "axisB": [
+     0,
+     0,
+     255
+    ]
+   }
+  },
+  {
+   "block": "B",
+   "idx": 21,
+   "va": "0x8091ebc0",
+   "e0": [
+    0,
+    0,
+    0
+   ],
+   "white": [
+    185,
+    185,
+    255
+   ],
+   "strict_identity": false,
+   "n_identical": 795,
+   "max_deviation": 70,
+   "fingerprint_ok": true,
+   "axis_response": {
+    "axisR": [
+     255,
+     14,
+     9
+    ],
+    "axisG": [
+     1,
+     255,
+     0
+    ],
+    "axisB": [
+     0,
+     0,
+     255
+    ]
+   }
+  }
+ ]
+}
