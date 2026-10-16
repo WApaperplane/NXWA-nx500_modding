@@ -68,16 +68,16 @@ else
 #     本块只负责【维持 mount 在位】，冷启动这一次赶不上 App exec；
 #     实际生效点（何时加载补丁件）见 docs/current/T2_DELIVERY_REVISION_2026-10-15.md。
 if [ -f /opt/usr/nx-ks/dicam/di-camera-app.c2 ]; then
-    mount --bind /opt/usr/nx-ks/dicam/di-camera-app.c2 \
+    mount -o bind /opt/usr/nx-ks/dicam/di-camera-app.c2 \
         /usr/apps/com.samsung.di-camera-app/bin/di-camera-app 2>/dev/null
 fi
 EOF
     echo "   已向 init.sh 追加重挂块（原文件备份为 init.sh.dicam.bak）"
 fi
 
-# ---- 4. 建立 bind-mount（★ 10-15 修订：不再重启 App） ----
+# ---- 4. 建立 bind-mount（★ 10-15 修订：不再重启 App；★ 10-16：-o bind 兼容语法） ----
 if ! mount | grep -q "di-camera-app/bin/di-camera-app"; then
-    mount --bind "$PATCH" "$TARGET" && echo "   已 bind-mount 就位" || { echo "!! bind 失败"; exit 1; }
+    mount -o bind "$PATCH" "$TARGET" && echo "   已 bind-mount 就位" || { echo "!! bind 失败"; exit 1; }
 else
     echo "   已有 bind-mount"
 fi

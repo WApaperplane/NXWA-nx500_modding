@@ -11,6 +11,9 @@
 #   - 容错：任何失败皆 exit 0（退化为原厂行为 = 禁用语义）
 #   - unit 中以 `ExecStartPre=-…` 前缀调用 ⇒ 不阻止 App 启动
 #   ⛔ 本脚本绝不 restart 任何服务（该机型 restart di-camera-app = 卡死整机）
+#   ★ v2.1 · 2026-10-16 · `mount --bind` → `mount -o bind`
+#        VM 预演抓到的真 bug：相机 rootfs 自带 mount 不认 `--bind`（仅认 `-o bind`）；
+#        GNU util-linux 两者皆可 ⇒ `-o bind` 为最大兼容形式。证据：test_server/dicam/p5_qemu/
 #   v2 · 2026-10-16 · 多条目化（加 M2 locale）；单条目行为与 v1 一致
 #   v1 · 2026-10-15 · 离线编写（未上机验证；上机前建议先 dry-run：手工执行一次看 mount 表）
 # =====================================================================
@@ -22,7 +25,7 @@ do_mount() {
     [ -f "$SRC" ] || return 0            # 源不存在 ⇒ 该条目禁用（静默）
     [ -f "$DST" ] || return 0            # 目标不存在 ⇒ 跳过（防御）
     mount | grep -q "$DST" && return 0   # 已挂载 ⇒ 幂等跳过
-    if mount --bind "$SRC" "$DST" 2>/dev/null; then
+    if mount -o bind "$SRC" "$DST" 2>/dev/null; then
         # 最小审计日志（tmpfs；失败静默）
         echo "[$TAG] mount ok: $DST <- $SRC @ $(cut -d' ' -f1 /proc/uptime 2>/dev/null)s" >> "$LOG" 2>/dev/null
     fi

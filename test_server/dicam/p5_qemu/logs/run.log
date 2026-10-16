@@ -1,0 +1,91 @@
+
+########## A0. 布置（脚本/补丁体/样机/目标/日志） ##########
+T2 补丁体 : 48d94bd63e4479fc931ae1a1fee4e94b  (期望 48d94bd6…)
+M2 样机   : e531bd5fe7ff4c97d1f01991af932f5b  (期望 e531bd5f…)
+T2 目标   : 4773516B  /opt/nxks2/rootfs-112/usr/apps/com.samsung.di-camera-app/bin/di-camera-app
+日志文件  : /opt/nxks2/rootfs-112/tmp/dicam_p5_mount.log
+
+########## A1. premount 正常态（两条目应挂载） ##########
+  OK   T2 条目已挂载
+  OK   M2 条目已挂载
+-- chroot 内 mount 表（相机视角） --
+   /dev/sdd on /usr/apps/com.samsung.di-camera-app/bin/di-camera-app type ext4 (rw,relatime,discard,errors=remount-ro,data=ordered)
+   /dev/sdd on /usr/share/locale/zh_CN/LC_MESSAGES/di-camera-app.mo type ext4 (rw,relatime,discard,errors=remount-ro,data=ordered)
+-- /tmp/dicam_p5_mount.log --
+   [T2] mount ok: /usr/apps/com.samsung.di-camera-app/bin/di-camera-app <- /opt/usr/nx-ks/dicam/di-camera-app.c2 @ 802.47s
+   [M2] mount ok: /usr/share/locale/zh_CN/LC_MESSAGES/di-camera-app.mo <- /opt/usr/nx-ks/locale/zh_CN/di-camera-app.mo @ 802.53s
+  OK   日志恰 2 行（[T2]+[M2]）
+
+########## A2. premount 幂等态（无新增） ##########
+  OK   挂载表无变化（43）
+  OK   日志无新增（2）
+
+########## A3. 独立禁用（移除 T2 源 ⇒ 只 M2 挂载） ##########
+  OK   T2 正确未挂（禁用语义）
+  OK   M2 独立挂载不受影响
+
+########## A4. 清场（umount 全部） ##########
+  OK   T2 已清
+  OK   M2 已清
+
+########## B1. P5 install（真 unit 注入） ##########
+-- 注入前 [Service] 段 --
+   [Service]
+   ExecStart=/usr/apps/com.samsung.di-camera-app/bin/di-camera-app
+   StandardOutput=tty
+   EnvironmentFile=/run/tizen-mobile-env
+   #Restart=always
+   #RestartSec=3
+   
+   == dicam P5 installer（unit 前置挂载注入） ==
+      已注入：ExecStartPre=-/opt/usr/nx-ks/dicam/t2_premount.sh
+      daemon-reload OK
+   ---- unit [Service] 段现貌 ----
+   [Service]
+   ExecStartPre=-/opt/usr/nx-ks/dicam/t2_premount.sh
+   ExecStart=/usr/apps/com.samsung.di-camera-app/bin/di-camera-app
+   StandardOutput=tty
+   EnvironmentFile=/run/tizen-mobile-env
+   #Restart=always
+   #RestartSec=3
+   
+   == 完成。生效 = 下一次【正常关机→开机】（systemd 在 App exec 前调用 t2_premount.sh）。==
+   == ⛔ 禁 restart。开机后验证：sh /opt/usr/nx-ks/dicam/dicam_patch_status.sh（应显示 mount 在位 + P5 行在位） ==
+  OK   注入命中数=1
+  OK   注入行位于 ExecStart= 之前（6 < 7）
+  OK   备份与原始 unit 一致
+
+########## B2. P5 install 幂等 ##########
+  OK   二次运行跳过（幂等）
+
+########## C1. P5 rollback（互逆） ##########
+   == dicam P5 rollback ==
+      已移除 ExecStartPre 前置行
+      daemon-reload OK
+   == 完成。当前运行进程不变；恢复官方加载 = 正常关机→开机（禁 restart）。==
+   == 注：init.sh 复挂块（若在）不受本脚本影响——如需一并解除，跑 dicam_patch_rollback.sh。 ==
+  OK   移除后 0 命中
+  OK   与原始 unit 逐字节一致
+
+########## D1. 异常 unit（无 ExecStart=）——应报错且不修改 ##########
+   == dicam P5 installer（unit 前置挂载注入） ==
+   !! 未找到 ExecStart= 行——unit 形态异常，未做修改
+  OK   退出码非 0（rc=1）
+  OK   报错信息正确
+  OK   坏 unit 未被改（仍无 ExecStart=）
+  OK   无临时文件残留
+
+########## D2. 还原原始 unit（保持 rootfs 副本干净） ##########
+  OK   unit 已还原
+
+########## E. 汇总 ##########
+-- 最终 unit [Service] 段 --
+   [Service]
+   ExecStart=/usr/apps/com.samsung.di-camera-app/bin/di-camera-app
+   StandardOutput=tty
+   EnvironmentFile=/run/tizen-mobile-env
+   #Restart=always
+   #RestartSec=3
+   
+
+== P5 VM 预演：PASS（A/B/C/D 全绿） ==

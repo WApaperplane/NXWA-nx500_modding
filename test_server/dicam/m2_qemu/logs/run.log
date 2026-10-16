@@ -1,0 +1,83 @@
+
+########## 0. 前置检查 ##########
+探针   : 6c27d8c0463b7a359651d606c432c36f  /mnt/e/NXWA/nx500-modding-work/test_server/dicam/m2_qemu/out/m2_probe.arm
+官方件 : f2d60cd2f2687de43089729fb06f436c  /mnt/e/tmp/dicam_zh_CN.mo
+样机   : e531bd5fe7ff4c97d1f01991af932f5b  /mnt/e/NXWA/nx500-modding-work/fw/v1.12/dicam/locale/di-camera-app.zh_CN.m2sample.mo
+
+########## 1. zh_CN.UTF-8 locale（用相机自带 localedef + 自带 i18n 源；幂等） ##########
+charmap 已在位：UTF-8
+charmap 已在位：ANSI_X3.4-1968
+清除不完整残留目录 /opt/nxks2/rootfs-112/usr/lib/locale/zh_CN.UTF-8
+生成完成：
+total 1652
+drwxr-xr-x 3 root root    4096 Oct 16 15:54 .
+drwxrwxr-x 3 root root    4096 Oct 16 15:54 ..
+-rw-r--r-- 1 root root     162 Oct 16 15:54 LC_ADDRESS
+-rw-r--r-- 1 root root 1382818 Oct 16 15:54 LC_COLLATE
+-rw-r--r-- 1 root root  257192 Oct 16 15:54 LC_CTYPE
+-rw-r--r-- 1 root root     316 Oct 16 15:54 LC_IDENTIFICATION
+-rw-r--r-- 1 root root      23 Oct 16 15:54 LC_MEASUREMENT
+drwxr-xr-x 2 root root    4096 Oct 16 15:54 LC_MESSAGES
+-rw-r--r-- 1 root root     290 Oct 16 15:54 LC_MONETARY
+-rw-r--r-- 1 root root      82 Oct 16 15:54 LC_NAME
+-rw-r--r-- 1 root root      54 Oct 16 15:54 LC_NUMERIC
+
+########## 2. 布置（探针入 chroot + 字典目录 + proc） ##########
+
+########## 3. 基线轮：官方 .mo（期望：自定义 1/2/3） ##########
+# setlocale(LC_ALL,"") = zh_CN.UTF-8
+# env LC_ALL/LANG = zh_CN.UTF-8
+# -- A: dcgettext(domain) --
+CAP_MENU_CUSTOM_MODE_1|自定义 1
+CAP_MENU_CUSTOM_MODE_2|自定义 2
+CAP_MENU_CUSTOM_MODE_3|自定义 3
+CAP_FN_PW|图片向导
+MSG_MENU_PW_CUSTOM03|应用用户定义的风格。
+# -- B: default domain via textdomain() --
+CAP_MENU_CUSTOM_MODE_1|自定义 1
+CAP_MENU_CUSTOM_MODE_2|自定义 2
+CAP_MENU_CUSTOM_MODE_3|自定义 3
+CAP_FN_PW|图片向导
+MSG_MENU_PW_CUSTOM03|应用用户定义的风格。
+# -- C: after bindtextdomain(/usr/share/locale) --
+CAP_MENU_CUSTOM_MODE_1|自定义 1
+CAP_MENU_CUSTOM_MODE_2|自定义 2
+CAP_MENU_CUSTOM_MODE_3|自定义 3
+CAP_FN_PW|图片向导
+MSG_MENU_PW_CUSTOM03|应用用户定义的风格。
+# probe done
+
+########## 4. 样机轮：m2sample .mo（期望：Portra 400 / Gold 200 / TriX 400） ##########
+# setlocale(LC_ALL,"") = zh_CN.UTF-8
+# env LC_ALL/LANG = zh_CN.UTF-8
+# -- A: dcgettext(domain) --
+CAP_MENU_CUSTOM_MODE_1|Portra 400
+CAP_MENU_CUSTOM_MODE_2|Gold 200
+CAP_MENU_CUSTOM_MODE_3|TriX 400
+CAP_FN_PW|图片向导
+MSG_MENU_PW_CUSTOM03|应用用户定义的风格。
+# -- B: default domain via textdomain() --
+CAP_MENU_CUSTOM_MODE_1|Portra 400
+CAP_MENU_CUSTOM_MODE_2|Gold 200
+CAP_MENU_CUSTOM_MODE_3|TriX 400
+CAP_FN_PW|图片向导
+MSG_MENU_PW_CUSTOM03|应用用户定义的风格。
+# -- C: after bindtextdomain(/usr/share/locale) --
+CAP_MENU_CUSTOM_MODE_1|Portra 400
+CAP_MENU_CUSTOM_MODE_2|Gold 200
+CAP_MENU_CUSTOM_MODE_3|TriX 400
+CAP_FN_PW|图片向导
+MSG_MENU_PW_CUSTOM03|应用用户定义的风格。
+# probe done
+
+########## 5. 断言 ##########
+  OK   基线轮 CUSTOM1=旧名（证明翻译链工作）
+  OK   基线轮 CUSTOM2=旧名
+  OK   基线轮 CAP_FN_PW=图片向导
+  OK   样机轮 CUSTOM1=新名
+  OK   样机轮 CUSTOM2=新名
+  OK   样机轮 CUSTOM3=新名
+  OK   样机轮 CAP_FN_PW 未动（仍=图片向导）
+  OK   样机轮无旧名残留
+
+== M2 VM 预演：PASS（gettext 双轮对照全绿） ==

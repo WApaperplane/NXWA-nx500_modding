@@ -1,0 +1,21 @@
+# setlocale(LC_ALL,"") = zh_CN.UTF-8
+# env LC_ALL/LANG = zh_CN.UTF-8
+# -- A: dcgettext(domain) --
+CAP_MENU_CUSTOM_MODE_1|自定义 1
+CAP_MENU_CUSTOM_MODE_2|自定义 2
+CAP_MENU_CUSTOM_MODE_3|自定义 3
+CAP_FN_PW|图片向导
+MSG_MENU_PW_CUSTOM03|应用用户定义的风格。
+# -- B: default domain via textdomain() --
+CAP_MENU_CUSTOM_MODE_1|自定义 1
+CAP_MENU_CUSTOM_MODE_2|自定义 2
+CAP_MENU_CUSTOM_MODE_3|自定义 3
+CAP_FN_PW|图片向导
+MSG_MENU_PW_CUSTOM03|应用用户定义的风格。
+# -- C: after bindtextdomain(/usr/share/locale) --
+CAP_MENU_CUSTOM_MODE_1|自定义 1
+CAP_MENU_CUSTOM_MODE_2|自定义 2
+CAP_MENU_CUSTOM_MODE_3|自定义 3
+CAP_FN_PW|图片向导
+MSG_MENU_PW_CUSTOM03|应用用户定义的风格。
+# probe done

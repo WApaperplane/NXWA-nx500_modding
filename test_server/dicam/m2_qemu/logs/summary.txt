@@ -1,0 +1,1 @@
+== M2 VM 预演：PASS（gettext 双轮对照全绿） ==
