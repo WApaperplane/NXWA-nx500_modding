@@ -1,0 +1,92 @@
+== T4 p7 表池引用搜索证据（2026-10-16）==
+镜像: chunk-05.bin md5 5fc4824f5b6a6a3caca1f9104238b8ac
+
+### runtime 组 ###
+镜像: E:/NXWA/fw/v1.12/parts/chunk-05.bin (12075648B)  VA = off + 0x80000000
+扫描完成：指令形态命中 319 处；字面量命中 30 处
+
+=== RT:view_std  VA 0x810fd100 ===  字面量 2 / 配对 0
+   [literal] off 0x382b14  VA 0x80382b14
+   [literal] off 0x3837f0  VA 0x803837f0
+
+=== RT:view_bw  VA 0x81101e00 ===  字面量 2 / 配对 0
+   [literal] off 0x382b1c  VA 0x80382b1c
+   [literal] off 0x3837f4  VA 0x803837f4
+
+=== RT:view_film  VA 0x81106b00 ===  字面量 2 / 配对 0
+   [literal] off 0x382c6c  VA 0x80382c6c
+   [literal] off 0x3837f8  VA 0x803837f8
+
+=== RT:still_s4  VA 0x8110b800 ===  字面量 1 / 配对 0
+   [literal] off 0x382c68  VA 0x80382c68
+
+=== RT:still_s6  VA 0x81110500 ===  字面量 1 / 配对 0
+   [literal] off 0x382c70  VA 0x80382c70
+
+=== RT:view_skin  VA 0x81115200 ===  字面量 2 / 配对 0
+   [literal] off 0x382c60  VA 0x80382c60
+   [literal] off 0x3837fc  VA 0x803837fc
+
+=== RT:still_s1  VA 0x81119f00 ===  字面量 1 / 配对 0
+   [literal] off 0x382c5c  VA 0x80382c5c
+
+=== RT:still_s3  VA 0x8111ec00 ===  字面量 1 / 配对 0
+   [literal] off 0x382c64  VA 0x80382c64
+
+=== RT:bv_9  VA 0x8115d900 ===  字面量 1 / 配对 0
+   [literal] off 0x382b20  VA 0x80382b20
+
+=== RT:bv_11  VA 0x81162600 ===  字面量 1 / 配对 0
+   [literal] off 0x382b28  VA 0x80382b28
+
+=== RT:bv_3  VA 0x81167300 ===  字面量 1 / 配对 0
+   [literal] off 0x382b08  VA 0x80382b08
+
+=== RT:bv_1  VA 0x8116c000 ===  字面量 1 / 配对 0
+   [literal] off 0x382b00  VA 0x80382b00
+
+=== RT:bv_4  VA 0x81170d00 ===  字面量 1 / 配对 0
+   [literal] off 0x382b0c  VA 0x80382b0c
+
+=== RT:bv_2  VA 0x81175a00 ===  字面量 1 / 配对 0
+   [literal] off 0x382b04  VA 0x80382b04
+
+=== RT:bv_10  VA 0x8117a700 ===  字面量 1 / 配对 0
+   [literal] off 0x382b24  VA 0x80382b24
+
+=== RT:bv_12  VA 0x8117f400 ===  字面量 1 / 配对 0
+   [literal] off 0x382b2c  VA 0x80382b2c
+
+=== RT:bv_5  VA 0x81184100 ===  字面量 1 / 配对 0
+   [literal] off 0x382b10  VA 0x80382b10
+
+=== RT:bv_7  VA 0x81188e00 ===  字面量 1 / 配对 0
+   [literal] off 0x382b18  VA 0x80382b18
+
+=== RT:mcb_1  VA 0x813d8800 ===  字面量 2 / 配对 0
+   [literal] off 0x3f2c5c  VA 0x803f2c5c
+   [literal] off 0x3f2cf4  VA 0x803f2cf4
+
+=== RT:mcb_2  VA 0x813dd500 ===  字面量 2 / 配对 0
+   [literal] off 0x3f2c58  VA 0x803f2c58
+   [literal] off 0x3f2cf0  VA 0x803f2cf0
+
+=== RT:mcb_3  VA 0x813e2200 ===  字面量 2 / 配对 0
+   [literal] off 0x3f2c54  VA 0x803f2c54
+   [literal] off 0x3f2cec  VA 0x803f2cec
+
+=== RT:mcb_4  VA 0x813e6f00 ===  字面量 2 / 配对 0
+   [literal] off 0x3f2c4c  VA 0x803f2c4c
+   [literal] off 0x3f2ce4  VA 0x803f2ce4
+
+== 汇总：22/22 个地址有引用（指令或字面量）==
+
+### static 组 ###
+镜像: E:/NXWA/fw/v1.12/parts/chunk-05.bin (12075648B)  VA = off + 0x80000000
+扫描完成：指令形态命中 66 处；字面量命中 0 处
+
+=== SA03  VA 0x808679c0 ===  字面量 0 / 配对 0
+
+=== SA05  VA 0x808713c0 ===  字面量 0 / 配对 0
+
+=== SA06  VA 0x808760c0 ===  字面量 0 / 配对 0

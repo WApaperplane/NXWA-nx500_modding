@@ -1,0 +1,496 @@
+{
+ "image": "E:/NXWA/fw/v1.12/parts/chunk-05.bin",
+ "group": "static",
+ "refs": [
+  {
+   "name": "SA03",
+   "va": "0x808679c0",
+   "instr": 1,
+   "literal": 0,
+   "pairs": [],
+   "literal_offs": [],
+   "instr_offs": [
+    [
+     "0xc06d8",
+     "movw",
+     0
+    ]
+   ]
+  },
+  {
+   "name": "SA05",
+   "va": "0x808713c0",
+   "instr": 2,
+   "literal": 0,
+   "pairs": [],
+   "literal_offs": [],
+   "instr_offs": [
+    [
+     "0x69e64",
+     "mov",
+     6
+    ],
+    [
+     "0x241964",
+     "mov",
+     2
+    ]
+   ]
+  },
+  {
+   "name": "SA06",
+   "va": "0x808760c0",
+   "instr": 1,
+   "literal": 0,
+   "pairs": [],
+   "literal_offs": [],
+   "instr_offs": [
+    [
+     "0x4b18a4",
+     "movw",
+     2
+    ]
+   ]
+  },
+  {
+   "name": "SA08",
+   "va": "0x8087fac0",
+   "instr": 13,
+   "literal": 0,
+   "pairs": [],
+   "literal_offs": [],
+   "instr_offs": [
+    [
+     "0x1e6dc4",
+     "movw",
+     12
+    ],
+    [
+     "0x1e6efc",
+     "movw",
+     12
+    ],
+    [
+     "0x1e6f90",
+     "movw",
+     12
+    ],
+    [
+     "0x1e7100",
+     "movw",
+     12
+    ],
+    [
+     "0x1e7428",
+     "movw",
+     2
+    ],
+    [
+     "0x1e7484",
+     "movw",
+     3
+    ],
+    [
+     "0x1e74dc",
+     "movw",
+     3
+    ],
+    [
+     "0x1e7534",
+     "movw",
+     2
+    ],
+    [
+     "0x1e75e4",
+     "movw",
+     2
+    ],
+    [
+     "0x1e763c",
+     "movw",
+     2
+    ],
+    [
+     "0x2563c4",
+     "movw",
+     3
+    ],
+    [
+     "0x39d578",
+     "movw",
+     3
+    ],
+    [
+     "0x3a2b38",
+     "movw",
+     2
+    ]
+   ]
+  },
+  {
+   "name": "SA16",
+   "va": "0x808a62c0",
+   "instr": 1,
+   "literal": 0,
+   "pairs": [],
+   "literal_offs": [],
+   "instr_offs": [
+    [
+     "0x27b0c8",
+     "movw",
+     1
+    ]
+   ]
+  },
+  {
+   "name": "SB01",
+   "va": "0x808be7c0",
+   "instr": 1,
+   "literal": 0,
+   "pairs": [],
+   "literal_offs": [],
+   "instr_offs": [
+    [
+     "0x250d10",
+     "movw",
+     1
+    ]
+   ]
+  },
+  {
+   "name": "SB03",
+   "va": "0x808c81c0",
+   "instr": 2,
+   "literal": 0,
+   "pairs": [],
+   "literal_offs": [],
+   "instr_offs": [
+    [
+     "0x242548",
+     "movw",
+     0
+    ],
+    [
+     "0x287250",
+     "movw",
+     3
+    ]
+   ]
+  },
+  {
+   "name": "SB06",
+   "va": "0x808d68c0",
+   "instr": 4,
+   "literal": 0,
+   "pairs": [],
+   "literal_offs": [],
+   "instr_offs": [
+    [
+     "0x6937c",
+     "movw",
+     3
+    ],
+    [
+     "0x7c59c",
+     "movw",
+     3
+    ],
+    [
+     "0x7c708",
+     "movw",
+     3
+    ],
+    [
+     "0x7c930",
+     "movw",
+     3
+    ]
+   ]
+  },
+  {
+   "name": "SB08",
+   "va": "0x808e02c0",
+   "instr": 13,
+   "literal": 0,
+   "pairs": [],
+   "literal_offs": [],
+   "instr_offs": [
+    [
+     "0x646d4",
+     "mov",
+     0
+    ],
+    [
+     "0x8ff90",
+     "mov",
+     11
+    ],
+    [
+     "0x9f5e0",
+     "mov",
+     1
+    ],
+    [
+     "0xd9be4",
+     "mov",
+     2
+    ],
+    [
+     "0x18e820",
+     "mov",
+     1
+    ],
+    [
+     "0x19e404",
+     "mov",
+     3
+    ],
+    [
+     "0x24807c",
+     "mov",
+     2
+    ],
+    [
+     "0x285eb8",
+     "mov",
+     2
+    ],
+    [
+     "0x39a3d8",
+     "mov",
+     11
+    ],
+    [
+     "0x39a470",
+     "mov",
+     11
+    ],
+    [
+     "0x39fac4",
+     "mov",
+     0
+    ],
+    [
+     "0x39faf0",
+     "mov",
+     9
+    ],
+    [
+     "0x4d6b58",
+     "mov",
+     2
+    ]
+   ]
+  },
+  {
+   "name": "SB12",
+   "va": "0x808f36c0",
+   "instr": 1,
+   "literal": 0,
+   "pairs": [],
+   "literal_offs": [],
+   "instr_offs": [
+    [
+     "0x6fc24",
+     "movw",
+     0
+    ]
+   ]
+  },
+  {
+   "name": "SB13",
+   "va": "0x808f83c0",
+   "instr": 2,
+   "literal": 0,
+   "pairs": [],
+   "literal_offs": [],
+   "instr_offs": [
+    [
+     "0x1ba8d4",
+     "movw",
+     1
+    ],
+    [
+     "0x287f4c",
+     "movw",
+     3
+    ]
+   ]
+  },
+  {
+   "name": "SB14",
+   "va": "0x808fd0c0",
+   "instr": 1,
+   "literal": 0,
+   "pairs": [],
+   "literal_offs": [],
+   "instr_offs": [
+    [
+     "0x31ab8",
+     "movw",
+     3
+    ]
+   ]
+  },
+  {
+   "name": "SB15",
+   "va": "0x80901dc0",
+   "instr": 1,
+   "literal": 0,
+   "pairs": [],
+   "literal_offs": [],
+   "instr_offs": [
+    [
+     "0x265588",
+     "movw",
+     3
+    ]
+   ]
+  },
+  {
+   "name": "SB18",
+   "va": "0x809104c0",
+   "instr": 21,
+   "literal": 0,
+   "pairs": [],
+   "literal_offs": [],
+   "instr_offs": [
+    [
+     "0x1b91a8",
+     "mov",
+     0
+    ],
+    [
+     "0x2cd078",
+     "mov",
+     5
+    ],
+    [
+     "0x2cd334",
+     "mov",
+     5
+    ],
+    [
+     "0x2cd6ec",
+     "mov",
+     3
+    ],
+    [
+     "0x2d0520",
+     "mov",
+     6
+    ],
+    [
+     "0x2d0564",
+     "mov",
+     3
+    ],
+    [
+     "0x2d05b0",
+     "mov",
+     3
+    ],
+    [
+     "0x2d05e4",
+     "mov",
+     3
+    ],
+    [
+     "0x2d0628",
+     "mov",
+     3
+    ],
+    [
+     "0x2d0644",
+     "mov",
+     3
+    ],
+    [
+     "0x2d20c8",
+     "mov",
+     3
+    ],
+    [
+     "0x2d99c0",
+     "mov",
+     3
+    ],
+    [
+     "0x2da948",
+     "mov",
+     3
+    ],
+    [
+     "0x2da990",
+     "mov",
+     3
+    ],
+    [
+     "0x2db3e0",
+     "mov",
+     3
+    ],
+    [
+     "0x32990c",
+     "mov",
+     2
+    ],
+    [
+     "0x39be4c",
+     "mov",
+     0
+    ],
+    [
+     "0x39be64",
+     "mov",
+     10
+    ],
+    [
+     "0x3a15b0",
+     "mov",
+     8
+    ],
+    [
+     "0x3bc95c",
+     "mov",
+     2
+    ],
+    [
+     "0x3bc974",
+     "mov",
+     2
+    ]
+   ]
+  },
+  {
+   "name": "SB20",
+   "va": "0x80919ec0",
+   "instr": 1,
+   "literal": 0,
+   "pairs": [],
+   "literal_offs": [],
+   "instr_offs": [
+    [
+     "0x1b235c",
+     "movw",
+     3
+    ]
+   ]
+  },
+  {
+   "name": "SB21",
+   "va": "0x8091ebc0",
+   "instr": 1,
+   "literal": 0,
+   "pairs": [],
+   "literal_offs": [],
+   "instr_offs": [
+    [
+     "0x305a8c",
+     "movw",
+     9
+    ]
+   ]
+  }
+ ]
+}
