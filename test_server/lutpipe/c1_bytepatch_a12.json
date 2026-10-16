@@ -1,0 +1,120 @@
+{
+  "tool": "mk_c1_patch.py v1 · 2026-10-16",
+  "base": {
+    "path": "E:/NXWA/fw/v1.12/a2/p7_a2.bin",
+    "md5": "712c6fd0a49371ec05ce94c367b0d5c7",
+    "size": 12075648
+  },
+  "slot": {
+    "name": "A12",
+    "va": "0x80892ec0",
+    "file_off": "0x892ec0",
+    "size": 19712
+  },
+  "table": {
+    "kind": "identity",
+    "md5": "235ad45324c042d0bd4233513e1fca52"
+  },
+  "out": {
+    "path": "E:/NXWA/fw/v1.12/c1\\p7_c1_a12.bin",
+    "md5": "b415ca76ab93ec44c9146cab59e27ba8",
+    "size": 12075648
+  },
+  "diff": {
+    "regions_count": 5185,
+    "total_bytes": 13901,
+    "window": [
+      "0x892ec0",
+      "0x897bc0"
+    ],
+    "regions_head": [
+      [
+        "0x892ec0",
+        "0x892ec1"
+      ],
+      [
+        "0x892ec2",
+        "0x892ec3"
+      ],
+      [
+        "0x892ec4",
+        "0x892ec5"
+      ],
+      [
+        "0x892ec6",
+        "0x892ec7"
+      ],
+      [
+        "0x892ec8",
+        "0x892ec9"
+      ],
+      [
+        "0x892eca",
+        "0x892ecb"
+      ],
+      [
+        "0x892ecc",
+        "0x892ecd"
+      ],
+      [
+        "0x892ece",
+        "0x892ecf"
+      ],
+      [
+        "0x892ed0",
+        "0x892ed1"
+      ],
+      [
+        "0x892ed2",
+        "0x892ed3"
+      ],
+      [
+        "0x892ed4",
+        "0x892ed5"
+      ],
+      [
+        "0x892ed6",
+        "0x892ed7"
+      ],
+      [
+        "0x892ed8",
+        "0x892ed9"
+      ],
+      [
+        "0x892eda",
+        "0x892edb"
+      ],
+      [
+        "0x892edc",
+        "0x892edd"
+      ],
+      [
+        "0x892ede",
+        "0x892edf"
+      ],
+      [
+        "0x892ee0",
+        "0x892ee1"
+      ],
+      [
+        "0x892ee2",
+        "0x892ee3"
+      ],
+      [
+        "0x892ee4",
+        "0x892ee5"
+      ],
+      [
+        "0x892ee6",
+        "0x892ee7"
+      ]
+    ],
+    "note": "全部差异均在 window 内；完整区间可由 mk_c1_patch.py 重算"
+  },
+  "snapshot": {
+    "path": "E:/NXWA/fw/v1.12/c1\\a12.orig.bin",
+    "md5": "058de5f8e5677b1cfe8eeb910b8e89ff"
+  },
+  "restore": "dd if=p7_c1_a12.bin of=/dev/mmcblk0p7 bs=1M  (或用 A2 包重刷)",
+  "note": "C1 实验：静态池一槽替换；消费判定与回退见 T6_C1_SLOT_EXPERIMENT_2026-10-16.md"
+}
