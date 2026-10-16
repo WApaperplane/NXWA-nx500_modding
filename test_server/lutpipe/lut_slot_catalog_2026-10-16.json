@@ -1,0 +1,1100 @@
+{
+ "image": "E:/NXWA/fw/v1.12/parts/chunk-05.bin",
+ "image_size": 12075648,
+ "slot": "0x4d00",
+ "table_bytes": 19652,
+ "slots": [
+  {
+   "block": "A",
+   "idx": 0,
+   "va": "0x808592c0",
+   "file_off": "0x8592c0",
+   "e0": [
+    8,
+    8,
+    16
+   ],
+   "e8": [
+    128,
+    128,
+    143
+   ],
+   "tail_item": [
+    182,
+    182,
+    254,
+    0
+   ],
+   "fingerprint_ok": true,
+   "pad_zero_ok": true,
+   "is_gray": false,
+   "guess": "蓝影lift?（E0=(8, 8, 16)）"
+  },
+  {
+   "block": "A",
+   "idx": 1,
+   "va": "0x8085dfc0",
+   "file_off": "0x85dfc0",
+   "e0": [
+    16,
+    16,
+    16
+   ],
+   "e8": [
+    128,
+    128,
+    141
+   ],
+   "tail_item": [
+    178,
+    178,
+    254,
+    0
+   ],
+   "fingerprint_ok": true,
+   "pad_zero_ok": true,
+   "is_gray": false,
+   "guess": "其他（E0=(16, 16, 16)）"
+  },
+  {
+   "block": "A",
+   "idx": 2,
+   "va": "0x80862cc0",
+   "file_off": "0x862cc0",
+   "e0": [
+    1,
+    1,
+    1
+   ],
+   "e8": [
+    128,
+    128,
+    128
+   ],
+   "tail_item": [
+    185,
+    185,
+    254,
+    0
+   ],
+   "fingerprint_ok": true,
+   "pad_zero_ok": true,
+   "is_gray": false,
+   "guess": "其他（E0=(1, 1, 1)）"
+  },
+  {
+   "block": "A",
+   "idx": 3,
+   "va": "0x808679c0",
+   "file_off": "0x8679c0",
+   "e0": [
+    8,
+    8,
+    16
+   ],
+   "e8": [
+    128,
+    128,
+    143
+   ],
+   "tail_item": [
+    182,
+    182,
+    254,
+    0
+   ],
+   "fingerprint_ok": true,
+   "pad_zero_ok": true,
+   "is_gray": false,
+   "guess": "蓝影lift?（E0=(8, 8, 16)）"
+  },
+  {
+   "block": "A",
+   "idx": 4,
+   "va": "0x8086c6c0",
+   "file_off": "0x86c6c0",
+   "e0": [
+    16,
+    16,
+    16
+   ],
+   "e8": [
+    128,
+    128,
+    141
+   ],
+   "tail_item": [
+    178,
+    178,
+    254,
+    0
+   ],
+   "fingerprint_ok": true,
+   "pad_zero_ok": true,
+   "is_gray": false,
+   "guess": "其他（E0=(16, 16, 16)）"
+  },
+  {
+   "block": "A",
+   "idx": 5,
+   "va": "0x808713c0",
+   "file_off": "0x8713c0",
+   "e0": [
+    1,
+    1,
+    1
+   ],
+   "e8": [
+    128,
+    128,
+    128
+   ],
+   "tail_item": [
+    185,
+    185,
+    254,
+    0
+   ],
+   "fingerprint_ok": true,
+   "pad_zero_ok": true,
+   "is_gray": false,
+   "guess": "其他（E0=(1, 1, 1)）"
+  },
+  {
+   "block": "A",
+   "idx": 6,
+   "va": "0x808760c0",
+   "file_off": "0x8760c0",
+   "e0": [
+    8,
+    8,
+    16
+   ],
+   "e8": [
+    128,
+    128,
+    143
+   ],
+   "tail_item": [
+    182,
+    182,
+    254,
+    0
+   ],
+   "fingerprint_ok": true,
+   "pad_zero_ok": true,
+   "is_gray": false,
+   "guess": "蓝影lift?（E0=(8, 8, 16)）"
+  },
+  {
+   "block": "A",
+   "idx": 7,
+   "va": "0x8087adc0",
+   "file_off": "0x87adc0",
+   "e0": [
+    16,
+    16,
+    16
+   ],
+   "e8": [
+    128,
+    128,
+    141
+   ],
+   "tail_item": [
+    178,
+    178,
+    254,
+    0
+   ],
+   "fingerprint_ok": true,
+   "pad_zero_ok": true,
+   "is_gray": false,
+   "guess": "其他（E0=(16, 16, 16)）"
+  },
+  {
+   "block": "A",
+   "idx": 8,
+   "va": "0x8087fac0",
+   "file_off": "0x87fac0",
+   "e0": [
+    1,
+    1,
+    1
+   ],
+   "e8": [
+    128,
+    128,
+    128
+   ],
+   "tail_item": [
+    185,
+    185,
+    254,
+    0
+   ],
+   "fingerprint_ok": true,
+   "pad_zero_ok": true,
+   "is_gray": false,
+   "guess": "其他（E0=(1, 1, 1)）"
+  },
+  {
+   "block": "A",
+   "idx": 9,
+   "va": "0x808847c0",
+   "file_off": "0x8847c0",
+   "e0": [
+    8,
+    8,
+    16
+   ],
+   "e8": [
+    128,
+    128,
+    143
+   ],
+   "tail_item": [
+    182,
+    182,
+    254,
+    0
+   ],
+   "fingerprint_ok": true,
+   "pad_zero_ok": true,
+   "is_gray": false,
+   "guess": "蓝影lift?（E0=(8, 8, 16)）"
+  },
+  {
+   "block": "A",
+   "idx": 10,
+   "va": "0x808894c0",
+   "file_off": "0x8894c0",
+   "e0": [
+    16,
+    16,
+    16
+   ],
+   "e8": [
+    128,
+    128,
+    141
+   ],
+   "tail_item": [
+    178,
+    178,
+    254,
+    0
+   ],
+   "fingerprint_ok": true,
+   "pad_zero_ok": true,
+   "is_gray": false,
+   "guess": "其他（E0=(16, 16, 16)）"
+  },
+  {
+   "block": "A",
+   "idx": 11,
+   "va": "0x8088e1c0",
+   "file_off": "0x88e1c0",
+   "e0": [
+    1,
+    1,
+    1
+   ],
+   "e8": [
+    128,
+    128,
+    128
+   ],
+   "tail_item": [
+    185,
+    185,
+    254,
+    0
+   ],
+   "fingerprint_ok": true,
+   "pad_zero_ok": true,
+   "is_gray": false,
+   "guess": "其他（E0=(1, 1, 1)）"
+  },
+  {
+   "block": "A",
+   "idx": 12,
+   "va": "0x80892ec0",
+   "file_off": "0x892ec0",
+   "e0": [
+    21,
+    0,
+    13
+   ],
+   "e8": [
+    128,
+    128,
+    127
+   ],
+   "tail_item": [
+    171,
+    190,
+    245,
+    0
+   ],
+   "fingerprint_ok": true,
+   "pad_zero_ok": true,
+   "is_gray": false,
+   "guess": "标准(已知)"
+  },
+  {
+   "block": "A",
+   "idx": 13,
+   "va": "0x80897bc0",
+   "file_off": "0x897bc0",
+   "e0": [
+    0,
+    0,
+    0
+   ],
+   "e8": [
+    128,
+    128,
+    128
+   ],
+   "tail_item": [
+    185,
+    185,
+    255,
+    0
+   ],
+   "fingerprint_ok": true,
+   "pad_zero_ok": true,
+   "is_gray": false,
+   "guess": "identity"
+  },
+  {
+   "block": "A",
+   "idx": 14,
+   "va": "0x8089c8c0",
+   "file_off": "0x89c8c0",
+   "e0": [
+    21,
+    0,
+    13
+   ],
+   "e8": [
+    128,
+    128,
+    127
+   ],
+   "tail_item": [
+    171,
+    190,
+    245,
+    0
+   ],
+   "fingerprint_ok": true,
+   "pad_zero_ok": true,
+   "is_gray": false,
+   "guess": "标准(已知)"
+  },
+  {
+   "block": "A",
+   "idx": 15,
+   "va": "0x808a15c0",
+   "file_off": "0x8a15c0",
+   "e0": [
+    21,
+    0,
+    13
+   ],
+   "e8": [
+    128,
+    128,
+    127
+   ],
+   "tail_item": [
+    171,
+    190,
+    245,
+    0
+   ],
+   "fingerprint_ok": true,
+   "pad_zero_ok": true,
+   "is_gray": false,
+   "guess": "标准(已知)"
+  },
+  {
+   "block": "A",
+   "idx": 16,
+   "va": "0x808a62c0",
+   "file_off": "0x8a62c0",
+   "e0": [
+    21,
+    0,
+    13
+   ],
+   "e8": [
+    128,
+    128,
+    127
+   ],
+   "tail_item": [
+    171,
+    190,
+    245,
+    0
+   ],
+   "fingerprint_ok": true,
+   "pad_zero_ok": true,
+   "is_gray": false,
+   "guess": "标准(已知)"
+  },
+  {
+   "block": "A",
+   "idx": 17,
+   "va": "0x808aafc0",
+   "file_off": "0x8aafc0",
+   "e0": [
+    0,
+    0,
+    0
+   ],
+   "e8": [
+    128,
+    128,
+    128
+   ],
+   "tail_item": [
+    185,
+    185,
+    255,
+    0
+   ],
+   "fingerprint_ok": true,
+   "pad_zero_ok": true,
+   "is_gray": false,
+   "guess": "identity"
+  },
+  {
+   "block": "A",
+   "idx": 18,
+   "va": "0x808afcc0",
+   "file_off": "0x8afcc0",
+   "e0": [
+    0,
+    0,
+    0
+   ],
+   "e8": [
+    128,
+    128,
+    128
+   ],
+   "tail_item": [
+    185,
+    185,
+    255,
+    0
+   ],
+   "fingerprint_ok": true,
+   "pad_zero_ok": true,
+   "is_gray": false,
+   "guess": "identity"
+  },
+  {
+   "block": "A",
+   "idx": 19,
+   "va": "0x808b49c0",
+   "file_off": "0x8b49c0",
+   "e0": [
+    0,
+    0,
+    0
+   ],
+   "e8": [
+    128,
+    128,
+    128
+   ],
+   "tail_item": [
+    185,
+    185,
+    255,
+    0
+   ],
+   "fingerprint_ok": false,
+   "pad_zero_ok": true,
+   "is_gray": false,
+   "guess": "identity"
+  },
+  {
+   "block": "B",
+   "idx": 0,
+   "va": "0x808b9ac0",
+   "file_off": "0x8b9ac0",
+   "e0": [
+    8,
+    8,
+    16
+   ],
+   "e8": [
+    128,
+    128,
+    143
+   ],
+   "tail_item": [
+    182,
+    182,
+    254,
+    0
+   ],
+   "fingerprint_ok": true,
+   "pad_zero_ok": true,
+   "is_gray": false,
+   "guess": "蓝影lift?（E0=(8, 8, 16)）"
+  },
+  {
+   "block": "B",
+   "idx": 1,
+   "va": "0x808be7c0",
+   "file_off": "0x8be7c0",
+   "e0": [
+    8,
+    8,
+    16
+   ],
+   "e8": [
+    128,
+    128,
+    143
+   ],
+   "tail_item": [
+    182,
+    182,
+    254,
+    0
+   ],
+   "fingerprint_ok": true,
+   "pad_zero_ok": true,
+   "is_gray": false,
+   "guess": "蓝影lift?（E0=(8, 8, 16)）"
+  },
+  {
+   "block": "B",
+   "idx": 2,
+   "va": "0x808c34c0",
+   "file_off": "0x8c34c0",
+   "e0": [
+    16,
+    16,
+    16
+   ],
+   "e8": [
+    128,
+    128,
+    141
+   ],
+   "tail_item": [
+    178,
+    178,
+    254,
+    0
+   ],
+   "fingerprint_ok": true,
+   "pad_zero_ok": true,
+   "is_gray": false,
+   "guess": "其他（E0=(16, 16, 16)）"
+  },
+  {
+   "block": "B",
+   "idx": 3,
+   "va": "0x808c81c0",
+   "file_off": "0x8c81c0",
+   "e0": [
+    16,
+    16,
+    16
+   ],
+   "e8": [
+    128,
+    128,
+    141
+   ],
+   "tail_item": [
+    178,
+    178,
+    254,
+    0
+   ],
+   "fingerprint_ok": true,
+   "pad_zero_ok": true,
+   "is_gray": false,
+   "guess": "其他（E0=(16, 16, 16)）"
+  },
+  {
+   "block": "B",
+   "idx": 4,
+   "va": "0x808ccec0",
+   "file_off": "0x8ccec0",
+   "e0": [
+    1,
+    1,
+    1
+   ],
+   "e8": [
+    128,
+    128,
+    128
+   ],
+   "tail_item": [
+    185,
+    185,
+    254,
+    0
+   ],
+   "fingerprint_ok": true,
+   "pad_zero_ok": true,
+   "is_gray": false,
+   "guess": "其他（E0=(1, 1, 1)）"
+  },
+  {
+   "block": "B",
+   "idx": 5,
+   "va": "0x808d1bc0",
+   "file_off": "0x8d1bc0",
+   "e0": [
+    1,
+    1,
+    1
+   ],
+   "e8": [
+    128,
+    128,
+    128
+   ],
+   "tail_item": [
+    185,
+    185,
+    254,
+    0
+   ],
+   "fingerprint_ok": true,
+   "pad_zero_ok": true,
+   "is_gray": false,
+   "guess": "其他（E0=(1, 1, 1)）"
+  },
+  {
+   "block": "B",
+   "idx": 6,
+   "va": "0x808d68c0",
+   "file_off": "0x8d68c0",
+   "e0": [
+    8,
+    8,
+    16
+   ],
+   "e8": [
+    128,
+    128,
+    143
+   ],
+   "tail_item": [
+    182,
+    182,
+    254,
+    0
+   ],
+   "fingerprint_ok": true,
+   "pad_zero_ok": true,
+   "is_gray": false,
+   "guess": "蓝影lift?（E0=(8, 8, 16)）"
+  },
+  {
+   "block": "B",
+   "idx": 7,
+   "va": "0x808db5c0",
+   "file_off": "0x8db5c0",
+   "e0": [
+    8,
+    8,
+    16
+   ],
+   "e8": [
+    128,
+    128,
+    143
+   ],
+   "tail_item": [
+    182,
+    182,
+    254,
+    0
+   ],
+   "fingerprint_ok": true,
+   "pad_zero_ok": true,
+   "is_gray": false,
+   "guess": "蓝影lift?（E0=(8, 8, 16)）"
+  },
+  {
+   "block": "B",
+   "idx": 8,
+   "va": "0x808e02c0",
+   "file_off": "0x8e02c0",
+   "e0": [
+    16,
+    16,
+    16
+   ],
+   "e8": [
+    128,
+    128,
+    141
+   ],
+   "tail_item": [
+    178,
+    178,
+    254,
+    0
+   ],
+   "fingerprint_ok": true,
+   "pad_zero_ok": true,
+   "is_gray": false,
+   "guess": "其他（E0=(16, 16, 16)）"
+  },
+  {
+   "block": "B",
+   "idx": 9,
+   "va": "0x808e4fc0",
+   "file_off": "0x8e4fc0",
+   "e0": [
+    16,
+    16,
+    16
+   ],
+   "e8": [
+    128,
+    128,
+    141
+   ],
+   "tail_item": [
+    178,
+    178,
+    254,
+    0
+   ],
+   "fingerprint_ok": true,
+   "pad_zero_ok": true,
+   "is_gray": false,
+   "guess": "其他（E0=(16, 16, 16)）"
+  },
+  {
+   "block": "B",
+   "idx": 10,
+   "va": "0x808e9cc0",
+   "file_off": "0x8e9cc0",
+   "e0": [
+    1,
+    1,
+    1
+   ],
+   "e8": [
+    128,
+    128,
+    128
+   ],
+   "tail_item": [
+    185,
+    185,
+    254,
+    0
+   ],
+   "fingerprint_ok": true,
+   "pad_zero_ok": true,
+   "is_gray": false,
+   "guess": "其他（E0=(1, 1, 1)）"
+  },
+  {
+   "block": "B",
+   "idx": 11,
+   "va": "0x808ee9c0",
+   "file_off": "0x8ee9c0",
+   "e0": [
+    1,
+    1,
+    1
+   ],
+   "e8": [
+    128,
+    128,
+    128
+   ],
+   "tail_item": [
+    185,
+    185,
+    254,
+    0
+   ],
+   "fingerprint_ok": true,
+   "pad_zero_ok": true,
+   "is_gray": false,
+   "guess": "其他（E0=(1, 1, 1)）"
+  },
+  {
+   "block": "B",
+   "idx": 12,
+   "va": "0x808f36c0",
+   "file_off": "0x8f36c0",
+   "e0": [
+    21,
+    0,
+    13
+   ],
+   "e8": [
+    128,
+    128,
+    127
+   ],
+   "tail_item": [
+    171,
+    190,
+    245,
+    0
+   ],
+   "fingerprint_ok": true,
+   "pad_zero_ok": true,
+   "is_gray": false,
+   "guess": "标准(已知)"
+  },
+  {
+   "block": "B",
+   "idx": 13,
+   "va": "0x808f83c0",
+   "file_off": "0x8f83c0",
+   "e0": [
+    0,
+    0,
+    0
+   ],
+   "e8": [
+    128,
+    128,
+    128
+   ],
+   "tail_item": [
+    185,
+    185,
+    255,
+    0
+   ],
+   "fingerprint_ok": true,
+   "pad_zero_ok": true,
+   "is_gray": false,
+   "guess": "identity"
+  },
+  {
+   "block": "B",
+   "idx": 14,
+   "va": "0x808fd0c0",
+   "file_off": "0x8fd0c0",
+   "e0": [
+    21,
+    0,
+    13
+   ],
+   "e8": [
+    128,
+    128,
+    127
+   ],
+   "tail_item": [
+    171,
+    190,
+    245,
+    0
+   ],
+   "fingerprint_ok": true,
+   "pad_zero_ok": true,
+   "is_gray": false,
+   "guess": "标准(已知)"
+  },
+  {
+   "block": "B",
+   "idx": 15,
+   "va": "0x80901dc0",
+   "file_off": "0x901dc0",
+   "e0": [
+    0,
+    0,
+    0
+   ],
+   "e8": [
+    128,
+    128,
+    128
+   ],
+   "tail_item": [
+    185,
+    185,
+    255,
+    0
+   ],
+   "fingerprint_ok": true,
+   "pad_zero_ok": true,
+   "is_gray": false,
+   "guess": "identity"
+  },
+  {
+   "block": "B",
+   "idx": 16,
+   "va": "0x80906ac0",
+   "file_off": "0x906ac0",
+   "e0": [
+    21,
+    0,
+    13
+   ],
+   "e8": [
+    128,
+    128,
+    127
+   ],
+   "tail_item": [
+    171,
+    190,
+    245,
+    0
+   ],
+   "fingerprint_ok": true,
+   "pad_zero_ok": true,
+   "is_gray": false,
+   "guess": "标准(已知)"
+  },
+  {
+   "block": "B",
+   "idx": 17,
+   "va": "0x8090b7c0",
+   "file_off": "0x90b7c0",
+   "e0": [
+    0,
+    0,
+    0
+   ],
+   "e8": [
+    128,
+    128,
+    128
+   ],
+   "tail_item": [
+    185,
+    185,
+    255,
+    0
+   ],
+   "fingerprint_ok": true,
+   "pad_zero_ok": true,
+   "is_gray": false,
+   "guess": "identity"
+  },
+  {
+   "block": "B",
+   "idx": 18,
+   "va": "0x809104c0",
+   "file_off": "0x9104c0",
+   "e0": [
+    21,
+    0,
+    13
+   ],
+   "e8": [
+    128,
+    128,
+    127
+   ],
+   "tail_item": [
+    171,
+    190,
+    245,
+    0
+   ],
+   "fingerprint_ok": true,
+   "pad_zero_ok": true,
+   "is_gray": false,
+   "guess": "标准(已知)"
+  },
+  {
+   "block": "B",
+   "idx": 19,
+   "va": "0x809151c0",
+   "file_off": "0x9151c0",
+   "e0": [
+    0,
+    0,
+    0
+   ],
+   "e8": [
+    128,
+    128,
+    128
+   ],
+   "tail_item": [
+    185,
+    185,
+    255,
+    0
+   ],
+   "fingerprint_ok": true,
+   "pad_zero_ok": true,
+   "is_gray": false,
+   "guess": "identity"
+  },
+  {
+   "block": "B",
+   "idx": 20,
+   "va": "0x80919ec0",
+   "file_off": "0x919ec0",
+   "e0": [
+    21,
+    0,
+    13
+   ],
+   "e8": [
+    128,
+    128,
+    127
+   ],
+   "tail_item": [
+    171,
+    190,
+    245,
+    0
+   ],
+   "fingerprint_ok": true,
+   "pad_zero_ok": true,
+   "is_gray": false,
+   "guess": "标准(已知)"
+  },
+  {
+   "block": "B",
+   "idx": 21,
+   "va": "0x8091ebc0",
+   "file_off": "0x91ebc0",
+   "e0": [
+    0,
+    0,
+    0
+   ],
+   "e8": [
+    128,
+    128,
+    128
+   ],
+   "tail_item": [
+    185,
+    185,
+    255,
+    0
+   ],
+   "fingerprint_ok": true,
+   "pad_zero_ok": true,
+   "is_gray": false,
+   "guess": "identity"
+  }
+ ]
+}

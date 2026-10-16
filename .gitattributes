@@ -7,3 +7,4 @@
 *.png binary
 *.mo binary
 *.bin binary
+*.arm binary

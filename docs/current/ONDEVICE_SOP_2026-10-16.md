@@ -27,6 +27,7 @@
 | 2 | U3（R2b 样本） | 换补丁体为 R2b 样本（或合成体）→ 开关机 → OSD 观察 | 1 次 | U2 完成 |
 | 随时 | U4（A2 健康） | 二次回读（只读）+ 多配方体验（日常） | 0 | — |
 | 随时 | U6（槽语义） | 只读观察（三自定义槽独立性） | 0 | — |
+| 随时 | **U7（LUT 批）** | R-B 终验：identity/Portra 表 → 取景器 + **Still 成片判据** + `lutsentinel` 守护实测 | 0 | SD 部署 `filmlab/`（工具 + 表包）；见 §10 |
 
 > 分步备选：若想最大化变量隔离，趟 1 拆两趟——① P5 + **官件自绑**（把官方件拷为 `di-camera-app.c2`，挂载内容与原件同字节 = 零变化灰度）→ 验证机制；② 换 C-2 → 验证桥。代价 = 多一次开关机（~5 min）。
 
@@ -170,13 +171,34 @@ sh /opt/usr/nx-ks/filmlab.sh apply portra400   （或 pwpush gold200 …）
 
 ⛔ 任何回退**禁用 restart**。所有回退在机内完成、不依赖网络。
 
-## 10. 证据落点约定
+## 10. U7 —— LUT 批（R-B 终验；设计全文见 `LUT_ROADMAP_RESTART_2026-10-16.md` §4）
+
+> 注：本章引用的「§[n]」= `test_server/u6/runbook.txt`（旧 LUT 波次）的节号，**非本 SOP 的 U6 批**。
+> 前置：SD 部署 `filmlab/`（5 工具 + `lutpick.sh` + 表包）；**相机停在菜单界面**（写表需官方 API 安全闸放行）。
+
+| 序 | 动作 | 判据 | 回退 |
+|---|---|---|---|
+| 1 | `busybox sh /mnt/mmc/filmlab/lutpick.sh list` | 表目录列出（空 ⇒ 先 `deploy_luts.py push`） | — |
+| 2 | `lutpick.sh apply <identity> --dry` | 落点探测 + cmasafe 四查全过（不写） | 失败 ⇒ 换时机，**不换地址硬上** |
+| 3 | `lutpick.sh apply <identity>`（**sel=1**） | ★ **E1 首发**（sel=1 从未实测）：Cfg 终态 `SelLUT=1`；取景器**中性** | `lutpick.sh off` / `lutload.arm restore` |
+| 4 | `lutpick.sh apply <Portra 400>` | 取景器出胶片风格（R3-B 目视判据） | 同上 |
+| 5 | ★★ **Still 判据**：**不半按** → 直拍 1-2 张 → 比对成片 vs 取景器 | 一致 ⇒ **所见即所得闭环**；不一致 ⇒ 保底（ksfilm）或转 R-C | — |
+| 6 | `lutsentinel.arm --sel 1 --count 120`（约 1 分钟，500ms 间隔） | 半按/切档后**画面自动恢复**（日志有恢复行）；无不稳定告警 | `--count 1` 体检模式先试 |
+| 7 | 叠加观察：PW 一键（A2）与 LUT 同开 | 记录观感（是否过强/共振） | 二者独立可分别关 |
+| 8 | 回退演练：`off` + `restore` + 重启 | 画面回中性、参数回官方 | — |
+| 9 | （可选，C2 顺验）`st cap help` / `st cap ref mem` | 记录 `st cap mem` 是否支持**写**（决定 R-C-C2 通道） | 只读探，无风险 |
+
+⛔ 纪律：单会话单命令 + FTP 拉结果 + `setsid`；禁 `systemctl restart di-camera-app`。
+⛔ LUT 专属：写表时**不在拍摄态**；看取景器**决不半按**（半按 = p7 抢回，正常现象，不是回滚失败）。
+
+## 11. 证据落点约定
 
 | 目录 | 内容 |
 |---|---|
 | `raw8/gates/dicam/` | p5_status_before/after、c2_film.log、u3_r2b.txt、u6_slots.txt |
 | `raw8/gates/m2/` | m2_status_before/after、menu_observe.txt、照片 |
 | `raw8/gates/a2/` | readback2_2026-10-16.json |
+| `raw8/gates/lut/` | U7：identity/Portra 取景器照片、成片 vs 取景器对比、`lutsentinel` 日志、Cfg 读回 |
 | 通用 | 命令一律经 `nx-probe.py`/`nx-fetch.py` 落盘取回（G1-4：不信回显） |
 
 ---
