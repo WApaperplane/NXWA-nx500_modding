@@ -5,3 +5,5 @@
 *.JPG binary
 *.jpg binary
 *.png binary
+*.mo binary
+*.bin binary
