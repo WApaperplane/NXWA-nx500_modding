@@ -1,0 +1,14 @@
+{
+  "schema": "nxwa.native-loading-receipt/1",
+  "host": "192.168.0.105",
+  "started_utc": "2026-10-16T13:14:22.931840+00:00",
+  "finished_utc": "2026-10-16T13:14:24.377725+00:00",
+  "nonce": "fa960052cd394290b4a59b186d0617b5",
+  "framed_remote_rc": 0,
+  "probe": "probe_native_resident.sh",
+  "probe_sha256": "35811277c835fe538aff176606128895dc89d3e5ebbc0bf0324d53352fcc00e6",
+  "capture_sha256": "6bfa60ceae81f0773aa543e814c56c16f54c8cad7424890cb9205b9477adc352",
+  "transcript_sha256": "c3556f4a4c526e785cc14f2105c4e19a11dde6d0e4365918853bfbd23d9c2594",
+  "transport": "telnet_complete_line_nonce_frame_no_camera_logfile",
+  "scope": "readonly_metadata_with_session_local_echo_history_setup"
+}

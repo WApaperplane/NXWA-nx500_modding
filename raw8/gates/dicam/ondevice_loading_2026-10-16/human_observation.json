@@ -1,0 +1,28 @@
+{
+  "authority": "human_user_report_in_current_chat",
+  "scope": "one_11_byte_temporary_native_label_trial_and_restore",
+  "before": {
+    "camera_idle": true,
+    "screen_and_buttons_normal": true,
+    "execution_explicitly_authorized": true,
+    "ready_for_30_second_window": true
+  },
+  "during": {
+    "native_custom1_showed_NXWA_Test_1": true,
+    "menu_reported_normal": true,
+    "user_answer": "看到了 NXWA Test 1，菜单正常"
+  },
+  "after": {
+    "custom1_restored_after_reentry": true,
+    "menu_and_return_reported_normal": true,
+    "user_answer": "已恢复自定义 1，菜单和返回正常"
+  },
+  "not_observed": [
+    "individual_rotary_and_touch_regression",
+    "PW_slot_content_consistency",
+    "confirm_applies_preset",
+    "preview_or_JPEG_effect",
+    "normal_power_cycle_persistence",
+    "startup_automation"
+  ]
+}

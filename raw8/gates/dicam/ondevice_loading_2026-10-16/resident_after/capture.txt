@@ -1,0 +1,135 @@
+[root@drime5 ~]# /bin/sh <<'NXWA_SCRIPT_5420f61209ef4ba68f07ebf478bdb788'
+> #!/bin/sh
+> # @gate script=probe_native_resident.sh opens=rdonly one_shot=1
+> # NX500 1.12 only. At most 41 bytes from known App/catalog locations.
+> # No debugger/ptrace, no stop signal, no /dev/mem, no file or memory writes<stop signal, no /dev/mem, no file or memory writes.                         
+> # Permission failure stays unavailable; never fall back to attach or inject<s unavailable; never fall back to attach or injecti                         on.
+> echo NXWA_NATIVE_RESIDENT_V1
+> section() { printf '@@ %s\n' "$1"; }
+> section boot_id; cat /proc/sys/kernel/random/boot_id
+> section uptime; cat /proc/uptime
+> section loadavg; cat /proc/loadavg
+> section meminfo; cat /proc/meminfo
+> chosen=''; count=0
+> for process in /proc/[0-9]*; do
+>     case "$(readlink "$process/exe" 2>/dev/null)" in
+>         */di-camera-app) chosen=${process##*/}; count=$((count + 1)) ;;
+>     esac
+> done
+> section pid; echo "$chosen"
+> if [ "$count" != 1 ]; then section refusal; echo ambiguous_process; section<n section refusal; echo ambiguous_process; section                          end; exit 0; fi
+> section stat_before; cat "/proc/$chosen/stat"
+> app_md5=$(md5sum "/proc/$chosen/exe" 2>/dev/null | cut -d ' ' -f 1)
+> mo_md5=$(md5sum /usr/share/locale/zh_CN/LC_MESSAGES/di-camera-app.mo 2>/dev<e/locale/zh_CN/LC_MESSAGES/di-camera-app.mo 2>/dev/                         null | cut -d ' ' -f 1)
+> section exe_md5; echo "$app_md5"
+> section locale_md5; echo "$mo_md5"
+> section file_identity
+> stat -L -c '%d %i %s %n' /usr/apps/com.samsung.di-camera-app/bin/di-camera-</usr/apps/com.samsung.di-camera-app/bin/di-camera-a                         pp /usr/share/locale/zh_C<amera-app/bin/di-camera-app /usr/share/locale/zh_CN                         /LC_MESSAGES/di-camera-ap<p /usr/share/locale/zh_CN/LC_MESSAGES/di-camera-app                         .mo
+> section locale_loop_backing
+> cat /sys/block/loop0/loop/backing_file 2>/dev/null
+> section app_maps
+> grep -E '/di-camera-app$|/di-camera-app.mo$' "/proc/$chosen/maps"
+> if [ "$app_md5" != ae44293e969101d1cf0a93cbe9b99f75 ] || [ "$mo_md5" != f2d<3e969101d1cf0a93cbe9b99f75 ] || [ "$mo_md5" != f2d6                         0cd2f2687de43089729fb06f4< ] || [ "$mo_md5" != f2d60cd2f2687de43089729fb06f43                         6c ]; then
+>     section refusal; echo unsupported_backing_file; section end; exit 0
+> fi
+> text_map=$(grep -E '^00008000-00441000 r-xp 00000000 .* /usr/apps/com.samsu<8000-00441000 r-xp 00000000 .* /usr/apps/com.samsun                         g.di-camera-app/bin/di-ca<0 .* /usr/apps/com.samsung.di-camera-app/bin/di-cam                         era-app$' "/proc/$chosen/<.di-camera-app/bin/di-camera-app$' "/proc/$chosen/m                         aps")
+> if [ -z "$text_map" ]; then section refusal; echo unexpected_text_map; sect<en section refusal; echo unexpected_text_map; secti                         on end; exit 0; fi
+> sample() {
+>     section "$1"
+>     printf 'address=%s count=%s\n' "$2" "$3"
+>     { dd if="/proc/$chosen/mem" bs=1 skip="$2" count="$3" 2>/dev/null; prin<n/mem" bs=1 skip="$2" count="$3" 2>/dev/null; print                         f 'read_rc=%s\n' "$?" >&2<t="$3" 2>/dev/null; printf 'read_rc=%s\n' "$?" >&2;                          } | od -An -tx1
+> }
+> # Source: c2_bytepatch.v2.json. Code and command-name samples, NOT an App d<.json. Code and command-name samples, NOT an App du                         mp.
+> sample c2_name 3593948 6
+> sample c2_code 828328 16
+> mo_base=$(awk '$6 == "/usr/share/locale/zh_CN/LC_MESSAGES/di-camera-app.mo"<r/share/locale/zh_CN/LC_MESSAGES/di-camera-app.mo"                          && $3 == "00000000" {spli<SSAGES/di-camera-app.mo" && $3 == "00000000" {split                         ($1, a, "-"); print a[1]}<& $3 == "00000000" {split($1, a, "-"); print a[1]}'                          "/proc/$chosen/maps")
+> case "$mo_base" in
+>     ''|*[!0-9a-f]*) section catalog_sample_refusal; echo ambiguous_or_missi<on catalog_sample_refusal; echo ambiguous_or_missin                         g_catalog_map ;;
+>     *)
+>         # Canonical zh_CN MO: CUSTOM1 trans descriptor @0x4a24, old string < MO: CUSTOM1 trans descriptor @0x4a24, old string @                         104583.
+>         sample custom1_descriptor "$((0x$mo_base + 0x4a24))" 8
+>         sample custom1_old_string "$((0x$mo_base + 104583))" 11
+>         ;;
+> esac
+> section stat_after; cat "/proc/$chosen/stat"
+> section end
+> NXWA_SCRIPT_5420f61209ef4ba68f07ebf478bdb788
+NXWA_NATIVE_RESIDENT_V1
+@@ boot_id
+dbb7e6ce-8b5e-4d2a-ba3e-bf5ea16d54bc
+@@ uptime
+3933.82 1300.17
+@@ loadavg
+0.80 1.02 1.04 1/124 1072
+@@ meminfo
+MemTotal:         511580 kB
+MemFree:            5192 kB
+Buffers:            3960 kB
+Cached:            77672 kB
+SwapCached:            0 kB
+Active:            64372 kB
+Inactive:          64996 kB
+Active(anon):      34600 kB
+Inactive(anon):    16548 kB
+Active(file):      29772 kB
+Inactive(file):    48448 kB
+Unevictable:          12 kB
+Mlocked:               0 kB
+SwapTotal:             0 kB
+SwapFree:              0 kB
+Dirty:                 0 kB
+Writeback:             0 kB
+AnonPages:         47764 kB
+Mapped:            29176 kB
+Shmem:              3412 kB
+Slab:               8416 kB
+SReclaimable:       3304 kB
+SUnreclaim:         5112 kB
+KernelStack:        1000 kB
+PageTables:         3636 kB
+NFS_Unstable:          0 kB
+Bounce:                0 kB
+WritebackTmp:          0 kB
+CommitLimit:      255788 kB
+Committed_AS:     641400 kB
+VmallocTotal:     499712 kB
+VmallocUsed:        7352 kB
+VmallocChunk:     382128 kB
+@@ pid
+247
+@@ stat_before
+247 (di-camera-app) S 1 247 247 0 -1 4194560 511329 792 404 5 249779 13535 0 6 0 -20 15 0 1224 1288835072 7741 4294967295 32768 4457644 3198450544 3198448816 3005868672 0 0 4096 1082224367 4294967295 0 0 17 0 0 0 0 0 0 4490412 4837552 6017024 3198450832 3198450886 3198450886 3198451654 0
+@@ exe_md5
+ae44293e969101d1cf0a93cbe9b99f75
+@@ locale_md5
+f2d60cd2f2687de43089729fb06f436c
+@@ file_identity
+45834 13377 4773516 /usr/apps/com.samsung.di-camera-app/bin/di-camera-app
+1792 651 172850 /usr/share/locale/zh_CN/LC_MESSAGES/di-camera-app.mo
+@@ locale_loop_backing
+/usr/share/usr_share_locale.squash
+@@ app_maps
+00008000-00441000 r-xp 00000000 b3:0a 13377      /usr/apps/com.samsung.di-camera-app/bin/di-camera-app
+00448000-0049e000 rw-p 00438000 b3:0a 13377      /usr/apps/com.samsung.di-camera-app/bin/di-camera-app
+70a67000-70a92000 r--p 00000000 07:00 651        /usr/share/locale/zh_CN/LC_MESSAGES/di-camera-app.mo
+@@ c2_name
+address=3593948 count=6
+read_rc=0
+ 75 73 63 6f 6d 00
+@@ c2_code
+address=828328 count=16
+ f8 45 2d e9 01 00 50 e3 35 00 00 da 04 00 91 e5
+read_rc=0
+@@ custom1_descriptor
+address=1889974820 count=8
+read_rc=0
+ 0b 00 00 00 87 98 01 00
+@@ custom1_old_string
+address=1890060423 count=11
+read_rc=0
+ e8 87 aa e5 ae 9a e4 b9 89 20 31
+@@ stat_after
+247 (di-camera-app) S 1 247 247 0 -1 4194560 511361 792 404 5 249779 13536 0 6 0 -20 15 0 1224 1288835072 7741 4294967295 32768 4457644 3198450544 3198448816 3005868672 0 0 4096 1082224367 4294967295 0 0 17 0 0 0 0 0 0 4490412 4837552 6017024 3198450832 3198450886 3198450886 3198451654 0
+@@ end
+[root@drime5 ~]# nxwa_capture_rc=$?
+[root@drime5 ~]# printf '\nNXWA_CAPTURE_END_5420f61209ef4ba68f07ebf478bdb788:<NXWA_CAPTURE_END_5420f61209ef4ba68f07ebf478bdb788:%                         s\n' "$nxwa_capture_rc"

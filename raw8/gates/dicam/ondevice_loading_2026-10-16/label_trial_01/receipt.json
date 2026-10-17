@@ -1,0 +1,12 @@
+{
+  "schema": "nxwa.native-label-trial/1",
+  "captured_utc": "2026-10-16T13:29:10.602881+00:00",
+  "nonce": "e0429ef45f70454e843157eb92988537",
+  "script_sha256": "d3400a693427008be255eaaa4e1da58de53512fe90f4f280739625a3ae77bcc8",
+  "capture_sha256": "6ee269e933f60f263239beb69594210e61924736c910c23ed9263b0f23f8e814",
+  "authorized_length": 11,
+  "label": "NXWA Test 1",
+  "scope": "private_catalog_label_only_automatic_restore",
+  "remote_exit_code": 0,
+  "human_authorization": "11-byte temporary native label experiment and restoration only"
+}

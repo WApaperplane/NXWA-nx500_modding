@@ -1,0 +1,10 @@
+test_changed_original_bytes_never_writes (__main__.TrialTests.test_changed_original_bytes_never_writes) ... ok
+test_exact_eleven_byte_blocks_and_verified_restore (__main__.TrialTests.test_exact_eleven_byte_blocks_and_verified_restore) ... ok
+test_restore_only_does_not_reapply_trial (__main__.TrialTests.test_restore_only_does_not_reapply_trial) ... ok
+test_write_failure_runs_rollback (__main__.TrialTests.test_write_failure_runs_rollback) ... ok
+test_wrong_boot_identity_never_writes (__main__.TrialTests.test_wrong_boot_identity_never_writes) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.497s
+
+OK

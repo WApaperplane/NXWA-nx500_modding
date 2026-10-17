@@ -1,0 +1,24 @@
+test_changed_original_bytes_never_writes (__main__.TrialTests.test_changed_original_bytes_never_writes) ... ok
+test_exact_eleven_byte_blocks_and_verified_restore (__main__.TrialTests.test_exact_eleven_byte_blocks_and_verified_restore) ... FAIL
+test_restore_only_does_not_reapply_trial (__main__.TrialTests.test_restore_only_does_not_reapply_trial) ... ok
+test_write_failure_runs_rollback (__main__.TrialTests.test_write_failure_runs_rollback) ... ok
+test_wrong_boot_identity_never_writes (__main__.TrialTests.test_wrong_boot_identity_never_writes) ... ok
+
+======================================================================
+FAIL: test_exact_eleven_byte_blocks_and_verified_restore (__main__.TrialTests.test_exact_eleven_byte_blocks_and_verified_restore)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/e/NXWA/nx500-modding-work/test_server/dicam/test_native_label_trial.py", line 82, in test_exact_eleven_byte_blocks_and_verified_restore
+    self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+AssertionError: 90 != 0 : NXWA_NATIVE_LABEL_TRIAL_V1
+pid=247 address=1890060423 length=11 mode=trial
+before_hex=e887aae5ae9ae4b9892031
+phase=label_patched
+observation_seconds=0
+rollback=FAILED
+
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.454s
+
+FAILED (failures=1)

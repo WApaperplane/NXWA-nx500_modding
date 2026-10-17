@@ -1,0 +1,22 @@
+{
+  "schema": "nxwa.native-label-acceptance/1",
+  "machine_evidence_pass": true,
+  "human_visual_observation_pass": true,
+  "authority": "human_user_report_in_current_chat",
+  "result": "one_label_observed_and_restored",
+  "pid": 247,
+  "address": "0x70a80887",
+  "length": 11,
+  "code_write_performed": false,
+  "disk_catalog_unchanged": true,
+  "approved_trial_count": 1,
+  "production_ready": false,
+  "startup_persistence": "unverified",
+  "preset_slot_consistency": "unverified",
+  "preset_confirm_apply": "unverified",
+  "touch_rotary_full_regression": "unverified",
+  "preview_JPEG_effect": "unverified",
+  "fresh_exec": "unknown",
+  "whole_app_resident_code_verified": false,
+  "note": "11 bytes restored; private COW page accounting is not claimed to revert."
+}

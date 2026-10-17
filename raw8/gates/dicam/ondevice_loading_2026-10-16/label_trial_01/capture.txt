@@ -1,0 +1,97 @@
+[root@drime5 ~]# /bin/sh <<'NXWA_SCRIPT_e0429ef45f70454e843157eb92988537'
+> #!/bin/sh
+> # Experimental data-only write, explicitly human-authorized; NOT a startup <write, explicitly human-authorized; NOT a startup p                         atch.
+> # Two writes (trial/restore), each EXACTLY 11 bytes at one private MO strin<re), each EXACTLY 11 bytes at one private MO string                         .
+> # No App code, descriptor, pointer, disk catalog, PW/LUT or service changes<, pointer, disk catalog, PW/LUT or service changes.                         
+> ROOT=''
+> PID=247
+> TICKS=1224
+> BOOT=dbb7e6ce-8b5e-4d2a-ba3e-bf5ea16d54bc
+> BASE=70a67000-70a92000:07:00:651
+> ADDR=1890060423
+> MODE=trial
+> WINDOW=30
+> MEM=$ROOT/proc/$PID/mem
+> OLD_HEX=e887aae5ae9ae4b9892031
+> NEW_HEX=4e58574120546573742031
+> OLD=$(printf '\350\207\252\345\256\232\344\271\211 1')
+> NEW='NXWA Test 1'
+> dirty=0
+> export LC_ALL=C LANG=C
+> 
+> guard() {
+>     [ "$(cat "$ROOT/proc/sys/kernel/random/boot_id")" = "$BOOT" ] || return<sys/kernel/random/boot_id")" = "$BOOT" ] || return                          1
+>     ticks=$(sed 's/^.*) //' "$ROOT/proc/$PID/stat" | awk '{print $20}')
+>     [ "$ticks" = "$TICKS" ] || return 1
+>     case "$(readlink "$ROOT/proc/$PID/exe")" in */di-camera-app) ;; *) retu<OT/proc/$PID/exe")" in */di-camera-app) ;; *) retur                         n 1 ;; esac
+>     hash=$(md5sum "$ROOT/proc/$PID/exe" | cut -d ' ' -f 1)
+>     [ "$hash" = ae44293e969101d1cf0a93cbe9b99f75 ] || return 1
+>     actual=$(awk '$2 == "r--p" && $3 == "00000000" && $6 == "/usr/share/loc<r--p" && $3 == "00000000" && $6 == "/usr/share/loca                         le/zh_CN/LC_MESSAGES/di-c<&& $6 == "/usr/share/locale/zh_CN/LC_MESSAGES/di-ca                         mera-app.mo" {print $1 ":<e/zh_CN/LC_MESSAGES/di-camera-app.mo" {print $1 ":"                          $4 ":" $5}' "$ROOT/proc/<era-app.mo" {print $1 ":" $4 ":" $5}' "$ROOT/proc/$                         PID/maps")
+>     [ "$actual" = "$BASE" ] || return 1
+> }
+> read_label() {
+>     dd if="$MEM" bs=1 skip="$ADDR" count=11 2>/dev/null | od -An -tx1 | tr <p="$ADDR" count=11 2>/dev/null | od -An -tx1 | tr -                         d ' \n'
+> }
+> write_label() (
+>     trap - 0 1 2 15
+>     guard || exit 1
+>     # dd6.9 seeks relative to the inherited descriptor position. A fresh op<e to the inherited descriptor position. A fresh ope                         n
+>     # per write is mandatory; reusing the first descriptor mispositions res<ory; reusing the first descriptor mispositions rest                         ore.
+>     exec 9<>"$MEM"
+>     guard || exit 1
+>     # count=0 moves the shared open-file-description position WITHOUT writi<hared open-file-description position WITHOUT writin                         g.
+>     # ibs=1/obs=11/count=11 buffers exactly eleven input bytes into one blo<11 buffers exactly eleven input bytes into one bloc                         k.
+>     dd if=/dev/null bs=1 count=0 seek="$ADDR" conv=notrunc >&9 2>/dev/null <count=0 seek="$ADDR" conv=notrunc >&9 2>/dev/null |                         | exit 1
+>     printf '%s' "$1" | dd ibs=1 obs=11 count=11 conv=notrunc >&9 2>/dev/nul< ibs=1 obs=11 count=11 conv=notrunc >&9 2>/dev/null                         
+> )
+> rollback() {
+>     [ "$dirty" = 1 ] || return 0
+>     dirty=0
+>     if guard && write_label "$OLD" && [ "$(read_label)" = "$OLD_HEX" ]; the<el "$OLD" && [ "$(read_label)" = "$OLD_HEX" ]; then                         
+>         echo rollback=verified_original_11_bytes
+>         return 0
+>     fi
+>     echo rollback=FAILED
+>     return 1
+> }
+> trap 'if ! rollback; then exit 90; fi' 0
+> trap 'exit 89' 1 2 15
+> echo NXWA_NATIVE_LABEL_TRIAL_V1
+> printf 'pid=%s address=%s length=11 mode=%s\n' "$PID" "$ADDR" "$MODE"
+> guard || { echo refusal=identity_or_mapping_changed; exit 10; }
+> current=$(read_label)
+> printf 'before_hex=%s\n' "$current"
+> if [ "$MODE" = restore ]; then
+>     case "$current" in "$OLD_HEX"|"$NEW_HEX") ;; *) echo refusal=unexpected<OLD_HEX"|"$NEW_HEX") ;; *) echo refusal=unexpected_                         label; exit 11 ;; esac
+> else
+>     [ "$current" = "$OLD_HEX" ] || { echo refusal=original_bytes_changed; e<HEX" ] || { echo refusal=original_bytes_changed; ex                         it 11; }
+> fi
+> if [ "$MODE" = restore ]; then
+>     dirty=1
+>     rollback || exit 90
+> else
+>     dirty=1
+>     write_label "$NEW" || { echo phase=write_failed; exit 20; }
+>     [ "$(read_label)" = "$NEW_HEX" ] || { echo phase=write_readback_failed;<$NEW_HEX" ] || { echo phase=write_readback_failed;                          exit 21; }
+>     echo phase=label_patched
+>     printf 'observation_seconds=%s\n' "$WINDOW"
+>     sleep "$WINDOW"
+>     rollback || exit 90
+> fi
+> disk_hash=$(md5sum "$ROOT/usr/share/locale/zh_CN/LC_MESSAGES/di-camera-app.</usr/share/locale/zh_CN/LC_MESSAGES/di-camera-app.m                         o" | cut -d ' ' -f 1)
+> printf 'disk_catalog_md5=%s\n' "$disk_hash"
+> [ "$disk_hash" = f2d60cd2f2687de43089729fb06f436c ] || exit 91
+> printf 'after_hex=%s\n' "$(read_label)"
+> echo phase=finished
+> NXWA_SCRIPT_e0429ef45f70454e843157eb92988537
+NXWA_NATIVE_LABEL_TRIAL_V1
+pid=247 address=1890060423 length=11 mode=trial
+before_hex=e887aae5ae9ae4b9892031
+phase=label_patched
+observation_seconds=30
+rollback=verified_original_11_bytes
+disk_catalog_md5=f2d60cd2f2687de43089729fb06f436c
+after_hex=e887aae5ae9ae4b9892031
+phase=finished
+[root@drime5 ~]# nxwa_capture_rc=$?
+[root@drime5 ~]# printf '\nNXWA_CAPTURE_END_e0429ef45f70454e843157eb92988537:<NXWA_CAPTURE_END_e0429ef45f70454e843157eb92988537:%                         s\n' "$nxwa_capture_rc"

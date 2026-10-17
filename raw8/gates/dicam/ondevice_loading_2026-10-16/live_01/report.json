@@ -1,0 +1,61 @@
+{
+  "schema": "nxwa.native-loading/1",
+  "scope": "saved_readonly_probe",
+  "boot_id": "dbb7e6ce-8b5e-4d2a-ba3e-bf5ea16d54bc",
+  "uptime": "2813.58 881.20",
+  "loadavg": "0.91 1.04 1.01 2/121 567",
+  "meminfo": "MemTotal:         511580 kB\nMemFree:            6652 kB\nBuffers:            5472 kB\nCached:            77848 kB\nSwapCached:            0 kB\nActive:            55592 kB\nInactive:          72552 kB\nActive(anon):      31684 kB\nInactive(anon):    16524 kB\nActive(file):      23908 kB\nInactive(file):    56028 kB\nUnevictable:          12 kB\nMlocked:               0 kB\nSwapTotal:             0 kB\nSwapFree:              0 kB\nDirty:                 0 kB\nWriteback:             0 kB\nAnonPages:         44852 kB\nMapped:            28364 kB\nShmem:              3384 kB\nSlab:               8288 kB\nSReclaimable:       3284 kB\nSUnreclaim:         5004 kB\nKernelStack:         968 kB\nPageTables:         3628 kB\nNFS_Unstable:          0 kB\nBounce:                0 kB\nWritebackTmp:          0 kB\nCommitLimit:      255788 kB\nCommitted_AS:     638560 kB\nVmallocTotal:     499712 kB\nVmallocUsed:        7352 kB\nVmallocChunk:     382128 kB",
+  "version_info": "1.12\nNX500\nNX500GLU0APC1\nDSP_NX500GLU0APC1_SR1\nBABF43A",
+  "ev_mobile_md5": "54a308b8c55d8e3a313f63c33e06d0a5",
+  "language_environment": [
+    "LANG=en_US.UTF-8",
+    "HIB=a"
+  ],
+  "pid_candidates": [
+    247
+  ],
+  "process_stable": true,
+  "process": {
+    "pid": 247,
+    "start_ticks": 1224
+  },
+  "target_file": {
+    "md5": "ae44293e969101d1cf0a93cbe9b99f75",
+    "variant": "official_v1.12"
+  },
+  "process_exe_file": {
+    "md5": "ae44293e969101d1cf0a93cbe9b99f75",
+    "variant": "official_v1.12"
+  },
+  "exe_file_matches_target": true,
+  "app_map_lines": [
+    "00008000-00441000 r-xp 00000000 b3:0a 13377      /usr/apps/com.samsung.di-camera-app/bin/di-camera-app",
+    "00448000-0049e000 rw-p 00438000 b3:0a 13377      /usr/apps/com.samsung.di-camera-app/bin/di-camera-app",
+    "707f6000-70900000 r--s 00000000 b3:0a 13378      /usr/apps/com.samsung.di-camera-app/res/edje/nx_style.edj",
+    "70a67000-70a92000 r--p 00000000 07:00 651        /usr/share/locale/zh_CN/LC_MESSAGES/di-camera-app.mo"
+  ],
+  "catalog_map_lines": [
+    "70a66000-70a67000 r--p 00000000 07:00 648        /usr/share/locale/zh_CN/LC_MESSAGES/elementary.mo",
+    "70a67000-70a92000 r--p 00000000 07:00 651        /usr/share/locale/zh_CN/LC_MESSAGES/di-camera-app.mo",
+    "70abe000-70c12000 r--p 01839000 07:00 711        /usr/share/locale/locale-archive",
+    "70c12000-70c52000 r--p 01577000 07:00 711        /usr/share/locale/locale-archive",
+    "b011f000-b0120000 r--p 0079b000 07:00 711        /usr/share/locale/locale-archive",
+    "b0120000-b023e000 r--p 002a7000 07:00 711        /usr/share/locale/locale-archive",
+    "b023e000-b043e000 r--p 00000000 07:00 711        /usr/share/locale/locale-archive"
+  ],
+  "locale": {
+    "target_md5": "f2d60cd2f2687de43089729fb06f436c",
+    "staged_md5": "e531bd5fe7ff4c97d1f01991af932f5b",
+    "path_matches_staged": false,
+    "visible_labels_verified": false
+  },
+  "unit_contains_premount": true,
+  "fresh_exec": "unknown",
+  "running_code_verified": false,
+  "native_ui_verified": false,
+  "warnings": [
+    "Backing-file identity is not resident-code verification.",
+    "PID/starttime/boot_id do not prove fresh exec on this snapshot device.",
+    "Catalog path/mount/hash do not prove gettext cache reload or visible labels."
+  ]
+}
