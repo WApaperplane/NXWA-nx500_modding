@@ -1,0 +1,38 @@
+000acf4c <elm_box_pack_end@plt>:
+   acf4c:	e28fc603 	add	ip, pc, #3145728	@ 0x300000
+   acf50:	e28cca9c 	add	ip, ip, #156, 20	@ 0x9c000
+   acf54:	e5bcf3fc 	ldr	pc, [ip, #1020]!	@ 0x3fc
+
+000acf58 <hib@plt>:
+   acf58:	e28fc603 	add	ip, pc, #3145728	@ 0x300000
+   acf5c:	e28cca9c 	add	ip, ip, #156, 20	@ 0x9c000
+   acf60:	e5bcf3f4 	ldr	pc, [ip, #1012]!	@ 0x3f4
+
+--
+000ad408 <elm_entry_single_line_set@plt>:
+   ad408:	e28fc603 	add	ip, pc, #3145728	@ 0x300000
+   ad40c:	e28cca9c 	add	ip, ip, #156, 20	@ 0x9c000
+   ad410:	e5bcf0d4 	ldr	pc, [ip, #212]!	@ 0xd4
+
+000ad414 <hib_post@plt>:
+   ad414:	e28fc603 	add	ip, pc, #3145728	@ 0x300000
+   ad418:	e28cca9c 	add	ip, ip, #156, 20	@ 0x9c000
+   ad41c:	e5bcf0cc 	ldr	pc, [ip, #204]!	@ 0xcc
+
+--
+001c1740 <_Z6UI_Hibv@@Base>:
+  1c1740:	e92d4008 	push	{r3, lr}
+  1c1744:	ebfbabe7 	bl	ac6e8 <hib_mem_alloc@plt>
+  1c1748:	e3500000 	cmp	r0, #0
+  1c174c:	b8bd8008 	poplt	{r3, pc}
+  1c1750:	ebfbae00 	bl	acf58 <hib@plt>
+  1c1754:	ebfbb01e 	bl	ad7d4 <hib_mem_dealloc@plt>
+  1c1758:	e8bd8008 	pop	{r3, pc}
+
+001c175c <_Z11UI_Hib_Postv@@Base>:
+  1c175c:	e92d4008 	push	{r3, lr}
+  1c1760:	ebfbaf2b 	bl	ad414 <hib_post@plt>
+  1c1764:	e8bd8008 	pop	{r3, pc}
+
+001c1768 <_Z20UI_Hib_Has_Extradatav@@Base>:
+  1c1768:	e92d4008 	push	{r3, lr}

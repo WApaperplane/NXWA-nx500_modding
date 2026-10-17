@@ -1,0 +1,182 @@
+
+/opt/nxks2/rootfs-112/usr/lib/libhibernation.so:     file format elf32-littlearm
+
+
+Disassembly of section .text:
+
+00001970 <hib_get_int@@Base+0x78>:
+    1970:	b580      	push	{r7, lr}
+    1972:	b084      	sub	sp, #16
+    1974:	af00      	add	r7, sp, #0
+    1976:	6078      	str	r0, [r7, #4]
+    1978:	6878      	ldr	r0, [r7, #4]
+    197a:	f240 1141 	movw	r1, #321	@ 0x141
+    197e:	f2c0 0108 	movt	r1, #8
+    1982:	f44f 72db 	mov.w	r2, #438	@ 0x1b6
+    1986:	f7ff ec80 	blx	1288 <open@plt>
+    198a:	4603      	mov	r3, r0
+    198c:	60fb      	str	r3, [r7, #12]
+    198e:	68fb      	ldr	r3, [r7, #12]
+    1990:	2b00      	cmp	r3, #0
+    1992:	da07      	bge.n	19a4 <hib_get_int@@Base+0xac>
+    1994:	f7ff eca2 	blx	12dc <__errno_location@plt>
+    1998:	4603      	mov	r3, r0
+    199a:	681b      	ldr	r3, [r3, #0]
+    199c:	f1c3 0300 	rsb	r3, r3, #0
+    19a0:	e016      	b.n	19d0 <hib_get_int@@Base+0xd8>
+    19a2:	bf00      	nop
+    19a4:	68f8      	ldr	r0, [r7, #12]
+    19a6:	f7ff ecfa 	blx	139c <close@plt>
+    19aa:	4603      	mov	r3, r0
+    19ac:	2b00      	cmp	r3, #0
+    19ae:	da0c      	bge.n	19ca <hib_get_int@@Base+0xd2>
+    19b0:	f7ff ec94 	blx	12dc <__errno_location@plt>
+    19b4:	4603      	mov	r3, r0
+    19b6:	681b      	ldr	r3, [r3, #0]
+    19b8:	2b04      	cmp	r3, #4
+    19ba:	d0f2      	beq.n	19a2 <hib_get_int@@Base+0xaa>
+    19bc:	f7ff ec8e 	blx	12dc <__errno_location@plt>
+    19c0:	4603      	mov	r3, r0
+    19c2:	681b      	ldr	r3, [r3, #0]
+    19c4:	f1c3 0300 	rsb	r3, r3, #0
+    19c8:	e002      	b.n	19d0 <hib_get_int@@Base+0xd8>
+    19ca:	bf00      	nop
+    19cc:	f04f 0300 	mov.w	r3, #0
+    19d0:	4618      	mov	r0, r3
+    19d2:	f107 0710 	add.w	r7, r7, #16
+    19d6:	46bd      	mov	sp, r7
+    19d8:	bd80      	pop	{r7, pc}
+    19da:	bf00      	nop
+
+000019dc <hib_post@@Base>:
+    19dc:	b580      	push	{r7, lr}
+    19de:	af00      	add	r7, sp, #0
+    19e0:	f04f 0005 	mov.w	r0, #5
+    19e4:	f04f 0105 	mov.w	r1, #5
+    19e8:	f04f 0200 	mov.w	r2, #0
+    19ec:	f7ff ec16 	blx	121c <device_set_property@plt>
+    19f0:	4b02      	ldr	r3, [pc, #8]	@ (19fc <hib_post@@Base+0x20>)
+    19f2:	447b      	add	r3, pc
+    19f4:	4618      	mov	r0, r3
+    19f6:	f7ff ffbb 	bl	1970 <hib_get_int@@Base+0x78>
+    19fa:	bd80      	pop	{r7, pc}
+    19fc:	1b06      	subs	r6, r0, r4
+    19fe:	0000      	movs	r0, r0
+    1a00:	b580      	push	{r7, lr}
+    1a02:	af00      	add	r7, sp, #0
+    1a04:	4b06      	ldr	r3, [pc, #24]	@ (1a20 <hib_post@@Base+0x44>)
+    1a06:	447b      	add	r3, pc
+    1a08:	4618      	mov	r0, r3
+    1a0a:	f7ff ec2c 	blx	1264 <system@plt>
+    1a0e:	4b05      	ldr	r3, [pc, #20]	@ (1a24 <hib_post@@Base+0x48>)
+    1a10:	447b      	add	r3, pc
+    1a12:	4618      	mov	r0, r3
+    1a14:	f7ff ec26 	blx	1264 <system@plt>
+    1a18:	f04f 0300 	mov.w	r3, #0
+    1a1c:	4618      	mov	r0, r3
+    1a1e:	bd80      	pop	{r7, pc}
+    1a20:	1b02      	subs	r2, r0, r4
+    1a22:	0000      	movs	r0, r0
+    1a24:	1b34      	subs	r4, r6, r4
+    1a26:	0000      	movs	r0, r0
+    1a28:	b580      	push	{r7, lr}
+    1a2a:	b084      	sub	sp, #16
+    1a2c:	af00      	add	r7, sp, #0
+    1a2e:	f04f 0300 	mov.w	r3, #0
+    1a32:	607b      	str	r3, [r7, #4]
+    1a34:	f04f 0300 	mov.w	r3, #0
+    1a38:	60bb      	str	r3, [r7, #8]
+    1a3a:	f04f 0300 	mov.w	r3, #0
+    1a3e:	60fb      	str	r3, [r7, #12]
+    1a40:	4b2e      	ldr	r3, [pc, #184]	@ (1afc <hib_post@@Base+0x120>)
+    1a42:	447b      	add	r3, pc
+    1a44:	4618      	mov	r0, r3
+    1a46:	f7ff ec32 	blx	12ac <hib_exe_cmd@plt>
+    1a4a:	4b2d      	ldr	r3, [pc, #180]	@ (1b00 <hib_post@@Base+0x124>)
+    1a4c:	447b      	add	r3, pc
+    1a4e:	4618      	mov	r0, r3
+    1a50:	f04f 0102 	mov.w	r1, #2
+    1a54:	f7ff ec18 	blx	1288 <open@plt>
+    1a58:	4603      	mov	r3, r0
+    1a5a:	607b      	str	r3, [r7, #4]
+    1a5c:	687b      	ldr	r3, [r7, #4]
+    1a5e:	2b00      	cmp	r3, #0
+    1a60:	da12      	bge.n	1a88 <hib_post@@Base+0xac>
+    1a62:	f7ff ec3c 	blx	12dc <__errno_location@plt>
+    1a66:	4603      	mov	r3, r0
+    1a68:	681b      	ldr	r3, [r3, #0]
+    1a6a:	60fb      	str	r3, [r7, #12]
+    1a6c:	f7ff ec7e 	blx	136c <hib_part_postproc@plt>
+    1a70:	4b24      	ldr	r3, [pc, #144]	@ (1b04 <hib_post@@Base+0x128>)
+    1a72:	447b      	add	r3, pc
+    1a74:	4618      	mov	r0, r3
+    1a76:	4b24      	ldr	r3, [pc, #144]	@ (1b08 <hib_post@@Base+0x12c>)
+    1a78:	447b      	add	r3, pc
+    1a7a:	4619      	mov	r1, r3
+    1a7c:	68fa      	ldr	r2, [r7, #12]
+    1a7e:	f7ff eb8c 	blx	1198 <hib_write_log@plt>
+    1a82:	f04f 33ff 	mov.w	r3, #4294967295	@ 0xffffffff
+    1a86:	e033      	b.n	1af0 <hib_post@@Base+0x114>
+    1a88:	4b20      	ldr	r3, [pc, #128]	@ (1b0c <hib_post@@Base+0x130>)
+    1a8a:	447b      	add	r3, pc
+    1a8c:	4618      	mov	r0, r3
+    1a8e:	4b20      	ldr	r3, [pc, #128]	@ (1b10 <hib_post@@Base+0x134>)
+    1a90:	447b      	add	r3, pc
+    1a92:	4619      	mov	r1, r3
+    1a94:	f7ff eb80 	blx	1198 <hib_write_log@plt>
+    1a98:	f04f 000a 	mov.w	r0, #10
+    1a9c:	f7ff ebb8 	blx	1210 <sleep@plt>
+    1aa0:	6878      	ldr	r0, [r7, #4]
+    1aa2:	4b1c      	ldr	r3, [pc, #112]	@ (1b14 <hib_post@@Base+0x138>)
+    1aa4:	447b      	add	r3, pc
+    1aa6:	4619      	mov	r1, r3
+    1aa8:	f04f 0204 	mov.w	r2, #4
+    1aac:	f7ff ec2e 	blx	130c <write@plt>
+    1ab0:	4603      	mov	r3, r0
+    1ab2:	60bb      	str	r3, [r7, #8]
+    1ab4:	68bb      	ldr	r3, [r7, #8]
+    1ab6:	2b00      	cmp	r3, #0
+    1ab8:	da15      	bge.n	1ae6 <hib_post@@Base+0x10a>
+    1aba:	f7ff ec10 	blx	12dc <__errno_location@plt>
+    1abe:	4603      	mov	r3, r0
+    1ac0:	681b      	ldr	r3, [r3, #0]
+    1ac2:	60fb      	str	r3, [r7, #12]
+    1ac4:	f7ff ec52 	blx	136c <hib_part_postproc@plt>
+    1ac8:	4b13      	ldr	r3, [pc, #76]	@ (1b18 <hib_post@@Base+0x13c>)
+    1aca:	447b      	add	r3, pc
+    1acc:	4618      	mov	r0, r3
+    1ace:	4b13      	ldr	r3, [pc, #76]	@ (1b1c <hib_post@@Base+0x140>)
+    1ad0:	447b      	add	r3, pc
+    1ad2:	4619      	mov	r1, r3
+    1ad4:	68fa      	ldr	r2, [r7, #12]
+    1ad6:	f7ff eb60 	blx	1198 <hib_write_log@plt>
+    1ada:	6878      	ldr	r0, [r7, #4]
+    1adc:	f7ff ec5e 	blx	139c <close@plt>
+    1ae0:	f04f 33ff 	mov.w	r3, #4294967295	@ 0xffffffff
+    1ae4:	e004      	b.n	1af0 <hib_post@@Base+0x114>
+    1ae6:	6878      	ldr	r0, [r7, #4]
+    1ae8:	f7ff ec58 	blx	139c <close@plt>
+    1aec:	f04f 0300 	mov.w	r3, #0
+    1af0:	4618      	mov	r0, r3
+    1af2:	f107 0710 	add.w	r7, r7, #16
+    1af6:	46bd      	mov	sp, r7
+    1af8:	bd80      	pop	{r7, pc}
+    1afa:	bf00      	nop
+    1afc:	1b42      	subs	r2, r0, r5
+    1afe:	0000      	movs	r0, r0
+    1b00:	1b58      	subs	r0, r3, r5
+    1b02:	0000      	movs	r0, r0
+    1b04:	1b46      	subs	r6, r0, r5
+    1b06:	0000      	movs	r0, r0
+    1b08:	1b2c      	subs	r4, r5, r4
+    1b0a:	0000      	movs	r0, r0
+    1b0c:	1b52      	subs	r2, r2, r5
+    1b0e:	0000      	movs	r0, r0
+    1b10:	1b14      	subs	r4, r2, r4
+    1b12:	0000      	movs	r0, r0
+    1b14:	1b4c      	subs	r4, r1, r5
+    1b16:	0000      	movs	r0, r0
+    1b18:	1b2e      	subs	r6, r5, r4
+    1b1a:	0000      	movs	r0, r0
+    1b1c:	1ad4      	subs	r4, r2, r3
+	...

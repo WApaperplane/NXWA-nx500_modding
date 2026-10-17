@@ -2,7 +2,8 @@
 # =====================================================================
 # [T2] di-camera-app 补丁状态检查（只读）
 #   输出：bind-mount 状态 / 目标与补丁的 md5 / App 进程 / 命令通道探活
-#   用途：刷机后复查"T2 是否仍生效"（抗刷机判据，见 TASKFLOW_2026-10-12 W-2 序 3）
+#   用途：检查磁盘/挂载就位；不是运行代码或原生菜单生效证明。
+#   10-16：P5 实测失败；快照恢复/fresh-exec 和 gettext 缓存必须另验。
 # =====================================================================
 
 D=/opt/usr/nx-ks
@@ -17,7 +18,7 @@ md5of() { /opt/usr/nx-ks/busybox md5sum "$1" 2>/dev/null | awk '{print $1}'; }
 
 echo "===== dicam T2 status ====="
 echo "-- mount --"
-mount | grep "di-camera-app/bin/di-camera-app" || echo "  (无 bind-mount ⇒ 当前跑的是 rootfs 里的官方件)"
+mount | grep "di-camera-app/bin/di-camera-app" || echo "  (无 bind-mount；不能据此判定当前进程的代码版本)"
 echo
 echo "-- files --"
 for f in "$TARGET" "$PATCH" "$ORIG"; do
@@ -31,7 +32,9 @@ echo
 echo "-- 判定 --"
 cur=$(md5of "$TARGET")
 if [ "$cur" = "$MD5_PATCH_EXPECT" ]; then
-    echo "  ⇒ 目标 = 补丁件（T2 生效中的强证据）"
+    echo "  ⇒ 目标路径 = C-2 v1 补丁文件（不证明当前进程已装载）"
+elif [ "$cur" = "48d94bd63e4479fc931ae1a1fee4e94b" ]; then
+    echo "  ⇒ 目标路径 = C-2 v2 补丁文件（不证明当前进程已装载）"
 elif [ "$cur" = "$MD5_SRC_EXPECT" ]; then
     echo "  ⇒ 目标 = 官方件"
     # 若挂着 bind 但 md5 等于官方件，说明补丁体本身就是官方件（异常）
@@ -41,31 +44,28 @@ else
 fi
 echo
 echo "-- App 进程 --"
-# 进程判定：不依赖 pidof/pgrep applet（该机型 busybox PATH 不全 ⇒ 曾误报"未在跑"）
+# 只认 exe 的文件名，不用 cmdline 子串，避免把本诊断命令自身识别成 App。
 _APP_PID=""
 for _p in /proc/[0-9]*; do
-    _c=$(cat "$_p/cmdline" 2>/dev/null | tr '\0' ' ')
+    _c=$(readlink "$_p/exe" 2>/dev/null)
     case "$_c" in
-        *di-camera-app*) _APP_PID=${_p#/proc/}; break ;;
+        */di-camera-app|*/di-camera-app\ \(deleted\)) _APP_PID=${_p#/proc/}; break ;;
     esac
 done
-[ -z "$_APP_PID" ] && _APP_PID=$(pidof di-camera-app 2>/dev/null | awk '{print $1}')
-[ -z "$_APP_PID" ] && _APP_PID=$(pgrep -f di-camera-app 2>/dev/null | head -1)
 if [ -n "$_APP_PID" ]; then
     echo "  di-camera-app 在跑（pid $_APP_PID）"
 else
-    echo "  ★ di-camera-app 未在跑 —— 注意 unit 里 Restart=always 被注释，崩了不自愈，需手动 start"
+    echo "  ★ 未找到 App 候选进程；需只读复核，禁止自动 start/restart"
 fi
 echo
 echo "-- init.sh 重挂块 --"
-grep -n "dicam-T2" "$D/init.sh" 2>/dev/null && echo "  ✓ 块在位（开机自动重挂）" || echo "  ✗ 块不在 ⇒ 刷机后不会自动重挂"
+grep -n "dicam-T2" "$D/init.sh" 2>/dev/null && echo "  ✓ 复挂块在位（不保证早于 App 或字典加载）" || echo "  ✗ 未找到复挂块"
 echo
 echo "-- P5 前置（unit ExecStartPre，10-15 裁决） --"
 if grep -q "t2_premount.sh" /usr/lib/systemd/system/di-camera-app.service 2>/dev/null; then
-    echo "  ✓ unit 含前置挂载行（P5 已就位 ⇒ mount 保证先于 App exec）"
+    echo "  ✓ 磁盘 unit 含前置行；P5 已实测未执行，不能据此认定投递生效"
 else
-    echo "  ✗ unit 未含 P5 前置（仅靠 init.sh 复挂 = 晚于 App exec 约 25s）"
-    echo "    如需启用：sh /opt/usr/nx-ks/dicam/dicam_p5_install.sh"
+    echo "  ✗ 磁盘 unit 未含 P5 前置；不得自动重装或重启 App"
 fi
 echo
 echo "-- M2 locale（配方名样机，10-16 新增；详见 M2_RECIPE_NAME_DESIGN） --"
@@ -73,10 +73,10 @@ MDEP=/opt/usr/nx-ks/locale/zh_CN/di-camera-app.mo
 if [ -f "$MDEP" ]; then
     echo "  $(md5of "$MDEP")  $MDEP"
     mount | grep -q "LC_MESSAGES/di-camera-app.mo" \
-        && echo "  ⇒ 已挂载（M2 生效中：菜单自定义项显示配方名）" \
-        || echo "  ⇒ 未挂载（下次正常开机生效；或 P5 未装）"
+        && echo "  ⇒ 路径已挂载（不证明已加载的 gettext 字典或可见菜单名已刷新）" \
+        || echo "  ⇒ 路径未挂载；正常开关机后的生效方式仍待验证"
 else
-    echo "  <缺失>（未部署/已回退；语义 = 自定义项保持官方名）"
+    echo "  <缺失>（未部署/已移除；运行中的旧字典是否保留仍需另验）"
 fi
 echo
 echo "-- 命令通道探活 --"

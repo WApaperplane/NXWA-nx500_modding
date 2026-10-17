@@ -23,20 +23,20 @@
 #   v1 · 2026-10-16 · 离线编写（未上机验证）
 # =====================================================================
 
-D=/opt/usr/nx-ks
+D=${NXWA_MOD_ROOT:-/opt/usr/nx-ks}
 BB=$D/busybox
 [ -x "$BB" ] || BB=/bin/busybox
 [ -x "$BB" ] || BB=$(command -v busybox 2>/dev/null)
 [ -x "$BB" ] || BB=""                    # 无 busybox ⇒ RUNNER 退化为系统 sh
 if [ -n "$BB" ]; then RUNNER="$BB sh"; else RUNNER="sh"; fi
-MOD=/mnt/mmc/filmlab
+MOD=${NXWA_LUT_MOD:-/mnt/mmc/filmlab}
 [ -d "$MOD" ] || MOD=$D
 PICK=$MOD/lutpick.sh
 LUTS=$MOD/luts
 # ★ 上机实测（10-16）：工具实际部署在 SD $MOD/，不在 $D/（/opt/usr/nx-ks/）
 LOAD=$D/lutload.arm
 [ -f "$LOAD" ] || LOAD=$MOD/lutload.arm
-SENTPID=/tmp/lutsentinel.pid
+SENTPID=$LUTS/sentinel.pid
 
 log(){ echo "$*" >&2; }
 
@@ -66,23 +66,28 @@ cmd_probe(){
 cmd_apply(){
     name=$1; dry=$2
     [ -n "$name" ] || { printf '{"ok":false,"level":"failed","error":"no_name"}\n'; return 1; }
+    case "$name" in
+        *[!a-zA-Z0-9_.-]*|.|..) printf '{"ok":false,"level":"failed","error":"invalid_name"}\n'; return 1 ;;
+    esac
+    [ -z "$dry" ] || [ "$dry" = "--dry" ] || { printf '{"ok":false,"level":"failed","error":"invalid_option"}\n'; return 1; }
     [ -f "$PICK" ] || { printf '{"ok":false,"level":"failed","error":"lutpick_missing"}\n'; return 1; }
     [ -f "$LUTS/$name.bin" ] || { printf '{"ok":false,"level":"failed","error":"table_not_found","table":%s}\n' "$(jstr "$name")"; return 1; }
     [ -f "$LUTS/_identity.bin" ] || log "(提示：无 _identity.bin；诊断表缺省)"
 
     log "-- apply $name ${dry:+($dry)}（sel=1 通道）--"
     if [ "$dry" = "--dry" ]; then
-        out=$($RUNNER "$PICK" apply "$name" --dry 2>&1); rc=$?
+        out=$($RUNNER "$PICK" apply "$name" --ch1 --dry 2>&1); rc=$?
     else
-        out=$($RUNNER "$PICK" apply "$name" 2>&1); rc=$?
+        out=$($RUNNER "$PICK" apply "$name" --ch1 2>&1); rc=$?
     fi
     echo "$out" | sed 's/^/  /' >&2
     if [ "$rc" = "0" ]; then
-        printf '{"ok":true,"level":"full","table":%s,"sel":1,"dry":%s,"note":"预览生效（LUT1）；成片走 postproc（E4 口径）"}\n' \
-            "$(jstr "$name")" "$([ "$dry" = "--dry" ] && echo true || echo false)"
+        printf '{"ok":true,"level":"full","table":%s,"sel":1,"sel_requested":1,"hardware_verified":false,"guard":%s,"dry":%s,"note":"sel 为请求通道；dry=true 仅探测，其余为加载命令返回成功；守护未自动启动，画面与成片另验"}\n' \
+            "$(jstr "$name")" "$(guard_state)" "$([ "$dry" = "--dry" ] && echo true || echo false)"
     else
         printf '{"ok":false,"level":"failed","table":%s,"rc":%s,"error":"lutpick_apply_failed"}\n' "$(jstr "$name")" "$rc"
     fi
+    return "$rc"
 }
 
 cmd_rollback(){
@@ -103,16 +108,22 @@ cmd_rollback(){
     else
         log "!! 缺 lutload.arm —— 无法恢复出厂表（请用 SD 重刷/重启兜底）"
     fi
-    printf '{"ok":%s,"path":"factory_restore","identity_used":false,"guard_stopped":%s,"restore_rc":%s,"note":"关闭=停守护+恢复出厂表指针（非 identity）"}\n' \
-        "$([ "$rc_r" = "0" ] && echo true || echo false)" \
-        "$([ "$g" = "1" ] && echo true || echo false)" "$rc_r"
+    g_after=$(guard_state)
+    ok=false
+    if [ "$rc_r" = "0" ] && [ "$g_after" = "0" ]; then
+        ok=true
+        rm -f "$LUTS/current"
+    fi
+    printf '{"ok":%s,"path":"factory_restore","identity_used":false,"hardware_verified":false,"guard_stopped":%s,"restore_rc":%s,"note":"恢复命令返回结果，原厂画面另验（非 identity）"}\n' \
+        "$ok" "$([ "$g_after" = "0" ] && echo true || echo false)" "$rc_r"
+    [ "$ok" = true ]
 }
 
 cmd_status(){
     cur=""
     [ -f "$LUTS/current" ] && cur=$(cat "$LUTS/current" 2>/dev/null)
-    printf '{"ok":true,"guard":%s,"current":%s,"sel":%s,"note":"current 为软件记账（非硬件读回）"}\n' \
-        "$(guard_state)" "$(jstr "$cur")" "$([ -n "$cur" ] && echo 1 || echo 0)"
+    printf '{"ok":true,"guard":%s,"current":%s,"sel":null,"sel_requested":%s,"hardware_verified":false,"note":"current 与 sel_requested 为软件记账；sel 未读取硬件"}\n' \
+        "$(guard_state)" "$(jstr "$cur")" "$([ -n "$cur" ] && echo 1 || echo null)"
 }
 
 case "$1" in

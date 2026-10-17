@@ -1,0 +1,26 @@
+
+/opt/nxks2/rootfs-112/usr/lib/libhibernation.so:     file format elf32-littlearm
+
+
+Disassembly of section .init:
+
+Disassembly of section .plt:
+
+Disassembly of section .text:
+
+000019dc <hib_post@@Base>:
+    19dc:	b580      	push	{r7, lr}
+    19de:	af00      	add	r7, sp, #0
+    19e0:	f04f 0005 	mov.w	r0, #5
+    19e4:	f04f 0105 	mov.w	r1, #5
+    19e8:	f04f 0200 	mov.w	r2, #0
+    19ec:	f7ff ec16 	blx	121c <device_set_property@plt>
+    19f0:	4b02      	ldr	r3, [pc, #8]	@ (19fc <hib_post@@Base+0x20>)
+    19f2:	447b      	add	r3, pc
+    19f4:	4618      	mov	r0, r3
+    19f6:	f7ff ffbb 	bl	1970 <hib_get_int@@Base+0x78>
+    19fa:	bd80      	pop	{r7, pc}
+    19fc:	1b06      	subs	r6, r0, r4
+	...
+
+Disassembly of section .fini:

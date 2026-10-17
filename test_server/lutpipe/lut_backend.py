@@ -25,6 +25,7 @@ import argparse
 import json
 import os
 import re
+import shlex
 import subprocess
 import sys
 
@@ -56,23 +57,24 @@ class SimBackend:
         if name not in self.state["luts"]:
             return {"ok": False, "level": "failed", "error": "table_not_found", "table": name}
         if not dry:
-            self.state["guard"] = 1
             self.state["current"] = name
-        return {"ok": True, "level": "full", "table": name, "sel": 1, "dry": bool(dry),
-                "note": "预览生效（LUT1）；成片走 postproc（E4 口径）"}
+        return {"ok": True, "level": "full", "table": name, "sel": 1,
+                "sel_requested": 1, "hardware_verified": False,
+                "guard": self.state["guard"], "dry": bool(dry),
+                "note": "请求 LUT1；守护未自动启动，画面与成片另验"}
 
     def rollback(self):
-        g = self.state["guard"]
         self.state["guard"] = 0
         self.state["current"] = ""
         return {"ok": True, "path": "factory_restore", "identity_used": False,
-                "guard_stopped": bool(g), "restore_rc": 0,
-                "note": "关闭=停守护+恢复出厂表指针（非 identity）"}
+                "hardware_verified": False, "guard_stopped": True, "restore_rc": 0,
+                "note": "恢复命令返回结果，原厂画面另验（非 identity）"}
 
     def status(self):
         return {"ok": True, "guard": self.state["guard"], "current": self.state["current"],
-                "sel": 1 if self.state["current"] else 0,
-                "note": "current 为软件记账（非硬件读回）"}
+                "sel": None, "sel_requested": 1 if self.state["current"] else None,
+                "hardware_verified": False,
+                "note": "current 与 sel_requested 为软件记账；sel 未读取硬件"}
 
 
 def run_remote(args, timeout=180):
@@ -80,7 +82,7 @@ def run_remote(args, timeout=180):
     if not os.path.isfile(NX_TELNET):
         print("!! 缺 %s" % NX_TELNET, file=sys.stderr)
         return None
-    cmd = "%s %s" % (REMOTE, args)
+    cmd = "%s %s" % (REMOTE, shlex.join(args))
     p = subprocess.run([sys.executable, NX_TELNET, "-c", cmd],
                        capture_output=True, text=True, encoding="utf-8", timeout=timeout)
     for line in (p.stdout or "").splitlines():
@@ -115,7 +117,8 @@ def selftest():
     r = b.apply("portra400")
     chk(r["level"] == "full" and r["sel"] == 1, "apply 成功 → level=full / sel=1")
     s = b.status()
-    chk(s["guard"] == 1 and s["current"] == "portra400", "apply 后 status：guard=1 / current=portra400")
+    chk(s["guard"] == 0 and s["current"] == "portra400" and s["sel"] is None,
+        "apply 后 status：不虚构守护启动或硬件通道读回")
 
     r2 = b.apply("nonexistent")
     chk(r2["level"] == "failed" and r2["error"] == "table_not_found",
@@ -168,7 +171,11 @@ def main():
     if not a.cmd:
         print("usage: lut_backend.py [--sim] probe|apply <name>|rollback|status", file=sys.stderr)
         return 2
-    args = a.cmd + ((" " + a.name) if a.name else "") + (" --dry" if a.dry else "")
+    args = [a.cmd]
+    if a.name:
+        args.append(a.name)
+    if a.dry:
+        args.append("--dry")
     d = run_remote(args)
     if d is None:
         return 3

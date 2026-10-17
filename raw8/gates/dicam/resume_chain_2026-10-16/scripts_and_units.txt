@@ -1,0 +1,172 @@
+
+SOURCE usr/bin/hibernation.sh
+dd3687d3231ec32bbdcaaf3aac3015842f4ec703269a5eef71213e3e75447361  /opt/nxks2/rootfs-112/usr/bin/hibernation.sh
+#!/bin/sh
+
+bootmode="`cat /sys/power/bootmode`"
+if [ $bootmode -eq 4 ]; then
+	echo -e "\nbootshell set to cold-boot... \n"	
+	/bin/touch /tmp/.hib_ready	
+	exit
+fi
+
+if [ ! -e /etc/snapshot ]; then
+	/bin/touch /tmp/.hib_ready
+	exit
+fi
+
+#LOGPATH="/mnt/ubi1/fw/log"
+#LOGFILE="$LOGPATH/hib.txt"
+SNAPSHOT_DEV="/dev/mmcblk0p9"
+#DI_CAMERA_BIN="`readlink /usr/bin/di-camera-app`"
+
+# exit script if any command failed.
+set -e
+
+# print shell command on console
+set -x
+
+# verbosity level: 0 - quiet, 1 - output, 2 - output and log
+#_verbose=2
+
+#if [ $_verbose -ge 2 ]; then
+#	mkdir -m 777 -p $LOGPATH
+#	echo "`date` ------------------" > $LOGFILE
+#fi
+
+#logexec()
+#{
+#	[ "$_verbose" -lt 1 ] || echo "[exec] $*"
+#	[ "$_verbose" -lt 2 ] || echo "[exec] $*" >> $LOGFILE
+#	"$@"
+#}
+
+#logmsg()
+#{
+#	[ "$_verbose" -lt 1 ] || echo "$*"
+#	[ "$_verbose" -lt 2 ] || echo "$*" >> $LOGFILE
+#	sync
+#}
+
+echo "Starting hibernation ... "
+echo timer > /sys/class/leds/card/trigger
+#/usr/sbin/fw_upgrade_display on ./usr/sbin/hib_gui.raw
+
+# make swap device to use zram.
+echo "Set RAMZ size"
+/bin/sh -c "echo -n $((50*1024*1024)) > /sys/block/zram0/disksize"
+mkswap /dev/zram0
+swapon /dev/zram0
+
+# make swap device to save hibernation image.
+/bin/dd if=/dev/zero of=$SNAPSHOT_DEV bs=512 count=1
+mkswap -c $SNAPSHOT_DEV
+swapon $SNAPSHOT_DEV
+
+# set environment variable to let app do hibernation. 
+#export HIB=a
+
+# clear dirty corresponding to adj partition.
+#logexec sh -c "echo 0 > /pref/dirty_adj"
+
+# remount /mnt/ubi2 with read-only
+#logexec mount -o ro,remount,noatime,nodiratime /mnt/ubi2
+
+
+# umount opt
+#umount /opt/usr
+#umount /opt
+
+# remount / with read-only
+mount -o ro,remount /
+
+#mount -t ext4 /dev/mmcblk0p7 /opt
+#mount -t ext4 /dev/mmcblk0p11 /opt/usr
+
+
+# disable upgrade gui
+#fw_upgrade_display off
+
+#logexec startx
+#logexec sleep 1
+#logexec /usr/bin/hib_exjob -r
+#logmsg "launch di-camera-app"
+#$DI_CAMERA_BIN &
+
+touch /tmp/.hib_ready
+
+SOURCE usr/bin/hib_tmp.sh
+60d2d6540c594796b16bff995fb805881ac3949268749256972562ebf8afd9c4  /opt/nxks2/rootfs-112/usr/bin/hib_tmp.sh
+#!/bin/sh
+
+if [ ! -e /opt/_dbspace ]; then
+	mv /opt/dbspace /opt/_dbspace
+	ln -sf /tmp/dbspace /opt/dbspace
+fi
+	cp -Rf /opt/_dbspace /tmp/dbspace
+
+
+SOURCE usr/lib/systemd/system/hib_post.path
+59c9006b53597a0f8ce17fe3068e390fdc00472c7529160f15ddeb3c77530027  /opt/nxks2/rootfs-112/usr/lib/systemd/system/hib_post.path
+[Unit]
+Description=Hibernation Postproc Requests
+DefaultDependencies=no
+Before=paths.target shutdown.target
+
+[Path]
+PathExists=/tmp/.hib_post
+
+SOURCE usr/lib/systemd/system/hib_post.service
+9fc3e5aa13b282b63a68c45bb7277497b61195aac0a8c585dd9d189553cfe4f8  /opt/nxks2/rootfs-112/usr/lib/systemd/system/hib_post.service
+[Unit]
+Description=Hibernation Postproc
+DefaultDependencies=no
+After=default.target wm_ready.service deviced.service di-camera-app.service
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -c "/sbin/swapoff -a"
+
+[Install]
+WantedBy=default.target
+
+
+SOURCE usr/lib/systemd/system/hibernation.service
+6d89c8788aca583164d63f055948809901adbf601626f36bbce9a0f9a4d73636  /opt/nxks2/rootfs-112/usr/lib/systemd/system/hibernation.service
+#  This file is part of systemd.
+#
+#  systemd is free software; you can redistribute it and/or modify it
+#  under the terms of the GNU Lesser General Public License as published by
+#  the Free Software Foundation; either version 2.1 of the License, or
+#  (at your option) any later version.
+
+[Unit]
+Description=Preparing snapshot image...
+
+DefaultDependencies=no
+Conflicts=shutdown.target
+After=systemd-readahead-collect.service systemd-readahead-replay.service systemd-fsck-root.service
+Before=local-fs-pre.target local-fs.target shutdown.target
+Wants=local-fs-pre.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/bin/hibernation.sh
+StandardOutput=tty
+
+SOURCE usr/lib/systemd/system/di-camera-app.service
+5f7824afd875a7073618401d3e157af1f909530be12f1db7dee179c2a79d7f5c  /opt/nxks2/rootfs-112/usr/lib/systemd/system/di-camera-app.service
+[Unit]
+Description=Start di-camera-app
+After=hib_ready.service xorg.service default.target wm_ready.service deviced.service
+
+[Service]
+ExecStart=/usr/apps/com.samsung.di-camera-app/bin/di-camera-app
+StandardOutput=tty
+EnvironmentFile=/run/tizen-mobile-env
+#Restart=always
+#RestartSec=3
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,55 @@
+  12c67c:	e3a00001 	mov	r0, #1
+  12c680:	e3a01002 	mov	r1, #2
+  12c684:	e3a02000 	mov	r2, #0
+  12c688:	eb038ad3 	bl	20f1dc <_Z22UI_Send_Thread_Messagei19eUI_COMMON_EVENT_IDi@@Base>
+  12c68c:	e3570000 	cmp	r7, #0
+  12c690:	1a00001a 	bne	12c700 <_Z22UI_Set_Power_Off_Startb@@Base+0x450>
+  12c694:	e30f49c0 	movw	r4, #63936	@ 0xf9c0
+  12c698:	e3404037 	movt	r4, #55	@ 0x37
+  12c69c:	e3a00003 	mov	r0, #3
+  12c6a0:	e3a01004 	mov	r1, #4
+  12c6a4:	e1a02004 	mov	r2, r4
+  12c6a8:	e3073600 	movw	r3, #30208	@ 0x7600
+  12c6ac:	e3403038 	movt	r3, #56	@ 0x38
+  12c6b0:	ebfe0297 	bl	ad114 <__dlog_print@plt>
+  12c6b4:	eb025428 	bl	1c175c <_Z11UI_Hib_Postv@@Base>
+  12c6b8:	e3a00003 	mov	r0, #3
+  12c6bc:	e3a01004 	mov	r1, #4
+  12c6c0:	e1a02004 	mov	r2, r4
+  12c6c4:	e3073620 	movw	r3, #30240	@ 0x7620
+  12c6c8:	e3403038 	movt	r3, #56	@ 0x38
+  12c6cc:	ebfe0290 	bl	ad114 <__dlog_print@plt>
+  12c6d0:	e28d1f46 	add	r1, sp, #280	@ 0x118
+  12c6d4:	e3a03000 	mov	r3, #0
+  12c6d8:	e5213004 	str	r3, [r1, #-4]!
+  12c6dc:	e3a00060 	mov	r0, #96	@ 0x60
+  12c6e0:	e3a02002 	mov	r2, #2
+  12c6e4:	eb031aae 	bl	1f31a4 <_Z31UI_Adjust_Data_Manager_Get_Data18eUI_ADJUST_DATA_IDPvm@@Base>
+--
+  1b5b7c:	e58d3008 	str	r3, [sp, #8]
+  1b5b80:	e58d500c 	str	r5, [sp, #12]
+  1b5b84:	e3a00003 	mov	r0, #3
+  1b5b88:	e3a01004 	mov	r1, #4
+  1b5b8c:	e30b2fb4 	movw	r2, #49076	@ 0xbfb4
+  1b5b90:	e3402036 	movt	r2, #54	@ 0x36
+  1b5b94:	e30a37d0 	movw	r3, #42960	@ 0xa7d0
+  1b5b98:	e3403036 	movt	r3, #54	@ 0x36
+  1b5b9c:	ebfbdd5c 	bl	ad114 <__dlog_print@plt>
+  1b5ba0:	e1a00004 	mov	r0, r4
+  1b5ba4:	ebfdded5 	bl	12d700 <_Z34UI_Manage_Power_On_Before_SnapShotPv@@Base>
+  1b5ba8:	eb008c1a 	bl	1d8c18 <_Z30UI_Sys_Mmap_Manage_Init_Sysmapv@@Base>
+  1b5bac:	e3a00000 	mov	r0, #0
+  1b5bb0:	eb008c1e 	bl	1d8c30 <_Z32UI_Sys_Mmap_Manage_Change_Opmode12eUI_MEM_MODE@@Base>
+  1b5bb4:	eb002ee1 	bl	1c1740 <_Z6UI_Hibv@@Base>
+  1b5bb8:	e30a0ac0 	movw	r0, #43712	@ 0xaac0
+  1b5bbc:	ebfbe0fc 	bl	adfb4 <_Z22User_Spec_Get_DB_Valuei@plt>
+  1b5bc0:	e30b3da8 	movw	r3, #48552	@ 0xbda8
+  1b5bc4:	e340304a 	movt	r3, #74	@ 0x4a
+  1b5bc8:	e5933000 	ldr	r3, [r3]
+  1b5bcc:	e5830088 	str	r0, [r3, #136]	@ 0x88
+  1b5bd0:	e3500000 	cmp	r0, #0
+  1b5bd4:	0a000026 	beq	1b5c74 <_Z13UI_Init_Statev@@Base+0x1218>
+  1b5bd8:	eb002eee 	bl	1c1798 <_Z23UI_Hib_Check_Fw_Upgradev@@Base>
+  1b5bdc:	e3500000 	cmp	r0, #0
+  1b5be0:	1a00006e 	bne	1b5da0 <_Z13UI_Init_Statev@@Base+0x1344>
+  1b5be4:	ea000022 	b	1b5c74 <_Z13UI_Init_Statev@@Base+0x1218>
