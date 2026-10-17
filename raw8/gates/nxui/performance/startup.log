@@ -1,0 +1,46 @@
+TRIGGER EV_EV.sh uptime=558.45
+904
+TRIGGER EV_AEL.sh uptime=559.81
+920
+TRIGGER EV_EV.sh uptime=561.08
+945
+  [0] 0x134 <- 0x6d  rc=0 OK
+  [1] 0x135 <- 0x65  rc=0 OK
+  [2] 0x136 <- 0x59  rc=0 OK
+  [3] 0x137 <- 0xc  rc=0 OK
+  [4] 0x138 <- 0xc  rc=0 OK
+  [5] 0x139 <- 0x9  rc=0 OK
+  [6] 0x13a <- 0xa  rc=0 OK
+  [7] 0x13b <- 0x1  rc=0 OK
+★ 下一步：st cap capdtm varlist（或 filmlab.sh check）读回对照
+✓ gold200 -> slot9  (reload=already pw=direct not-saved)
+
+EXIT renders=19 elapsed_ms=21326
+MENU file=/opt/usr/nx-ks/gui_ini.NX500 items=7
+READY backend=nuklear-xft live=1 recipes=95 panel=720x336 nice=19
+INIT recipes_ms=13 display_ms=4 font_ms=56 backend_ms=4 map_ms=32
+FIRST_FRAME process_ms=245 launch_ms=603
+EXIT renders=1 elapsed_ms=931 wakeups=2 blits=0 max_draw_ms=135
+READY backend=nuklear-xft live=1 recipes=95 panel=720x192 nice=19
+INIT recipes_ms=2 display_ms=3 font_ms=66 backend_ms=2 map_ms=13
+FIRST_FRAME process_ms=200 launch_ms=290
+EXIT renders=1 elapsed_ms=951 wakeups=2 blits=0 max_draw_ms=114
+MENU file=/opt/usr/nx-ks/gui_ini.NX500 items=7
+READY backend=nuklear-xft live=1 recipes=95 panel=720x336 nice=19
+INIT recipes_ms=2 display_ms=14 font_ms=48 backend_ms=14 map_ms=20
+FIRST_FRAME process_ms=202 launch_ms=367
+EXIT renders=1 elapsed_ms=946 wakeups=1 blits=0 max_draw_ms=104
+READY backend=nuklear-xft live=1 recipes=95 panel=720x192 nice=19
+INIT recipes_ms=4 display_ms=3 font_ms=49 backend_ms=3 map_ms=14
+FIRST_FRAME process_ms=180 launch_ms=270
+EXIT renders=1 elapsed_ms=951 wakeups=1 blits=0 max_draw_ms=107
+MENU file=/opt/usr/nx-ks/gui_ini.NX500 items=7
+READY backend=nuklear-xft live=1 recipes=95 panel=720x336 nice=19
+INIT recipes_ms=2 display_ms=10 font_ms=52 backend_ms=2 map_ms=20
+FIRST_FRAME process_ms=197 launch_ms=364
+EXIT renders=1 elapsed_ms=953 wakeups=1 blits=0 max_draw_ms=111
+f8a4fa220c9dea08f8f78188501510d6  /opt/usr/nx-ks/EV_EV.sh
+329a67fe1ab32b835f19f1a705b552a1  /opt/usr/nx-ks/nxui/nxui.arm
+408cfcfa1937b121f22f2cc78c288a8e  /opt/usr/nx-ks/filmlab.sh
+aff030b9c2eeab491e084f2b481e76a8  /opt/usr/nx-ks/nxui.sh
+DONE

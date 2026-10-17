@@ -1,0 +1,34 @@
+[
+  {
+    "event": "motion",
+    "renders": 1,
+    "elapsed_ms": 2406,
+    "wakeups": 23,
+    "blits": 0,
+    "max_draw_ms": 2
+  },
+  {
+    "event": "expose",
+    "renders": 1,
+    "elapsed_ms": 2405,
+    "wakeups": 23,
+    "blits": 11,
+    "max_draw_ms": 2
+  },
+  {
+    "event": "key",
+    "renders": 13,
+    "elapsed_ms": 2405,
+    "wakeups": 23,
+    "blits": 0,
+    "max_draw_ms": 3
+  },
+  {
+    "event": "idle",
+    "renders": 1,
+    "elapsed_ms": 2409,
+    "wakeups": 1,
+    "blits": 0,
+    "max_draw_ms": 2
+  }
+]

@@ -1,0 +1,73 @@
+{
+  "date": "2026-10-17",
+  "camera": "192.168.0.106",
+  "model": "NX500 1.12",
+  "framework": "Nuklear/X11/Xft",
+  "manual_confirmations": {
+    "baseline_normal": true,
+    "panel_visible_viewfinder_keys_normal": true,
+    "filter_colour_switch_close_normal": true,
+    "main_submenus_filter_navigation_normal": true
+  },
+  "trial_backend_successes": 4,
+  "trial_preview_saved_to_flash": false,
+  "demo_elapsed_ms": 10039,
+  "demo_renders": 2,
+  "installed_enabled": true,
+  "installed_binary_md5": "faa861ae262425c400cde0c76749e8a9",
+  "package_sha256": "e73e177f735e9efb17bdaeeef3dae39b213b2d49d091460900d3c79a86250532",
+  "offline_display_checks": [
+    {
+      "target": "host",
+      "mode": "filmlab",
+      "shape": "720 192",
+      "result": "PASS"
+    },
+    {
+      "target": "host",
+      "mode": "menu",
+      "shape": "720 336",
+      "result": "PASS"
+    },
+    {
+      "target": "host",
+      "mode": "idle",
+      "renders_in_1500ms": 1,
+      "result": "PASS"
+    },
+    {
+      "target": "host",
+      "mode": "interaction",
+      "result": "PASS"
+    },
+    {
+      "target": "arm",
+      "mode": "filmlab",
+      "shape": "720 192",
+      "result": "PASS"
+    },
+    {
+      "target": "arm",
+      "mode": "menu",
+      "shape": "720 336",
+      "result": "PASS"
+    },
+    {
+      "target": "arm",
+      "mode": "idle",
+      "renders_in_1500ms": 1,
+      "result": "PASS"
+    },
+    {
+      "target": "arm",
+      "mode": "interaction",
+      "result": "PASS"
+    }
+  ],
+  "engine_tests_passed": 6,
+  "limits": [
+    "PW recipe selector; no LUT thumbnail/selector",
+    "Camera jog dial mapping not measured",
+    "Dedicated legacy tool popups remain unchanged"
+  ]
+}

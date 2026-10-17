@@ -1,0 +1,86 @@
+[
+  {
+    "case": "baseline",
+    "seconds": 4.13,
+    "processes": {
+      "Xorg": {
+        "cpu_percent": 0.0,
+        "rss_kb": 3920,
+        "nice": -1,
+        "voluntary_wakeups": 0
+      },
+      "di-camera-app": {
+        "cpu_percent": 69.438,
+        "rss_kb": 26112,
+        "nice": -10,
+        "voluntary_wakeups": 30
+      },
+      "onscreen_ks": {
+        "cpu_percent": 0.0,
+        "rss_kb": 7940,
+        "nice": -15,
+        "voluntary_wakeups": 0
+      }
+    }
+  },
+  {
+    "case": "old-idle",
+    "seconds": 6.16,
+    "processes": {
+      "Xorg": {
+        "cpu_percent": 0.0,
+        "rss_kb": 3920,
+        "nice": -1,
+        "voluntary_wakeups": 0
+      },
+      "di-camera-app": {
+        "cpu_percent": 70.115,
+        "rss_kb": 26112,
+        "nice": -10,
+        "voluntary_wakeups": 45
+      },
+      "onscreen_ks": {
+        "cpu_percent": 0.0,
+        "rss_kb": 7940,
+        "nice": -15,
+        "voluntary_wakeups": 0
+      },
+      "nxui.arm": {
+        "cpu_percent": 0.0,
+        "rss_kb": 3632,
+        "nice": 19,
+        "voluntary_wakeups": 61
+      }
+    }
+  },
+  {
+    "case": "new-idle",
+    "seconds": 6.16,
+    "processes": {
+      "Xorg": {
+        "cpu_percent": 0.0,
+        "rss_kb": 3920,
+        "nice": -1,
+        "voluntary_wakeups": 0
+      },
+      "di-camera-app": {
+        "cpu_percent": 72.047,
+        "rss_kb": 26112,
+        "nice": -10,
+        "voluntary_wakeups": 45
+      },
+      "onscreen_ks": {
+        "cpu_percent": 0.0,
+        "rss_kb": 7940,
+        "nice": -15,
+        "voluntary_wakeups": 0
+      },
+      "nxui.arm": {
+        "cpu_percent": 0.0,
+        "rss_kb": 3628,
+        "nice": 19,
+        "voluntary_wakeups": 0
+      }
+    }
+  }
+]

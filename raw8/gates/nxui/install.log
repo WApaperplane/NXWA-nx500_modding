@@ -1,0 +1,15 @@
+expected-original.md5: OK
+install_camera.sh: OK
+README.md: OK
+rollback_camera.sh: OK
+scripts/EV_AEL.sh: OK
+scripts/filmlab.sh: OK
+scripts/loadgui.sh: OK
+scripts/menu.sh: OK
+scripts/nxui/NUKLEAR-LICENSE: OK
+scripts/nxui/nxui.arm: OK
+scripts/nxui.sh: OK
+INSTALLED enabled=yes backup=/opt/usr/nx-ks/nxui/backup-20261017
+faa861ae262425c400cde0c76749e8a9  /opt/usr/nx-ks/nxui/nxui.arm
+142890d6515c4982df59193dee3859a3  /opt/usr/nx-ks/filmlab.sh
+2827c62b4746d842e18e85464568a474  /opt/usr/nx-ks/nxui.sh

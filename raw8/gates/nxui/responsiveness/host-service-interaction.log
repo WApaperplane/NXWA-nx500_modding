@@ -1,0 +1,20 @@
+MENU file=/tmp/nxui-service-ui-p6lql6cn/gui_ini.NX500 items=8
+READY backend=nuklear-xft live=1 recipes=0 panel=720x336 nice=19
+INIT recipes_ms=8 display_ms=1 font_ms=7 backend_ms=2 map_ms=1
+FIRST_FRAME process_ms=20 launch_ms=20
+SERVICES known=1 telnet=0 ftp=0 label=WiFi未开  [Telnet:关 FTP:关]
+ACTION item=6 checkbox=0
+BACKEND kind=4 ok=1 elapsed_ms=126 output=
+SERVICES known=1 telnet=1 ftp=1 label=WiFi未开  [Telnet:开 FTP:开]
+ACTION item=6 checkbox=0
+BACKEND kind=4 ok=1 elapsed_ms=126 output=
+SERVICES known=1 telnet=0 ftp=0 label=WiFi未开  [Telnet:关 FTP:关]
+SERVICES known=1 telnet=1 ftp=0 label=WiFi未开  [Telnet:开 FTP:关]
+ACTION item=6 checkbox=0
+BACKEND kind=4 ok=0 elapsed_ms=125 output=
+ACTION item=6 checkbox=0
+BACKEND kind=4 ok=1 elapsed_ms=125 output=
+SERVICES known=1 telnet=1 ftp=1 label=WiFi未开  [Telnet:开 FTP:开]
+ACTION item=7 checkbox=0
+BACKEND kind=2 ok=1 elapsed_ms=4 output=
+EXIT renders=15 elapsed_ms=2343 wakeups=26 blits=0 max_draw_ms=1

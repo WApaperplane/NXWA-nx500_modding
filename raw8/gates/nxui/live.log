@@ -1,0 +1,110 @@
+READY backend=nuklear-xft live=1 recipes=95 panel=720x192
+BACKEND kind=1 ok=1 output=>>> 应用 'portra400' -> slot 9 (enum 9)
+  ③ PW直推（A2 档位池直写；真发）:
+     /opt/usr/nx-ks/pwsend.arm seq 0x134 106 0x135 100 0x136 93 0x137 11 0x138 9 0x139 9 0x13A 8 0x13B 1 --yes
+=== pwsend seq：8 条 真发（--yes）（条间 150ms）===
+  [0] id=0x134 cmd=0x1335 value=0x006a (106)
+  [1] id=0x135 cmd=0x1336 value=0x0064 (100)
+  [2] id=0x136 cmd=0x1337 value=0x005d (93)
+  [3] id=0x137 cmd=0x1338 value=0x000b (11)
+  [4] id=0x138 cmd=0x1339 value=0x0009 (9)
+  [5] id=0x139 cmd=0x133a value=0x0009 (9)
+  [6] id=0x13a cmd=0x133b value=0x0008 (8)
+  [7] id=0x13b cmd=0x133c value=0x0001 (1)
+  [mcb] mcb_init rc=0
+  [mcb] ignore_init_checking: set (destAlive=1)
+  [mcb] destAlive=1  (t=0ms)
+  [0] 0x134 <- 0x6a  rc=0 OK
+  [1] 0x135 <- 0x64  rc=0 OK
+  [2] 0x136 <- 0x5d  rc=0 OK
+  [3] 0x137 <- 0xb  rc=0 OK
+  [4] 0x138 <- 0x9  rc=0 OK
+  [5] 0x139 <- 0x9  rc=0 OK
+  [6] 0x13a <- 0x8  rc=0 OK
+  [7] 0x13b <- 0x1  rc=0 OK
+★ 下一步：st cap capdtm varlist（或 filmlab.sh check）读回对照
+✓ portra400 -> slot9  (reload=already pw=direct not-saved)
+
+BACKEND kind=1 ok=1 output=>>> 应用 'portra800' -> slot 9 (enum 9)
+  ③ PW直推（A2 档位池直写；真发）:
+     /opt/usr/nx-ks/pwsend.arm seq 0x134 109 0x135 101 0x136 94 0x137 11 0x138 9 0x139 8 0x13A 7 0x13B 1 --yes
+=== pwsend seq：8 条 真发（--yes）（条间 150ms）===
+  [0] id=0x134 cmd=0x1335 value=0x006d (109)
+  [1] id=0x135 cmd=0x1336 value=0x0065 (101)
+  [2] id=0x136 cmd=0x1337 value=0x005e (94)
+  [3] id=0x137 cmd=0x1338 value=0x000b (11)
+  [4] id=0x138 cmd=0x1339 value=0x0009 (9)
+  [5] id=0x139 cmd=0x133a value=0x0008 (8)
+  [6] id=0x13a cmd=0x133b value=0x0007 (7)
+  [7] id=0x13b cmd=0x133c value=0x0001 (1)
+  [mcb] mcb_init rc=0
+  [mcb] ignore_init_checking: set (destAlive=1)
+  [mcb] destAlive=1  (t=0ms)
+  [0] 0x134 <- 0x6d  rc=0 OK
+  [1] 0x135 <- 0x65  rc=0 OK
+  [2] 0x136 <- 0x5e  rc=0 OK
+  [3] 0x137 <- 0xb  rc=0 OK
+  [4] 0x138 <- 0x9  rc=0 OK
+  [5] 0x139 <- 0x8  rc=0 OK
+  [6] 0x13a <- 0x7  rc=0 OK
+  [7] 0x13b <- 0x1  rc=0 OK
+★ 下一步：st cap capdtm varlist（或 filmlab.sh check）读回对照
+✓ portra800 -> slot9  (reload=already pw=direct not-saved)
+
+BACKEND kind=1 ok=1 output=>>> 应用 'ultramax400' -> slot 9 (enum 9)
+  ③ PW直推（A2 档位池直写；真发）:
+     /opt/usr/nx-ks/pwsend.arm seq 0x134 106 0x135 100 0x136 95 0x137 12 0x138 13 0x139 9 0x13A 11 0x13B 1 --yes
+=== pwsend seq：8 条 真发（--yes）（条间 150ms）===
+  [0] id=0x134 cmd=0x1335 value=0x006a (106)
+  [1] id=0x135 cmd=0x1336 value=0x0064 (100)
+  [2] id=0x136 cmd=0x1337 value=0x005f (95)
+  [3] id=0x137 cmd=0x1338 value=0x000c (12)
+  [4] id=0x138 cmd=0x1339 value=0x000d (13)
+  [5] id=0x139 cmd=0x133a value=0x0009 (9)
+  [6] id=0x13a cmd=0x133b value=0x000b (11)
+  [7] id=0x13b cmd=0x133c value=0x0001 (1)
+  [mcb] mcb_init rc=0
+  [mcb] ignore_init_checking: set (destAlive=1)
+  [mcb] destAlive=1  (t=0ms)
+  [0] 0x134 <- 0x6a  rc=0 OK
+  [1] 0x135 <- 0x64  rc=0 OK
+  [2] 0x136 <- 0x5f  rc=0 OK
+  [3] 0x137 <- 0xc  rc=0 OK
+  [4] 0x138 <- 0xd  rc=0 OK
+  [5] 0x139 <- 0x9  rc=0 OK
+  [6] 0x13a <- 0xb  rc=0 OK
+  [7] 0x13b <- 0x1  rc=0 OK
+★ 下一步：st cap capdtm varlist（或 filmlab.sh check）读回对照
+✓ ultramax400 -> slot9  (reload=already pw=direct not-saved)
+
+BACKEND kind=1 ok=1 output=>>> 应用 'fuji400h' -> slot 9 (enum 9)
+  ③ PW直推（A2 档位池直写；真发）:
+     /opt/usr/nx-ks/pwsend.arm seq 0x134 97 0x135 103 0x136 109 0x137 9 0x138 8 0x139 8 0x13A 8 0x13B 1 --yes
+=== pwsend seq：8 条 真发（--yes）（条间 150ms）===
+  [0] id=0x134 cmd=0x1335 value=0x0061 (97)
+  [1] id=0x135 cmd=0x1336 value=0x0067 (103)
+  [2] id=0x136 cmd=0x1337 value=0x006d (109)
+  [3] id=0x137 cmd=0x1338 value=0x0009 (9)
+  [4] id=0x138 cmd=0x1339 value=0x0008 (8)
+  [5] id=0x139 cmd=0x133a value=0x0008 (8)
+  [6] id=0x13a cmd=0x133b value=0x0008 (8)
+  [7] id=0x13b cmd=0x133c value=0x0001 (1)
+  [mcb] mcb_init rc=0
+  [mcb] ignore_init_checking: set (destAlive=1)
+  [mcb] destAlive=1  (t=0ms)
+  [0] 0x134 <- 0x61  rc=0 OK
+  [1] 0x135 <- 0x67  rc=0 OK
+  [2] 0x136 <- 0x6d  rc=0 OK
+  [3] 0x137 <- 0x9  rc=0 OK
+  [4] 0x138 <- 0x8  rc=0 OK
+  [5] 0x139 <- 0x8  rc=0 OK
+  [6] 0x13a <- 0x8  rc=0 OK
+  [7] 0x13b <- 0x1  rc=0 OK
+★ 下一步：st cap capdtm varlist（或 filmlab.sh check）读回对照
+✓ fuji400h -> slot9  (reload=already pw=direct not-saved)
+
+EXIT renders=31 elapsed_ms=21108
+UI_RC=0
+ 09:00:02 up 45 min,  0 users,  load average: 1.31, 1.12, 1.01
+/mnt/mmc/stage/nxui-poc-92d56b55/live.sh: line 15:  1605 Terminated              ( "$BB" sleep 95; kill -TERM "$ui_pid" 2> /dev/null; "$BB" sleep 1; kill -KILL "$ui_pid" 2> /dev/null )
+DONE

@@ -1,0 +1,16 @@
+MENU file=/mnt/mmc/stage/nxui-response-20261017/gui_services.NX500 items=1
+READY backend=nuklear-xft live=1 recipes=95 panel=720x336 nice=19
+INIT recipes_ms=2 display_ms=7 font_ms=58 backend_ms=5 map_ms=19
+SERVICES known=1 telnet=1 ftp=1 label=192.168.0.106  [Telnet:开 FTP:开]
+FIRST_FRAME process_ms=196 launch_ms=196
+ACTION item=0 checkbox=0
+BACKEND kind=4 ok=1 elapsed_ms=266 output=SERVICES telnet=0 ftp=0 requested=disable
+
+SERVICES known=1 telnet=0 ftp=0 label=192.168.0.106  [Telnet:关 FTP:关]
+ACTION item=0 checkbox=0
+BACKEND kind=4 ok=1 elapsed_ms=200 output=SERVICES telnet=1 ftp=1 requested=enable
+
+SERVICES known=1 telnet=1 ftp=1 label=192.168.0.106  [Telnet:开 FTP:开]
+EXIT renders=7 elapsed_ms=1736 wakeups=11 blits=0 max_draw_ms=102
+DONE
+SERVICES telnet=1 ftp=1 requested=enable

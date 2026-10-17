@@ -1,4 +1,8 @@
 #!/bin/bash
+if [ -x /opt/usr/nx-ks/nxui.sh ] && /opt/usr/nx-ks/nxui.sh available; then
+    /opt/usr/nx-ks/nxui.sh menu
+    exit $?
+fi
 if ! killall -q mod_gui 
   then
 	# 动态生成主菜单(IP/Telnet 状态写入标签), 失败不影响菜单启动

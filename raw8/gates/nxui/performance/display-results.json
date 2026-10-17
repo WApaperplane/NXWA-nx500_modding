@@ -1,0 +1,126 @@
+[
+  {
+    "target": "host",
+    "mode": "filmlab",
+    "shape": "720 192",
+    "result": "PASS"
+  },
+  {
+    "target": "host",
+    "mode": "menu",
+    "shape": "720 336",
+    "result": "PASS"
+  },
+  {
+    "target": "host",
+    "mode": "idle",
+    "renders_in_1500ms": 1,
+    "result": "PASS"
+  },
+  {
+    "target": "host",
+    "mode": "interaction",
+    "result": "PASS"
+  },
+  {
+    "target": "host",
+    "mode": "performance",
+    "cases": [
+      {
+        "event": "motion",
+        "renders": 1,
+        "elapsed_ms": 2406,
+        "wakeups": 23,
+        "blits": 0,
+        "max_draw_ms": 2
+      },
+      {
+        "event": "expose",
+        "renders": 1,
+        "elapsed_ms": 2405,
+        "wakeups": 23,
+        "blits": 11,
+        "max_draw_ms": 2
+      },
+      {
+        "event": "key",
+        "renders": 13,
+        "elapsed_ms": 2405,
+        "wakeups": 23,
+        "blits": 0,
+        "max_draw_ms": 3
+      },
+      {
+        "event": "idle",
+        "renders": 1,
+        "elapsed_ms": 2409,
+        "wakeups": 1,
+        "blits": 0,
+        "max_draw_ms": 2
+      }
+    ],
+    "result": "PASS"
+  },
+  {
+    "target": "arm",
+    "mode": "filmlab",
+    "shape": "720 192",
+    "result": "PASS"
+  },
+  {
+    "target": "arm",
+    "mode": "menu",
+    "shape": "720 336",
+    "result": "PASS"
+  },
+  {
+    "target": "arm",
+    "mode": "idle",
+    "renders_in_1500ms": 1,
+    "result": "PASS"
+  },
+  {
+    "target": "arm",
+    "mode": "interaction",
+    "result": "PASS"
+  },
+  {
+    "target": "arm",
+    "mode": "performance",
+    "cases": [
+      {
+        "event": "motion",
+        "renders": 1,
+        "elapsed_ms": 2407,
+        "wakeups": 22,
+        "blits": 0,
+        "max_draw_ms": 25
+      },
+      {
+        "event": "expose",
+        "renders": 1,
+        "elapsed_ms": 2406,
+        "wakeups": 22,
+        "blits": 11,
+        "max_draw_ms": 28
+      },
+      {
+        "event": "key",
+        "renders": 12,
+        "elapsed_ms": 2405,
+        "wakeups": 18,
+        "blits": 0,
+        "max_draw_ms": 24
+      },
+      {
+        "event": "idle",
+        "renders": 1,
+        "elapsed_ms": 2413,
+        "wakeups": 1,
+        "blits": 0,
+        "max_draw_ms": 24
+      }
+    ],
+    "result": "PASS"
+  }
+]

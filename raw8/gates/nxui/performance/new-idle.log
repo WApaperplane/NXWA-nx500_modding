@@ -1,0 +1,2 @@
+READY backend=nuklear-xft live=0 recipes=95 panel=720x192 nice=19
+EXIT renders=1 elapsed_ms=10043 wakeups=2 blits=0 max_draw_ms=95

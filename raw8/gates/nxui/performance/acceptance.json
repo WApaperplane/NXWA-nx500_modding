@@ -1,0 +1,23 @@
+{
+  "camera": "192.168.0.106",
+  "installed": true,
+  "enabled": true,
+  "md5": {
+    "/opt/usr/nx-ks/nxui/nxui.arm": "329a67fe1ab32b835f19f1a705b552a1",
+    "/opt/usr/nx-ks/filmlab.sh": "408cfcfa1937b121f22f2cc78c288a8e",
+    "/opt/usr/nx-ks/nxui.sh": "aff030b9c2eeab491e084f2b481e76a8",
+    "/opt/usr/nx-ks/EV_EV.sh": "f8a4fa220c9dea08f8f78188501510d6"
+  },
+  "package_sha256": "9d146d158cb18dd7d89b5b19e7af12dabcc6c17381ebbbd96f5615c9ae6e206d",
+  "first_frame_ms": [
+    603,
+    290,
+    367,
+    270,
+    364
+  ],
+  "manual_shortcut_confirmation": "PASS after user reboot: opening clearly faster and operation normal; severe stutter persisted before reboot",
+  "manual_user_quote": "重启之前仍然极其卡顿，但在重启之后打开明显加快，操作正常。",
+  "reboot_performed_by": "user",
+  "limitations": "Acceptance is for the post-reboot state. Root cause of severe pre-reboot stutter and long-term stability remain unverified. Timing starts in nxui.sh, before first X frame, excluding key recognition."
+}

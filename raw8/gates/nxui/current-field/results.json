@@ -1,0 +1,23 @@
+[
+  {
+    "field": "standard",
+    "enum": "0x140000",
+    "recipe": "portra400",
+    "matched_values": 7,
+    "result": "PASS"
+  },
+  {
+    "field": "custom2",
+    "enum": "0x14000a",
+    "recipe": "trix400",
+    "matched_values": 7,
+    "result": "PASS"
+  },
+  {
+    "field": "custom3",
+    "enum": "0x14000c",
+    "recipe": "velvia50",
+    "matched_values": 7,
+    "result": "PASS"
+  }
+]

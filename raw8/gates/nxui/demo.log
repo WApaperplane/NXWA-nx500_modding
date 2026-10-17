@@ -1,0 +1,12 @@
+BEFORE
+ 08:55:15 up 40 min,  0 users,  load average: 1.12, 1.06, 0.97
+1.12 1.06 0.97 2/124 602
+92d56b55bb8dfb51fcbdc0f47073b12d  /mnt/mmc/stage/nxui-poc-92d56b55/nxui.arm
+READY backend=nuklear-xft live=0 recipes=95 panel=720x192
+EXIT renders=2 elapsed_ms=10039
+UI_RC=0
+AFTER
+ 08:55:25 up 40 min,  0 users,  load average: 1.17, 1.08, 0.97
+/mnt/mmc/stage/nxui-poc-92d56b55/demo.sh: line 21:   606 Terminated              ( "$BB" sleep 12; kill -TERM "$ui_pid" 2> /dev/null; "$BB" sleep 1; kill -KILL "$ui_pid" 2> /dev/null )
+1.17 1.08 0.97 3/125 609
+DONE

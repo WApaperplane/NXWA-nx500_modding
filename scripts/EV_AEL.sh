@@ -38,6 +38,12 @@ if ! /bin/grep -q '^NX500$' /etc/version.info; then
     exit 0
 fi
 
+# Independent UI, enabled only after the on-camera display/load check.
+if [ -x "$D/nxui.sh" ] && "$D/nxui.sh" available; then
+    "$D/nxui.sh" filmlab
+    exit $?
+fi
+
 # ---- 同槽重复触发 ⇒ 关掉（做成开关，免得开了关不掉）----
 if $BB pidof mod_gui > /dev/null 2>&1; then
     $BB killall -q mod_gui

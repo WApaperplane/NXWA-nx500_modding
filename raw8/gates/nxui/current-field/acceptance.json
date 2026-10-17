@@ -1,0 +1,33 @@
+{
+  "date": "2026-10-17",
+  "camera": "192.168.0.106",
+  "offline_tests": 13,
+  "mapped_fields": 12,
+  "device_matrix": [
+    {
+      "field": "standard",
+      "enum": "0x140000",
+      "recipe": "portra400",
+      "matched_values": 7,
+      "result": "PASS"
+    },
+    {
+      "field": "custom2",
+      "enum": "0x14000a",
+      "recipe": "trix400",
+      "matched_values": 7,
+      "result": "PASS"
+    },
+    {
+      "field": "custom3",
+      "enum": "0x14000c",
+      "recipe": "velvia50",
+      "matched_values": 7,
+      "result": "PASS"
+    }
+  ],
+  "manual_visual_confirmation": "User confirmed filter effect passes; after reboot UI opening clearly faster and operation normal",
+  "permanent_deployment": "installed and enabled",
+  "engine_md5": "408cfcfa1937b121f22f2cc78c288a8e",
+  "package_sha256": "9d146d158cb18dd7d89b5b19e7af12dabcc6c17381ebbbd96f5615c9ae6e206d"
+}

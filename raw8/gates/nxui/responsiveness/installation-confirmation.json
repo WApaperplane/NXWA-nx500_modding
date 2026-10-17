@@ -1,0 +1,12 @@
+{
+  "source": "Installer output returned by tools/nx-probe.py in this session; the later optional FTP log copy was unavailable",
+  "installed": true,
+  "enabled": true,
+  "payload_checks_passed": 13,
+  "md5": {
+    "/opt/usr/nx-ks/nxui/nxui.arm": "874553e0d6dc588267f85b2e603bf3c4",
+    "/opt/usr/nx-ks/filmlab.sh": "dc745c306f74bf4603b0ba275ad7f5d5",
+    "/opt/usr/nx-ks/nxui.sh": "aff030b9c2eeab491e084f2b481e76a8",
+    "/opt/usr/nx-ks/telnet_toggle.sh": "4d245109e8a6c5ab47240a23c2f4458d"
+  }
+}

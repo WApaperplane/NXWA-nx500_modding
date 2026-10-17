@@ -7,6 +7,10 @@
 #   现改为【读一次文件 + bash 内部分行】，0 个 grep 子进程。
 #   其余行为与社区原版逐字保持一致（prefman 偏移、DIALMODE 映射、gen_menu、mod_gui）。
 BB=/opt/usr/nx-ks/busybox
+if [ -x /opt/usr/nx-ks/nxui.sh ] && /opt/usr/nx-ks/nxui.sh available; then
+    /opt/usr/nx-ks/nxui.sh menu
+    exit $?
+fi
 
 # ---- 型号/版本：只读一次（原：最多 4 个 grep 子进程）----
 VI=$($BB head -2 /etc/version.info 2>/dev/null)

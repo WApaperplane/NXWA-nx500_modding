@@ -1,0 +1,39 @@
+{
+  "preview": [
+    {
+      "version": "old",
+      "recipe": "portra400",
+      "seconds": 5.39,
+      "matched_values": 7,
+      "retained_field": "0x140000"
+    },
+    {
+      "version": "new",
+      "recipe": "portra400",
+      "seconds": 4.35,
+      "matched_values": 7,
+      "retained_field": "0x140000"
+    },
+    {
+      "version": "old",
+      "recipe": "trix400",
+      "seconds": 5.33,
+      "matched_values": 7,
+      "retained_field": "0x140000"
+    },
+    {
+      "version": "new",
+      "recipe": "trix400",
+      "seconds": 4.36,
+      "matched_values": 7,
+      "retained_field": "0x140000"
+    }
+  ],
+  "service_actions_ms": [
+    266,
+    200
+  ],
+  "service_same_page": "PASS",
+  "offline_engine_tests": 15,
+  "offline_service_tests": 4
+}

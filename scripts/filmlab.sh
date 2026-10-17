@@ -1,6 +1,9 @@
 #!/bin/sh
 #=====================================================================
 # filmlab-apply.sh  —  FilmLab SD 卡配方引擎 v2（2026-10-10：全 7 维 id + apply --fast 提速）
+# 2026-10-17: apply/preview/commit without a slot now follow the current PW
+# field, including built-in fields. A2's forced CUSTOM1 selection is restored
+# after each send; first-use parameter backups live in filmlab/slot-backups/.
 #---------------------------------------------------------------------
 # 设计前提（2026-10-04 实机定案）：
 #   · 配方库在 SD 卡（/mnt/mmc/filmlab/recipes.json），数量不限
@@ -188,8 +191,14 @@ FILMLAB_ENC_RGB=${FILMLAB_ENC_RGB:-color}
 
 # ---- userdata(20) 读写（★ getusr/setusr 只认【十进制索引或名字】）----
 getusr20() {
-  st cap capdtm getusr 20 2>/dev/null | tr -d '\r' \
-  | sed -n 's/.*UserData is [A-Z_0-9]* (\(0x[0-9a-f]*\)).*/\1/p'
+  PW_READOUT=$(st cap capdtm getusr 20 2>/dev/null)
+  case "$PW_READOUT" in
+    *"UserData is "*"(0x"*")"*)
+      PW_READOUT=${PW_READOUT#*UserData is }
+      PW_READOUT=${PW_READOUT#*(}
+      printf '%s\n' "${PW_READOUT%%)*}"
+      ;;
+  esac
 }
 setusr20() { st cap capdtm setusr 20 "$1" >/dev/null 2>&1; }
 
@@ -216,9 +225,22 @@ pw_force_reload() {
     return 0
   fi
   setusr20 "$TGT"
-  $BB sleep 1
+  if [ "${UI_REQUEST:-0}" = 1 ]; then
+    # setusr normally completes synchronously. Verify immediately; only wait
+    # while the readback is stale, with the same ~1s upper bound as before.
+    PW_RETRIES=0
+    while :; do
+      NOW=$(getusr20)
+      [ "$NOW" = "$TGT" ] && { RELOAD="direct"; return 0; }
+      [ "$PW_RETRIES" -lt 20 ] || break
+      $BB sleep 0.05
+      PW_RETRIES=$((PW_RETRIES + 1))
+    done
+  else
+    $BB sleep 1
+    NOW=$(getusr20)
+  fi
   # ★ 自证：切完回读，确认真的落在目标上（不信 setusr 的退出码）
-  NOW=$(getusr20)
   [ "$NOW" = "$TGT" ] && RELOAD="direct" || RELOAD="direct-VERIFY-FAIL(now=$NOW want=$TGT)"
 }
 
@@ -370,6 +392,37 @@ enum_of_slot() {
     *)  echo $1;;   # 0-8 原生槽，enum = slot
   esac
 }
+# External PW enum 11 is a hole; CUSTOM3 is enum 12 / prefman slot 11.
+slot_of_enum() {
+  case "$1" in
+    0x140000) echo 0 ;; 0x140001) echo 1 ;; 0x140002) echo 2 ;;
+    0x140003) echo 3 ;; 0x140004) echo 4 ;; 0x140005) echo 5 ;;
+    0x140006) echo 6 ;; 0x140007) echo 7 ;; 0x140008) echo 8 ;;
+    0x140009) echo 9 ;; 0x14000a) echo 10 ;; 0x14000c) echo 11 ;;
+    *) return 1 ;;
+  esac
+}
+apply_slot_valid() {
+  case "$1" in 0|1|2|3|4|5|6|7|8|9|10|11) return 0 ;; *) return 1 ;; esac
+}
+# Backup before editing any current field, including a factory preset. Do not
+# source backup files as shell code. Their format is slot|R|G|B|H|S|P|C.
+backup_apply_slot() {
+  BACKDIR=$LAB/slot-backups
+  BACKFILE=$BACKDIR/slot-$SLOT.txt
+  [ -s "$BACKFILE" ] && return 0
+  mkdir -p "$BACKDIR" || return 1
+  BACKVALUES=$SLOT
+  for BACKPARAM in 0 1 2 3 4 5 6; do
+    BACKVALUE=$(get_r "$BACKPARAM" "$SLOT")
+    case "$BACKVALUE" in ''|*[!0-9]*) return 1 ;; esac
+    BACKMAX=20; [ "$BACKPARAM" -lt 3 ] && BACKMAX=200
+    [ "$BACKVALUE" -le "$BACKMAX" ] || return 1
+    BACKVALUES="$BACKVALUES|$BACKVALUE"
+  done
+  printf '%s\n' "$BACKVALUES" > "$BACKFILE.tmp" || return 1
+  mv -f "$BACKFILE.tmp" "$BACKFILE"
+}
 # ★ 合法写入校验（2026-10-04 新增）
 #  UI 可见的只有 slot 9/10/11（自定义1/2/3）。slot 12=CUSTOM_4 在 prefman 里
 #  存在但 UI 不显示 → 写进去就是"看不见的脏数据"，会污染整机状态
@@ -492,10 +545,17 @@ CMD=$1
 REC=$2
 SLOT=$3
 FAST=0
+UI_REQUEST=0
 # ★ --fast（10-10 提速）：菜单路径专用 —— 跳过 ISP 判据读与逐项回读（省 ~14 个进程）；
 #   详细判据仍可用 `filmlab.sh check`（只读）单独跑。
 case "$SLOT" in --fast) FAST=1; SLOT="" ;; esac
 [ -z "$CMD" ] && CMD=help
+# Persistent UI: browsing must not save every intermediate selection to flash.
+# Resolve these after filmlab.conf, so its FILMLAB_SAVE cannot override intent.
+case "$CMD" in
+  preview) CMD=apply; FILMLAB_SAVE=0; FAST=1; UI_REQUEST=1 ;;
+  commit)  CMD=apply; FILMLAB_SAVE=1; FAST=1; UI_REQUEST=1 ;;
+esac
 mkdir -p $LAB 2>/dev/null
 
 case $CMD in
@@ -533,14 +593,19 @@ show)
 #---------------------------------------------------------------
 apply)
   [ -z "$REC" ] && { echo "用法: apply <recipe> [slot]"; exit 1; }
-  # ★★★ 默认永远写 slot 9（UI 的「自定义1」）★★★
-  #   2026-10-04：原逻辑是"看当前 enum 轮换到下一个槽"，导致用户无法知道
-  #   配方被写到了哪个槽，必须切到 UI 上逐个看 —— 这正是"不够一键"的根因。
-  #   固定单槽后：按一下 = 当前槽被覆盖 = 取景器立刻变，无需任何 UI 确认。
-  #   相机 UI 上会一直显示「Picture Wizard > 自定义1」，位置恒定、可预测。
-  [ -z "$SLOT" ] && SLOT=9
+  if [ "$UI_REQUEST" = 1 ] && { [ "$FILMLAB_PW" != 1 ] || [ ! -x "$PWSEND" ]; }; then
+    echo "REJECT: preview/commit requires FILMLAB_PW=1, pwsend.arm and verified A2 firmware"
+    exit 1
+  fi
+  # Follow the field selected at the moment this request is executed. Never
+  # silently fall back to CUSTOM1 when a read fails or an enum is unsupported.
+  if [ -z "$SLOT" ]; then
+    CURRENT_PW=$(getusr20)
+    SLOT=$(slot_of_enum "$CURRENT_PW") || { echo "REJECT: cannot resolve current PW field ($CURRENT_PW)"; exit 1; }
+  fi
+  apply_slot_valid "$SLOT" || { echo "REJECT: unsupported PW slot $SLOT"; exit 1; }
   ENUM=$(enum_of_slot $SLOT)
-  ok_slot $SLOT || { echo "拒绝：slot $SLOT 不是 UI 可见槽（只允许 9/10/11）。"; echo "  恢复出厂请用: filmlab.sh reset"; exit 1; }
+  TARGET_PW=$(printf "0x%06x" $((0x140000 + ENUM)))
   echo ">>> 应用 '$REC' -> slot $SLOT (enum $ENUM)"
   # ★★★ 2026-10-08 加固：先取全部 7 维，★ 任一为空就【拒绝写入】。
   #   起因（U2 上机实测，用户报告）：/mnt/mmc/filmlab/recipes.json 缺失时 jval 返回空串，
@@ -560,34 +625,68 @@ apply)
       echo "  ★ 强行写入会把槽位清成 0 ⇒ 画面全黑，故中止。"
       exit 1 ;;
   esac
-  set_r 0 $SLOT "$V0"
-  set_r 1 $SLOT "$V1"
-  set_r 2 $SLOT "$V2"
-  set_r 3 $SLOT "$V3"
-  set_r 4 $SLOT "$V4"
-  set_r 5 $SLOT "$V5"
-  set_r 6 $SLOT "$V6"
+  # The JSON and exported UI table may be edited independently. Validate the
+  # actual values consumed by A2 before touching any slot (its scalar LUT is 0..20).
+  VALUE_PARAM=0
+  for VALUE in "$V0" "$V1" "$V2" "$V3" "$V4" "$V5" "$V6"; do
+    case "$VALUE" in ''|*[!0-9]*) echo "REJECT: nonnumeric recipe value"; exit 1 ;; esac
+    VALUE_MAX=20; [ "$VALUE_PARAM" -lt 3 ] && VALUE_MAX=200
+    [ "$VALUE" -le "$VALUE_MAX" ] || { echo "REJECT: recipe value out of range"; exit 1; }
+    VALUE_PARAM=$((VALUE_PARAM + 1))
+  done
+  backup_apply_slot || { echo "REJECT: cannot back up slot $SLOT"; exit 1; }
+  if [ "$UI_REQUEST" = 1 ]; then
+    set_r 0 $SLOT "$V0" && set_r 1 $SLOT "$V1" && set_r 2 $SLOT "$V2" &&
+      set_r 3 $SLOT "$V3" && set_r 4 $SLOT "$V4" && set_r 5 $SLOT "$V5" &&
+      set_r 6 $SLOT "$V6" || { echo "REJECT: slot write failed"; exit 1; }
+  else
+    set_r 0 $SLOT "$V0"
+    set_r 1 $SLOT "$V1"
+    set_r 2 $SLOT "$V2"
+    set_r 3 $SLOT "$V3"
+    set_r 4 $SLOT "$V4"
+    set_r 5 $SLOT "$V5"
+    set_r 6 $SLOT "$V6"
+  fi
   # v2: 白平衡不由配方控制，相机保持自动 WB（见 recipes.json 的 _note）
   # ★ 落盘（2026-10-08 实测必需）：只 set 不 save ⇒ 相机重启后槽位回退到旧值。
   #   FILMLAB_SAVE=0 可关掉（跑批量试验时省 eMMC 写入）。
-  if [ "$FILMLAB_SAVE" = "1" ]; then
+  if [ "$FILMLAB_SAVE" = "1" ] && [ "$UI_REQUEST" != 1 ]; then
     prefman save 0 >/dev/null 2>&1
     sync
     SAVED="saved"
   else
     SAVED="not-saved"
   fi
-  # ② 选择通道：切到目标槽（同值空操作已由借道修掉）
-  pw_force_reload $(printf "0x%06x" $((0x140000 + ENUM)))
   # ③ PW 直推（2026-10-09 新链路；FILMLAB_PW=1 时启用——pwcalib.sh 校准后开）
   PWSTAT="off"
   if [ "$FILMLAB_PW" = "1" ]; then
-    pw_direct "$V0" "$V1" "$V2" "$V3" "$V4" "$V5" "$V6" --yes
-    PWSTAT="direct"
+    [ "$UI_REQUEST" != 1 ] || echo 'NXUI_STAGE send'
+    if pw_direct "$V0" "$V1" "$V2" "$V3" "$V4" "$V5" "$V6" --yes; then
+      PWSTAT="direct"
+    else
+      PWSTAT="failed"
+    fi
+  fi
+  # A2 commit writes runtime field 10 (= CUSTOM1), regardless of the selected
+  # field. Restore the intended enum *after* sending, including on send failure.
+  [ "$UI_REQUEST" != 1 ] || echo 'NXUI_STAGE restore'
+  pw_force_reload "$TARGET_PW"
+  if [ "$UI_REQUEST" = 1 ] && [ "$PWSTAT" = failed ]; then
+    echo "REJECT: PW backend failed (target=$TARGET_PW reload=$RELOAD)"
+    exit 1
   fi
   # 旧触发（切拍摄模式）—— 2026-10-08 证伪，默认关闭；FILMLAB_MODE=1 才跑
   RELOAD2="off"
   [ "$FILMLAB_MODE" = "1" ] && trigger_reload
+  if [ "$UI_REQUEST" = 1 ]; then
+    case "$RELOAD" in *VERIFY-FAIL*) echo "REJECT: VERIFY-FAIL"; exit 1 ;; esac
+    if [ "$FILMLAB_SAVE" = 1 ]; then
+      prefman save 0 >/dev/null 2>&1 || { echo "REJECT: save failed"; exit 1; }
+      sync
+      SAVED="saved"
+    fi
+  fi
   log "$(date '+%H:%M:%S') apply $REC -> slot$SLOT enum$ENUM reload=$RELOAD mode=$RELOAD2 pw=$PWSTAT $SAVED"
   # ★ --fast 出口（10-10）：菜单路径 —— 只回一行结果，不做回读/判据（那 ~15 个进程省掉）
   if [ "$FAST" = "1" ]; then
@@ -618,7 +717,7 @@ apply)
       fi ;;
     *) echo "  ★ 判据不可用，无法自动确认。" ;;
   esac
-  echo "  ★ 相机 UI 上固定显示「自定义1」"
+  echo "  相机画面向导栏位: enum $ENUM / slot $SLOT"
   ;;
 
 #---------------------------------------------------------------
@@ -974,7 +1073,9 @@ export)
   echo
   echo "  list              列出 SD 卡全部配方"
   echo "  show <recipe>     查看配方内容"
-  echo "  apply <recipe> [slot] [--fast]   写槽 + 切风格（--fast=菜单提速路径，10-10）"
+  echo "  apply <recipe> [slot] [--fast]   默认跟随当前画面向导栏位，应用配方"
+  echo "  preview <recipe> [slot]         保持当前栏位即时预览，不保存到闪存"
+  echo "  commit <recipe> [slot]          应用并保存当前栏位"
   echo "  quick <recipe>    只切风格（零写入，槽需已预写）"
   echo "  preset            预写 3 个可见槽并 save"
   echo "  dump [slot]       读回槽位值"
