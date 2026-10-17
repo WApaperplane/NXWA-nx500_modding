@@ -19,6 +19,7 @@ docs/
 
 | 文档 | 定位 |
 |---|---|
+| [`NXUI_NUKLEAR_2026-10-17.md`](current/NXUI_NUKLEAR_2026-10-17.md) | **替代 UI 真机新证据**：Nuklear + X11/Xft 已安装启用；95 配方常驻滤镜条，用户确认取景色彩切换正常；小面积事件驱动避免持续重绘，含备份/回退与验证记录。 |
 | [`UI_FRAMEWORK_ALTERNATIVES_2026-10-17.md`](current/UI_FRAMEWORK_ALTERNATIVES_2026-10-17.md) | **UI 框架替换可行性分析（10-17）**：分层结论——全屏自绘 ⛔（实测墙）/ **小面板可换 ✅（Nuklear+Xlib+Xft 实验进行中，含三关验收清单）** / UI 内预览窗格 ⛔（无帧源）；「滤镜预览」由硬件链路提供、与框架无关；rootfs 实测 + 真机 `/dev` 复采 + nxui 实验独立对照。 |
 | [`ONDEVICE_NATIVE_LABEL_RESULT_2026-10-16.md`](current/ONDEVICE_NATIVE_LABEL_RESULT_2026-10-16.md) | **原生UI真机正证据**：用户授权单次11字节私有字典标签实验，目视看到NXWA Test 1并确认恢复；独立驻留读回/文件哈希收尾。仅标签POC通过，PW槽/确认应用/开机自动化未验。 |
 | [`NATIVE_UI_LOADING_PROGRESS_2026-10-16.md`](current/NATIVE_UI_LOADING_PROGRESS_2026-10-16.md) | **原生UI主线后续**：CUSTOM1单预设候选包；相机glibc/QEMU验证字典冷/热加载边界；REA校正快照调用归属；只读加载采集器与严格判读，不把文件/挂载当作UI已生效。 |
