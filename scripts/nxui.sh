@@ -21,8 +21,8 @@ case "${1:-filmlab}" in
   available)
     [ -x "$BIN" ] && [ -f "$D/nxui/enabled" ] && /bin/grep -q '^NX500$' /etc/version.info
     exit $? ;;
-  menu|filmlab|demo) MODE=${1:-filmlab} ;;
-  *) echo 'nxui.sh menu|filmlab|demo|stop|enable|disable|available'; exit 2 ;;
+  menu|filmlab|demo|list) MODE=${1:-filmlab} ;;
+  *) echo 'nxui.sh menu|filmlab|demo|list|stop|enable|disable|available'; exit 2 ;;
 esac
 [ -x "$BIN" ] || exit 1
 /bin/grep -q '^NX500$' /etc/version.info || exit 1

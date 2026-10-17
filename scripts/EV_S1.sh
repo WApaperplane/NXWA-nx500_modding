@@ -1,4 +1,10 @@
 #!/bin/bash
+# ★ 2026-10-17：mod 菜单（nxui）打开时，半按快门 = 关闭菜单；原 AF 微调不执行。
+echo "S1 $(date +%H:%M:%S) nxui=$(/opt/usr/nx-ks/busybox ps 2>/dev/null | /bin/grep -c '[n]xui.arm')" >> /mnt/mmc/s1.log 2>/dev/null
+if /opt/usr/nx-ks/busybox ps 2>/dev/null | /bin/grep -q '[n]xui.arm'; then
+    touch /tmp/nxui-close
+    exit 0
+fi
 sync;sync;sync
 echo 3 > /proc/sys/vm/drop_caches
 renice -n -10 -p $$

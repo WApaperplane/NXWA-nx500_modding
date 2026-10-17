@@ -18,8 +18,8 @@ An enhancement mod for the **Samsung NX500 / NX1** (Tizen / DRIMe5), built on th
 
 ## Highlights
 
-- ★ **NXUI (Nuklear) replacement menu + persistent filter strip** — the mod UI rewritten with open-source **Nuklear** (MIT) on the camera's own X11/Xft (**no EFL linkage**, no viewfinder capture or blit). `EV+AEL` opens a 720×192 bottom filter strip: 95 recipes scroll horizontally, a tap **previews instantly**, `Save & close` commits to flash; the main menu is a 720×336 paginated screen. Verified on camera 2026-10-17: panel visible, viewfinder/keys normal, four recipes confirmed changing colours live; supports the 9 built-in presets + Custom 1/2/3 (follows the current Picture-Wizard slot), with automatic backup of the original 7 values to SD before the first write to a slot. Package: `NXUI-Nuklear-20261017.zip` (see Releases).
-- **FilmLab film recipes (95)** — negative / slide / B&W / cinema / stylised, five families, auto-generated 6-page menu (18/page). The recipe library lives on the SD card (editable, extensible).
+- ★ **NXUI (Nuklear) replacement menu + persistent filter strip** — the mod UI rewritten with open-source **Nuklear** (MIT) on the camera's own X11/Xft (**no EFL linkage**, no viewfinder capture or blit). `EV+AEL` opens a 720×192 bottom filter strip: 68 recipes scroll horizontally, swipe or tap **previews in ~2.5s**, `Save & close` commits to flash; the main menu is a 720×336 paginated screen. Verified on camera 2026-10-17: panel visible, viewfinder/keys normal, four recipes confirmed changing colours live; supports the 9 built-in presets + Custom 1/2/3 (follows the current Picture-Wizard slot), with automatic backup of the original 7 values to SD before the first write to a slot. Package: `NXUI-Nuklear-20261017.zip` (see Releases).
+- **FilmLab film recipes (68)** — negative / slide / B&W / cinema / stylised, five families, auto-generated 6-page menu (18/page). The recipe library lives on the SD card (editable, extensible).
 - **PW all-7-dimension one-tap**: `EV+AEL` → tap a recipe ⇒ **R/G/B/HUE/SAT/SHARP/CON are all pushed straight into the ISP and the image changes within a second** (A2 "slot-pool direct write" channel, `0x134..0x13B`; verified on-camera dimension by dimension, 2026-10-15).
   ★ Requires: **NXWA-A2 p7 firmware — shipped in this package (`patch-a2/`, with CN/EN flashing guide and md5)**; without A2 the push step is silently ineffective (it does not crash) — use "Picture Wizard → Custom 1" as the fallback for a full-range effect.
 - **Objective criterion**: `sh /opt/usr/nx-ks/filmlab.sh check` reads the 7 values the ISP is *actually* using and compares them with the recipe slot (read-only, zero risk) — **"the value changed" ≠ "the value is consumed"**, and that rule underpins the whole project.
@@ -39,7 +39,7 @@ An enhancement mod for the **Samsung NX500 / NX1** (Tizen / DRIMe5), built on th
 | --- | --- |
 | `IP: x.x.x.x [Telnet关]` | Shows the current WiFi IP; **tap = toggle Telnet(23) + FTP(21)**, with popup feedback |
 | `远程控制` (checkbox) | Toggles the web remote (port 80); also starts the port-8080 cluster and thumbnail warm-up |
-| **`EV + AEL`** (key combo) | ★ **NXUI filter strip** (720×192 persistent bottom panel, 95 recipes): tap = **instant preview** on the current slot (not saved), `Save & close` = apply + save once; press again = close. 【NX500 only】. Machines without NXUI keep the legacy 6-page mod_gui menu |
+| **`EV + AEL`** (key combo) | ★ **NXUI filter strip** (720×192 persistent bottom panel, 68 recipes): swipe or tap = **instant preview** (~2.5s) on the current slot (not saved), `Save & close` = apply + save (~0.5s); press again or **half-press the shutter** = close. 【NX500 only】. Machines without NXUI keep the legacy 6-page mod_gui menu |
 
 The menu is regenerated every time it opens (`gen_menu.sh`), so the IP / Telnet state is always current.
 PC-side troubleshooting: `test_server/telnet_run.py <camera-ip> 'command'` (non-interactive telnet, root, empty password).
@@ -53,9 +53,9 @@ PC-side troubleshooting: `test_server/telnet_run.py <camera-ip> 'command'` (non-
 >
 > ★ **From 2026-10-17 (with NXUI installed)**: `EV+AEL` opens the persistent filter strip; `apply` is split into `preview` (write slot + ISP push, **no** prefman save) and `commit` (save once after success). Plain close keeps the current preview (previous values are not restored); the original 7 values of a slot are backed up to SD `filmlab/slot-backups/` before its first write.
 
-### The 95 built-in recipes (6-page menu, 18/page)
+### The 68 built-in recipes (60 colour + 8 B&W, auto-paginated)
 
-| Family | Examples (95 total) |
+| Family | Examples (68 total) |
 | --- | --- |
 | Colour negative | Portra 400/400NC/400VC/800/800 推1600/160 · Gold 100/200/400 · Ektar 100 · UltraMax 400 · Kodak Max 400 · Superia 200/400/1600 · ColorPlus 200/400 · ProImage 100 · Fuji C200/400H/9000 · X-TRA 400 · Venus 800 · Natura 1600 · Vista 200/400/100 · Lomo 100/800/Color 100 · Reala 100 · Solaris 100/400 · Centuria 400 · Rollei CN 200 |
 | Slide | Velvia 50/50 风光/100/100F · Provia 100F/400X/1600 · Sensia 100/200/400 · Astia 100F · Ektachrome · Ektachrome E100/64/100D · EliteChrome 100 · Kodachrome · Kodachrome 25/200 · EK Cyan 冷调 · Fortia SP · Agfachrome CT100/RSX100 |
@@ -74,10 +74,10 @@ The authoritative recipe library (read directly by the engine): /mnt/mmc/filmlab
 To add one: edit that JSON -> copy back to the SD card -> reopen the menu (it regenerates itself)
 ```
 
-- Authoritative source in the repo: **`scripts/filmlab/recipes.json`** (95 recipes; `flab.py`'s `add/edit/rm/lint/conf/deploy` all work on it).
+- Authoritative source in the repo: **`scripts/filmlab/recipes.json`** (68 recipes; `flab.py`'s `add/edit/rm/lint/conf/deploy` all work on it).
 - One-shot deploy: `python test_server/filmlab/flab.py add …` → `lint` → `deploy` (push JSON + rebuild menu + verify readback).
 - Offline regression (no camera needed): `sh test_server/filmlab/flab_sim.sh` (12 assertions).
-- ✅ `test_server/filmsim/recipes/nx500_recipes.txt` has been refreshed to a **95-recipe flat mirror** (2026-10-11, exported from the authoritative source); it feeds `mk_recipes_json.py` / `deploy_lab.py`, and the **authoritative source remains** `scripts/filmlab/recipes.json`.
+- ✅ `test_server/filmsim/recipes/nx500_recipes.txt` has been refreshed to a **68-recipe flat mirror** (2026-10-11, exported from the authoritative source); it feeds `mk_recipes_json.py` / `deploy_lab.py`, and the **authoritative source remains** `scripts/filmlab/recipes.json`.
 
 ### Known limits (honest notes)
 
@@ -181,8 +181,8 @@ The following corrections are authoritative; **where they conflict with older te
 | - | --- | --- | --- |
 | 1 | This fork = `github.com/WApaperplane/nxwa` | Canonical repo = **`github.com/WApaperplane/NXWA-nx500_modding`** (a fork; default branch `nxwa`; the old name still redirects) | `gh repo view`, measured |
 | 2 | Upstream = `github.com/SamsungNX500/nx500_nx1_modding` | GitHub fork parent (which itself has no parent) = **`ottokiksmaler/nx500_nx1_modding`**; the `SamsungNX500/...` repository **does not exist** | `gh repo view`, measured |
-| 3 | 18 built-in recipes | **95** (6-page menu, 18/page) | `scripts/filmlab/recipes.json` |
-| 4 | Authoritative recipe source = `nx500_recipes.txt` | Authoritative source = **`scripts/filmlab/recipes.json`**; the `.txt` is its 95-recipe flat mirror (synced 2026-10-11) | `flab.py` data flow |
+| 3 | 18 built-in recipes | **68** (60 colour + 8 B&W, auto-paginated) | `scripts/filmlab/recipes.json` |
+| 4 | Authoritative recipe source = `nx500_recipes.txt` | Authoritative source = **`scripts/filmlab/recipes.json`**; the `.txt` is its 68-recipe flat mirror (synced 2026-10-11) | `flab.py` data flow |
 | 5 | "Tap a recipe and it applies instantly / two steps to a look" | **All 7 dimensions push instantly (2026-10-15, A2 channel); on official firmware one Picture-Wizard confirmation on the camera body is needed** | `PW_PARAM_CHANNEL`, `PW_ID_MAP_FULL`, `A2_*` |
 | 6 | "View and Still are independent ⇒ editing the View table does not affect photos" | ❌ **Disproven**: `View 4 profiles ⊆ Still 18` ⇒ both share one buffer pool; software-level isolation is impossible | `3DLUT_VIEW_STILL_ISOLATION_2026-10-08.md` |
 | 7 | "Userspace cannot write LUT data" | **Fixed**: userspace *can* `lutapi load` its own table (LUT1 + guard). What it cannot do is read/write p7's four built-in buffers (`0x81xxxxxx`, outside the Linux mapping) | `U6_ONMACHINE_RESULT`, `3DLUT_APPLY_PATHS` |

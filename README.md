@@ -33,8 +33,8 @@ scripts/                          <- 整个目录(模块母本, 会被同步到�
 
 ## 特性亮点 / Highlights
 
-- ★ **NXUI（Nuklear）替代菜单 + 常驻滤镜条**：用开源 **Nuklear**（MIT）+ 相机自带 X11/Xft 重写的 mod 界面（**不链接 EFL**，不抓取/重绘取景帧）。`EV+AEL` 打开 720×192 底部滤镜条：95 条配方横滑、触屏点选**即时预览**、`保存并关闭` 才落盘；主菜单为 720×336 分页界面。2026-10-17 实机验证：面板可见、取景与按键正常、四条配方点选色彩实时变化（用户确认）；支持 9 个内置档位 + 自定义 1/2/3（跟随画面向导当前栏位），首次写入某栏位前自动备份原始七维到 SD。包：`NXUI-Nuklear-20261017.zip`（见 Releases）。
-- **FilmLab 胶片配方（95 条）**：负片 / 反转 / 黑白 / 电影 / 风格五族，菜单分 6 页自动生成。配方库在 SD 卡（可编辑、可扩充）。
+- ★ **NXUI（Nuklear）替代菜单 + 常驻滤镜条**：用开源 **Nuklear**（MIT）+ 相机自带 X11/Xft 重写的 mod 界面（**不链接 EFL**，不抓取/重绘取景帧）。`EV+AEL` 打开 720×192 底部滤镜条：68 条配方横向滚动（左右滑动/点选**即时预览**，约 2.5s 出画面）、`保存并关闭` 约 0.5s 落盘；**半按快门可关闭菜单**；主菜单为 720×336 分页界面。2026-10-17 实机验证：面板可见、取景与按键正常、四条配方点选色彩实时变化（用户确认）；支持 9 个内置档位 + 自定义 1/2/3（跟随画面向导当前栏位），首次写入某栏位前自动备份原始七维到 SD。包：`NXUI-Nuklear-20261017.zip`（见 Releases）。
+- **FilmLab 胶片配方（68 条）**：负片 / 反转 / 黑白 / 电影 / 风格五族，菜单分 6 页自动生成。配方库在 SD 卡（可编辑、可扩充）。
 - **PW 全 7 维一键**：`EV+AEL` → 点配方，**R/G/B/HUE/SAT/SHARP/CON 七维一次全部直进 ISP，画面秒级变化**（A2「档位池直写」通道 `0x134..0x13B`；2026-10-15 上机实测逐维命中）。
   ★ 依赖：**NXWA-A2 p7 固件——已随包提供（`patch-a2/`，含中英文刷入教程与校验 md5）**；未刷 A2 时直推段静默无效（不崩），可用「画面向导 → 自定义1」保底全维效果。
 - **客观判据**：`sh /opt/usr/nx-ks/filmlab.sh check` 直接读 ISP 手上那 7 维并与配方槽位比对（只读、零风险）——**"值变了" ≠ "被消费"**，这一条是全项目的判据基准。
@@ -53,7 +53,7 @@ scripts/                          <- 整个目录(模块母本, 会被同步到�
 | --- | --- |
 | `IP: x.x.x.x [Telnet关]` | 显示当前 WiFi IP；**点击 = 开/关 Telnet(23) + FTP(21)**，popup 反馈 |
 | `远程控制` (checkbox) | 开关 Web 遥控（80 端口），同时拉起 8080 服务群与缩略图预热 |
-| **`EV + AEL`**（组合键） | ★ **NXUI 滤镜条**（720×192 常驻底部面板，95 条配方横滑）：点选 = 当前栏位**即时预览**（不保存），`保存并关闭` = 应用并保存一次；再按一次 = 关闭 【NX500 专属】。未装 NXUI 的机器仍是旧 6 页 mod_gui 菜单 |
+| **`EV + AEL`**（组合键） | ★ **NXUI 滤镜条**（720×192 常驻底部面板，68 条配方横向滚动）：左右滑动或点选 = 当前栏位**即时预览**（约 2.5s），`保存并关闭` = 应用并保存（约 0.5s）；再按一次或**半按快门** = 关闭 【NX500 专属】。未装 NXUI 的机器仍是旧 6 页 mod_gui 菜单 |
 
 菜单每次打开时重新生成（`gen_menu.sh`），IP / Telnet 状态始终最新。  
 PC 端排障工具：`test_server/telnet_run.py <相机IP> '命令'`（非交互 telnet，root 空密码）。
@@ -67,9 +67,9 @@ PC 端排障工具：`test_server/telnet_run.py <相机IP> '命令'`（非交互
 >
 > ★ **2026-10-17 起（装 NXUI 后）**：`EV+AEL` 打开常驻滤镜条；`apply` 语义拆为 `preview`（写槽 + ISP 直推，**不**执行 prefman save）与 `commit`（成功后保存一次）。普通关闭保留当前预览（不退还原值）；某栏位首次写入前，原始七维备份到 SD `filmlab/slot-backups/`。
 
-### 内置 95 条配方（6 页菜单，18/页）
+### 内置 68 条配方（彩色 60 + 黑白 8，自动分页）
 
-| 族 | 示例（共 95 条） |
+| 族 | 示例（共 68 条） |
 | --- | --- |
 | 彩色负片 | Portra 400/400NC/400VC/800/800 推1600/160 / Gold 100/200/400 / Ektar 100 / UltraMax 400 / Kodak Max 400 / Superia 200/400/1600 / ColorPlus 200/400 / ProImage 100 / Fuji C200/400H/9000 / X-TRA 400 / Venus 800 / Natura 1600 / Vista 200/400/100 / Lomo 100/800/Color 100 / Reala 100 / Solaris 100/400 / Centuria 400 / Rollei CN 200 |
 | 反转片 | Velvia 50/50 风光/100/100F / Provia 100F/400X/1600 / Sensia 100/200/400 / Astia 100F / Ektachrome / Ektachrome E100/64/100D / EliteChrome 100 / Kodachrome / Kodachrome 25/200 / EK Cyan 冷调 / Fortia SP / Agfachrome CT100/RSX100 |
@@ -88,10 +88,10 @@ PC 端排障工具：`test_server/telnet_run.py <相机IP> '命令'`（非交互
 加一条：编辑该 JSON → 拷回 SD 卡 → 重新打开菜单（菜单自动重建）
 ```
 
-- 仓库中的**权威源**：`scripts/filmlab/recipes.json`（95 条；`flab.py` 的 `add/edit/rm/lint/conf/deploy` 一条龙都基于它）。
+- 仓库中的**权威源**：`scripts/filmlab/recipes.json`（68 条；`flab.py` 的 `add/edit/rm/lint/conf/deploy` 一条龙都基于它）。
 - 上机一条龙：`python test_server/filmlab/flab.py add …` → `lint` → `deploy`（推 JSON + 重建菜单 + 回收核对）。
 - 离线回归（无需相机）：`sh test_server/filmlab/flab_sim.sh`（12 断言）。
-- ✅ `test_server/filmsim/recipes/nx500_recipes.txt` 已刷新为 **95 条扁平镜像**（2026-10-11，由权威源导出）；它是 `mk_recipes_json.py` / `deploy_lab.py` 的消费源，**权威源仍是** `scripts/filmlab/recipes.json`。
+- ✅ `test_server/filmsim/recipes/nx500_recipes.txt` 已刷新为 **68 条扁平镜像**（2026-10-11，由权威源导出）；它是 `mk_recipes_json.py` / `deploy_lab.py` 的消费源，**权威源仍是** `scripts/filmlab/recipes.json`。
 
 ### 已知边界（诚实说明）
 
@@ -121,7 +121,7 @@ PC 端排障工具：`test_server/telnet_run.py <相机IP> '命令'`（非交互
 | `install.sh` `info.tg` `nx_cs.adj` | SD 卡根触发三件套（装机/同步入口） |
 | `scripts/` | 全部模块母本，同步目标 = 相机内部 `/opt/usr/nx-ks/` |
 | `scripts/filmlab.sh` | ★ **FilmLab 引擎**（相机端运行版）：配方读写 / 应用 / 菜单生成 / `apply --fast` |
-| `scripts/filmlab/recipes.json` | ★ **权威配方库**（95 条；首次安装时自动拷到 SD 卡 `/mnt/mmc/filmlab/`） |
+| `scripts/filmlab/recipes.json` | ★ **权威配方库**（68 条；首次安装时自动拷到 SD 卡 `/mnt/mmc/filmlab/`） |
 | `scripts/EV_AEL.sh` | FilmLab 入口（`EV+AEL` 组合键）；NX1 自动回退 `EV_AEL.community.sh` |
 | `scripts/gui_filmlab*.NX500` | FilmLab 菜单：`1b`=配方主菜单（默认）；`2/3/4`=预设槽 / WB / 诊断页 |
 | `scripts/nx-rc/` | Web 遥控：`web_root/`(前端)、`thumb/`(缩略图)、`capdtm/`(参数API)、`push/`(WiFi同步) |
@@ -172,8 +172,8 @@ PC 端排障工具：`test_server/telnet_run.py <相机IP> '命令'`（非交互
 | - | --- | --- | --- |
 | 1 | 本 fork 仓库 = `github.com/WApaperplane/nxwa` | 规范仓库 = **`github.com/WApaperplane/NXWA-nx500_modding`**（fork；默认分支 `nxwa`；旧名 URL 仍重定向） | `gh repo view` 实测 |
 | 2 | 上游 = `github.com/SamsungNX500/nx500_nx1_modding` | 上游（fork parent，其自身 parent 为空）= **`ottokiksmaler/nx500_nx1_modding`**；`SamsungNX500/...` 这个仓库**不存在** | `gh repo view` 实测 |
-| 3 | 内置 18 条配方 | **95 条**（6 页菜单，18/页） | `scripts/filmlab/recipes.json` |
-| 4 | 配方权威源 = `nx500_recipes.txt` | 权威源 = **`scripts/filmlab/recipes.json`**；`.txt` 为其 95 条扁平镜像（2026-10-11 已同步） | `flab.py` 数据流 |
+| 3 | 内置 18 条配方 | **68 条**（彩色 60 + 黑白 8，自动分页） | `scripts/filmlab/recipes.json` |
+| 4 | 配方权威源 = `nx500_recipes.txt` | 权威源 = **`scripts/filmlab/recipes.json`**；`.txt` 为其 68 条扁平镜像（2026-10-11 已同步） | `flab.py` 数据流 |
 | 5 | 「点配方立即生效 / 两步出片」 | **全 7 维直推即时生效（2026-10-15 A2 通道达成）；官方固件下需机身「画面向导→自定义1」确认一次** | `PW_PARAM_CHANNEL` / `PW_ID_MAP_FULL` / `A2_*` |
 | 6 | 「View 与 Still 独立 ⇒ 改 View 表不影响照片」 | ❌ **已证伪**：`View 4 档 ⊆ Still 18 档`，View 独有 = 空 ⇒ 两路**共用同一缓冲池**，软件层无法隔离 | `3DLUT_VIEW_STILL_ISOLATION_2026-10-08.md` |
 | 7 | 「用户态写 LUT 数据不可行」 | **已修**：用户态可 `lutapi load` 自有表（LUT1 + 守护）；**不可**读写的是 p7 那 4 个内置缓冲（`0x81xxxxxx`，超出 Linux 映射） | `U6_ONMACHINE_RESULT` / `3DLUT_APPLY_PATHS` |

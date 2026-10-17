@@ -22,6 +22,9 @@
 #include <sys/stat.h>
 #include <sys/wait.h>
 #include "nxui_model.h"
+/* evdev（S1 半按快门）：结构手动定义，不依赖内核头 */
+struct input_event { long tv_sec, tv_usec; unsigned short type, code; int value; };
+#define EV_KEY 1
 #include "nxui_services.h"
 
 static struct nx_recipe recipes[NXUI_MAX_RECIPES];
@@ -29,6 +32,10 @@ static struct nx_item items[NXUI_MAX_ITEMS];
 static struct nx_queue queue;
 static const char *root = "/opt/usr/nx-ks", *engine = "/opt/usr/nx-ks/filmlab.sh";
 static int count, item_count, selected, menu, page, live, dirty = 1, quit;
+static int touch_x, touch_active, close_after_child;
+static char enum_cache[16]; static long long enum_cache_ms;
+static long long close_flag_check;
+static int ev_fd = -1;
 static int busy_kind, child_fd = -1, output_len, child_timed_out;
 static pid_t child;
 static long long child_started, lifetime;
@@ -153,6 +160,7 @@ static int start_child(int kind, int index, const char *command) {
         if (chdir(root) != 0) _exit(126);
         snprintf(envpath, sizeof envpath, "%s:%s", root, old ? old : "/usr/bin:/bin");
         setenv("PATH", envpath, 1);
+        if (kind == 1 && enum_cache[0]) setenv("FILMLAB_ENUM_CACHE", enum_cache, 1);
         if (kind == 1)
             execl("/bin/sh", "sh", engine, queue.committing ? "commit" : "preview", recipes[index].key, (char *)0);
         else execl("/bin/bash", "bash", "-c", command, (char *)0);
@@ -206,7 +214,25 @@ static void poll_child(void) {
                 services.telnet ? "开启" : "关闭", services.ftp ? "开启" : "关闭");
             dirty = 1;
         }
-    } else message(success ? "命令已完成" : "命令失败 · 详情见日志");
+    } else if (busy_kind == 6) {
+        /* 解析 "UserData is PW_CUSTOM1 (0x140009)" → 缓存 hex，供 preview 免读 */
+        char *p = strstr(output, "(0x");
+        if (p) {
+            char *q = p + 1, *e = strchr(q, ')');
+            if (e && e - q < (int)sizeof enum_cache) {
+                memcpy(enum_cache, q, (size_t)(e - q));
+                enum_cache[e - q] = 0;
+                enum_cache_ms = now_ms();
+                dirty = 1;
+            }
+        }
+    } else {
+        if (close_after_child) {
+            close_after_child = 0;
+            if (success) { quit = 1; queue.close_requested = 1; }
+        }
+        message(success ? "命令已完成" : "命令失败 · 详情见日志");
+    }
     dirty = 1;
 }
 static int copy_file(const char *from, const char *to) {
@@ -280,7 +306,7 @@ static void draw(void) {
     char line[320]; int i, start;
     struct nk_color accent = nk_rgb(203, 233, 153);
     if (nk_begin(ctx, "NXWA", nk_rect(0, 0, (float)width, (float)height), NK_WINDOW_NO_SCROLLBAR)) {
-        nk_layout_row_begin(ctx, NK_STATIC, 28, 3);
+        nk_layout_row_begin(ctx, NK_STATIC, 24, 3);
         nk_layout_row_push(ctx, 460);
         nk_label_colored(ctx, menu ? "NX-KS  /  菜单" : "FILMLAB  /  滤镜预览", NK_TEXT_LEFT, accent);
         nk_layout_row_push(ctx, 104);
@@ -307,21 +333,37 @@ static void draw(void) {
             nk_label(ctx, line, NK_TEXT_CENTERED);
             if (nk_button_label(ctx, "下一页")) { page = (page+1) % ((item_count+5)/6); dirty = 1; }
         } else if (count > 0) {
-            nk_layout_row_dynamic(ctx, 41, 3);
-            for (i = -1; i <= 1; i++) {
-                int index = (selected + i + count) % count;
-                snprintf(line, sizeof line, "%s%s", i == 0 ? "● " : "", recipes[index].label);
-                if (nk_button_label(ctx, line)) choose(index);
+            int gi, win = 5, first, idx;
+            nk_layout_row_dynamic(ctx, 84, win);
+            first = selected - win / 2;
+            if (first < 0) first = 0;
+            if (first > count - win) first = count - win;
+            if (first < 0) first = 0;
+            for (gi = 0; gi < win; gi++) {
+                idx = first + gi;
+                if (idx >= count) { nk_spacing(ctx, 1); continue; }
+                nk_bool picked = (idx == selected);
+                snprintf(line, sizeof line, "%s%s", idx == selected ? "● " : "", recipes[idx].label);
+                if (nk_selectable_label(ctx, line, NK_TEXT_CENTERED, &picked) && picked && idx != selected)
+                    choose(idx);
             }
             snprintf(line, sizeof line, "%d/%d   R%d G%d B%d   H%d S%d 锐%d 对比%d", selected+1, count,
                 recipes[selected].value[0], recipes[selected].value[1], recipes[selected].value[2],
                 recipes[selected].value[3], recipes[selected].value[4], recipes[selected].value[5], recipes[selected].value[6]);
-            nk_layout_row_dynamic(ctx, 22, 1); nk_label(ctx, line, NK_TEXT_LEFT);
-            nk_layout_row_dynamic(ctx, 36, 3);
+            nk_layout_row_dynamic(ctx, 16, 1);
+            nk_label_colored(ctx, line, NK_TEXT_LEFT, nk_rgb(171, 182, 190));
+            nk_layout_row_dynamic(ctx, 26, 3);
             if (nk_button_label(ctx, "‹ 上一个")) choose(selected-1);
-            if (nk_button_label(ctx, "保存并关闭") && !child && !queue.close_requested) {
-                nx_queue_select(&queue, selected, now_ms()-NXUI_DEBOUNCE_MS);
-                queue.commit_requested = 1; queue.close_requested = 1;
+            if (nk_button_label(ctx, "保存并关闭") && !queue.close_requested) {
+                if (!child && selected == queue.applied) {
+                    /* 当前选中已预览生效：仅保存到闪存，免一次完整 apply */
+                    close_after_child = 1;
+                    if (!start_child(2, -1, "prefman save 0")) { close_after_child = 0; message("保存启动失败"); }
+                } else {
+                    nx_queue_select(&queue, selected, now_ms()-NXUI_DEBOUNCE_MS);
+                    queue.commit_requested = 1;
+                    queue.close_requested = 1;
+                }
             }
             if (nk_button_label(ctx, "下一个 ›")) choose(selected+1);
         } else {
@@ -433,10 +475,28 @@ int main(int argc, char **argv) {
     fprintf(stderr, "INIT recipes_ms=%lld display_ms=%lld font_ms=%lld backend_ms=%lld map_ms=%lld\n",
         recipes_ready-process_started, display_ready-recipes_ready, font_ready-display_ready,
         backend_ready-font_ready, started-backend_ready);
+    if (live) { ev_fd = open("/dev/input/event0", O_RDONLY | O_NONBLOCK); }
+    if (live) start_child(6, -1, "st cap capdtm getusr 20");
     while (!quit) {
         XEvent event; fd_set fds; struct timeval wait; int index, pending, events = 0, refresh = 0, painted = 0;
         long long tick = now_ms(), delay = 60000;
         if (interrupted || (lifetime > 0 && now_ms()-started >= lifetime)) queue.close_requested = 1;
+        /* 半按快门 S1：/dev/input/event0 code 125 (KEY_LEFTMETA) press ⇒ 关闭 */
+        if (ev_fd >= 0) {
+            struct input_event iev;
+            while (read(ev_fd, &iev, sizeof iev) == (ssize_t)sizeof iev) {
+                if (iev.type == EV_KEY && iev.code == 125 && iev.value == 1)
+                    queue.close_requested = 1;
+            }
+        }
+        /* EV_S1.sh 通道（备用）：每 100ms 检查并消费标记 */
+        if (tick - close_flag_check >= 100) {
+            close_flag_check = tick;
+            if (access("/tmp/nxui-close", F_OK) == 0) {
+                unlink("/tmp/nxui-close");
+                queue.close_requested = 1;
+            }
+        }
         /* Leave unconsumed input in Xlib until its frame. Resetting Nuklear's
          * input while deferring draw would discard fast taps. Bound each batch
          * and render to 10 Hz, including an expose/key-repeat event storm. */
@@ -475,6 +535,19 @@ int main(int argc, char **argv) {
             /* Touchscreens can send a tap without a preceding MotionNotify. */
             if (event.type == ButtonPress || event.type == ButtonRelease)
                 nk_input_motion(ctx, event.xbutton.x, event.xbutton.y);
+            /* 左右滑动手势：超阈值切换选中；release 移出控件避免被当成点击 */
+            if (event.type == ButtonPress && !menu) { touch_x = event.xbutton.x; touch_active = 1; }
+            if (event.type == ButtonRelease && touch_active) {
+                int dx = event.xbutton.x - touch_x;
+                int step = (dx >= 0 ? dx : -dx) / 45;   /* 每 45px 切一项：滑得远切得快 */
+                touch_active = 0;
+                if (step < 1 && (dx >= 30 || dx <= -30)) step = 1;   /* 轻扫阈值 30px */
+                if (!menu && step > 0) {
+                    choose(selected + (dx < 0 ? step : -step));
+                    nk_input_motion(ctx, -10000, -10000);
+                    dirty = 1;
+                }
+            }
             nk_xlib_handle_event(display, screen, window, &event);
             /* Keep press/release transitions in separate frames, even when a
              * complete short tap was queued while the camera was busy. */

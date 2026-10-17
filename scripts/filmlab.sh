@@ -599,8 +599,10 @@ apply)
   fi
   # Follow the field selected at the moment this request is executed. Never
   # silently fall back to CUSTOM1 when a read fails or an enum is unsupported.
+  # ★ 10-17：允许调用方（nxui）用 FILMLAB_ENUM_CACHE 提供最近一次读到的档位
+  #   （格式 0x1400XX），省掉每次 1.4s 的 getusr。缓存无效时会落到 REJECT。
   if [ -z "$SLOT" ]; then
-    CURRENT_PW=$(getusr20)
+    CURRENT_PW="${FILMLAB_ENUM_CACHE:-$(getusr20)}"
     SLOT=$(slot_of_enum "$CURRENT_PW") || { echo "REJECT: cannot resolve current PW field ($CURRENT_PW)"; exit 1; }
   fi
   apply_slot_valid "$SLOT" || { echo "REJECT: unsupported PW slot $SLOT"; exit 1; }
@@ -671,7 +673,14 @@ apply)
   # A2 commit writes runtime field 10 (= CUSTOM1), regardless of the selected
   # field. Restore the intended enum *after* sending, including on send failure.
   [ "$UI_REQUEST" != 1 ] || echo 'NXUI_STAGE restore'
-  pw_force_reload "$TARGET_PW"
+  # ★ 快路径（10-17）：A2 发送成功且目标就是 CUSTOM1（0x140009）⇒ commit 已把档位
+  #   切到 9，无需再读 getusr（每次 1.4s）、无需 setusr、无需读回验证。
+  #   发送失败或目标为其它档位时仍走 pw_force_reload 原路径（含读回自证）。
+  if [ "$TARGET_PW" = "0x140009" ] && [ "$PWSTAT" = "direct" ]; then
+    RELOAD="already"
+  else
+    pw_force_reload "$TARGET_PW"
+  fi
   if [ "$UI_REQUEST" = 1 ] && [ "$PWSTAT" = failed ]; then
     echo "REJECT: PW backend failed (target=$TARGET_PW reload=$RELOAD)"
     exit 1
