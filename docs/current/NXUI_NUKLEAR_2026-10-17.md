@@ -202,3 +202,23 @@ STANDARD（默认拍摄档）每次滚动都付三次 st。
 - 预览后关闭面板（不 commit）运行时档位停在"自定义1"，槽数据未变 ⇒ 切走再切回即回旧值。
   若要"退出面板自动还档"，需在 nxui 退出路径加一次 setusr（约 1.2 s，退出时付一次）。
 - `pwsend` 收尾固定 300 ms 未动（需重编 ABI 二进制）；再压可到 ~1.2 s。
+
+### 同日 18:30–18:40：pwsend 收尾 usleep 300ms → 100ms
+
+`pwsend.arm` 两处 `usleep(300000)`（单发 / seq 末尾）压到 100 ms。因本机无 zig 0.13.0，
+以**二进制常量补丁**落地（两处 `.word 0x493e0` → `0x186a0`，vaddr 0x26264 / 0x26808
+→ 文件偏移 0x6264 / 0x6808，PT_LOAD#2 `vaddr = offset + 0x20000`；diff 仅 6 字节）；
+源码 `test_server/pwsend/pwsend.c` 同步改为 100000。
+
+真机验收（连续三次不同配方）：
+
+| 配方 | 耗时 | 七维读回 |
+|---|---|---|
+| portra400 | 1.32 s | R 0x0890 / G 0x07F0 / B 0x0760、HUE 0x001F、SAT 0xFFCF、SHARP 0xFFFF、CON 0xFFEF |
+| trix400 | 1.29 s | R 0x0880 / G 0x07F0 / B 0x0790、HUE 0x000F、SAT 0xFF6F、SHARP 0x002F、CON 0x002F |
+| portra800 | 1.27 s | 全部命中 |
+
+⇒ 收尾缩短**不影响送达**；累计预览 4.35 s → 1.27~1.32 s（3.4×）。
+部署 md5：`filmlab.sh 021a7aff` / `pwsend.arm 935fead9`；备份 `*.bak-1017b` / `*.bak-1017c`。
+`pwsend.arm` 首次纳入 `scripts/`（install.sh 的 `cp -ar scripts/*` + 全局 chmod 兜底）⇒
+全新安装也能直接预览，不必再手工 deploy。

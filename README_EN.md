@@ -18,7 +18,7 @@ An enhancement mod for the **Samsung NX500 / NX1** (Tizen / DRIMe5), built on th
 
 ## Highlights
 
-- ★ **NXUI (Nuklear) replacement menu + persistent filter strip** — the mod UI rewritten with open-source **Nuklear** (MIT) on the camera's own X11/Xft (**no EFL linkage**, no viewfinder capture or blit). `EV+AEL` opens a 720×192 bottom filter strip: 68 recipes scroll horizontally, swipe or tap **previews in ~2.5s**, `Save & close` commits to flash; the main menu is a 720×336 paginated screen. Verified on camera 2026-10-17: panel visible, viewfinder/keys normal, four recipes confirmed changing colours live; supports the 9 built-in presets + Custom 1/2/3 (follows the current Picture-Wizard slot), with automatic backup of the original 7 values to SD before the first write to a slot. Package: `NXUI-Nuklear-20261017.zip` (see Releases).
+- ★ **NXUI (Nuklear) replacement menu + persistent filter strip** — the mod UI rewritten with open-source **Nuklear** (MIT) on the camera's own X11/Xft (**no EFL linkage**, no viewfinder capture or blit). `EV+AEL` opens a 720×192 bottom filter strip: 68 recipes scroll horizontally, swipe or tap **previews in ~1.3 s**, `Save & close` commits to flash; the main menu is a 720×336 paginated screen. Verified on camera 2026-10-17: panel visible, viewfinder/keys normal, four recipes confirmed changing colours live. **Preview always uses Custom 1 as its canvas** (A2 direct push, no slot write, no other Style touched); `Save & close` writes the 7 values, saves once, then returns the runtime field to whichever slot you had when opening the panel. The original 7 values of Custom 1 are backed up to SD before the first write. Package: `NXUI-Nuklear-20261017.zip` (see Releases).
 - **FilmLab film recipes (68)** — negative / slide / B&W / cinema / stylised, five families, auto-generated 6-page menu (18/page). The recipe library lives on the SD card (editable, extensible).
 - **PW all-7-dimension one-tap**: `EV+AEL` → tap a recipe ⇒ **R/G/B/HUE/SAT/SHARP/CON are all pushed straight into the ISP and the image changes within a second** (A2 "slot-pool direct write" channel, `0x134..0x13B`; verified on-camera dimension by dimension, 2026-10-15).
   ★ Requires: **NXWA-A2 p7 firmware — shipped in this package (`patch-a2/`, with CN/EN flashing guide and md5)**; without A2 the push step is silently ineffective (it does not crash) — use "Picture Wizard → Custom 1" as the fallback for a full-range effect.
@@ -39,7 +39,7 @@ An enhancement mod for the **Samsung NX500 / NX1** (Tizen / DRIMe5), built on th
 | --- | --- |
 | `IP: x.x.x.x [Telnet关]` | Shows the current WiFi IP; **tap = toggle Telnet(23) + FTP(21)**, with popup feedback |
 | `远程控制` (checkbox) | Toggles the web remote (port 80); also starts the port-8080 cluster and thumbnail warm-up |
-| **`EV + AEL`** (key combo) | ★ **NXUI filter strip** (720×192 persistent bottom panel, 68 recipes): swipe or tap = **instant preview** (~2.5s) on the current slot (not saved), `Save & close` = apply + save (~0.5s); press again or **half-press the shutter** = close. 【NX500 only】. Machines without NXUI keep the legacy 6-page mod_gui menu |
+| **`EV + AEL`** (key combo) | ★ **NXUI filter strip** (720×192 persistent bottom panel, 68 recipes): swipe or tap = **instant preview** (**~1.3 s**, always rendered into the Custom 1 canvas, other Styles untouched), `Save & close` = write the 7 values + save + return to the original field (~0.5 s); press again or **half-press the shutter** = close. 【NX500 only】. Machines without NXUI keep the legacy 6-page mod_gui menu |
 
 The menu is regenerated every time it opens (`gen_menu.sh`), so the IP / Telnet state is always current.
 PC-side troubleshooting: `test_server/telnet_run.py <camera-ip> 'command'` (non-interactive telnet, root, empty password).
@@ -51,7 +51,7 @@ PC-side troubleshooting: `test_server/telnet_run.py <camera-ip> 'command'` (non-
 > Step ③ goes through the A2 channel (`seq 0x134..0x13B`, raw values) and pushes **all seven dimensions into the ISP at once** — the image changes within a second.
 > On machines without the A2 firmware: step ③ is silently ineffective (safe degradation); for a full-range effect confirm once in the camera's **Picture Wizard → "Custom 1"**.
 >
-> ★ **From 2026-10-17 (with NXUI installed)**: `EV+AEL` opens the persistent filter strip; `apply` is split into `preview` (write slot + ISP push, **no** prefman save) and `commit` (save once after success). Plain close keeps the current preview (previous values are not restored); the original 7 values of a slot are backed up to SD `filmlab/slot-backups/` before its first write.
+> ★ **From 2026-10-17 (with NXUI installed)**: `EV+AEL` opens the persistent filter strip; `apply` is split into `preview` (**ISP direct push only — no slot write, no backup, no field switch**) and `commit` (write the 7 values + `prefman save` + return the runtime field to the one you had when opening the panel). Preview always renders into Custom 1, so browsing never pollutes built-in Styles such as Standard; a plain close keeps the preview (slot data untouched ⇒ leaving and re-entering the field restores the old look). The original 7 values of Custom 1 are backed up to SD `filmlab/slot-backups/` before its first write.
 
 ### The 68 built-in recipes (60 colour + 8 B&W, auto-paginated)
 

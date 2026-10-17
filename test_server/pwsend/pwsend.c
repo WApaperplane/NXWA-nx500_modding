@@ -207,7 +207,7 @@ int main(int argc, char **argv)
         printf("★ 下一步（PC 侧/相机侧读回验证）：\n");
         printf("   /opt/usr/nx-ks/filmlab.sh check   或   st cap capdtm varlist\n");
         printf("   期望：PWCOLOR_*/PWSATURATION 等的高 16 位跟随 value\n");
-        usleep(300000);   /* 让 MCB 队列收尾，不重试 */
+        usleep(100000);   /* 让 MCB 队列收尾，不重试（10-17：300ms→100ms） */
         return rc == 0 ? 0 : 5;
     }
 
@@ -264,7 +264,7 @@ int main(int argc, char **argv)
             if (i + 1 < npair) usleep((useconds_t)slp * 1000);
         }
         printf("★ 下一步：st cap capdtm varlist（或 filmlab.sh check）读回对照\n");
-        usleep(300000);
+        usleep(100000);   /* 10-17：300ms→100ms（svdm 同步返回，队列已在） */
         return rc_all;
     }
 
