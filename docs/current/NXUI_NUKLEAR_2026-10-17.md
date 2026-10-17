@@ -141,3 +141,64 @@ FTP 实例，现精确匹配 BusyBox 路径 + tcpsvd + 0.0.0.0:21，未对其它
 用原快捷键完成服务关/开及配方发送，并明确确认“状态即时刷新，响应和取景正常”。
 最终 ARM MD5 `874553e0d6dc588267f85b2e603bf3c4`，引擎
 `dc745c306f74bf4603b0ba275ad7f5d5`，服务脚本 `4d245109e8a6c5ab47240a23c2f4458d`。
+
+## 同日 18:00–18:30：预览慢的根因（实测）与 3× 提速
+
+用户实测反馈"因为要等待预览，速度反而变慢了"。相机在线（192.168.0.106）分段计时后
+定性：**瓶颈不是渲染，是 `st cap capdtm` 每次 ~1.3s**。
+
+### 实测（loadavg 2.44，`raw8/gates/nxui/responsiveness/timing_probe*.sh`）
+
+| 项 | 耗时 |
+|---|---|
+| `st cap capdtm getusr 20` | 1.31 s |
+| `st cap capdtm setusr 20 0x140000` | 1.23 s |
+| 再次 `getusr 20`（读回自证） | 1.30 s |
+| `prefman get` ×7 | 0.17 s（24 ms/次） |
+| `pwsend.arm seq` 启动 | 0.45 s |
+| `/bin/true` ×20 | 0.27 s（13.5 ms/fork） |
+
+`prefman` 与 fork 都很便宜，唯 `st` 通道是秒级（命令走 App 队列 key 0x8828，取景占
+36% CPU 时轮询一轮 1.3s）。
+
+### 根因
+
+`preview` → `apply UI_REQUEST=1`：无 slot 时按 `FILMLAB_ENUM_CACHE` 解析当前栏位 →
+目标 ≠ `0x140009` ⇒ `pw_force_reload` 三连 st（读档位 1.3 + 切档 1.2 + 读回 1.3）→
+`pwsend` 固定 7×150 ms + 300 ms = 1.35 s → 7×`prefman set` 写槽 + 7×`get` 备份（≈0.4 s，
+预览完全用不到）。合计 4.3–5.9 s，与既有 `results.json` 的 4.35 s 吻合。
+
+**回归点**：同日早先的"preview 跟随当前 PW 栏位、发送后恢复原档位"改动。改之前 apply
+固定写 slot 9，preview 走 `TARGET==0x140009` 快路径 = 0 次 st；改之后只要相机停在
+STANDARD（默认拍摄档）每次滚动都付三次 st。
+
+**附带缺陷（已修）**：预览在 STANDARD 档会把配方 7 维写进 slot 0（标准风格）且不恢复，
+切回"标准"看到的是最后一次预览 —— 预览是临时态，不该污染真实风格。
+
+### 改动（`scripts/filmlab.sh`）
+
+1. `preview`/`commit` 固定以 CUSTOM1（slot 9）为画布：A2 提交位 0x13B 本来就把运行时
+   档位切到 field 10，固定槽后全程 0 次 st cap。
+2. `preview` 不写槽、不做 slot 备份（画面完全由 A2 直推决定）；`commit` 才写槽 + save。
+3. `preview` 跳过档位通道（不发 `NXUI_STAGE restore`，`RELOAD=already`）。
+4. `commit` 才把档位还回打开面板时那一档（`TARGET_PW` 取 `FILMLAB_ENUM_CACHE`）。
+5. `pw_force_reload <目标> [已知当前值]`：A2 发送成功后调用方传 `0x140009`，省一次
+   getusr（commit 的 3 次 st → 2 次）。
+6. `pw_direct` 支持 `FILMLAB_PWSLEEP`：浏览预览用 40 ms（原 150 ms），批量写槽仍 150。
+
+### 验证
+
+- **离线桩测试**（`E:/tmp/filmlab_stub_test.sh`，非入库）：preview = 0 set / 0 get /
+  0 save / 0 st / 1 pwsend；commit = 7 set / 7 get / 1 save / pwsend /（目标为 CUSTOM1
+  时 0 st，带 STANDARD 缓存时 2 st）。
+- **真机**：preview 4.35 s → **1.43 s / 1.44 s**（两次连续，均 `reload=already
+  pw=direct not-saved`）；从 STANDARD 档起步同样 1.4 s。预览后运行时档位停在
+  `PW_CUSTOM1`（新语义），手动 `setusr 20 0x140000` 可回标准。
+- 部署：`/opt/usr/nx-ks/filmlab.sh` md5 **`021a7aff98d724f1eaf6309c04ffcd62`**；
+  原文件备份 `filmlab.sh.bak-1017b`（`4ecddd03`）；相机端 `sh -n` 通过。
+
+### 遗留
+
+- 预览后关闭面板（不 commit）运行时档位停在"自定义1"，槽数据未变 ⇒ 切走再切回即回旧值。
+  若要"退出面板自动还档"，需在 nxui 退出路径加一次 setusr（约 1.2 s，退出时付一次）。
+- `pwsend` 收尾固定 300 ms 未动（需重编 ABI 二进制）；再压可到 ~1.2 s。

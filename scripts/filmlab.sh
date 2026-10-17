@@ -213,9 +213,12 @@ setusr20() { st cap capdtm setusr 20 "$1" >/dev/null 2>&1; }
 #   不同的分支；自定义槽之间切换必然走「读槽位数据」的分支。
 #   FILMLAB_MID=standard 可退回旧行为（借道 STANDARD=0x140000）。
 _NEED_PW=0
+# pw_force_reload <目标 enum> [已知当前 enum]
+#   第 2 参可省一次 getusr（1.3s）：A2 提交位发送成功后，运行时档位必然是
+#   field 10 ⇒ 调用方已知当前值，不必再读一遍。读回自证仍然保留。
 pw_force_reload() {
   TGT=$1
-  CUR=$(getusr20)
+  if [ -n "${2:-}" ]; then CUR="$2"; else CUR=$(getusr20); fi
   if [ "$CUR" = "$TGT" ]; then
     # ★ 快路径（2026-10-10）：目标已达成 —— 不借道、不 sleep。
     #   依据：① "切换触发 p7 重读槽"已证伪（切换从不搬参数）；② 直推模式下画面靠
@@ -267,6 +270,9 @@ pw_direct() {
   # A2：固定 id + 原始值 + 提交位（0x13B=1）
   ARGS="0x134 $1 0x135 $2 0x136 $3 0x137 $4 0x138 $5 0x139 $6 0x13A $7 0x13B 1"
   YES="$8"
+  # ★ 10-17：条间 150ms 是 A1 时代的保守值，svdm 是同步返回（rc=0 即已入 MCB）。
+  #   浏览预览用 FILMLAB_PWSLEEP=40（省 ~0.8s），批量写槽仍用 150。
+  [ "$YES" = "--yes" ] && ARGS="$ARGS --sleep ${FILMLAB_PWSLEEP:-150}"
   echo "  ③ PW直推（A2 档位池直写；$([ "$YES" = "--yes" ] && echo 真发 || echo dry-run)）:"
   echo "     $PWSEND seq $ARGS $YES"
   # shellcheck disable=SC2086
@@ -553,7 +559,10 @@ case "$SLOT" in --fast) FAST=1; SLOT="" ;; esac
 # Persistent UI: browsing must not save every intermediate selection to flash.
 # Resolve these after filmlab.conf, so its FILMLAB_SAVE cannot override intent.
 case "$CMD" in
-  preview) CMD=apply; FILMLAB_SAVE=0; FAST=1; UI_REQUEST=1 ;;
+  # ★ 2026-10-17 提速（实测 4.35s → 目标 ~1.0s）：预览/提交一律以 CUSTOM1（slot 9）
+  #   为画布。理由见 apply 分支内 "UI 快路径" 注释。
+  #   FILMLAB_PWSLEEP 控制 A2 条间间隔：浏览时不值得等 7×150ms。
+  preview) CMD=apply; FILMLAB_SAVE=0; FAST=1; UI_REQUEST=1; FILMLAB_PWSLEEP=40 ;;
   commit)  CMD=apply; FILMLAB_SAVE=1; FAST=1; UI_REQUEST=1 ;;
 esac
 mkdir -p $LAB 2>/dev/null
@@ -601,13 +610,30 @@ apply)
   # silently fall back to CUSTOM1 when a read fails or an enum is unsupported.
   # ★ 10-17：允许调用方（nxui）用 FILMLAB_ENUM_CACHE 提供最近一次读到的档位
   #   （格式 0x1400XX），省掉每次 1.4s 的 getusr。缓存无效时会落到 REJECT。
-  if [ -z "$SLOT" ]; then
-    CURRENT_PW="${FILMLAB_ENUM_CACHE:-$(getusr20)}"
-    SLOT=$(slot_of_enum "$CURRENT_PW") || { echo "REJECT: cannot resolve current PW field ($CURRENT_PW)"; exit 1; }
+  if [ "$UI_REQUEST" = 1 ]; then
+    # ★★ UI 快路径（2026-10-17 实测定根因）：预览/提交固定以 CUSTOM1（slot 9）为画布。
+    #   原因一（性能）：A2 提交位 0x13B 本身就把运行时档位切到 field 10。若"跟随当前
+    #     栏位"（STANDARD 等），收尾必须 getusr(1.3s)+setusr(1.2s)+getusr(1.3s) 把档位
+    #     搬回去 —— 单次预览 4.35s 里 2.5~3.9s 全耗在这三次 st 调用（相机实测 1.3s/次）。
+    #   原因二（正确性）：跟随当前栏位会把配方 7 维写进 slot 0（标准风格）且 preview
+    #     不恢复，用户切回"标准"看到的是最后一次预览 —— 预览是临时态，不该污染真实风格。
+    #   代价：预览期运行时档位停在 CUSTOM1（画面本来就是配方效果，语义自洽）；
+    #     commit 才把档位还回打开面板时那一档（FILMLAB_ENUM_CACHE 由 nxui 传入）。
+    SLOT=9
+    case "${FILMLAB_ENUM_CACHE:-}" in
+      0x1400*) TARGET_PW="$FILMLAB_ENUM_CACHE" ;;
+      *)       TARGET_PW="0x140009" ;;
+    esac
+    ENUM=9
+  else
+    if [ -z "$SLOT" ]; then
+      CURRENT_PW="$(getusr20)"
+      SLOT=$(slot_of_enum "$CURRENT_PW") || { echo "REJECT: cannot resolve current PW field ($CURRENT_PW)"; exit 1; }
+    fi
+    ENUM=$(enum_of_slot $SLOT)
+    TARGET_PW=$(printf "0x%06x" $((0x140000 + ENUM)))
   fi
   apply_slot_valid "$SLOT" || { echo "REJECT: unsupported PW slot $SLOT"; exit 1; }
-  ENUM=$(enum_of_slot $SLOT)
-  TARGET_PW=$(printf "0x%06x" $((0x140000 + ENUM)))
   echo ">>> 应用 '$REC' -> slot $SLOT (enum $ENUM)"
   # ★★★ 2026-10-08 加固：先取全部 7 维，★ 任一为空就【拒绝写入】。
   #   起因（U2 上机实测，用户报告）：/mnt/mmc/filmlab/recipes.json 缺失时 jval 返回空串，
@@ -636,6 +662,11 @@ apply)
     [ "$VALUE" -le "$VALUE_MAX" ] || { echo "REJECT: recipe value out of range"; exit 1; }
     VALUE_PARAM=$((VALUE_PARAM + 1))
   done
+  # ★ 10-17：预览不写槽、不备份 —— 画面完全由 A2 直推决定，槽只在 commit 落盘时写。
+  #   省掉 7×prefman set + 7×prefman get（≈0.4s），浏览过程也不改 eMMC 侧数据。
+  if [ "$UI_REQUEST" = 1 ] && [ "$FILMLAB_SAVE" != 1 ]; then
+    :
+  else
   backup_apply_slot || { echo "REJECT: cannot back up slot $SLOT"; exit 1; }
   if [ "$UI_REQUEST" = 1 ]; then
     set_r 0 $SLOT "$V0" && set_r 1 $SLOT "$V1" && set_r 2 $SLOT "$V2" &&
@@ -649,6 +680,7 @@ apply)
     set_r 4 $SLOT "$V4"
     set_r 5 $SLOT "$V5"
     set_r 6 $SLOT "$V6"
+  fi
   fi
   # v2: 白平衡不由配方控制，相机保持自动 WB（见 recipes.json 的 _note）
   # ★ 落盘（2026-10-08 实测必需）：只 set 不 save ⇒ 相机重启后槽位回退到旧值。
@@ -672,14 +704,23 @@ apply)
   fi
   # A2 commit writes runtime field 10 (= CUSTOM1), regardless of the selected
   # field. Restore the intended enum *after* sending, including on send failure.
-  [ "$UI_REQUEST" != 1 ] || echo 'NXUI_STAGE restore'
-  # ★ 快路径（10-17）：A2 发送成功且目标就是 CUSTOM1（0x140009）⇒ commit 已把档位
-  #   切到 9，无需再读 getusr（每次 1.4s）、无需 setusr、无需读回验证。
-  #   发送失败或目标为其它档位时仍走 pw_force_reload 原路径（含读回自证）。
-  if [ "$TARGET_PW" = "0x140009" ] && [ "$PWSTAT" = "direct" ]; then
+  # ★ 10-17 快路径：A2 提交位已经把运行时档位切到 CUSTOM1。
+  #   preview（不落盘）的语义就是"停在 CUSTOM1 看效果" ⇒ 完全跳过档位通道（0 次 st，
+  #   省 2.5~3.9s）。commit 才把档位还回打开面板时那一档（TARGET_PW，来自 nxui 缓存）；
+  #   目标本来就是 CUSTOM1 时同样跳过。发送失败仍走原路径自证。
+  if [ "$UI_REQUEST" = 1 ] && [ "$FILMLAB_SAVE" != 1 ]; then
+    RELOAD="already"
+  elif [ "$TARGET_PW" = "0x140009" ] && [ "$PWSTAT" = "direct" ]; then
+    [ "$UI_REQUEST" != 1 ] || echo 'NXUI_STAGE restore'
     RELOAD="already"
   else
-    pw_force_reload "$TARGET_PW"
+    [ "$UI_REQUEST" != 1 ] || echo 'NXUI_STAGE restore'
+    # commit 的 A2 发送成功后运行时档位必为 CUSTOM1 ⇒ 传进去省一次 getusr
+    if [ "$PWSTAT" = "direct" ]; then
+      pw_force_reload "$TARGET_PW" "0x140009"
+    else
+      pw_force_reload "$TARGET_PW"
+    fi
   fi
   if [ "$UI_REQUEST" = 1 ] && [ "$PWSTAT" = failed ]; then
     echo "REJECT: PW backend failed (target=$TARGET_PW reload=$RELOAD)"
