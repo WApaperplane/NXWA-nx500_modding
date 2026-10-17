@@ -1,0 +1,29 @@
+{
+  "capability": {
+    "lut": false,
+    "preview": true,
+    "pw": true,
+    "requires_firmware": "A2",
+    "still": "native",
+    "still_verified": false
+  },
+  "display_name": "Portra 400",
+  "id": "portra400",
+  "meta": {
+    "scope": "offline_pw_only_native_entry_candidate"
+  },
+  "pw": {
+    "B": 93,
+    "CON": 8,
+    "G": 100,
+    "HUE": 11,
+    "R": 106,
+    "SAT": 9,
+    "SHARP": 9
+  },
+  "schema": "nxwa.preset/1",
+  "slot_map": {
+    "slot": 1,
+    "verified": false
+  }
+}

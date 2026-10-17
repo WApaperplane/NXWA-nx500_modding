@@ -1,0 +1,14 @@
+test_collector_reads_only_fixture_and_ignores_cmdline_false_positive (__main__.CollectorTests.test_collector_reads_only_fixture_and_ignores_cmdline_false_positive) ... ok
+test_comm_with_spaces_and_parentheses (__main__.ParserTests.test_comm_with_spaces_and_parentheses) ... ok
+test_different_backing_files_are_not_reported_as_activated (__main__.ParserTests.test_different_backing_files_are_not_reported_as_activated) ... ok
+test_incomplete_or_duplicate_capture_is_rejected (__main__.ParserTests.test_incomplete_or_duplicate_capture_is_rejected) ... ok
+test_matching_files_unit_and_locale_do_not_prove_native_ui (__main__.ParserTests.test_matching_files_unit_and_locale_do_not_prove_native_ui) ... ok
+test_missing_metadata_stays_unknown (__main__.ParserTests.test_missing_metadata_stays_unknown) ... ok
+test_multiple_processes_are_unknown (__main__.ParserTests.test_multiple_processes_are_unknown) ... ok
+test_pid_start_ticks_cannot_prove_fresh_exec (__main__.ParserTests.test_pid_start_ticks_cannot_prove_fresh_exec) ... ok
+test_process_change_during_capture_is_unknown (__main__.ParserTests.test_process_change_during_capture_is_unknown) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.023s
+
+OK

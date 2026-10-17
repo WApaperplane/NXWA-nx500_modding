@@ -1,0 +1,13 @@
+  (no --expect; inferred 1 changed entr(ies))
+== verify ==
+  orig: /mnt/e/tmp/dicam_zh_CN.mo  (172850B, md5 f2d60cd2f2687de43089729fb06f436c)
+  new : /mnt/e/NXWA/nx500-modding-work/fw/v1.12/dicam/native-entry-portra400/di-camera-app.mo  (172861B, md5 3231a980504c0b9dfe5cab268e0e0814)
+  expected replacements: 1
+    CAP_MENU_CUSTOM_MODE_1 -> 'Portra 400'
+  RESULT: PASS (逐条对比：除预期目标外 msgid/msgstr 全同)
+  -- glibc path simulation (hash + binary) --
+  [orig] hash: size=2927 coverage=2194/2194 dup=0 hash-reachable=1389/2194
+    OK CAP_MENU_CUSTOM_MODE_1: hash_idx=175(steps=0) bin_idx=175 -> '自定义 1' / '自定义 1'
+  [new ] hash: size=2927 coverage=2194/2194 dup=0 hash-reachable=1389/2194
+    OK CAP_MENU_CUSTOM_MODE_1: hash_idx=175(steps=0) bin_idx=175 -> 'Portra 400' / 'Portra 400'
+    note: hash 表字节两文件全同（未被替换触碰）；msgid→index 映射不变，仅 index→msgstr 的目标条目指向新值。hash 表若因构建环境差异被 glibc 加载期弃用，则走二分路径——两路径对本替换同样成立。

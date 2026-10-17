@@ -1,0 +1,142 @@
+
+/opt/nxks2/rootfs-112/usr/apps/com.samsung.di-camera-app/bin/di-camera-app:     file format elf32-littlearm
+
+
+Disassembly of section .text:
+
+002ff168 <_ZN10CAPPGUIEtc11SetLanguageEi@@Base>:
+  2ff168:	e92d4070 	push	{r4, r5, r6, lr}
+  2ff16c:	e24dde11 	sub	sp, sp, #272	@ 0x110
+  2ff170:	e2504000 	subs	r4, r0, #0
+  2ff174:	0a000005 	beq	2ff190 <_ZN10CAPPGUIEtc11SetLanguageEi@@Base+0x28>
+  2ff178:	e59f21f4 	ldr	r2, [pc, #500]	@ 2ff374 <_ZN10CAPPGUIEtc11SetLanguageEi@@Base+0x20c>
+  2ff17c:	e3a03001 	mov	r3, #1
+  2ff180:	e5921008 	ldr	r1, [r2, #8]
+  2ff184:	e1510004 	cmp	r1, r4
+  2ff188:	1a000073 	bne	2ff35c <_ZN10CAPPGUIEtc11SetLanguageEi@@Base+0x1f4>
+  2ff18c:	ea000000 	b	2ff194 <_ZN10CAPPGUIEtc11SetLanguageEi@@Base+0x2c>
+  2ff190:	e3a03000 	mov	r3, #0
+  2ff194:	e30d2ef4 	movw	r2, #57076	@ 0xdef4
+  2ff198:	e340203f 	movt	r2, #63	@ 0x3f
+  2ff19c:	e0823183 	add	r3, r2, r3, lsl #3
+  2ff1a0:	e5936618 	ldr	r6, [r3, #1560]	@ 0x618
+  2ff1a4:	e3a00005 	mov	r0, #5
+  2ff1a8:	e1a01006 	mov	r1, r6
+  2ff1ac:	ebf6bc4c 	bl	ae2e4 <setlocale@plt>
+  2ff1b0:	e2505000 	subs	r5, r0, #0
+  2ff1b4:	1a000032 	bne	2ff284 <_ZN10CAPPGUIEtc11SetLanguageEi@@Base+0x11c>
+  2ff1b8:	e59f31b8 	ldr	r3, [pc, #440]	@ 2ff378 <_ZN10CAPPGUIEtc11SetLanguageEi@@Base+0x210>
+  2ff1bc:	e8930003 	ldm	r3, {r0, r1}
+  2ff1c0:	e58d0010 	str	r0, [sp, #16]
+  2ff1c4:	e1cd11b4 	strh	r1, [sp, #20]
+  2ff1c8:	e28d0016 	add	r0, sp, #22
+  2ff1cc:	e3a01000 	mov	r1, #0
+  2ff1d0:	e3a020fa 	mov	r2, #250	@ 0xfa
+  2ff1d4:	ebf6b5b8 	bl	ac8bc <memset@plt>
+  2ff1d8:	e58d6000 	str	r6, [sp]
+  2ff1dc:	e28d0015 	add	r0, sp, #21
+  2ff1e0:	e3a010f6 	mov	r1, #246	@ 0xf6
+  2ff1e4:	e30e299c 	movw	r2, #59804	@ 0xe99c
+  2ff1e8:	e340203f 	movt	r2, #63	@ 0x3f
+  2ff1ec:	e1a03004 	mov	r3, r4
+  2ff1f0:	ebf6bbe4 	bl	ae188 <snprintf@plt>
+  2ff1f4:	e28d0010 	add	r0, sp, #16
+  2ff1f8:	ebf6b49e 	bl	ac478 <strlen@plt>
+  2ff1fc:	e2400001 	sub	r0, r0, #1
+  2ff200:	e28d2e11 	add	r2, sp, #272	@ 0x110
+  2ff204:	e0823000 	add	r3, r2, r0
+  2ff208:	e5533100 	ldrb	r3, [r3, #-256]	@ 0xffffff00
+  2ff20c:	e353000a 	cmp	r3, #10
+  2ff210:	00820000 	addeq	r0, r2, r0
+  2ff214:	03a03000 	moveq	r3, #0
+  2ff218:	05403100 	strbeq	r3, [r0, #-256]	@ 0xffffff00
+  2ff21c:	e28d4010 	add	r4, sp, #16
+  2ff220:	e1a00004 	mov	r0, r4
+  2ff224:	ebf6b493 	bl	ac478 <strlen@plt>
+  2ff228:	e1a02000 	mov	r2, r0
+  2ff22c:	e0841000 	add	r1, r4, r0
+  2ff230:	e30a37c0 	movw	r3, #42944	@ 0xa7c0
+  2ff234:	e3403036 	movt	r3, #54	@ 0x36
+  2ff238:	e5930000 	ldr	r0, [r3]
+  2ff23c:	e7840002 	str	r0, [r4, r2]
+  2ff240:	e5d33004 	ldrb	r3, [r3, #4]
+  2ff244:	e5c13004 	strb	r3, [r1, #4]
+  2ff248:	e59f312c 	ldr	r3, [pc, #300]	@ 2ff37c <_ZN10CAPPGUIEtc11SetLanguageEi@@Base+0x214>
+  2ff24c:	e58d3000 	str	r3, [sp]
+  2ff250:	e59f3128 	ldr	r3, [pc, #296]	@ 2ff380 <_ZN10CAPPGUIEtc11SetLanguageEi@@Base+0x218>
+  2ff254:	e58d3004 	str	r3, [sp, #4]
+  2ff258:	e3003668 	movw	r3, #1640	@ 0x668
+  2ff25c:	e58d3008 	str	r3, [sp, #8]
+  2ff260:	e58d400c 	str	r4, [sp, #12]
+  2ff264:	e3a00003 	mov	r0, #3
+  2ff268:	e3a01004 	mov	r1, #4
+  2ff26c:	e30a27c8 	movw	r2, #42952	@ 0xa7c8
+  2ff270:	e3402036 	movt	r2, #54	@ 0x36
+  2ff274:	e30a37d0 	movw	r3, #42960	@ 0xa7d0
+  2ff278:	e3403036 	movt	r3, #54	@ 0x36
+  2ff27c:	ebf6b7a4 	bl	ad114 <__dlog_print@plt>
+  2ff280:	ea000039 	b	2ff36c <_ZN10CAPPGUIEtc11SetLanguageEi@@Base+0x204>
+  2ff284:	e3053b1b 	movw	r3, #23323	@ 0x5b1b
+  2ff288:	e340306d 	movt	r3, #109	@ 0x6d
+  2ff28c:	e58d3010 	str	r3, [sp, #16]
+  2ff290:	e28d0014 	add	r0, sp, #20
+  2ff294:	e3a01000 	mov	r1, #0
+  2ff298:	e3a020fc 	mov	r2, #252	@ 0xfc
+  2ff29c:	ebf6b586 	bl	ac8bc <memset@plt>
+  2ff2a0:	e58d5000 	str	r5, [sp]
+  2ff2a4:	e28d0013 	add	r0, sp, #19
+  2ff2a8:	e3a010f8 	mov	r1, #248	@ 0xf8
+  2ff2ac:	e30e29bc 	movw	r2, #59836	@ 0xe9bc
+  2ff2b0:	e340203f 	movt	r2, #63	@ 0x3f
+  2ff2b4:	e1a03004 	mov	r3, r4
+  2ff2b8:	ebf6bbb2 	bl	ae188 <snprintf@plt>
+  2ff2bc:	e28d0010 	add	r0, sp, #16
+  2ff2c0:	ebf6b46c 	bl	ac478 <strlen@plt>
+  2ff2c4:	e2400001 	sub	r0, r0, #1
+  2ff2c8:	e28d2e11 	add	r2, sp, #272	@ 0x110
+  2ff2cc:	e0823000 	add	r3, r2, r0
+  2ff2d0:	e5533100 	ldrb	r3, [r3, #-256]	@ 0xffffff00
+  2ff2d4:	e353000a 	cmp	r3, #10
+  2ff2d8:	00820000 	addeq	r0, r2, r0
+  2ff2dc:	03a03000 	moveq	r3, #0
+  2ff2e0:	05403100 	strbeq	r3, [r0, #-256]	@ 0xffffff00
+  2ff2e4:	e28d4010 	add	r4, sp, #16
+  2ff2e8:	e1a00004 	mov	r0, r4
+  2ff2ec:	ebf6b461 	bl	ac478 <strlen@plt>
+  2ff2f0:	e1a02000 	mov	r2, r0
+  2ff2f4:	e0841000 	add	r1, r4, r0
+  2ff2f8:	e30a37c0 	movw	r3, #42944	@ 0xa7c0
+  2ff2fc:	e3403036 	movt	r3, #54	@ 0x36
+  2ff300:	e5930000 	ldr	r0, [r3]
+  2ff304:	e7840002 	str	r0, [r4, r2]
+  2ff308:	e5d33004 	ldrb	r3, [r3, #4]
+  2ff30c:	e5c13004 	strb	r3, [r1, #4]
+  2ff310:	e59f3064 	ldr	r3, [pc, #100]	@ 2ff37c <_ZN10CAPPGUIEtc11SetLanguageEi@@Base+0x214>
+  2ff314:	e58d3000 	str	r3, [sp]
+  2ff318:	e59f3060 	ldr	r3, [pc, #96]	@ 2ff380 <_ZN10CAPPGUIEtc11SetLanguageEi@@Base+0x218>
+  2ff31c:	e58d3004 	str	r3, [sp, #4]
+  2ff320:	e300366c 	movw	r3, #1644	@ 0x66c
+  2ff324:	e58d3008 	str	r3, [sp, #8]
+  2ff328:	e58d400c 	str	r4, [sp, #12]
+  2ff32c:	e3a00003 	mov	r0, #3
+  2ff330:	e3a01004 	mov	r1, #4
+  2ff334:	e30a27c8 	movw	r2, #42952	@ 0xa7c8
+  2ff338:	e3402036 	movt	r2, #54	@ 0x36
+  2ff33c:	e30a37d0 	movw	r3, #42960	@ 0xa7d0
+  2ff340:	e3403036 	movt	r3, #54	@ 0x36
+  2ff344:	ebf6b772 	bl	ad114 <__dlog_print@plt>
+  2ff348:	e30e09d0 	movw	r0, #59856	@ 0xe9d0
+  2ff34c:	e340003f 	movt	r0, #63	@ 0x3f
+  2ff350:	e1a01005 	mov	r1, r5
+  2ff354:	ebf6bc60 	bl	ae4dc <vconf_set_str@plt>
+  2ff358:	ea000003 	b	2ff36c <_ZN10CAPPGUIEtc11SetLanguageEi@@Base+0x204>
+  2ff35c:	e2833001 	add	r3, r3, #1
+  2ff360:	e2822008 	add	r2, r2, #8
+  2ff364:	e3530021 	cmp	r3, #33	@ 0x21
+  2ff368:	1affff84 	bne	2ff180 <_ZN10CAPPGUIEtc11SetLanguageEi@@Base+0x18>
+  2ff36c:	e28dde11 	add	sp, sp, #272	@ 0x110
+  2ff370:	e8bd8070 	pop	{r4, r5, r6, pc}
+  2ff374:	003fe508 	eorseq	lr, pc, r8, lsl #10
+  2ff378:	003fe3f4 	ldrshteq	lr, [pc], -r4
+  2ff37c:	003fe94c 	eorseq	lr, pc, ip, asr #18
+  2ff380:	003fe610 	eorseq	lr, pc, r0, lsl r6	@ <UNPREDICTABLE>

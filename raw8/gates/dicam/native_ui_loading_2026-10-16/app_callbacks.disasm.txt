@@ -1,0 +1,1395 @@
+
+/opt/nxks2/rootfs-112/usr/apps/com.samsung.di-camera-app/bin/di-camera-app:     file format elf32-littlearm
+
+
+Disassembly of section .text:
+
+001b4a5c <_Z13UI_Init_Statev@@Base>:
+  1b4a5c:	e92d4008 	push	{r3, lr}
+  1b4a60:	ebfe4d4b 	bl	147f94 <_Z27UI_Init_Playback_State_Infov@@Base>
+  1b4a64:	ebffe6a5 	bl	1ae500 <_Z23UI_Init_Wifi_State_Infov@@Base>
+  1b4a68:	ebfdd4aa 	bl	129d18 <_Z25UI_Init_Common_State_Infov@@Base>
+  1b4a6c:	e8bd8008 	pop	{r3, pc}
+  1b4a70:	e92d4010 	push	{r4, lr}
+  1b4a74:	e24dde11 	sub	sp, sp, #272	@ 0x110
+  1b4a78:	e3053b1b 	movw	r3, #23323	@ 0x5b1b
+  1b4a7c:	e340306d 	movt	r3, #109	@ 0x6d
+  1b4a80:	e58d3010 	str	r3, [sp, #16]
+  1b4a84:	e28d0014 	add	r0, sp, #20
+  1b4a88:	e3a01000 	mov	r1, #0
+  1b4a8c:	e3a020fc 	mov	r2, #252	@ 0xfc
+  1b4a90:	ebfbdf89 	bl	ac8bc <memset@plt>
+  1b4a94:	e28d0013 	add	r0, sp, #19
+  1b4a98:	e3a010f8 	mov	r1, #248	@ 0xf8
+  1b4a9c:	e30b2644 	movw	r2, #46660	@ 0xb644
+  1b4aa0:	e3402039 	movt	r2, #57	@ 0x39
+  1b4aa4:	ebfbe5b7 	bl	ae188 <snprintf@plt>
+  1b4aa8:	e28d0010 	add	r0, sp, #16
+  1b4aac:	ebfbde71 	bl	ac478 <strlen@plt>
+  1b4ab0:	e2400001 	sub	r0, r0, #1
+  1b4ab4:	e28d2e11 	add	r2, sp, #272	@ 0x110
+  1b4ab8:	e0823000 	add	r3, r2, r0
+  1b4abc:	e5533100 	ldrb	r3, [r3, #-256]	@ 0xffffff00
+  1b4ac0:	e353000a 	cmp	r3, #10
+  1b4ac4:	00820000 	addeq	r0, r2, r0
+  1b4ac8:	03a03000 	moveq	r3, #0
+  1b4acc:	05403100 	strbeq	r3, [r0, #-256]	@ 0xffffff00
+  1b4ad0:	e28d4010 	add	r4, sp, #16
+  1b4ad4:	e1a00004 	mov	r0, r4
+  1b4ad8:	ebfbde66 	bl	ac478 <strlen@plt>
+  1b4adc:	e1a02000 	mov	r2, r0
+  1b4ae0:	e0841000 	add	r1, r4, r0
+  1b4ae4:	e30a37c0 	movw	r3, #42944	@ 0xa7c0
+  1b4ae8:	e3403036 	movt	r3, #54	@ 0x36
+  1b4aec:	e5930000 	ldr	r0, [r3]
+  1b4af0:	e7840002 	str	r0, [r4, r2]
+  1b4af4:	e5d33004 	ldrb	r3, [r3, #4]
+  1b4af8:	e5c13004 	strb	r3, [r1, #4]
+  1b4afc:	e59f303c 	ldr	r3, [pc, #60]	@ 1b4b40 <_Z13UI_Init_Statev@@Base+0xe4>
+  1b4b00:	e58d3000 	str	r3, [sp]
+  1b4b04:	e30b33a0 	movw	r3, #45984	@ 0xb3a0
+  1b4b08:	e3403039 	movt	r3, #57	@ 0x39
+  1b4b0c:	e58d3004 	str	r3, [sp, #4]
+  1b4b10:	e3003122 	movw	r3, #290	@ 0x122
+  1b4b14:	e58d3008 	str	r3, [sp, #8]
+  1b4b18:	e58d400c 	str	r4, [sp, #12]
+  1b4b1c:	e3a00003 	mov	r0, #3
+  1b4b20:	e3a01004 	mov	r1, #4
+  1b4b24:	e30b2fb4 	movw	r2, #49076	@ 0xbfb4
+  1b4b28:	e3402036 	movt	r2, #54	@ 0x36
+  1b4b2c:	e30a37d0 	movw	r3, #42960	@ 0xa7d0
+  1b4b30:	e3403036 	movt	r3, #54	@ 0x36
+  1b4b34:	ebfbe176 	bl	ad114 <__dlog_print@plt>
+  1b4b38:	e28dde11 	add	sp, sp, #272	@ 0x110
+  1b4b3c:	e8bd8010 	pop	{r4, pc}
+  1b4b40:	0039b65b 	eorseq	fp, r9, fp, asr r6
+  1b4b44:	e92d4030 	push	{r4, r5, lr}
+  1b4b48:	e24ddf47 	sub	sp, sp, #284	@ 0x11c
+  1b4b4c:	e1a05000 	mov	r5, r0
+  1b4b50:	e3003f10 	movw	r3, #3856	@ 0xf10
+  1b4b54:	e340304b 	movt	r3, #75	@ 0x4b
+  1b4b58:	e5d33002 	ldrb	r3, [r3, #2]
+  1b4b5c:	e3130001 	tst	r3, #1
+  1b4b60:	0a000034 	beq	1b4c38 <_Z13UI_Init_Statev@@Base+0x1dc>
+  1b4b64:	e59f339c 	ldr	r3, [pc, #924]	@ 1b4f08 <_Z13UI_Init_Statev@@Base+0x4ac>
+  1b4b68:	e8930003 	ldm	r3, {r0, r1}
+  1b4b6c:	e58d0014 	str	r0, [sp, #20]
+  1b4b70:	e1cd11b8 	strh	r1, [sp, #24]
+  1b4b74:	e28d001a 	add	r0, sp, #26
+  1b4b78:	e3a01000 	mov	r1, #0
+  1b4b7c:	e3a020fa 	mov	r2, #250	@ 0xfa
+  1b4b80:	ebfbdf4d 	bl	ac8bc <memset@plt>
+  1b4b84:	eb0301d2 	bl	2752d4 <GET_TICK_COUNT@@Base>
+  1b4b88:	e3003f10 	movw	r3, #3856	@ 0xf10
+  1b4b8c:	e340304b 	movt	r3, #75	@ 0x4b
+  1b4b90:	e5933028 	ldr	r3, [r3, #40]	@ 0x28
+  1b4b94:	e0633000 	rsb	r3, r3, r0
+  1b4b98:	e28d0019 	add	r0, sp, #25
+  1b4b9c:	e3a010f6 	mov	r1, #246	@ 0xf6
+  1b4ba0:	e30b2670 	movw	r2, #46704	@ 0xb670
+  1b4ba4:	e3402039 	movt	r2, #57	@ 0x39
+  1b4ba8:	ebfbe576 	bl	ae188 <snprintf@plt>
+  1b4bac:	e28d0014 	add	r0, sp, #20
+  1b4bb0:	ebfbde30 	bl	ac478 <strlen@plt>
+  1b4bb4:	e2400001 	sub	r0, r0, #1
+  1b4bb8:	e28d2f46 	add	r2, sp, #280	@ 0x118
+  1b4bbc:	e0823000 	add	r3, r2, r0
+  1b4bc0:	e5533104 	ldrb	r3, [r3, #-260]	@ 0xfffffefc
+  1b4bc4:	e353000a 	cmp	r3, #10
+  1b4bc8:	00820000 	addeq	r0, r2, r0
+  1b4bcc:	03a03000 	moveq	r3, #0
+  1b4bd0:	05403104 	strbeq	r3, [r0, #-260]	@ 0xfffffefc
+  1b4bd4:	e28d4014 	add	r4, sp, #20
+  1b4bd8:	e1a00004 	mov	r0, r4
+  1b4bdc:	ebfbde25 	bl	ac478 <strlen@plt>
+  1b4be0:	e1a02000 	mov	r2, r0
+  1b4be4:	e0841000 	add	r1, r4, r0
+  1b4be8:	e30a37c0 	movw	r3, #42944	@ 0xa7c0
+  1b4bec:	e3403036 	movt	r3, #54	@ 0x36
+  1b4bf0:	e5930000 	ldr	r0, [r3]
+  1b4bf4:	e7840002 	str	r0, [r4, r2]
+  1b4bf8:	e5d33004 	ldrb	r3, [r3, #4]
+  1b4bfc:	e5c13004 	strb	r3, [r1, #4]
+  1b4c00:	e59f3304 	ldr	r3, [pc, #772]	@ 1b4f0c <_Z13UI_Init_Statev@@Base+0x4b0>
+  1b4c04:	e58d3000 	str	r3, [sp]
+  1b4c08:	e59f3300 	ldr	r3, [pc, #768]	@ 1b4f10 <_Z13UI_Init_Statev@@Base+0x4b4>
+  1b4c0c:	e58d3004 	str	r3, [sp, #4]
+  1b4c10:	e3a0308a 	mov	r3, #138	@ 0x8a
+  1b4c14:	e58d3008 	str	r3, [sp, #8]
+  1b4c18:	e58d400c 	str	r4, [sp, #12]
+  1b4c1c:	e3a00003 	mov	r0, #3
+  1b4c20:	e3a01004 	mov	r1, #4
+  1b4c24:	e30423c8 	movw	r2, #17352	@ 0x43c8
+  1b4c28:	e3402038 	movt	r2, #56	@ 0x38
+  1b4c2c:	e30a37d0 	movw	r3, #42960	@ 0xa7d0
+  1b4c30:	e3403036 	movt	r3, #54	@ 0x36
+  1b4c34:	ebfbe136 	bl	ad114 <__dlog_print@plt>
+  1b4c38:	e30007e6 	movw	r0, #2022	@ 0x7e6
+  1b4c3c:	eb012b51 	bl	1ff988 <_Z12UI_Get_Value14eUI_VALUE_ITEM@@Base>
+  1b4c40:	e3500001 	cmp	r0, #1
+  1b4c44:	1a000041 	bne	1b4d50 <_Z13UI_Init_Statev@@Base+0x2f4>
+  1b4c48:	e3053b1b 	movw	r3, #23323	@ 0x5b1b
+  1b4c4c:	e340306d 	movt	r3, #109	@ 0x6d
+  1b4c50:	e58d3014 	str	r3, [sp, #20]
+  1b4c54:	e28d0018 	add	r0, sp, #24
+  1b4c58:	e3a01000 	mov	r1, #0
+  1b4c5c:	e3a020fc 	mov	r2, #252	@ 0xfc
+  1b4c60:	ebfbdf15 	bl	ac8bc <memset@plt>
+  1b4c64:	e28d0017 	add	r0, sp, #23
+  1b4c68:	e3a010f8 	mov	r1, #248	@ 0xf8
+  1b4c6c:	e30b2688 	movw	r2, #46728	@ 0xb688
+  1b4c70:	e3402039 	movt	r2, #57	@ 0x39
+  1b4c74:	ebfbe543 	bl	ae188 <snprintf@plt>
+  1b4c78:	e28d0014 	add	r0, sp, #20
+  1b4c7c:	ebfbddfd 	bl	ac478 <strlen@plt>
+  1b4c80:	e2400001 	sub	r0, r0, #1
+  1b4c84:	e28d2f46 	add	r2, sp, #280	@ 0x118
+  1b4c88:	e0823000 	add	r3, r2, r0
+  1b4c8c:	e5533104 	ldrb	r3, [r3, #-260]	@ 0xfffffefc
+  1b4c90:	e353000a 	cmp	r3, #10
+  1b4c94:	00820000 	addeq	r0, r2, r0
+  1b4c98:	03a03000 	moveq	r3, #0
+  1b4c9c:	05403104 	strbeq	r3, [r0, #-260]	@ 0xfffffefc
+  1b4ca0:	e28d4014 	add	r4, sp, #20
+  1b4ca4:	e1a00004 	mov	r0, r4
+  1b4ca8:	ebfbddf2 	bl	ac478 <strlen@plt>
+  1b4cac:	e1a02000 	mov	r2, r0
+  1b4cb0:	e0841000 	add	r1, r4, r0
+  1b4cb4:	e30a37c0 	movw	r3, #42944	@ 0xa7c0
+  1b4cb8:	e3403036 	movt	r3, #54	@ 0x36
+  1b4cbc:	e5930000 	ldr	r0, [r3]
+  1b4cc0:	e7840002 	str	r0, [r4, r2]
+  1b4cc4:	e5d33004 	ldrb	r3, [r3, #4]
+  1b4cc8:	e5c13004 	strb	r3, [r1, #4]
+  1b4ccc:	e59f3238 	ldr	r3, [pc, #568]	@ 1b4f0c <_Z13UI_Init_Statev@@Base+0x4b0>
+  1b4cd0:	e58d3000 	str	r3, [sp]
+  1b4cd4:	e59f3234 	ldr	r3, [pc, #564]	@ 1b4f10 <_Z13UI_Init_Statev@@Base+0x4b4>
+  1b4cd8:	e58d3004 	str	r3, [sp, #4]
+  1b4cdc:	e3a0308f 	mov	r3, #143	@ 0x8f
+  1b4ce0:	e58d3008 	str	r3, [sp, #8]
+  1b4ce4:	e58d400c 	str	r4, [sp, #12]
+  1b4ce8:	e3a00003 	mov	r0, #3
+  1b4cec:	e3a01004 	mov	r1, #4
+  1b4cf0:	e30b2fb4 	movw	r2, #49076	@ 0xbfb4
+  1b4cf4:	e3402036 	movt	r2, #54	@ 0x36
+  1b4cf8:	e30a37d0 	movw	r3, #42960	@ 0xa7d0
+  1b4cfc:	e3403036 	movt	r3, #54	@ 0x36
+  1b4d00:	ebfbe103 	bl	ad114 <__dlog_print@plt>
+  1b4d04:	e3a03002 	mov	r3, #2
+  1b4d08:	e58530a8 	str	r3, [r5, #168]	@ 0xa8
+  1b4d0c:	e28d1f46 	add	r1, sp, #280	@ 0x118
+  1b4d10:	e3a03001 	mov	r3, #1
+  1b4d14:	e5213004 	str	r3, [r1, #-4]!
+  1b4d18:	e30400ac 	movw	r0, #16556	@ 0x40ac
+  1b4d1c:	e3400038 	movt	r0, #56	@ 0x38
+  1b4d20:	ebfbdaf2 	bl	ab8f0 <vconf_get_int@plt>
+  1b4d24:	e59d3114 	ldr	r3, [sp, #276]	@ 0x114
+  1b4d28:	e3530003 	cmp	r3, #3
+  1b4d2c:	1a000039 	bne	1b4e18 <_Z13UI_Init_Statev@@Base+0x3bc>
+  1b4d30:	e30007e6 	movw	r0, #2022	@ 0x7e6
+  1b4d34:	eb012b13 	bl	1ff988 <_Z12UI_Get_Value14eUI_VALUE_ITEM@@Base>
+  1b4d38:	e3500001 	cmp	r0, #1
+  1b4d3c:	130933e0 	movwne	r3, #37856	@ 0x93e0
+  1b4d40:	1340304a 	movtne	r3, #74	@ 0x4a
+  1b4d44:	13a02001 	movne	r2, #1
+  1b4d48:	15c32000 	strbne	r2, [r3]
+  1b4d4c:	ea000031 	b	1b4e18 <_Z13UI_Init_Statev@@Base+0x3bc>
+  1b4d50:	e3053b1b 	movw	r3, #23323	@ 0x5b1b
+  1b4d54:	e340306d 	movt	r3, #109	@ 0x6d
+  1b4d58:	e58d3014 	str	r3, [sp, #20]
+  1b4d5c:	e28d0018 	add	r0, sp, #24
+  1b4d60:	e3a01000 	mov	r1, #0
+  1b4d64:	e3a020fc 	mov	r2, #252	@ 0xfc
+  1b4d68:	ebfbded3 	bl	ac8bc <memset@plt>
+  1b4d6c:	e30007e6 	movw	r0, #2022	@ 0x7e6
+  1b4d70:	eb012b04 	bl	1ff988 <_Z12UI_Get_Value14eUI_VALUE_ITEM@@Base>
+  1b4d74:	e1a03000 	mov	r3, r0
+  1b4d78:	e28d0017 	add	r0, sp, #23
+  1b4d7c:	e3a010f8 	mov	r1, #248	@ 0xf8
+  1b4d80:	e30b26a0 	movw	r2, #46752	@ 0xb6a0
+  1b4d84:	e3402039 	movt	r2, #57	@ 0x39
+  1b4d88:	ebfbe4fe 	bl	ae188 <snprintf@plt>
+  1b4d8c:	e28d0014 	add	r0, sp, #20
+  1b4d90:	ebfbddb8 	bl	ac478 <strlen@plt>
+  1b4d94:	e2400001 	sub	r0, r0, #1
+  1b4d98:	e28d2f46 	add	r2, sp, #280	@ 0x118
+  1b4d9c:	e0823000 	add	r3, r2, r0
+  1b4da0:	e5533104 	ldrb	r3, [r3, #-260]	@ 0xfffffefc
+  1b4da4:	e353000a 	cmp	r3, #10
+  1b4da8:	00820000 	addeq	r0, r2, r0
+  1b4dac:	03a03000 	moveq	r3, #0
+  1b4db0:	05403104 	strbeq	r3, [r0, #-260]	@ 0xfffffefc
+  1b4db4:	e28d4014 	add	r4, sp, #20
+  1b4db8:	e1a00004 	mov	r0, r4
+  1b4dbc:	ebfbddad 	bl	ac478 <strlen@plt>
+  1b4dc0:	e1a02000 	mov	r2, r0
+  1b4dc4:	e0841000 	add	r1, r4, r0
+  1b4dc8:	e30a37c0 	movw	r3, #42944	@ 0xa7c0
+  1b4dcc:	e3403036 	movt	r3, #54	@ 0x36
+  1b4dd0:	e5930000 	ldr	r0, [r3]
+  1b4dd4:	e7840002 	str	r0, [r4, r2]
+  1b4dd8:	e5d33004 	ldrb	r3, [r3, #4]
+  1b4ddc:	e5c13004 	strb	r3, [r1, #4]
+  1b4de0:	e59f3124 	ldr	r3, [pc, #292]	@ 1b4f0c <_Z13UI_Init_Statev@@Base+0x4b0>
+  1b4de4:	e58d3000 	str	r3, [sp]
+  1b4de8:	e59f3120 	ldr	r3, [pc, #288]	@ 1b4f10 <_Z13UI_Init_Statev@@Base+0x4b4>
+  1b4dec:	e58d3004 	str	r3, [sp, #4]
+  1b4df0:	e3a0309f 	mov	r3, #159	@ 0x9f
+  1b4df4:	e58d3008 	str	r3, [sp, #8]
+  1b4df8:	e58d400c 	str	r4, [sp, #12]
+  1b4dfc:	e3a00003 	mov	r0, #3
+  1b4e00:	e3a01004 	mov	r1, #4
+  1b4e04:	e30b2fb4 	movw	r2, #49076	@ 0xbfb4
+  1b4e08:	e3402036 	movt	r2, #54	@ 0x36
+  1b4e0c:	e30a37d0 	movw	r3, #42960	@ 0xa7d0
+  1b4e10:	e3403036 	movt	r3, #54	@ 0x36
+  1b4e14:	ebfbe0be 	bl	ad114 <__dlog_print@plt>
+  1b4e18:	e3003f10 	movw	r3, #3856	@ 0xf10
+  1b4e1c:	e340304b 	movt	r3, #75	@ 0x4b
+  1b4e20:	e5d33002 	ldrb	r3, [r3, #2]
+  1b4e24:	e3130001 	tst	r3, #1
+  1b4e28:	0a000034 	beq	1b4f00 <_Z13UI_Init_Statev@@Base+0x4a4>
+  1b4e2c:	e59f30d4 	ldr	r3, [pc, #212]	@ 1b4f08 <_Z13UI_Init_Statev@@Base+0x4ac>
+  1b4e30:	e8930003 	ldm	r3, {r0, r1}
+  1b4e34:	e58d0014 	str	r0, [sp, #20]
+  1b4e38:	e1cd11b8 	strh	r1, [sp, #24]
+  1b4e3c:	e28d001a 	add	r0, sp, #26
+  1b4e40:	e3a01000 	mov	r1, #0
+  1b4e44:	e3a020fa 	mov	r2, #250	@ 0xfa
+  1b4e48:	ebfbde9b 	bl	ac8bc <memset@plt>
+  1b4e4c:	eb030120 	bl	2752d4 <GET_TICK_COUNT@@Base>
+  1b4e50:	e3003f10 	movw	r3, #3856	@ 0xf10
+  1b4e54:	e340304b 	movt	r3, #75	@ 0x4b
+  1b4e58:	e5933028 	ldr	r3, [r3, #40]	@ 0x28
+  1b4e5c:	e0633000 	rsb	r3, r3, r0
+  1b4e60:	e28d0019 	add	r0, sp, #25
+  1b4e64:	e3a010f6 	mov	r1, #246	@ 0xf6
+  1b4e68:	e30b26cc 	movw	r2, #46796	@ 0xb6cc
+  1b4e6c:	e3402039 	movt	r2, #57	@ 0x39
+  1b4e70:	ebfbe4c4 	bl	ae188 <snprintf@plt>
+  1b4e74:	e28d0014 	add	r0, sp, #20
+  1b4e78:	ebfbdd7e 	bl	ac478 <strlen@plt>
+  1b4e7c:	e2400001 	sub	r0, r0, #1
+  1b4e80:	e28d2f46 	add	r2, sp, #280	@ 0x118
+  1b4e84:	e0823000 	add	r3, r2, r0
+  1b4e88:	e5533104 	ldrb	r3, [r3, #-260]	@ 0xfffffefc
+  1b4e8c:	e353000a 	cmp	r3, #10
+  1b4e90:	00820000 	addeq	r0, r2, r0
+  1b4e94:	03a03000 	moveq	r3, #0
+  1b4e98:	05403104 	strbeq	r3, [r0, #-260]	@ 0xfffffefc
+  1b4e9c:	e28d4014 	add	r4, sp, #20
+  1b4ea0:	e1a00004 	mov	r0, r4
+  1b4ea4:	ebfbdd73 	bl	ac478 <strlen@plt>
+  1b4ea8:	e1a02000 	mov	r2, r0
+  1b4eac:	e0841000 	add	r1, r4, r0
+  1b4eb0:	e30a37c0 	movw	r3, #42944	@ 0xa7c0
+  1b4eb4:	e3403036 	movt	r3, #54	@ 0x36
+  1b4eb8:	e5930000 	ldr	r0, [r3]
+  1b4ebc:	e7840002 	str	r0, [r4, r2]
+  1b4ec0:	e5d33004 	ldrb	r3, [r3, #4]
+  1b4ec4:	e5c13004 	strb	r3, [r1, #4]
+  1b4ec8:	e59f303c 	ldr	r3, [pc, #60]	@ 1b4f0c <_Z13UI_Init_Statev@@Base+0x4b0>
+  1b4ecc:	e58d3000 	str	r3, [sp]
+  1b4ed0:	e59f3038 	ldr	r3, [pc, #56]	@ 1b4f10 <_Z13UI_Init_Statev@@Base+0x4b4>
+  1b4ed4:	e58d3004 	str	r3, [sp, #4]
+  1b4ed8:	e3a030a4 	mov	r3, #164	@ 0xa4
+  1b4edc:	e58d3008 	str	r3, [sp, #8]
+  1b4ee0:	e58d400c 	str	r4, [sp, #12]
+  1b4ee4:	e3a00003 	mov	r0, #3
+  1b4ee8:	e3a01004 	mov	r1, #4
+  1b4eec:	e30423c8 	movw	r2, #17352	@ 0x43c8
+  1b4ef0:	e3402038 	movt	r2, #56	@ 0x38
+  1b4ef4:	e30a37d0 	movw	r3, #42960	@ 0xa7d0
+  1b4ef8:	e3403036 	movt	r3, #54	@ 0x36
+  1b4efc:	ebfbe084 	bl	ad114 <__dlog_print@plt>
+  1b4f00:	e28ddf47 	add	sp, sp, #284	@ 0x11c
+  1b4f04:	e8bd8030 	pop	{r4, r5, pc}
+  1b4f08:	0039b3b0 	ldrhteq	fp, [r9], -r0
+  1b4f0c:	0039b65b 	eorseq	fp, r9, fp, asr r6
+  1b4f10:	0039b4b0 	ldrhteq	fp, [r9], -r0
+  1b4f14:	e92d4ff0 	push	{r4, r5, r6, r7, r8, r9, sl, fp, lr}
+  1b4f18:	e24ddf89 	sub	sp, sp, #548	@ 0x224
+  1b4f1c:	e1a04001 	mov	r4, r1
+  1b4f20:	e3053b1b 	movw	r3, #23323	@ 0x5b1b
+  1b4f24:	e340306d 	movt	r3, #109	@ 0x6d
+  1b4f28:	e58d3014 	str	r3, [sp, #20]
+  1b4f2c:	e28d0018 	add	r0, sp, #24
+  1b4f30:	e3a01000 	mov	r1, #0
+  1b4f34:	e3a020fc 	mov	r2, #252	@ 0xfc
+  1b4f38:	ebfbde5f 	bl	ac8bc <memset@plt>
+  1b4f3c:	e28d0017 	add	r0, sp, #23
+  1b4f40:	e3a010f8 	mov	r1, #248	@ 0xf8
+  1b4f44:	e30b26e0 	movw	r2, #46816	@ 0xb6e0
+  1b4f48:	e3402039 	movt	r2, #57	@ 0x39
+  1b4f4c:	ebfbe48d 	bl	ae188 <snprintf@plt>
+  1b4f50:	e28d0014 	add	r0, sp, #20
+  1b4f54:	ebfbdd47 	bl	ac478 <strlen@plt>
+  1b4f58:	e2400001 	sub	r0, r0, #1
+  1b4f5c:	e28d2e22 	add	r2, sp, #544	@ 0x220
+  1b4f60:	e0823000 	add	r3, r2, r0
+  1b4f64:	e553320c 	ldrb	r3, [r3, #-524]	@ 0xfffffdf4
+  1b4f68:	e353000a 	cmp	r3, #10
+  1b4f6c:	00820000 	addeq	r0, r2, r0
+  1b4f70:	03a03000 	moveq	r3, #0
+  1b4f74:	0540320c 	strbeq	r3, [r0, #-524]	@ 0xfffffdf4
+  1b4f78:	e28d5014 	add	r5, sp, #20
+  1b4f7c:	e1a00005 	mov	r0, r5
+  1b4f80:	ebfbdd3c 	bl	ac478 <strlen@plt>
+  1b4f84:	e1a02000 	mov	r2, r0
+  1b4f88:	e0851000 	add	r1, r5, r0
+  1b4f8c:	e30a37c0 	movw	r3, #42944	@ 0xa7c0
+  1b4f90:	e3403036 	movt	r3, #54	@ 0x36
+  1b4f94:	e5930000 	ldr	r0, [r3]
+  1b4f98:	e7850002 	str	r0, [r5, r2]
+  1b4f9c:	e5d33004 	ldrb	r3, [r3, #4]
+  1b4fa0:	e5c13004 	strb	r3, [r1, #4]
+  1b4fa4:	e59f3e54 	ldr	r3, [pc, #3668]	@ 1b5e00 <_Z13UI_Init_Statev@@Base+0x13a4>
+  1b4fa8:	e58d3000 	str	r3, [sp]
+  1b4fac:	e59f3e50 	ldr	r3, [pc, #3664]	@ 1b5e04 <_Z13UI_Init_Statev@@Base+0x13a8>
+  1b4fb0:	e58d3004 	str	r3, [sp, #4]
+  1b4fb4:	e3a03f5e 	mov	r3, #376	@ 0x178
+  1b4fb8:	e58d3008 	str	r3, [sp, #8]
+  1b4fbc:	e58d500c 	str	r5, [sp, #12]
+  1b4fc0:	e3a00003 	mov	r0, #3
+  1b4fc4:	e3a01004 	mov	r1, #4
+  1b4fc8:	e30b2fb4 	movw	r2, #49076	@ 0xbfb4
+  1b4fcc:	e3402036 	movt	r2, #54	@ 0x36
+  1b4fd0:	e30a37d0 	movw	r3, #42960	@ 0xa7d0
+  1b4fd4:	e3403036 	movt	r3, #54	@ 0x36
+  1b4fd8:	ebfbe04d 	bl	ad114 <__dlog_print@plt>
+  1b4fdc:	e59430ac 	ldr	r3, [r4, #172]	@ 0xac
+  1b4fe0:	e3530000 	cmp	r3, #0
+  1b4fe4:	0a00028a 	beq	1b5a14 <_Z13UI_Init_Statev@@Base+0xfb8>
+  1b4fe8:	e3070a9c 	movw	r0, #31388	@ 0x7a9c
+  1b4fec:	e3400038 	movt	r0, #56	@ 0x38
+  1b4ff0:	e3a01001 	mov	r1, #1
+  1b4ff4:	ebfbe12d 	bl	ad4b0 <vconf_set_int@plt>
+  1b4ff8:	e3a03002 	mov	r3, #2
+  1b4ffc:	e58430a8 	str	r3, [r4, #168]	@ 0xa8
+  1b5000:	e3003f10 	movw	r3, #3856	@ 0xf10
+  1b5004:	e340304b 	movt	r3, #75	@ 0x4b
+  1b5008:	e5d33002 	ldrb	r3, [r3, #2]
+  1b500c:	e3130001 	tst	r3, #1
+  1b5010:	0a000034 	beq	1b50e8 <_Z13UI_Init_Statev@@Base+0x68c>
+  1b5014:	e59f3dec 	ldr	r3, [pc, #3564]	@ 1b5e08 <_Z13UI_Init_Statev@@Base+0x13ac>
+  1b5018:	e8930003 	ldm	r3, {r0, r1}
+  1b501c:	e58d0014 	str	r0, [sp, #20]
+  1b5020:	e1cd11b8 	strh	r1, [sp, #24]
+  1b5024:	e28d001a 	add	r0, sp, #26
+  1b5028:	e3a01000 	mov	r1, #0
+  1b502c:	e3a020fa 	mov	r2, #250	@ 0xfa
+  1b5030:	ebfbde21 	bl	ac8bc <memset@plt>
+  1b5034:	eb0300a6 	bl	2752d4 <GET_TICK_COUNT@@Base>
+  1b5038:	e3003f10 	movw	r3, #3856	@ 0xf10
+  1b503c:	e340304b 	movt	r3, #75	@ 0x4b
+  1b5040:	e5933028 	ldr	r3, [r3, #40]	@ 0x28
+  1b5044:	e0633000 	rsb	r3, r3, r0
+  1b5048:	e28d0019 	add	r0, sp, #25
+  1b504c:	e3a010f6 	mov	r1, #246	@ 0xf6
+  1b5050:	e30b26f0 	movw	r2, #46832	@ 0xb6f0
+  1b5054:	e3402039 	movt	r2, #57	@ 0x39
+  1b5058:	ebfbe44a 	bl	ae188 <snprintf@plt>
+  1b505c:	e28d0014 	add	r0, sp, #20
+  1b5060:	ebfbdd04 	bl	ac478 <strlen@plt>
+  1b5064:	e2400001 	sub	r0, r0, #1
+  1b5068:	e28d2e22 	add	r2, sp, #544	@ 0x220
+  1b506c:	e0823000 	add	r3, r2, r0
+  1b5070:	e553320c 	ldrb	r3, [r3, #-524]	@ 0xfffffdf4
+  1b5074:	e353000a 	cmp	r3, #10
+  1b5078:	00820000 	addeq	r0, r2, r0
+  1b507c:	03a03000 	moveq	r3, #0
+  1b5080:	0540320c 	strbeq	r3, [r0, #-524]	@ 0xfffffdf4
+  1b5084:	e28d5014 	add	r5, sp, #20
+  1b5088:	e1a00005 	mov	r0, r5
+  1b508c:	ebfbdcf9 	bl	ac478 <strlen@plt>
+  1b5090:	e1a02000 	mov	r2, r0
+  1b5094:	e0851000 	add	r1, r5, r0
+  1b5098:	e30a37c0 	movw	r3, #42944	@ 0xa7c0
+  1b509c:	e3403036 	movt	r3, #54	@ 0x36
+  1b50a0:	e5930000 	ldr	r0, [r3]
+  1b50a4:	e7850002 	str	r0, [r5, r2]
+  1b50a8:	e5d33004 	ldrb	r3, [r3, #4]
+  1b50ac:	e5c13004 	strb	r3, [r1, #4]
+  1b50b0:	e59f3d48 	ldr	r3, [pc, #3400]	@ 1b5e00 <_Z13UI_Init_Statev@@Base+0x13a4>
+  1b50b4:	e58d3000 	str	r3, [sp]
+  1b50b8:	e59f3d4c 	ldr	r3, [pc, #3404]	@ 1b5e0c <_Z13UI_Init_Statev@@Base+0x13b0>
+  1b50bc:	e58d3004 	str	r3, [sp, #4]
+  1b50c0:	e3a030b3 	mov	r3, #179	@ 0xb3
+  1b50c4:	e58d3008 	str	r3, [sp, #8]
+  1b50c8:	e58d500c 	str	r5, [sp, #12]
+  1b50cc:	e3a00003 	mov	r0, #3
+  1b50d0:	e3a01004 	mov	r1, #4
+  1b50d4:	e30423c8 	movw	r2, #17352	@ 0x43c8
+  1b50d8:	e3402038 	movt	r2, #56	@ 0x38
+  1b50dc:	e30a37d0 	movw	r3, #42960	@ 0xa7d0
+  1b50e0:	e3403036 	movt	r3, #54	@ 0x36
+  1b50e4:	ebfbe00a 	bl	ad114 <__dlog_print@plt>
+  1b50e8:	e3053b1b 	movw	r3, #23323	@ 0x5b1b
+  1b50ec:	e340306d 	movt	r3, #109	@ 0x6d
+  1b50f0:	e58d3014 	str	r3, [sp, #20]
+  1b50f4:	e28d0018 	add	r0, sp, #24
+  1b50f8:	e3a01000 	mov	r1, #0
+  1b50fc:	e3a020fc 	mov	r2, #252	@ 0xfc
+  1b5100:	ebfbdded 	bl	ac8bc <memset@plt>
+  1b5104:	e59430a8 	ldr	r3, [r4, #168]	@ 0xa8
+  1b5108:	e30923e0 	movw	r2, #37856	@ 0x93e0
+  1b510c:	e340204a 	movt	r2, #74	@ 0x4a
+  1b5110:	e5d22000 	ldrb	r2, [r2]
+  1b5114:	e58d2000 	str	r2, [sp]
+  1b5118:	e28d0017 	add	r0, sp, #23
+  1b511c:	e3a010f8 	mov	r1, #248	@ 0xf8
+  1b5120:	e30b2708 	movw	r2, #46856	@ 0xb708
+  1b5124:	e3402039 	movt	r2, #57	@ 0x39
+  1b5128:	ebfbe416 	bl	ae188 <snprintf@plt>
+  1b512c:	e28d0014 	add	r0, sp, #20
+  1b5130:	ebfbdcd0 	bl	ac478 <strlen@plt>
+  1b5134:	e2400001 	sub	r0, r0, #1
+  1b5138:	e28d2e22 	add	r2, sp, #544	@ 0x220
+  1b513c:	e0823000 	add	r3, r2, r0
+  1b5140:	e553320c 	ldrb	r3, [r3, #-524]	@ 0xfffffdf4
+  1b5144:	e353000a 	cmp	r3, #10
+  1b5148:	00820000 	addeq	r0, r2, r0
+  1b514c:	03a03000 	moveq	r3, #0
+  1b5150:	0540320c 	strbeq	r3, [r0, #-524]	@ 0xfffffdf4
+  1b5154:	e28d5014 	add	r5, sp, #20
+  1b5158:	e1a00005 	mov	r0, r5
+  1b515c:	ebfbdcc5 	bl	ac478 <strlen@plt>
+  1b5160:	e1a02000 	mov	r2, r0
+  1b5164:	e0851000 	add	r1, r5, r0
+  1b5168:	e30a37c0 	movw	r3, #42944	@ 0xa7c0
+  1b516c:	e3403036 	movt	r3, #54	@ 0x36
+  1b5170:	e5930000 	ldr	r0, [r3]
+  1b5174:	e7850002 	str	r0, [r5, r2]
+  1b5178:	e5d33004 	ldrb	r3, [r3, #4]
+  1b517c:	e5c13004 	strb	r3, [r1, #4]
+  1b5180:	e59f3c78 	ldr	r3, [pc, #3192]	@ 1b5e00 <_Z13UI_Init_Statev@@Base+0x13a4>
+  1b5184:	e58d3000 	str	r3, [sp]
+  1b5188:	e59f3c7c 	ldr	r3, [pc, #3196]	@ 1b5e0c <_Z13UI_Init_Statev@@Base+0x13b0>
+  1b518c:	e58d3004 	str	r3, [sp, #4]
+  1b5190:	e3a030b7 	mov	r3, #183	@ 0xb7
+  1b5194:	e58d3008 	str	r3, [sp, #8]
+  1b5198:	e58d500c 	str	r5, [sp, #12]
+  1b519c:	e3a00003 	mov	r0, #3
+  1b51a0:	e3a01004 	mov	r1, #4
+  1b51a4:	e30b2fb4 	movw	r2, #49076	@ 0xbfb4
+  1b51a8:	e3402036 	movt	r2, #54	@ 0x36
+  1b51ac:	e30a37d0 	movw	r3, #42960	@ 0xa7d0
+  1b51b0:	e3403036 	movt	r3, #54	@ 0x36
+  1b51b4:	ebfbdfd6 	bl	ad114 <__dlog_print@plt>
+  1b51b8:	e59430a8 	ldr	r3, [r4, #168]	@ 0xa8
+  1b51bc:	e3530002 	cmp	r3, #2
+  1b51c0:	1a0001ca 	bne	1b58f0 <_Z13UI_Init_Statev@@Base+0xe94>
+  1b51c4:	e3a03003 	mov	r3, #3
+  1b51c8:	e58430a8 	str	r3, [r4, #168]	@ 0xa8
+  1b51cc:	e30933e0 	movw	r3, #37856	@ 0x93e0
+  1b51d0:	e340304a 	movt	r3, #74	@ 0x4a
+  1b51d4:	e5d33000 	ldrb	r3, [r3]
+  1b51d8:	e3530000 	cmp	r3, #0
+  1b51dc:	0a000004 	beq	1b51f4 <_Z13UI_Init_Statev@@Base+0x798>
+  1b51e0:	e30933e0 	movw	r3, #37856	@ 0x93e0
+  1b51e4:	e340304a 	movt	r3, #74	@ 0x4a
+  1b51e8:	e3a02000 	mov	r2, #0
+  1b51ec:	e5c32000 	strb	r2, [r3]
+  1b51f0:	ea000202 	b	1b5a00 <_Z13UI_Init_Statev@@Base+0xfa4>
+  1b51f4:	e3a05000 	mov	r5, #0
+  1b51f8:	e58d5214 	str	r5, [sp, #532]	@ 0x214
+  1b51fc:	e58d5218 	str	r5, [sp, #536]	@ 0x218
+  1b5200:	e30b073c 	movw	r0, #46908	@ 0xb73c
+  1b5204:	e3400039 	movt	r0, #57	@ 0x39
+  1b5208:	e28d1f85 	add	r1, sp, #532	@ 0x214
+  1b520c:	ebfbd9b7 	bl	ab8f0 <vconf_get_int@plt>
+  1b5210:	e3030184 	movw	r0, #12676	@ 0x3184
+  1b5214:	e3400038 	movt	r0, #56	@ 0x38
+  1b5218:	e28d1f86 	add	r1, sp, #536	@ 0x218
+  1b521c:	ebfbd9b3 	bl	ab8f0 <vconf_get_int@plt>
+  1b5220:	e30b63a0 	movw	r6, #45984	@ 0xb3a0
+  1b5224:	e3406039 	movt	r6, #57	@ 0x39
+  1b5228:	e28dcf45 	add	ip, sp, #276	@ 0x114
+  1b522c:	e286ef4f 	add	lr, r6, #316	@ 0x13c
+  1b5230:	e8be000f 	ldm	lr!, {r0, r1, r2, r3}
+  1b5234:	e8ac000f 	stmia	ip!, {r0, r1, r2, r3}
+  1b5238:	e59e3000 	ldr	r3, [lr]
+  1b523c:	e58c3000 	str	r3, [ip]
+  1b5240:	e2866010 	add	r6, r6, #16
+  1b5244:	e8960003 	ldm	r6, {r0, r1}
+  1b5248:	e58d0014 	str	r0, [sp, #20]
+  1b524c:	e1cd11b8 	strh	r1, [sp, #24]
+  1b5250:	e28d001a 	add	r0, sp, #26
+  1b5254:	e1a01005 	mov	r1, r5
+  1b5258:	e3a020fa 	mov	r2, #250	@ 0xfa
+  1b525c:	ebfbdd96 	bl	ac8bc <memset@plt>
+  1b5260:	e59d3214 	ldr	r3, [sp, #532]	@ 0x214
+  1b5264:	e28d2e22 	add	r2, sp, #544	@ 0x220
+  1b5268:	e0823103 	add	r3, r2, r3, lsl #2
+  1b526c:	e28d0019 	add	r0, sp, #25
+  1b5270:	e3a010f6 	mov	r1, #246	@ 0xf6
+  1b5274:	e30b2758 	movw	r2, #46936	@ 0xb758
+  1b5278:	e3402039 	movt	r2, #57	@ 0x39
+  1b527c:	e513310c 	ldr	r3, [r3, #-268]	@ 0xfffffef4
+  1b5280:	ebfbe3c0 	bl	ae188 <snprintf@plt>
+  1b5284:	e28d0014 	add	r0, sp, #20
+  1b5288:	ebfbdc7a 	bl	ac478 <strlen@plt>
+  1b528c:	e2400001 	sub	r0, r0, #1
+  1b5290:	e28d2e22 	add	r2, sp, #544	@ 0x220
+  1b5294:	e0823000 	add	r3, r2, r0
+  1b5298:	e553320c 	ldrb	r3, [r3, #-524]	@ 0xfffffdf4
+  1b529c:	e353000a 	cmp	r3, #10
+  1b52a0:	00820000 	addeq	r0, r2, r0
+  1b52a4:	01a03005 	moveq	r3, r5
+  1b52a8:	0540320c 	strbeq	r3, [r0, #-524]	@ 0xfffffdf4
+  1b52ac:	e28d5014 	add	r5, sp, #20
+  1b52b0:	e1a00005 	mov	r0, r5
+  1b52b4:	ebfbdc6f 	bl	ac478 <strlen@plt>
+  1b52b8:	e1a02000 	mov	r2, r0
+  1b52bc:	e0851000 	add	r1, r5, r0
+  1b52c0:	e30a37c0 	movw	r3, #42944	@ 0xa7c0
+  1b52c4:	e3403036 	movt	r3, #54	@ 0x36
+  1b52c8:	e5930000 	ldr	r0, [r3]
+  1b52cc:	e7850002 	str	r0, [r5, r2]
+  1b52d0:	e5d33004 	ldrb	r3, [r3, #4]
+  1b52d4:	e5c13004 	strb	r3, [r1, #4]
+  1b52d8:	e59f3b20 	ldr	r3, [pc, #2848]	@ 1b5e00 <_Z13UI_Init_Statev@@Base+0x13a4>
+  1b52dc:	e58d3000 	str	r3, [sp]
+  1b52e0:	e59f3b24 	ldr	r3, [pc, #2852]	@ 1b5e0c <_Z13UI_Init_Statev@@Base+0x13b0>
+  1b52e4:	e58d3004 	str	r3, [sp, #4]
+  1b52e8:	e3a030d4 	mov	r3, #212	@ 0xd4
+  1b52ec:	e58d3008 	str	r3, [sp, #8]
+  1b52f0:	e58d500c 	str	r5, [sp, #12]
+  1b52f4:	e3a00003 	mov	r0, #3
+  1b52f8:	e3a01004 	mov	r1, #4
+  1b52fc:	e30b2fb4 	movw	r2, #49076	@ 0xbfb4
+  1b5300:	e3402036 	movt	r2, #54	@ 0x36
+  1b5304:	e30a37d0 	movw	r3, #42960	@ 0xa7d0
+  1b5308:	e3403036 	movt	r3, #54	@ 0x36
+  1b530c:	ebfbdf80 	bl	ad114 <__dlog_print@plt>
+  1b5310:	e59d3214 	ldr	r3, [sp, #532]	@ 0x214
+  1b5314:	e2433001 	sub	r3, r3, #1
+  1b5318:	e3530002 	cmp	r3, #2
+  1b531c:	8a000173 	bhi	1b58f0 <_Z13UI_Init_Statev@@Base+0xe94>
+  1b5320:	e30007e6 	movw	r0, #2022	@ 0x7e6
+  1b5324:	eb012997 	bl	1ff988 <_Z12UI_Get_Value14eUI_VALUE_ITEM@@Base>
+  1b5328:	e3500001 	cmp	r0, #1
+  1b532c:	1a00016f 	bne	1b58f0 <_Z13UI_Init_Statev@@Base+0xe94>
+  1b5330:	e59d3214 	ldr	r3, [sp, #532]	@ 0x214
+  1b5334:	e3530003 	cmp	r3, #3
+  1b5338:	0a000004 	beq	1b5350 <_Z13UI_Init_Statev@@Base+0x8f4>
+  1b533c:	e3003f10 	movw	r3, #3856	@ 0xf10
+  1b5340:	e340304b 	movt	r3, #75	@ 0x4b
+  1b5344:	e5933020 	ldr	r3, [r3, #32]
+  1b5348:	e3530001 	cmp	r3, #1
+  1b534c:	1a000160 	bne	1b58d4 <_Z13UI_Init_Statev@@Base+0xe78>
+  1b5350:	e30b53a0 	movw	r5, #45984	@ 0xb3a0
+  1b5354:	e3405039 	movt	r5, #57	@ 0x39
+  1b5358:	e2853e15 	add	r3, r5, #336	@ 0x150
+  1b535c:	e8930003 	ldm	r3, {r0, r1}
+  1b5360:	e58d0014 	str	r0, [sp, #20]
+  1b5364:	e1cd11b8 	strh	r1, [sp, #24]
+  1b5368:	e28d001a 	add	r0, sp, #26
+  1b536c:	e3a01000 	mov	r1, #0
+  1b5370:	e3a020fa 	mov	r2, #250	@ 0xfa
+  1b5374:	ebfbdd50 	bl	ac8bc <memset@plt>
+  1b5378:	e28d0019 	add	r0, sp, #25
+  1b537c:	e3a010f6 	mov	r1, #246	@ 0xf6
+  1b5380:	e30b2778 	movw	r2, #46968	@ 0xb778
+  1b5384:	e3402039 	movt	r2, #57	@ 0x39
+  1b5388:	e2853f4b 	add	r3, r5, #300	@ 0x12c
+  1b538c:	ebfbe37d 	bl	ae188 <snprintf@plt>
+  1b5390:	e28d0014 	add	r0, sp, #20
+  1b5394:	ebfbdc37 	bl	ac478 <strlen@plt>
+  1b5398:	e2400001 	sub	r0, r0, #1
+  1b539c:	e28d2e22 	add	r2, sp, #544	@ 0x220
+  1b53a0:	e0823000 	add	r3, r2, r0
+  1b53a4:	e553320c 	ldrb	r3, [r3, #-524]	@ 0xfffffdf4
+  1b53a8:	e353000a 	cmp	r3, #10
+  1b53ac:	00820000 	addeq	r0, r2, r0
+  1b53b0:	03a03000 	moveq	r3, #0
+  1b53b4:	0540320c 	strbeq	r3, [r0, #-524]	@ 0xfffffdf4
+  1b53b8:	e28d5014 	add	r5, sp, #20
+  1b53bc:	e1a00005 	mov	r0, r5
+  1b53c0:	ebfbdc2c 	bl	ac478 <strlen@plt>
+  1b53c4:	e1a02000 	mov	r2, r0
+  1b53c8:	e0851000 	add	r1, r5, r0
+  1b53cc:	e30a37c0 	movw	r3, #42944	@ 0xa7c0
+  1b53d0:	e3403036 	movt	r3, #54	@ 0x36
+  1b53d4:	e5930000 	ldr	r0, [r3]
+  1b53d8:	e7850002 	str	r0, [r5, r2]
+  1b53dc:	e5d33004 	ldrb	r3, [r3, #4]
+  1b53e0:	e5c13004 	strb	r3, [r1, #4]
+  1b53e4:	e30361d8 	movw	r6, #12760	@ 0x31d8
+  1b53e8:	e3406038 	movt	r6, #56	@ 0x38
+  1b53ec:	e59f3a0c 	ldr	r3, [pc, #2572]	@ 1b5e00 <_Z13UI_Init_Statev@@Base+0x13a4>
+  1b53f0:	e58d3000 	str	r3, [sp]
+  1b53f4:	e59f3a10 	ldr	r3, [pc, #2576]	@ 1b5e0c <_Z13UI_Init_Statev@@Base+0x13b0>
+  1b53f8:	e58d3004 	str	r3, [sp, #4]
+  1b53fc:	e3a030e1 	mov	r3, #225	@ 0xe1
+  1b5400:	e58d3008 	str	r3, [sp, #8]
+  1b5404:	e58d500c 	str	r5, [sp, #12]
+  1b5408:	e3a00003 	mov	r0, #3
+  1b540c:	e3a01004 	mov	r1, #4
+  1b5410:	e1a02006 	mov	r2, r6
+  1b5414:	e30a37d0 	movw	r3, #42960	@ 0xa7d0
+  1b5418:	e3403036 	movt	r3, #54	@ 0x36
+  1b541c:	ebfbdf3c 	bl	ad114 <__dlog_print@plt>
+  1b5420:	e30d30f4 	movw	r3, #53492	@ 0xd0f4
+  1b5424:	e3403049 	movt	r3, #73	@ 0x49
+  1b5428:	e5930000 	ldr	r0, [r3]
+  1b542c:	e30b1fdc 	movw	r1, #49116	@ 0xbfdc
+  1b5430:	e3401036 	movt	r1, #54	@ 0x36
+  1b5434:	e1a02006 	mov	r2, r6
+  1b5438:	e1a03005 	mov	r3, r5
+  1b543c:	ebfbd8d4 	bl	ab794 <fprintf@plt>
+  1b5440:	e3a05000 	mov	r5, #0
+  1b5444:	e3066384 	movw	r6, #25476	@ 0x6384
+  1b5448:	e3406038 	movt	r6, #56	@ 0x38
+  1b544c:	e3067667 	movw	r7, #26215	@ 0x6667
+  1b5450:	e3467666 	movt	r7, #26214	@ 0x6666
+  1b5454:	e300af10 	movw	sl, #3856	@ 0xf10
+  1b5458:	e340a04b 	movt	sl, #75	@ 0x4b
+  1b545c:	e30b97a0 	movw	r9, #47008	@ 0xb7a0
+  1b5460:	e3409039 	movt	r9, #57	@ 0x39
+  1b5464:	ea000019 	b	1b54d0 <_Z13UI_Init_Statev@@Base+0xa74>
+  1b5468:	e0c23597 	smull	r3, r2, r7, r5
+  1b546c:	e1a03fc5 	asr	r3, r5, #31
+  1b5470:	e0633142 	rsb	r3, r3, r2, asr #2
+  1b5474:	e0833103 	add	r3, r3, r3, lsl #2
+  1b5478:	e1550083 	cmp	r5, r3, lsl #1
+  1b547c:	1a00000f 	bne	1b54c0 <_Z13UI_Init_Statev@@Base+0xa64>
+  1b5480:	e3a08000 	mov	r8, #0
+  1b5484:	e58a8024 	str	r8, [sl, #36]	@ 0x24
+  1b5488:	e28d0f87 	add	r0, sp, #540	@ 0x21c
+  1b548c:	ebfbdd70 	bl	aca54 <service_create@plt>
+  1b5490:	e59d021c 	ldr	r0, [sp, #540]	@ 0x21c
+  1b5494:	e1a01006 	mov	r1, r6
+  1b5498:	ebfbda8b 	bl	abecc <service_set_package@plt>
+  1b549c:	e59d021c 	ldr	r0, [sp, #540]	@ 0x21c
+  1b54a0:	e1a01009 	mov	r1, r9
+  1b54a4:	ebfbe004 	bl	ad4bc <service_set_operation@plt>
+  1b54a8:	e59d021c 	ldr	r0, [sp, #540]	@ 0x21c
+  1b54ac:	e1a01008 	mov	r1, r8
+  1b54b0:	e1a02008 	mov	r2, r8
+  1b54b4:	ebfbd9f4 	bl	abc8c <service_send_launch_request@plt>
+  1b54b8:	e59d021c 	ldr	r0, [sp, #540]	@ 0x21c
+  1b54bc:	ebfbdc80 	bl	ac6c4 <service_destroy@plt>
+  1b54c0:	e2855001 	add	r5, r5, #1
+  1b54c4:	e30806a0 	movw	r0, #34464	@ 0x86a0
+  1b54c8:	e3400001 	movt	r0, #1
+  1b54cc:	ebfbe4da 	bl	ae83c <usleep@plt>
+  1b54d0:	e1a00006 	mov	r0, r6
+  1b54d4:	ebfbdb66 	bl	ac274 <aul_app_is_running@plt>
+  1b54d8:	e3500000 	cmp	r0, #0
+  1b54dc:	1affffe1 	bne	1b5468 <_Z13UI_Init_Statev@@Base+0xa0c>
+  1b54e0:	e3003192 	movw	r3, #402	@ 0x192
+  1b54e4:	e59d2218 	ldr	r2, [sp, #536]	@ 0x218
+  1b54e8:	e1520003 	cmp	r2, r3
+  1b54ec:	0a0000f8 	beq	1b58d4 <_Z13UI_Init_Statev@@Base+0xe78>
+  1b54f0:	e59f5918 	ldr	r5, [pc, #2328]	@ 1b5e10 <_Z13UI_Init_Statev@@Base+0x13b4>
+  1b54f4:	e2853e15 	add	r3, r5, #336	@ 0x150
+  1b54f8:	e8930003 	ldm	r3, {r0, r1}
+  1b54fc:	e58d0014 	str	r0, [sp, #20]
+  1b5500:	e1cd11b8 	strh	r1, [sp, #24]
+  1b5504:	e28d001a 	add	r0, sp, #26
+  1b5508:	e3a01000 	mov	r1, #0
+  1b550c:	e3a020fa 	mov	r2, #250	@ 0xfa
+  1b5510:	ebfbdce9 	bl	ac8bc <memset@plt>
+  1b5514:	e28d0019 	add	r0, sp, #25
+  1b5518:	e3a010f6 	mov	r1, #246	@ 0xf6
+  1b551c:	e59f28f0 	ldr	r2, [pc, #2288]	@ 1b5e14 <_Z13UI_Init_Statev@@Base+0x13b8>
+  1b5520:	e2853f4b 	add	r3, r5, #300	@ 0x12c
+  1b5524:	ebfbe317 	bl	ae188 <snprintf@plt>
+  1b5528:	e28d0014 	add	r0, sp, #20
+  1b552c:	ebfbdbd1 	bl	ac478 <strlen@plt>
+  1b5530:	e2400001 	sub	r0, r0, #1
+  1b5534:	e28d2e22 	add	r2, sp, #544	@ 0x220
+  1b5538:	e0823000 	add	r3, r2, r0
+  1b553c:	e553320c 	ldrb	r3, [r3, #-524]	@ 0xfffffdf4
+  1b5540:	e353000a 	cmp	r3, #10
+  1b5544:	00820000 	addeq	r0, r2, r0
+  1b5548:	03a03000 	moveq	r3, #0
+  1b554c:	0540320c 	strbeq	r3, [r0, #-524]	@ 0xfffffdf4
+  1b5550:	e28d5014 	add	r5, sp, #20
+  1b5554:	e1a00005 	mov	r0, r5
+  1b5558:	ebfbdbc6 	bl	ac478 <strlen@plt>
+  1b555c:	e1a02000 	mov	r2, r0
+  1b5560:	e0851000 	add	r1, r5, r0
+  1b5564:	e59f38ac 	ldr	r3, [pc, #2220]	@ 1b5e18 <_Z13UI_Init_Statev@@Base+0x13bc>
+  1b5568:	e5930000 	ldr	r0, [r3]
+  1b556c:	e7850002 	str	r0, [r5, r2]
+  1b5570:	e5d33004 	ldrb	r3, [r3, #4]
+  1b5574:	e5c13004 	strb	r3, [r1, #4]
+  1b5578:	e59f689c 	ldr	r6, [pc, #2204]	@ 1b5e1c <_Z13UI_Init_Statev@@Base+0x13c0>
+  1b557c:	e59f387c 	ldr	r3, [pc, #2172]	@ 1b5e00 <_Z13UI_Init_Statev@@Base+0x13a4>
+  1b5580:	e58d3000 	str	r3, [sp]
+  1b5584:	e59f3880 	ldr	r3, [pc, #2176]	@ 1b5e0c <_Z13UI_Init_Statev@@Base+0x13b0>
+  1b5588:	e58d3004 	str	r3, [sp, #4]
+  1b558c:	e3a030f4 	mov	r3, #244	@ 0xf4
+  1b5590:	e58d3008 	str	r3, [sp, #8]
+  1b5594:	e58d500c 	str	r5, [sp, #12]
+  1b5598:	e3a00003 	mov	r0, #3
+  1b559c:	e3a01004 	mov	r1, #4
+  1b55a0:	e1a02006 	mov	r2, r6
+  1b55a4:	e59f3874 	ldr	r3, [pc, #2164]	@ 1b5e20 <_Z13UI_Init_Statev@@Base+0x13c4>
+  1b55a8:	ebfbded9 	bl	ad114 <__dlog_print@plt>
+  1b55ac:	e59f3870 	ldr	r3, [pc, #2160]	@ 1b5e24 <_Z13UI_Init_Statev@@Base+0x13c8>
+  1b55b0:	e5930000 	ldr	r0, [r3]
+  1b55b4:	e59f186c 	ldr	r1, [pc, #2156]	@ 1b5e28 <_Z13UI_Init_Statev@@Base+0x13cc>
+  1b55b8:	e1a02006 	mov	r2, r6
+  1b55bc:	e1a03005 	mov	r3, r5
+  1b55c0:	ebfbd873 	bl	ab794 <fprintf@plt>
+  1b55c4:	e59fa860 	ldr	sl, [pc, #2144]	@ 1b5e2c <_Z13UI_Init_Statev@@Base+0x13d0>
+  1b55c8:	e59f9840 	ldr	r9, [pc, #2112]	@ 1b5e10 <_Z13UI_Init_Statev@@Base+0x13b4>
+  1b55cc:	e2897f4b 	add	r7, r9, #300	@ 0x12c
+  1b55d0:	e59fb828 	ldr	fp, [pc, #2088]	@ 1b5e00 <_Z13UI_Init_Statev@@Base+0x13a4>
+  1b55d4:	e30886a0 	movw	r8, #34464	@ 0x86a0
+  1b55d8:	e3408001 	movt	r8, #1
+  1b55dc:	ea000039 	b	1b56c8 <_Z13UI_Init_Statev@@Base+0xc6c>
+  1b55e0:	e2893e15 	add	r3, r9, #336	@ 0x150
+  1b55e4:	e8930003 	ldm	r3, {r0, r1}
+  1b55e8:	e58d0014 	str	r0, [sp, #20]
+  1b55ec:	e1cd11b8 	strh	r1, [sp, #24]
+  1b55f0:	e28d001a 	add	r0, sp, #26
+  1b55f4:	e3a01000 	mov	r1, #0
+  1b55f8:	e3a020fa 	mov	r2, #250	@ 0xfa
+  1b55fc:	ebfbdcae 	bl	ac8bc <memset@plt>
+  1b5600:	e28d0019 	add	r0, sp, #25
+  1b5604:	e3a010f6 	mov	r1, #246	@ 0xf6
+  1b5608:	e30b27f4 	movw	r2, #47092	@ 0xb7f4
+  1b560c:	e3402039 	movt	r2, #57	@ 0x39
+  1b5610:	e1a03007 	mov	r3, r7
+  1b5614:	ebfbe2db 	bl	ae188 <snprintf@plt>
+  1b5618:	e28d0014 	add	r0, sp, #20
+  1b561c:	ebfbdb95 	bl	ac478 <strlen@plt>
+  1b5620:	e2400001 	sub	r0, r0, #1
+  1b5624:	e28d2e22 	add	r2, sp, #544	@ 0x220
+  1b5628:	e0823000 	add	r3, r2, r0
+  1b562c:	e553320c 	ldrb	r3, [r3, #-524]	@ 0xfffffdf4
+  1b5630:	e353000a 	cmp	r3, #10
+  1b5634:	00820000 	addeq	r0, r2, r0
+  1b5638:	03a03000 	moveq	r3, #0
+  1b563c:	0540320c 	strbeq	r3, [r0, #-524]	@ 0xfffffdf4
+  1b5640:	e28d5014 	add	r5, sp, #20
+  1b5644:	e1a00005 	mov	r0, r5
+  1b5648:	ebfbdb8a 	bl	ac478 <strlen@plt>
+  1b564c:	e1a02000 	mov	r2, r0
+  1b5650:	e0851000 	add	r1, r5, r0
+  1b5654:	e30a37c0 	movw	r3, #42944	@ 0xa7c0
+  1b5658:	e3403036 	movt	r3, #54	@ 0x36
+  1b565c:	e5930000 	ldr	r0, [r3]
+  1b5660:	e7850002 	str	r0, [r5, r2]
+  1b5664:	e5d33004 	ldrb	r3, [r3, #4]
+  1b5668:	e5c13004 	strb	r3, [r1, #4]
+  1b566c:	e30361d8 	movw	r6, #12760	@ 0x31d8
+  1b5670:	e3406038 	movt	r6, #56	@ 0x38
+  1b5674:	e58db000 	str	fp, [sp]
+  1b5678:	e58d7004 	str	r7, [sp, #4]
+  1b567c:	e3a030f7 	mov	r3, #247	@ 0xf7
+  1b5680:	e58d3008 	str	r3, [sp, #8]
+  1b5684:	e58d500c 	str	r5, [sp, #12]
+  1b5688:	e3a00003 	mov	r0, #3
+  1b568c:	e3a01004 	mov	r1, #4
+  1b5690:	e1a02006 	mov	r2, r6
+  1b5694:	e30a37d0 	movw	r3, #42960	@ 0xa7d0
+  1b5698:	e3403036 	movt	r3, #54	@ 0x36
+  1b569c:	ebfbde9c 	bl	ad114 <__dlog_print@plt>
+  1b56a0:	e30d30f4 	movw	r3, #53492	@ 0xd0f4
+  1b56a4:	e3403049 	movt	r3, #73	@ 0x49
+  1b56a8:	e5930000 	ldr	r0, [r3]
+  1b56ac:	e30b1fdc 	movw	r1, #49116	@ 0xbfdc
+  1b56b0:	e3401036 	movt	r1, #54	@ 0x36
+  1b56b4:	e1a02006 	mov	r2, r6
+  1b56b8:	e1a03005 	mov	r3, r5
+  1b56bc:	ebfbd834 	bl	ab794 <fprintf@plt>
+  1b56c0:	e1a00008 	mov	r0, r8
+  1b56c4:	ebfbe45c 	bl	ae83c <usleep@plt>
+  1b56c8:	e1a0000a 	mov	r0, sl
+  1b56cc:	ebfbdae8 	bl	ac274 <aul_app_is_running@plt>
+  1b56d0:	e3500000 	cmp	r0, #0
+  1b56d4:	1affffc1 	bne	1b55e0 <_Z13UI_Init_Statev@@Base+0xb84>
+  1b56d8:	e30c0350 	movw	r0, #50000	@ 0xc350
+  1b56dc:	ebfbe456 	bl	ae83c <usleep@plt>
+  1b56e0:	e3a00000 	mov	r0, #0
+  1b56e4:	eb00f3c6 	bl	1f2604 <_Z23UI_Devman_Set_GUI_Clocki@@Base>
+  1b56e8:	e59f9720 	ldr	r9, [pc, #1824]	@ 1b5e10 <_Z13UI_Init_Statev@@Base+0x13b4>
+  1b56ec:	e59f7724 	ldr	r7, [pc, #1828]	@ 1b5e18 <_Z13UI_Init_Statev@@Base+0x13bc>
+  1b56f0:	e59f8724 	ldr	r8, [pc, #1828]	@ 1b5e1c <_Z13UI_Init_Statev@@Base+0x13c0>
+  1b56f4:	e59fb704 	ldr	fp, [pc, #1796]	@ 1b5e00 <_Z13UI_Init_Statev@@Base+0x13a4>
+  1b56f8:	e289af4b 	add	sl, r9, #300	@ 0x12c
+  1b56fc:	eb00f279 	bl	1f20e8 <_Z29UI_Devman_Free_Memory_Browserv@@Base>
+  1b5700:	e1a06000 	mov	r6, r0
+  1b5704:	e2893e15 	add	r3, r9, #336	@ 0x150
+  1b5708:	e8930003 	ldm	r3, {r0, r1}
+  1b570c:	e58d0014 	str	r0, [sp, #20]
+  1b5710:	e1cd11b8 	strh	r1, [sp, #24]
+  1b5714:	e28d001a 	add	r0, sp, #26
+  1b5718:	e3a01000 	mov	r1, #0
+  1b571c:	e3a020fa 	mov	r2, #250	@ 0xfa
+  1b5720:	ebfbdc65 	bl	ac8bc <memset@plt>
+  1b5724:	e28d0019 	add	r0, sp, #25
+  1b5728:	e3a010f6 	mov	r1, #246	@ 0xf6
+  1b572c:	e59f26fc 	ldr	r2, [pc, #1788]	@ 1b5e30 <_Z13UI_Init_Statev@@Base+0x13d4>
+  1b5730:	e1a03006 	mov	r3, r6
+  1b5734:	ebfbe293 	bl	ae188 <snprintf@plt>
+  1b5738:	e28d0014 	add	r0, sp, #20
+  1b573c:	ebfbdb4d 	bl	ac478 <strlen@plt>
+  1b5740:	e2400001 	sub	r0, r0, #1
+  1b5744:	e28d2e22 	add	r2, sp, #544	@ 0x220
+  1b5748:	e0823000 	add	r3, r2, r0
+  1b574c:	e553320c 	ldrb	r3, [r3, #-524]	@ 0xfffffdf4
+  1b5750:	e353000a 	cmp	r3, #10
+  1b5754:	00820000 	addeq	r0, r2, r0
+  1b5758:	03a03000 	moveq	r3, #0
+  1b575c:	0540320c 	strbeq	r3, [r0, #-524]	@ 0xfffffdf4
+  1b5760:	e28d5014 	add	r5, sp, #20
+  1b5764:	e1a00005 	mov	r0, r5
+  1b5768:	ebfbdb42 	bl	ac478 <strlen@plt>
+  1b576c:	e1a03000 	mov	r3, r0
+  1b5770:	e0852000 	add	r2, r5, r0
+  1b5774:	e5970000 	ldr	r0, [r7]
+  1b5778:	e7850003 	str	r0, [r5, r3]
+  1b577c:	e5d73004 	ldrb	r3, [r7, #4]
+  1b5780:	e5c23004 	strb	r3, [r2, #4]
+  1b5784:	e58db000 	str	fp, [sp]
+  1b5788:	e58da004 	str	sl, [sp, #4]
+  1b578c:	e3a030ff 	mov	r3, #255	@ 0xff
+  1b5790:	e58d3008 	str	r3, [sp, #8]
+  1b5794:	e58d500c 	str	r5, [sp, #12]
+  1b5798:	e3a00003 	mov	r0, #3
+  1b579c:	e3a01004 	mov	r1, #4
+  1b57a0:	e1a02008 	mov	r2, r8
+  1b57a4:	e30a37d0 	movw	r3, #42960	@ 0xa7d0
+  1b57a8:	e3403036 	movt	r3, #54	@ 0x36
+  1b57ac:	ebfbde58 	bl	ad114 <__dlog_print@plt>
+  1b57b0:	e30d30f4 	movw	r3, #53492	@ 0xd0f4
+  1b57b4:	e3403049 	movt	r3, #73	@ 0x49
+  1b57b8:	e5930000 	ldr	r0, [r3]
+  1b57bc:	e30b1fdc 	movw	r1, #49116	@ 0xbfdc
+  1b57c0:	e3401036 	movt	r1, #54	@ 0x36
+  1b57c4:	e1a02008 	mov	r2, r8
+  1b57c8:	e1a03005 	mov	r3, r5
+  1b57cc:	ebfbd7f0 	bl	ab794 <fprintf@plt>
+  1b57d0:	e3560000 	cmp	r6, #0
+  1b57d4:	0a000038 	beq	1b58bc <_Z13UI_Init_Statev@@Base+0xe60>
+  1b57d8:	e2893e15 	add	r3, r9, #336	@ 0x150
+  1b57dc:	e8930003 	ldm	r3, {r0, r1}
+  1b57e0:	e58d0014 	str	r0, [sp, #20]
+  1b57e4:	e1cd11b8 	strh	r1, [sp, #24]
+  1b57e8:	e28d001a 	add	r0, sp, #26
+  1b57ec:	e3a01000 	mov	r1, #0
+  1b57f0:	e3a020fa 	mov	r2, #250	@ 0xfa
+  1b57f4:	ebfbdc30 	bl	ac8bc <memset@plt>
+  1b57f8:	e58d6000 	str	r6, [sp]
+  1b57fc:	e28d0019 	add	r0, sp, #25
+  1b5800:	e3a010f6 	mov	r1, #246	@ 0xf6
+  1b5804:	e30b282c 	movw	r2, #47148	@ 0xb82c
+  1b5808:	e3402039 	movt	r2, #57	@ 0x39
+  1b580c:	e1a0300a 	mov	r3, sl
+  1b5810:	ebfbe25c 	bl	ae188 <snprintf@plt>
+  1b5814:	e28d0014 	add	r0, sp, #20
+  1b5818:	ebfbdb16 	bl	ac478 <strlen@plt>
+  1b581c:	e2400001 	sub	r0, r0, #1
+  1b5820:	e28d2e22 	add	r2, sp, #544	@ 0x220
+  1b5824:	e0823000 	add	r3, r2, r0
+  1b5828:	e553320c 	ldrb	r3, [r3, #-524]	@ 0xfffffdf4
+  1b582c:	e353000a 	cmp	r3, #10
+  1b5830:	00820000 	addeq	r0, r2, r0
+  1b5834:	03a03000 	moveq	r3, #0
+  1b5838:	0540320c 	strbeq	r3, [r0, #-524]	@ 0xfffffdf4
+  1b583c:	e28d5014 	add	r5, sp, #20
+  1b5840:	e1a00005 	mov	r0, r5
+  1b5844:	ebfbdb0b 	bl	ac478 <strlen@plt>
+  1b5848:	e1a03000 	mov	r3, r0
+  1b584c:	e0852000 	add	r2, r5, r0
+  1b5850:	e5970000 	ldr	r0, [r7]
+  1b5854:	e7850003 	str	r0, [r5, r3]
+  1b5858:	e5d73004 	ldrb	r3, [r7, #4]
+  1b585c:	e5c23004 	strb	r3, [r2, #4]
+  1b5860:	e58db000 	str	fp, [sp]
+  1b5864:	e58da004 	str	sl, [sp, #4]
+  1b5868:	e3003102 	movw	r3, #258	@ 0x102
+  1b586c:	e58d3008 	str	r3, [sp, #8]
+  1b5870:	e58d500c 	str	r5, [sp, #12]
+  1b5874:	e3a00003 	mov	r0, #3
+  1b5878:	e3a01004 	mov	r1, #4
+  1b587c:	e1a02008 	mov	r2, r8
+  1b5880:	e30a37d0 	movw	r3, #42960	@ 0xa7d0
+  1b5884:	e3403036 	movt	r3, #54	@ 0x36
+  1b5888:	ebfbde21 	bl	ad114 <__dlog_print@plt>
+  1b588c:	e30d30f4 	movw	r3, #53492	@ 0xd0f4
+  1b5890:	e3403049 	movt	r3, #73	@ 0x49
+  1b5894:	e5930000 	ldr	r0, [r3]
+  1b5898:	e30b1fdc 	movw	r1, #49116	@ 0xbfdc
+  1b589c:	e3401036 	movt	r1, #54	@ 0x36
+  1b58a0:	e1a02008 	mov	r2, r8
+  1b58a4:	e1a03005 	mov	r3, r5
+  1b58a8:	ebfbd7b9 	bl	ab794 <fprintf@plt>
+  1b58ac:	e30806a0 	movw	r0, #34464	@ 0x86a0
+  1b58b0:	e3400001 	movt	r0, #1
+  1b58b4:	ebfbe3e0 	bl	ae83c <usleep@plt>
+  1b58b8:	eaffff8f 	b	1b56fc <_Z13UI_Init_Statev@@Base+0xca0>
+  1b58bc:	e3a01000 	mov	r1, #0
+  1b58c0:	e59f356c 	ldr	r3, [pc, #1388]	@ 1b5e34 <_Z13UI_Init_Statev@@Base+0x13d8>
+  1b58c4:	e5831020 	str	r1, [r3, #32]
+  1b58c8:	e1a00001 	mov	r0, r1
+  1b58cc:	ebfbde34 	bl	ad1a4 <mm_sound_nx_set_usage_flag@plt>
+  1b58d0:	ebfbe0af 	bl	adb94 <mm_sound_nx_extspk_check_n_update@plt>
+  1b58d4:	e3e00000 	mvn	r0, #0
+  1b58d8:	e3a01000 	mov	r1, #0
+  1b58dc:	e1a02001 	mov	r2, r1
+  1b58e0:	eb004b76 	bl	1c86c0 <_Z29UI_Set_Key_Unmask_ImmediatelyiiPKc@@Base>
+  1b58e4:	e3a00000 	mov	r0, #0
+  1b58e8:	e1a01000 	mov	r1, r0
+  1b58ec:	ebfd8201 	bl	1160f8 <_Z22UI_Manage_App_Relaunch9eUI_STATEb@@Base>
+  1b58f0:	e3003f10 	movw	r3, #3856	@ 0xf10
+  1b58f4:	e340304b 	movt	r3, #75	@ 0x4b
+  1b58f8:	e5d33002 	ldrb	r3, [r3, #2]
+  1b58fc:	e3130001 	tst	r3, #1
+  1b5900:	0a00003e 	beq	1b5a00 <_Z13UI_Init_Statev@@Base+0xfa4>
+  1b5904:	e59f34fc 	ldr	r3, [pc, #1276]	@ 1b5e08 <_Z13UI_Init_Statev@@Base+0x13ac>
+  1b5908:	e8930003 	ldm	r3, {r0, r1}
+  1b590c:	e58d0114 	str	r0, [sp, #276]	@ 0x114
+  1b5910:	e28d3f46 	add	r3, sp, #280	@ 0x118
+  1b5914:	e1c310b0 	strh	r1, [r3]
+  1b5918:	e28d3f47 	add	r3, sp, #284	@ 0x11c
+  1b591c:	e2430002 	sub	r0, r3, #2
+  1b5920:	e3a01000 	mov	r1, #0
+  1b5924:	e3a020fa 	mov	r2, #250	@ 0xfa
+  1b5928:	ebfbdbe3 	bl	ac8bc <memset@plt>
+  1b592c:	eb02fe68 	bl	2752d4 <GET_TICK_COUNT@@Base>
+  1b5930:	e3003f10 	movw	r3, #3856	@ 0xf10
+  1b5934:	e340304b 	movt	r3, #75	@ 0x4b
+  1b5938:	e5933028 	ldr	r3, [r3, #40]	@ 0x28
+  1b593c:	e0633000 	rsb	r3, r3, r0
+  1b5940:	e28d2f45 	add	r2, sp, #276	@ 0x114
+  1b5944:	e2820005 	add	r0, r2, #5
+  1b5948:	e3a010f6 	mov	r1, #246	@ 0xf6
+  1b594c:	e30b2848 	movw	r2, #47176	@ 0xb848
+  1b5950:	e3402039 	movt	r2, #57	@ 0x39
+  1b5954:	ebfbe20b 	bl	ae188 <snprintf@plt>
+  1b5958:	e28d0f45 	add	r0, sp, #276	@ 0x114
+  1b595c:	ebfbdac5 	bl	ac478 <strlen@plt>
+  1b5960:	e2400001 	sub	r0, r0, #1
+  1b5964:	e28d2e22 	add	r2, sp, #544	@ 0x220
+  1b5968:	e0823000 	add	r3, r2, r0
+  1b596c:	e553310c 	ldrb	r3, [r3, #-268]	@ 0xfffffef4
+  1b5970:	e353000a 	cmp	r3, #10
+  1b5974:	00820000 	addeq	r0, r2, r0
+  1b5978:	03a03000 	moveq	r3, #0
+  1b597c:	0540310c 	strbeq	r3, [r0, #-268]	@ 0xfffffef4
+  1b5980:	e28d5f45 	add	r5, sp, #276	@ 0x114
+  1b5984:	e1a00005 	mov	r0, r5
+  1b5988:	ebfbdaba 	bl	ac478 <strlen@plt>
+  1b598c:	e1a02000 	mov	r2, r0
+  1b5990:	e0851000 	add	r1, r5, r0
+  1b5994:	e30a37c0 	movw	r3, #42944	@ 0xa7c0
+  1b5998:	e3403036 	movt	r3, #54	@ 0x36
+  1b599c:	e5930000 	ldr	r0, [r3]
+  1b59a0:	e7850002 	str	r0, [r5, r2]
+  1b59a4:	e5d33004 	ldrb	r3, [r3, #4]
+  1b59a8:	e5c13004 	strb	r3, [r1, #4]
+  1b59ac:	e59f344c 	ldr	r3, [pc, #1100]	@ 1b5e00 <_Z13UI_Init_Statev@@Base+0x13a4>
+  1b59b0:	e58d3000 	str	r3, [sp]
+  1b59b4:	e59f3450 	ldr	r3, [pc, #1104]	@ 1b5e0c <_Z13UI_Init_Statev@@Base+0x13b0>
+  1b59b8:	e58d3004 	str	r3, [sp, #4]
+  1b59bc:	e3003119 	movw	r3, #281	@ 0x119
+  1b59c0:	e58d3008 	str	r3, [sp, #8]
+  1b59c4:	e58d500c 	str	r5, [sp, #12]
+  1b59c8:	e3a00003 	mov	r0, #3
+  1b59cc:	e3a01004 	mov	r1, #4
+  1b59d0:	e30423c8 	movw	r2, #17352	@ 0x43c8
+  1b59d4:	e3402038 	movt	r2, #56	@ 0x38
+  1b59d8:	e30a37d0 	movw	r3, #42960	@ 0xa7d0
+  1b59dc:	e3403036 	movt	r3, #54	@ 0x36
+  1b59e0:	ebfbddcb 	bl	ad114 <__dlog_print@plt>
+  1b59e4:	e3003f10 	movw	r3, #3856	@ 0xf10
+  1b59e8:	e340304b 	movt	r3, #75	@ 0x4b
+  1b59ec:	e5d32002 	ldrb	r2, [r3, #2]
+  1b59f0:	e7c0201f 	bfc	r2, #0, #1
+  1b59f4:	e5c32002 	strb	r2, [r3, #2]
+  1b59f8:	e3a02000 	mov	r2, #0
+  1b59fc:	e5832038 	str	r2, [r3, #56]	@ 0x38
+  1b5a00:	e594000c 	ldr	r0, [r4, #12]
+  1b5a04:	e3500000 	cmp	r0, #0
+  1b5a08:	0a0000fa 	beq	1b5df8 <_Z13UI_Init_Statev@@Base+0x139c>
+  1b5a0c:	ebfbd79c 	bl	ab884 <elm_win_activate@plt>
+  1b5a10:	ea0000f8 	b	1b5df8 <_Z13UI_Init_Statev@@Base+0x139c>
+  1b5a14:	e3a05001 	mov	r5, #1
+  1b5a18:	e58450ac 	str	r5, [r4, #172]	@ 0xac
+  1b5a1c:	e58450a8 	str	r5, [r4, #168]	@ 0xa8
+  1b5a20:	e3053b1b 	movw	r3, #23323	@ 0x5b1b
+  1b5a24:	e340306d 	movt	r3, #109	@ 0x6d
+  1b5a28:	e58d3114 	str	r3, [sp, #276]	@ 0x114
+  1b5a2c:	e28d0f46 	add	r0, sp, #280	@ 0x118
+  1b5a30:	e3a01000 	mov	r1, #0
+  1b5a34:	e3a020fc 	mov	r2, #252	@ 0xfc
+  1b5a38:	ebfbdb9f 	bl	ac8bc <memset@plt>
+  1b5a3c:	e28d3f45 	add	r3, sp, #276	@ 0x114
+  1b5a40:	e2830003 	add	r0, r3, #3
+  1b5a44:	e3a010f8 	mov	r1, #248	@ 0xf8
+  1b5a48:	e30b285c 	movw	r2, #47196	@ 0xb85c
+  1b5a4c:	e3402039 	movt	r2, #57	@ 0x39
+  1b5a50:	e1a03005 	mov	r3, r5
+  1b5a54:	ebfbe1cb 	bl	ae188 <snprintf@plt>
+  1b5a58:	e28d0f45 	add	r0, sp, #276	@ 0x114
+  1b5a5c:	ebfbda85 	bl	ac478 <strlen@plt>
+  1b5a60:	e2400001 	sub	r0, r0, #1
+  1b5a64:	e28d2e22 	add	r2, sp, #544	@ 0x220
+  1b5a68:	e0823000 	add	r3, r2, r0
+  1b5a6c:	e553310c 	ldrb	r3, [r3, #-268]	@ 0xfffffef4
+  1b5a70:	e353000a 	cmp	r3, #10
+  1b5a74:	00820000 	addeq	r0, r2, r0
+  1b5a78:	03a03000 	moveq	r3, #0
+  1b5a7c:	0540310c 	strbeq	r3, [r0, #-268]	@ 0xfffffef4
+  1b5a80:	e28d5f45 	add	r5, sp, #276	@ 0x114
+  1b5a84:	e1a00005 	mov	r0, r5
+  1b5a88:	ebfbda7a 	bl	ac478 <strlen@plt>
+  1b5a8c:	e1a02000 	mov	r2, r0
+  1b5a90:	e0851000 	add	r1, r5, r0
+  1b5a94:	e30a37c0 	movw	r3, #42944	@ 0xa7c0
+  1b5a98:	e3403036 	movt	r3, #54	@ 0x36
+  1b5a9c:	e5930000 	ldr	r0, [r3]
+  1b5aa0:	e7850002 	str	r0, [r5, r2]
+  1b5aa4:	e5d33004 	ldrb	r3, [r3, #4]
+  1b5aa8:	e5c13004 	strb	r3, [r1, #4]
+  1b5aac:	e59f334c 	ldr	r3, [pc, #844]	@ 1b5e00 <_Z13UI_Init_Statev@@Base+0x13a4>
+  1b5ab0:	e58d3000 	str	r3, [sp]
+  1b5ab4:	e59f337c 	ldr	r3, [pc, #892]	@ 1b5e38 <_Z13UI_Init_Statev@@Base+0x13dc>
+  1b5ab8:	e58d3004 	str	r3, [sp, #4]
+  1b5abc:	e3003171 	movw	r3, #369	@ 0x171
+  1b5ac0:	e58d3008 	str	r3, [sp, #8]
+  1b5ac4:	e58d500c 	str	r5, [sp, #12]
+  1b5ac8:	e3a00003 	mov	r0, #3
+  1b5acc:	e3a01004 	mov	r1, #4
+  1b5ad0:	e30b2fb4 	movw	r2, #49076	@ 0xbfb4
+  1b5ad4:	e3402036 	movt	r2, #54	@ 0x36
+  1b5ad8:	e30a37d0 	movw	r3, #42960	@ 0xa7d0
+  1b5adc:	e3403036 	movt	r3, #54	@ 0x36
+  1b5ae0:	ebfbdd8b 	bl	ad114 <__dlog_print@plt>
+  1b5ae4:	e3053b1b 	movw	r3, #23323	@ 0x5b1b
+  1b5ae8:	e340306d 	movt	r3, #109	@ 0x6d
+  1b5aec:	e58d3114 	str	r3, [sp, #276]	@ 0x114
+  1b5af0:	e28d0f46 	add	r0, sp, #280	@ 0x118
+  1b5af4:	e3a01000 	mov	r1, #0
+  1b5af8:	e3a020fc 	mov	r2, #252	@ 0xfc
+  1b5afc:	ebfbdb6e 	bl	ac8bc <memset@plt>
+  1b5b00:	e2850003 	add	r0, r5, #3
+  1b5b04:	e3a010f8 	mov	r1, #248	@ 0xf8
+  1b5b08:	e30b2874 	movw	r2, #47220	@ 0xb874
+  1b5b0c:	e3402039 	movt	r2, #57	@ 0x39
+  1b5b10:	ebfbe19c 	bl	ae188 <snprintf@plt>
+  1b5b14:	e1a00005 	mov	r0, r5
+  1b5b18:	ebfbda56 	bl	ac478 <strlen@plt>
+  1b5b1c:	e2400001 	sub	r0, r0, #1
+  1b5b20:	e28d2e22 	add	r2, sp, #544	@ 0x220
+  1b5b24:	e0823000 	add	r3, r2, r0
+  1b5b28:	e553310c 	ldrb	r3, [r3, #-268]	@ 0xfffffef4
+  1b5b2c:	e353000a 	cmp	r3, #10
+  1b5b30:	00820000 	addeq	r0, r2, r0
+  1b5b34:	03a03000 	moveq	r3, #0
+  1b5b38:	0540310c 	strbeq	r3, [r0, #-268]	@ 0xfffffef4
+  1b5b3c:	e28d5f45 	add	r5, sp, #276	@ 0x114
+  1b5b40:	e1a00005 	mov	r0, r5
+  1b5b44:	ebfbda4b 	bl	ac478 <strlen@plt>
+  1b5b48:	e1a02000 	mov	r2, r0
+  1b5b4c:	e0851000 	add	r1, r5, r0
+  1b5b50:	e30a37c0 	movw	r3, #42944	@ 0xa7c0
+  1b5b54:	e3403036 	movt	r3, #54	@ 0x36
+  1b5b58:	e5930000 	ldr	r0, [r3]
+  1b5b5c:	e7850002 	str	r0, [r5, r2]
+  1b5b60:	e5d33004 	ldrb	r3, [r3, #4]
+  1b5b64:	e5c13004 	strb	r3, [r1, #4]
+  1b5b68:	e59f3290 	ldr	r3, [pc, #656]	@ 1b5e00 <_Z13UI_Init_Statev@@Base+0x13a4>
+  1b5b6c:	e58d3000 	str	r3, [sp]
+  1b5b70:	e59f32c4 	ldr	r3, [pc, #708]	@ 1b5e3c <_Z13UI_Init_Statev@@Base+0x13e0>
+  1b5b74:	e58d3004 	str	r3, [sp, #4]
+  1b5b78:	e300313d 	movw	r3, #317	@ 0x13d
+  1b5b7c:	e58d3008 	str	r3, [sp, #8]
+  1b5b80:	e58d500c 	str	r5, [sp, #12]
+  1b5b84:	e3a00003 	mov	r0, #3
+  1b5b88:	e3a01004 	mov	r1, #4
+  1b5b8c:	e30b2fb4 	movw	r2, #49076	@ 0xbfb4
+  1b5b90:	e3402036 	movt	r2, #54	@ 0x36
+  1b5b94:	e30a37d0 	movw	r3, #42960	@ 0xa7d0
+  1b5b98:	e3403036 	movt	r3, #54	@ 0x36
+  1b5b9c:	ebfbdd5c 	bl	ad114 <__dlog_print@plt>
+  1b5ba0:	e1a00004 	mov	r0, r4
+  1b5ba4:	ebfdded5 	bl	12d700 <_Z34UI_Manage_Power_On_Before_SnapShotPv@@Base>
+  1b5ba8:	eb008c1a 	bl	1d8c18 <_Z30UI_Sys_Mmap_Manage_Init_Sysmapv@@Base>
+  1b5bac:	e3a00000 	mov	r0, #0
+  1b5bb0:	eb008c1e 	bl	1d8c30 <_Z32UI_Sys_Mmap_Manage_Change_Opmode12eUI_MEM_MODE@@Base>
+  1b5bb4:	eb002ee1 	bl	1c1740 <_Z6UI_Hibv@@Base>
+  1b5bb8:	e30a0ac0 	movw	r0, #43712	@ 0xaac0
+  1b5bbc:	ebfbe0fc 	bl	adfb4 <_Z22User_Spec_Get_DB_Valuei@plt>
+  1b5bc0:	e30b3da8 	movw	r3, #48552	@ 0xbda8
+  1b5bc4:	e340304a 	movt	r3, #74	@ 0x4a
+  1b5bc8:	e5933000 	ldr	r3, [r3]
+  1b5bcc:	e5830088 	str	r0, [r3, #136]	@ 0x88
+  1b5bd0:	e3500000 	cmp	r0, #0
+  1b5bd4:	0a000026 	beq	1b5c74 <_Z13UI_Init_Statev@@Base+0x1218>
+  1b5bd8:	eb002eee 	bl	1c1798 <_Z23UI_Hib_Check_Fw_Upgradev@@Base>
+  1b5bdc:	e3500000 	cmp	r0, #0
+  1b5be0:	1a00006e 	bne	1b5da0 <_Z13UI_Init_Statev@@Base+0x1344>
+  1b5be4:	ea000022 	b	1b5c74 <_Z13UI_Init_Statev@@Base+0x1218>
+  1b5be8:	e28d3e22 	add	r3, sp, #544	@ 0x220
+  1b5bec:	e0830000 	add	r0, r3, r0
+  1b5bf0:	e3a03000 	mov	r3, #0
+  1b5bf4:	e540310c 	strb	r3, [r0, #-268]	@ 0xfffffef4
+  1b5bf8:	e28d4f45 	add	r4, sp, #276	@ 0x114
+  1b5bfc:	e1a00004 	mov	r0, r4
+  1b5c00:	ebfbda1c 	bl	ac478 <strlen@plt>
+  1b5c04:	e1a02000 	mov	r2, r0
+  1b5c08:	e0841000 	add	r1, r4, r0
+  1b5c0c:	e30a37c0 	movw	r3, #42944	@ 0xa7c0
+  1b5c10:	e3403036 	movt	r3, #54	@ 0x36
+  1b5c14:	e5930000 	ldr	r0, [r3]
+  1b5c18:	e7840002 	str	r0, [r4, r2]
+  1b5c1c:	e5d33004 	ldrb	r3, [r3, #4]
+  1b5c20:	e5c13004 	strb	r3, [r1, #4]
+  1b5c24:	e59f31d4 	ldr	r3, [pc, #468]	@ 1b5e00 <_Z13UI_Init_Statev@@Base+0x13a4>
+  1b5c28:	e58d3000 	str	r3, [sp]
+  1b5c2c:	e59f3208 	ldr	r3, [pc, #520]	@ 1b5e3c <_Z13UI_Init_Statev@@Base+0x13e0>
+  1b5c30:	e58d3004 	str	r3, [sp, #4]
+  1b5c34:	e300314a 	movw	r3, #330	@ 0x14a
+  1b5c38:	e58d3008 	str	r3, [sp, #8]
+  1b5c3c:	e58d400c 	str	r4, [sp, #12]
+  1b5c40:	e3a00003 	mov	r0, #3
+  1b5c44:	e3a01004 	mov	r1, #4
+  1b5c48:	e30b2fb4 	movw	r2, #49076	@ 0xbfb4
+  1b5c4c:	e3402036 	movt	r2, #54	@ 0x36
+  1b5c50:	e30a37d0 	movw	r3, #42960	@ 0xa7d0
+  1b5c54:	e3403036 	movt	r3, #54	@ 0x36
+  1b5c58:	ebfbdd2d 	bl	ad114 <__dlog_print@plt>
+  1b5c5c:	ebfbda7d 	bl	ac658 <fw_clear_snapshot_request@plt>
+  1b5c60:	e30a0ac0 	movw	r0, #43712	@ 0xaac0
+  1b5c64:	e3a01000 	mov	r1, #0
+  1b5c68:	ebfbe12e 	bl	ae128 <_Z22User_Spec_Set_DB_Valueii@plt>
+  1b5c6c:	e3a00000 	mov	r0, #0
+  1b5c70:	ebfbdddb 	bl	ad3e4 <_Z19User_Spec_Save_Pref10eSAVE_TYPE@plt>
+  1b5c74:	e30a08ac 	movw	r0, #43180	@ 0xa8ac
+  1b5c78:	ebfbe0cd 	bl	adfb4 <_Z22User_Spec_Get_DB_Valuei@plt>
+  1b5c7c:	e3500000 	cmp	r0, #0
+  1b5c80:	0a000004 	beq	1b5c98 <_Z13UI_Init_Statev@@Base+0x123c>
+  1b5c84:	e30a08ac 	movw	r0, #43180	@ 0xa8ac
+  1b5c88:	e3a01000 	mov	r1, #0
+  1b5c8c:	ebfbe125 	bl	ae128 <_Z22User_Spec_Set_DB_Valueii@plt>
+  1b5c90:	e3a00000 	mov	r0, #0
+  1b5c94:	ebfbddd2 	bl	ad3e4 <_Z19User_Spec_Save_Pref10eSAVE_TYPE@plt>
+  1b5c98:	eb00e18b 	bl	1ee2cc <_Z34UI_Devman_Get_Boot_Power_Key_Statev@@Base>
+  1b5c9c:	e3500003 	cmp	r0, #3
+  1b5ca0:	1a00003b 	bne	1b5d94 <_Z13UI_Init_Statev@@Base+0x1338>
+  1b5ca4:	e3053b1b 	movw	r3, #23323	@ 0x5b1b
+  1b5ca8:	e340306d 	movt	r3, #109	@ 0x6d
+  1b5cac:	e58d3114 	str	r3, [sp, #276]	@ 0x114
+  1b5cb0:	e28d0f46 	add	r0, sp, #280	@ 0x118
+  1b5cb4:	e3a01000 	mov	r1, #0
+  1b5cb8:	e3a020fc 	mov	r2, #252	@ 0xfc
+  1b5cbc:	ebfbdafe 	bl	ac8bc <memset@plt>
+  1b5cc0:	e28d2f45 	add	r2, sp, #276	@ 0x114
+  1b5cc4:	e2820003 	add	r0, r2, #3
+  1b5cc8:	e3a010f8 	mov	r1, #248	@ 0xf8
+  1b5ccc:	e30b2888 	movw	r2, #47240	@ 0xb888
+  1b5cd0:	e3402039 	movt	r2, #57	@ 0x39
+  1b5cd4:	ebfbe12b 	bl	ae188 <snprintf@plt>
+  1b5cd8:	e28d0f45 	add	r0, sp, #276	@ 0x114
+  1b5cdc:	ebfbd9e5 	bl	ac478 <strlen@plt>
+  1b5ce0:	e2400001 	sub	r0, r0, #1
+  1b5ce4:	e28d2e22 	add	r2, sp, #544	@ 0x220
+  1b5ce8:	e0823000 	add	r3, r2, r0
+  1b5cec:	e553310c 	ldrb	r3, [r3, #-268]	@ 0xfffffef4
+  1b5cf0:	e353000a 	cmp	r3, #10
+  1b5cf4:	00820000 	addeq	r0, r2, r0
+  1b5cf8:	03a03000 	moveq	r3, #0
+  1b5cfc:	0540310c 	strbeq	r3, [r0, #-268]	@ 0xfffffef4
+  1b5d00:	e28d4f45 	add	r4, sp, #276	@ 0x114
+  1b5d04:	e1a00004 	mov	r0, r4
+  1b5d08:	ebfbd9da 	bl	ac478 <strlen@plt>
+  1b5d0c:	e1a02000 	mov	r2, r0
+  1b5d10:	e0841000 	add	r1, r4, r0
+  1b5d14:	e30a37c0 	movw	r3, #42944	@ 0xa7c0
+  1b5d18:	e3403036 	movt	r3, #54	@ 0x36
+  1b5d1c:	e5930000 	ldr	r0, [r3]
+  1b5d20:	e7840002 	str	r0, [r4, r2]
+  1b5d24:	e5d33004 	ldrb	r3, [r3, #4]
+  1b5d28:	e5c13004 	strb	r3, [r1, #4]
+  1b5d2c:	e30b5fb4 	movw	r5, #49076	@ 0xbfb4
+  1b5d30:	e3405036 	movt	r5, #54	@ 0x36
+  1b5d34:	e59f30c4 	ldr	r3, [pc, #196]	@ 1b5e00 <_Z13UI_Init_Statev@@Base+0x13a4>
+  1b5d38:	e58d3000 	str	r3, [sp]
+  1b5d3c:	e59f30f8 	ldr	r3, [pc, #248]	@ 1b5e3c <_Z13UI_Init_Statev@@Base+0x13e0>
+  1b5d40:	e58d3004 	str	r3, [sp, #4]
+  1b5d44:	e3003159 	movw	r3, #345	@ 0x159
+  1b5d48:	e58d3008 	str	r3, [sp, #8]
+  1b5d4c:	e58d400c 	str	r4, [sp, #12]
+  1b5d50:	e3a00003 	mov	r0, #3
+  1b5d54:	e3a01004 	mov	r1, #4
+  1b5d58:	e1a02005 	mov	r2, r5
+  1b5d5c:	e30a37d0 	movw	r3, #42960	@ 0xa7d0
+  1b5d60:	e3403036 	movt	r3, #54	@ 0x36
+  1b5d64:	ebfbdcea 	bl	ad114 <__dlog_print@plt>
+  1b5d68:	e30d30f4 	movw	r3, #53492	@ 0xd0f4
+  1b5d6c:	e3403049 	movt	r3, #73	@ 0x49
+  1b5d70:	e5930000 	ldr	r0, [r3]
+  1b5d74:	e30b1fdc 	movw	r1, #49116	@ 0xbfdc
+  1b5d78:	e3401036 	movt	r1, #54	@ 0x36
+  1b5d7c:	e1a02005 	mov	r2, r5
+  1b5d80:	e1a03004 	mov	r3, r4
+  1b5d84:	ebfbd682 	bl	ab794 <fprintf@plt>
+  1b5d88:	eb00f28e 	bl	1f27c8 <_Z26UI_Devman_Disable_Watchdogv@@Base>
+  1b5d8c:	ebfde528 	bl	12f234 <_Z28UI_Power_Off_Snapshot_Rebootv@@Base>
+  1b5d90:	ea000018 	b	1b5df8 <_Z13UI_Init_Statev@@Base+0x139c>
+  1b5d94:	e3a00000 	mov	r0, #0
+  1b5d98:	ebfde08d 	bl	12dfd4 <_Z24UI_Start_Power_On_Camera17eUI_POWER_ON_MODE@@Base>
+  1b5d9c:	ea000015 	b	1b5df8 <_Z13UI_Init_Statev@@Base+0x139c>
+  1b5da0:	e3053b1b 	movw	r3, #23323	@ 0x5b1b
+  1b5da4:	e340306d 	movt	r3, #109	@ 0x6d
+  1b5da8:	e58d3114 	str	r3, [sp, #276]	@ 0x114
+  1b5dac:	e28d0f46 	add	r0, sp, #280	@ 0x118
+  1b5db0:	e3a01000 	mov	r1, #0
+  1b5db4:	e3a020fc 	mov	r2, #252	@ 0xfc
+  1b5db8:	ebfbdabf 	bl	ac8bc <memset@plt>
+  1b5dbc:	e28d3f45 	add	r3, sp, #276	@ 0x114
+  1b5dc0:	e2830003 	add	r0, r3, #3
+  1b5dc4:	e3a010f8 	mov	r1, #248	@ 0xf8
+  1b5dc8:	e30b28d0 	movw	r2, #47312	@ 0xb8d0
+  1b5dcc:	e3402039 	movt	r2, #57	@ 0x39
+  1b5dd0:	ebfbe0ec 	bl	ae188 <snprintf@plt>
+  1b5dd4:	e28d0f45 	add	r0, sp, #276	@ 0x114
+  1b5dd8:	ebfbd9a6 	bl	ac478 <strlen@plt>
+  1b5ddc:	e2400001 	sub	r0, r0, #1
+  1b5de0:	e28d2e22 	add	r2, sp, #544	@ 0x220
+  1b5de4:	e0823000 	add	r3, r2, r0
+  1b5de8:	e553310c 	ldrb	r3, [r3, #-268]	@ 0xfffffef4
+  1b5dec:	e353000a 	cmp	r3, #10
+  1b5df0:	1affff80 	bne	1b5bf8 <_Z13UI_Init_Statev@@Base+0x119c>
+  1b5df4:	eaffff7b 	b	1b5be8 <_Z13UI_Init_Statev@@Base+0x118c>
+  1b5df8:	e28ddf89 	add	sp, sp, #548	@ 0x224
+  1b5dfc:	e8bd8ff0 	pop	{r4, r5, r6, r7, r8, r9, sl, fp, pc}
+  1b5e00:	0039b65b 	eorseq	fp, r9, fp, asr r6
+  1b5e04:	0039b4bc 	ldrhteq	fp, [r9], -ip
+  1b5e08:	0039b3b0 	ldrhteq	fp, [r9], -r0
+  1b5e0c:	0039b4cc 	eorseq	fp, r9, ip, asr #9
+  1b5e10:	0039b3a0 	eorseq	fp, r9, r0, lsr #7
+  1b5e14:	0039b7d8 	ldrsbteq	fp, [r9], -r8
+  1b5e18:	0036a7c0 	eorseq	sl, r6, r0, asr #15
+  1b5e1c:	003831d8 	ldrsbteq	r3, [r8], -r8
+  1b5e20:	0036a7d0 	ldrsbteq	sl, [r6], -r0
+  1b5e24:	0049d0f4 	strdeq	sp, [r9], #-4
+  1b5e28:	0036bfdc 	ldrsbteq	fp, [r6], -ip
+  1b5e2c:	003867c0 	eorseq	r6, r8, r0, asr #15
+  1b5e30:	0039b820 	eorseq	fp, r9, r0, lsr #16
+  1b5e34:	004b0f10 	subeq	r0, fp, r0, lsl pc
+  1b5e38:	0039b5f0 	ldrshteq	fp, [r9], -r0
+  1b5e3c:	0039b604 	eorseq	fp, r9, r4, lsl #12
+  1b5e40:	e92d4030 	push	{r4, r5, lr}
+  1b5e44:	e24ddf45 	sub	sp, sp, #276	@ 0x114
+  1b5e48:	e1a05000 	mov	r5, r0
+  1b5e4c:	e3053b1b 	movw	r3, #23323	@ 0x5b1b
+  1b5e50:	e340306d 	movt	r3, #109	@ 0x6d
+  1b5e54:	e58d3010 	str	r3, [sp, #16]
+  1b5e58:	e28d0014 	add	r0, sp, #20
+  1b5e5c:	e3a01000 	mov	r1, #0
+  1b5e60:	e3a020fc 	mov	r2, #252	@ 0xfc
+  1b5e64:	ebfbda94 	bl	ac8bc <memset@plt>
+  1b5e68:	e28d0013 	add	r0, sp, #19
+  1b5e6c:	e3a010f8 	mov	r1, #248	@ 0xf8
+  1b5e70:	e30b28e4 	movw	r2, #47332	@ 0xb8e4
+  1b5e74:	e3402039 	movt	r2, #57	@ 0x39
+  1b5e78:	ebfbe0c2 	bl	ae188 <snprintf@plt>
+  1b5e7c:	e28d0010 	add	r0, sp, #16
+  1b5e80:	ebfbd97c 	bl	ac478 <strlen@plt>
+  1b5e84:	e2400001 	sub	r0, r0, #1
+  1b5e88:	e28d2e11 	add	r2, sp, #272	@ 0x110
+  1b5e8c:	e0823000 	add	r3, r2, r0
+  1b5e90:	e5533100 	ldrb	r3, [r3, #-256]	@ 0xffffff00
+  1b5e94:	e353000a 	cmp	r3, #10
+  1b5e98:	00820000 	addeq	r0, r2, r0
+  1b5e9c:	03a03000 	moveq	r3, #0
+  1b5ea0:	05403100 	strbeq	r3, [r0, #-256]	@ 0xffffff00
+  1b5ea4:	e28d4010 	add	r4, sp, #16
+  1b5ea8:	e1a00004 	mov	r0, r4
+  1b5eac:	ebfbd971 	bl	ac478 <strlen@plt>
+  1b5eb0:	e1a02000 	mov	r2, r0
+  1b5eb4:	e0841000 	add	r1, r4, r0
+  1b5eb8:	e30a37c0 	movw	r3, #42944	@ 0xa7c0
+  1b5ebc:	e3403036 	movt	r3, #54	@ 0x36
+  1b5ec0:	e5930000 	ldr	r0, [r3]
+  1b5ec4:	e7840002 	str	r0, [r4, r2]
+  1b5ec8:	e5d33004 	ldrb	r3, [r3, #4]
+  1b5ecc:	e5c13004 	strb	r3, [r1, #4]
+  1b5ed0:	e59f3048 	ldr	r3, [pc, #72]	@ 1b5f20 <_Z13UI_Init_Statev@@Base+0x14c4>
+  1b5ed4:	e58d3000 	str	r3, [sp]
+  1b5ed8:	e59f3044 	ldr	r3, [pc, #68]	@ 1b5f24 <_Z13UI_Init_Statev@@Base+0x14c8>
+  1b5edc:	e58d3004 	str	r3, [sp, #4]
+  1b5ee0:	e3a03062 	mov	r3, #98	@ 0x62
+  1b5ee4:	e58d3008 	str	r3, [sp, #8]
+  1b5ee8:	e58d400c 	str	r4, [sp, #12]
+  1b5eec:	e3a00003 	mov	r0, #3
+  1b5ef0:	e3a01004 	mov	r1, #4
+  1b5ef4:	e30b2fb4 	movw	r2, #49076	@ 0xbfb4
+  1b5ef8:	e3402036 	movt	r2, #54	@ 0x36
+  1b5efc:	e30a37d0 	movw	r3, #42960	@ 0xa7d0
+  1b5f00:	e3403036 	movt	r3, #54	@ 0x36
+  1b5f04:	ebfbdc82 	bl	ad114 <__dlog_print@plt>
+  1b5f08:	e595000c 	ldr	r0, [r5, #12]
+  1b5f0c:	e3500000 	cmp	r0, #0
+  1b5f10:	0a000000 	beq	1b5f18 <_Z13UI_Init_Statev@@Base+0x14bc>
+  1b5f14:	ebfbdf42 	bl	adc24 <evas_object_del@plt>
+  1b5f18:	e28ddf45 	add	sp, sp, #276	@ 0x114
+  1b5f1c:	e8bd8030 	pop	{r4, r5, pc}
+  1b5f20:	0039b65b 	eorseq	fp, r9, fp, asr r6
+  1b5f24:	0039b61c 	eorseq	fp, r9, ip, lsl r6
+  1b5f28:	e92d4010 	push	{r4, lr}
+  1b5f2c:	e24dde11 	sub	sp, sp, #272	@ 0x110
+  1b5f30:	e3053b1b 	movw	r3, #23323	@ 0x5b1b
+  1b5f34:	e340306d 	movt	r3, #109	@ 0x6d
+  1b5f38:	e58d3010 	str	r3, [sp, #16]
+  1b5f3c:	e28d0014 	add	r0, sp, #20
+  1b5f40:	e3a01000 	mov	r1, #0
+  1b5f44:	e3a020fc 	mov	r2, #252	@ 0xfc
+  1b5f48:	ebfbda5b 	bl	ac8bc <memset@plt>
+  1b5f4c:	e28d0013 	add	r0, sp, #19
+  1b5f50:	e3a010f8 	mov	r1, #248	@ 0xf8
+  1b5f54:	e30b28f4 	movw	r2, #47348	@ 0xb8f4
+  1b5f58:	e3402039 	movt	r2, #57	@ 0x39
+  1b5f5c:	ebfbe089 	bl	ae188 <snprintf@plt>
+  1b5f60:	e28d0010 	add	r0, sp, #16
+  1b5f64:	ebfbd943 	bl	ac478 <strlen@plt>
+  1b5f68:	e2400001 	sub	r0, r0, #1
+  1b5f6c:	e28d2e11 	add	r2, sp, #272	@ 0x110
+  1b5f70:	e0823000 	add	r3, r2, r0
+  1b5f74:	e5533100 	ldrb	r3, [r3, #-256]	@ 0xffffff00
+  1b5f78:	e353000a 	cmp	r3, #10
+  1b5f7c:	00820000 	addeq	r0, r2, r0
+  1b5f80:	03a03000 	moveq	r3, #0
+  1b5f84:	05403100 	strbeq	r3, [r0, #-256]	@ 0xffffff00
+  1b5f88:	e28d4010 	add	r4, sp, #16
+  1b5f8c:	e1a00004 	mov	r0, r4
+  1b5f90:	ebfbd938 	bl	ac478 <strlen@plt>
+  1b5f94:	e1a02000 	mov	r2, r0
+  1b5f98:	e0841000 	add	r1, r4, r0
+  1b5f9c:	e30a37c0 	movw	r3, #42944	@ 0xa7c0
+  1b5fa0:	e3403036 	movt	r3, #54	@ 0x36
+  1b5fa4:	e5930000 	ldr	r0, [r3]
+  1b5fa8:	e7840002 	str	r0, [r4, r2]
+  1b5fac:	e5d33004 	ldrb	r3, [r3, #4]
+  1b5fb0:	e5c13004 	strb	r3, [r1, #4]
+  1b5fb4:	e59f3048 	ldr	r3, [pc, #72]	@ 1b6004 <_Z13UI_Init_Statev@@Base+0x15a8>
+  1b5fb8:	e58d3000 	str	r3, [sp]
+  1b5fbc:	e59f3044 	ldr	r3, [pc, #68]	@ 1b6008 <_Z13UI_Init_Statev@@Base+0x15ac>
+  1b5fc0:	e58d3004 	str	r3, [sp, #4]
+  1b5fc4:	e3a03059 	mov	r3, #89	@ 0x59
+  1b5fc8:	e58d3008 	str	r3, [sp, #8]
+  1b5fcc:	e58d400c 	str	r4, [sp, #12]
+  1b5fd0:	e3a00003 	mov	r0, #3
+  1b5fd4:	e3a01004 	mov	r1, #4
+  1b5fd8:	e30b2fb4 	movw	r2, #49076	@ 0xbfb4
+  1b5fdc:	e3402036 	movt	r2, #54	@ 0x36
+  1b5fe0:	e30a37d0 	movw	r3, #42960	@ 0xa7d0
+  1b5fe4:	e3403036 	movt	r3, #54	@ 0x36
+  1b5fe8:	ebfbdc49 	bl	ad114 <__dlog_print@plt>
+  1b5fec:	eb06c9bc 	bl	3686e4 <_ZN15CAfFocusBoxTask11GetInstanceEv@@Base>
+  1b5ff0:	eb06c9d6 	bl	368750 <_ZN15CAfFocusBoxTask12onInitializeEv@@Base>
+  1b5ff4:	ebfc5cc7 	bl	cd318 <_Z13ui_shell_initv@@Base>
+  1b5ff8:	e3a00001 	mov	r0, #1
+  1b5ffc:	e28dde11 	add	sp, sp, #272	@ 0x110
+  1b6000:	e8bd8010 	pop	{r4, pc}
+  1b6004:	0039b65b 	eorseq	fp, r9, fp, asr r6
+  1b6008:	0039b62c 	eorseq	fp, r9, ip, lsr #12

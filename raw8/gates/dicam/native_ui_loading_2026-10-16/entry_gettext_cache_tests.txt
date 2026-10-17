@@ -1,0 +1,56 @@
+test_cold_first_lookup_sees_replacement (__main__.CacheTests.test_cold_first_lookup_sees_replacement) ... ok
+test_different_binding_directory_loads_new_catalog (__main__.CacheTests.test_different_binding_directory_loads_new_catalog) ... ok
+test_fresh_process_sees_replacement (__main__.CacheTests.test_fresh_process_sees_replacement) ... ok
+test_language_round_trip_does_not_reload_old_catalog (__main__.CacheTests.test_language_round_trip_does_not_reload_old_catalog) ... ok
+test_same_textdomain_and_directory_do_not_reload (__main__.CacheTests.test_same_textdomain_and_directory_do_not_reload) ... ok
+test_warm_catalog_remains_old_after_path_replacement (__main__.CacheTests.test_warm_catalog_remains_old_after_path_replacement) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.322s
+
+OK
+== warm ==
+# libc=2.13 locale=zh_CN.UTF-8
+warm_before_replace|CAP_MENU_CUSTOM_MODE_1|自定义 1
+warm_before_replace|CAP_MENU_CUSTOM_MODE_2|自定义 2
+warm_before_replace|CAP_MENU_CUSTOM_MODE_3|自定义 3
+warm_before_replace|CAP_FN_PW|图片向导
+warm_after_replace|CAP_MENU_CUSTOM_MODE_1|自定义 1
+warm_after_replace|CAP_MENU_CUSTOM_MODE_2|自定义 2
+warm_after_replace|CAP_MENU_CUSTOM_MODE_3|自定义 3
+warm_after_replace|CAP_FN_PW|图片向导
+same_textdomain|CAP_MENU_CUSTOM_MODE_1|自定义 1
+same_textdomain|CAP_MENU_CUSTOM_MODE_2|自定义 2
+same_textdomain|CAP_MENU_CUSTOM_MODE_3|自定义 3
+same_textdomain|CAP_FN_PW|图片向导
+locale_C|CAP_MENU_CUSTOM_MODE_1|CAP_MENU_CUSTOM_MODE_1
+locale_C|CAP_MENU_CUSTOM_MODE_2|CAP_MENU_CUSTOM_MODE_2
+locale_C|CAP_MENU_CUSTOM_MODE_3|CAP_MENU_CUSTOM_MODE_3
+locale_C|CAP_FN_PW|CAP_FN_PW
+locale_round_trip|CAP_MENU_CUSTOM_MODE_1|自定义 1
+locale_round_trip|CAP_MENU_CUSTOM_MODE_2|自定义 2
+locale_round_trip|CAP_MENU_CUSTOM_MODE_3|自定义 3
+locale_round_trip|CAP_FN_PW|图片向导
+same_directory|CAP_MENU_CUSTOM_MODE_1|自定义 1
+same_directory|CAP_MENU_CUSTOM_MODE_2|自定义 2
+same_directory|CAP_MENU_CUSTOM_MODE_3|自定义 3
+same_directory|CAP_FN_PW|图片向导
+different_directory|CAP_MENU_CUSTOM_MODE_1|Portra 400
+different_directory|CAP_MENU_CUSTOM_MODE_2|自定义 2
+different_directory|CAP_MENU_CUSTOM_MODE_3|自定义 3
+different_directory|CAP_FN_PW|图片向导
+
+== fresh ==
+# libc=2.13 locale=zh_CN.UTF-8
+fresh_process|CAP_MENU_CUSTOM_MODE_1|Portra 400
+fresh_process|CAP_MENU_CUSTOM_MODE_2|自定义 2
+fresh_process|CAP_MENU_CUSTOM_MODE_3|自定义 3
+fresh_process|CAP_FN_PW|图片向导
+
+== cold ==
+# libc=2.13 locale=zh_CN.UTF-8
+cold_first_lookup|CAP_MENU_CUSTOM_MODE_1|Portra 400
+cold_first_lookup|CAP_MENU_CUSTOM_MODE_2|自定义 2
+cold_first_lookup|CAP_MENU_CUSTOM_MODE_3|自定义 3
+cold_first_lookup|CAP_FN_PW|图片向导
+

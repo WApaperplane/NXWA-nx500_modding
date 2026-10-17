@@ -1,0 +1,95 @@
+{
+  "schema": "nxwa.gettext-cache/1",
+  "scope": "offline_qemu_camera_libc",
+  "hardware_verified": false,
+  "rootfs": "/opt/nxks2/out/slp06_280505658.bin/slp06_280505658.bin_extract/slp06_280505658.bin.raw_extract",
+  "sha256": {
+    "original_mo": "6a58ab1177b72ecac4dc87c92405413cabd2da3ca1e39201f0a1be7048ba41c3",
+    "sample_mo": "cce910fad71f78f4a20c7179a2f53fc9aeecc3c2409281ab9dc84272d07aae39",
+    "camera_libc": "198a7b52e68df955de2573557644720e76580aae489e3785bb9afd80ad6f2e9c",
+    "probe_source": "54bf6294d14700c04367b014cee874b3447d451aafffa6c926c89fdacb8c5f01",
+    "probe_binary": "88cb4d78d3a97ecf9c6ba0a7713c99256959fcaca1675d60f9f4af5fca9ea577"
+  },
+  "build_command": [
+    "arm-linux-gnueabi-gcc",
+    "-O0",
+    "-mfloat-abi=soft",
+    "-fno-stack-protector",
+    "-fno-pic",
+    "-no-pie",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-nostdlib",
+    "-nostartfiles",
+    "-Wl,-e,_start",
+    "-Wl,--dynamic-linker=/lib/ld-linux.so.3",
+    "-Wl,--allow-shlib-undefined",
+    "-Wl,-rpath-link,/opt/nxks2/out/slp06_280505658.bin/slp06_280505658.bin_extract/slp06_280505658.bin.raw_extract/usr/lib",
+    "-Wl,-rpath-link,/opt/nxks2/out/slp06_280505658.bin/slp06_280505658.bin_extract/slp06_280505658.bin.raw_extract/lib",
+    "-o",
+    "/tmp/nxwa-m2-cache-h07j8hki/m2_cache_probe.arm",
+    "/mnt/e/NXWA/nx500-modding-work/test_server/dicam/m2_qemu/m2_cache_probe.c",
+    "/mnt/e/NXWA/nx500-modding-work/test_server/filmlab/src/crt0_arm.S",
+    "/opt/nxks2/out/slp06_280505658.bin/slp06_280505658.bin_extract/slp06_280505658.bin.raw_extract/lib/libc-2.13.so",
+    "-lgcc"
+  ],
+  "symbol_versions": "\nVersion symbols section '.gnu.version' contains 18 entries:\n Addr: 0x00000000000103d8  Offset: 0x000003d8  Link: 4 (.dynsym)\n  000:   0 (*local*)       2 (GLIBC_2.4)     2 (GLIBC_2.4)     2 (GLIBC_2.4)  \n  004:   2 (GLIBC_2.4)     2 (GLIBC_2.4)     2 (GLIBC_2.4)     2 (GLIBC_2.4)  \n  008:   2 (GLIBC_2.4)     2 (GLIBC_2.4)     2 (GLIBC_2.4)     2 (GLIBC_2.4)  \n  00c:   2 (GLIBC_2.4)     2 (GLIBC_2.4)     2 (GLIBC_2.4)     2 (GLIBC_2.4)  \n  010:   2 (GLIBC_2.4)     2 (GLIBC_2.4)  \n\nVersion needs section '.gnu.version_r' contains 1 entry:\n Addr: 0x00000000000103fc  Offset: 0x000003fc  Link: 5 (.dynstr)\n  000000: Version: 1  File: libc.so.6  Cnt: 1\n  0x0010:   Name: GLIBC_2.4  Flags: none  Version: 2\n",
+  "expected_translations": {
+    "CAP_MENU_CUSTOM_MODE_1": "Portra 400",
+    "CAP_MENU_CUSTOM_MODE_2": "自定义 2",
+    "CAP_MENU_CUSTOM_MODE_3": "自定义 3",
+    "CAP_FN_PW": "图片向导"
+  },
+  "runs": {
+    "warm": {
+      "command": [
+        "qemu-arm-static",
+        "-L",
+        "/opt/nxks2/out/slp06_280505658.bin/slp06_280505658.bin_extract/slp06_280505658.bin.raw_extract",
+        "/tmp/nxwa-m2-cache-h07j8hki/m2_cache_probe.arm",
+        "warm",
+        "/tmp/nxwa-m2-cache-h07j8hki/warm/a",
+        "/tmp/nxwa-m2-cache-h07j8hki/warm/b",
+        "/tmp/nxwa-m2-cache-h07j8hki/warm/staged.mo"
+      ],
+      "returncode": 0,
+      "stdout": "# libc=2.13 locale=zh_CN.UTF-8\nwarm_before_replace|CAP_MENU_CUSTOM_MODE_1|自定义 1\nwarm_before_replace|CAP_MENU_CUSTOM_MODE_2|自定义 2\nwarm_before_replace|CAP_MENU_CUSTOM_MODE_3|自定义 3\nwarm_before_replace|CAP_FN_PW|图片向导\nwarm_after_replace|CAP_MENU_CUSTOM_MODE_1|自定义 1\nwarm_after_replace|CAP_MENU_CUSTOM_MODE_2|自定义 2\nwarm_after_replace|CAP_MENU_CUSTOM_MODE_3|自定义 3\nwarm_after_replace|CAP_FN_PW|图片向导\nsame_textdomain|CAP_MENU_CUSTOM_MODE_1|自定义 1\nsame_textdomain|CAP_MENU_CUSTOM_MODE_2|自定义 2\nsame_textdomain|CAP_MENU_CUSTOM_MODE_3|自定义 3\nsame_textdomain|CAP_FN_PW|图片向导\nlocale_C|CAP_MENU_CUSTOM_MODE_1|CAP_MENU_CUSTOM_MODE_1\nlocale_C|CAP_MENU_CUSTOM_MODE_2|CAP_MENU_CUSTOM_MODE_2\nlocale_C|CAP_MENU_CUSTOM_MODE_3|CAP_MENU_CUSTOM_MODE_3\nlocale_C|CAP_FN_PW|CAP_FN_PW\nlocale_round_trip|CAP_MENU_CUSTOM_MODE_1|自定义 1\nlocale_round_trip|CAP_MENU_CUSTOM_MODE_2|自定义 2\nlocale_round_trip|CAP_MENU_CUSTOM_MODE_3|自定义 3\nlocale_round_trip|CAP_FN_PW|图片向导\nsame_directory|CAP_MENU_CUSTOM_MODE_1|自定义 1\nsame_directory|CAP_MENU_CUSTOM_MODE_2|自定义 2\nsame_directory|CAP_MENU_CUSTOM_MODE_3|自定义 3\nsame_directory|CAP_FN_PW|图片向导\ndifferent_directory|CAP_MENU_CUSTOM_MODE_1|Portra 400\ndifferent_directory|CAP_MENU_CUSTOM_MODE_2|自定义 2\ndifferent_directory|CAP_MENU_CUSTOM_MODE_3|自定义 3\ndifferent_directory|CAP_FN_PW|图片向导\n",
+      "stderr": ""
+    },
+    "fresh": {
+      "command": [
+        "qemu-arm-static",
+        "-L",
+        "/opt/nxks2/out/slp06_280505658.bin/slp06_280505658.bin_extract/slp06_280505658.bin.raw_extract",
+        "/tmp/nxwa-m2-cache-h07j8hki/m2_cache_probe.arm",
+        "fresh",
+        "/tmp/nxwa-m2-cache-h07j8hki/warm/a",
+        "/tmp/nxwa-m2-cache-h07j8hki/warm/b",
+        "/tmp/nxwa-m2-cache-h07j8hki/warm/staged.mo"
+      ],
+      "returncode": 0,
+      "stdout": "# libc=2.13 locale=zh_CN.UTF-8\nfresh_process|CAP_MENU_CUSTOM_MODE_1|Portra 400\nfresh_process|CAP_MENU_CUSTOM_MODE_2|自定义 2\nfresh_process|CAP_MENU_CUSTOM_MODE_3|自定义 3\nfresh_process|CAP_FN_PW|图片向导\n",
+      "stderr": ""
+    },
+    "cold": {
+      "command": [
+        "qemu-arm-static",
+        "-L",
+        "/opt/nxks2/out/slp06_280505658.bin/slp06_280505658.bin_extract/slp06_280505658.bin.raw_extract",
+        "/tmp/nxwa-m2-cache-h07j8hki/m2_cache_probe.arm",
+        "cold",
+        "/tmp/nxwa-m2-cache-h07j8hki/cold/a",
+        "/tmp/nxwa-m2-cache-h07j8hki/cold/b",
+        "/tmp/nxwa-m2-cache-h07j8hki/cold/staged.mo"
+      ],
+      "returncode": 0,
+      "stdout": "# libc=2.13 locale=zh_CN.UTF-8\ncold_first_lookup|CAP_MENU_CUSTOM_MODE_1|Portra 400\ncold_first_lookup|CAP_MENU_CUSTOM_MODE_2|自定义 2\ncold_first_lookup|CAP_MENU_CUSTOM_MODE_3|自定义 3\ncold_first_lookup|CAP_FN_PW|图片向导\n",
+      "stderr": ""
+    }
+  },
+  "tests_run": 6,
+  "passed": true,
+  "failures": 0,
+  "errors": 0
+}

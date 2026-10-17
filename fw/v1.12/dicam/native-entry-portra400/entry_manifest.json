@@ -1,0 +1,59 @@
+{
+  "camera": "NX500",
+  "delivery": {
+    "automatic_actions": [],
+    "blockers": [
+      "P5 failed on device; fresh exec is unproven",
+      "Loaded gettext catalog can survive path replacement",
+      "Native CUSTOM1 reselect and content consistency require device evidence"
+    ],
+    "installer_included": false
+  },
+  "entry": {
+    "changes": [
+      {
+        "msgid": "CAP_MENU_CUSTOM_MODE_1",
+        "new": "Portra 400",
+        "new_len": 10,
+        "new_off": 172850,
+        "old": "自定义 1",
+        "old_len": 11,
+        "old_off": 104583,
+        "warn_truncation_risk": false
+      }
+    ],
+    "custom_slot": 1,
+    "display_name": "Portra 400",
+    "long_label_warning": false,
+    "msgid": "CAP_MENU_CUSTOM_MODE_1",
+    "other_slots_unchanged": [
+      2,
+      3
+    ],
+    "text_width_verified": false
+  },
+  "files_sha256": {
+    "di-camera-app.mo": "cce910fad71f78f4a20c7179a2f53fc9aeecc3c2409281ab9dc84272d07aae39",
+    "preset.json": "7c241babbf29b1cfa6246c6efc8c54843cf9a2f23e3c2de66f6dd5a18e3868e4"
+  },
+  "firmware": "1.12",
+  "language": "zh_CN",
+  "official_app_sha256": "55dcc78143724435a2e38b9e0d809960bd728668634bbcf7532ce137f882eb04",
+  "recipe_id": "portra400",
+  "schema": "nxwa.native-entry/1",
+  "source": {
+    "catalog_md5": "f2d60cd2f2687de43089729fb06f436c",
+    "catalog_sha256": "6a58ab1177b72ecac4dc87c92405413cabd2da3ca1e39201f0a1be7048ba41c3",
+    "recipes_sha256": "08431263e7a480459d2a1bd7e8ce621f4491e3d3cadea2db00830c2461f457eb"
+  },
+  "status": "offline_candidate_not_deployable",
+  "verification": {
+    "catalog_other_entries_unchanged": true,
+    "delivery_verified": false,
+    "native_input_verified": false,
+    "preview_verified": false,
+    "rollback_verified": false,
+    "slot_content_verified": false,
+    "still_verified": false
+  }
+}
