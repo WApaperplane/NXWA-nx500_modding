@@ -19,6 +19,9 @@ docs/
 
 | 文档 | 定位 |
 |---|---|
+| [`ONDEVICE_NATIVE_LABEL_RESULT_2026-10-16.md`](current/ONDEVICE_NATIVE_LABEL_RESULT_2026-10-16.md) | **原生UI真机正证据**：用户授权单次11字节私有字典标签实验，目视看到NXWA Test 1并确认恢复；独立驻留读回/文件哈希收尾。仅标签POC通过，PW槽/确认应用/开机自动化未验。 |
+| [`NATIVE_UI_LOADING_PROGRESS_2026-10-16.md`](current/NATIVE_UI_LOADING_PROGRESS_2026-10-16.md) | **原生UI主线后续**：CUSTOM1单预设候选包；相机glibc/QEMU验证字典冷/热加载边界；REA校正快照调用归属；只读加载采集器与严格判读，不把文件/挂载当作UI已生效。 |
+| [`DELIVERY_RESUME_AUDIT_2026-10-16.md`](current/DELIVERY_RESUME_AUDIT_2026-10-16.md) | **P5失败后续推进**：REA定位 `.hib_post` 写入链和App内快照调用，约束“开机重新exec”的推断；修复T5真实调用漏传 `--ch1`、状态及退出码，补实际shell/驱动回归；未新增机身写入。 |
 | [`FILMLAB_LUT_NATIVE_UI_GOALS_2026-10-16.md`](current/FILMLAB_LUT_NATIVE_UI_GOALS_2026-10-16.md) | **FilmLab + LUT 原生 UI 目标与任务设计**：统一预设、原生入口和状态；保留已有LUT预览成果，成片单独验收；C1验证表消费机制，运行时换表为长期候选；含T1–T8任务、依赖及完成标准，修正重启方案中历史实验与identity口径。 |
 | [`T1_LUT_SEMANTICS_2026-10-16.md`](current/T1_LUT_SEMANTICS_2026-10-16.md) | **T1 证据收口（已执行）**：42 槽严格 identity 校验（=0，最接近 1045/4913）、轴序同序确认、槽边界/长度；**写表测试 / identity 诊断 / 恢复原厂**三概念分离；能力矩阵（E1✓/E3✓/E4✗）。工具 `lut_slot_verify.py`。 |
 | [`T2_PRESET_PROTOCOL_2026-10-16.md`](current/T2_PRESET_PROTOCOL_2026-10-16.md) | **T2 统一预设与适配器协议 v1**：`nxwa.preset/1` 格式（稳定 ID/能力标记/still 机制与验收分离）、状态机（含 partial/external_modified）、适配器接口、关闭=恢复原厂（禁 identity 冒充）；模拟后端 `preset_sim.py` 6/6 场景 PASS。 |
