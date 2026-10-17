@@ -6,7 +6,7 @@
 """
 import socket, sys, time, re
 
-HOST = sys.argv[1] if len(sys.argv) > 1 else "192.168.0.105"
+HOST = sys.argv[1] if len(sys.argv) > 1 else "192.168.0.106"
 STYLES = ['STANDARD', 'VIVID', 'PORTRAIT', 'LANDSCAPE', 'FOREST', 'RETRO', 'COOL',
           'CALM', 'CLASSIC', 'CUSTOM_1', 'CUSTOM_2', 'CUSTOM_3', 'CUSTOM_4']
 PARAMS = ['R_COLOR', 'G_COLOR', 'B_COLOR', 'HUE', 'SATURATION', 'SHARPNESS', 'CONTRAST']

@@ -5,7 +5,7 @@ import base64
 import gzip
 import sys
 
-HOST = '192.168.0.105'
+HOST = '192.168.0.106'
 REMOTE = sys.argv[1]
 LOCAL = sys.argv[2]
 

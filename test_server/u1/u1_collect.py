@@ -9,9 +9,9 @@ FTP 事实（本仓已确认）：
   * **单文件 >约 60KB 会 550/553** ⇒ 大文件必须 32KB 分块 + md5sum 拼合校验
 
 用法:
-  python u1_collect.py push --host 192.168.0.105        # 把本目录脚本推到相机 /mnt/mmc/u1/
-  python u1_collect.py pull --host 192.168.0.105        # 把 u1/out/ 全部拉回 raw8/gates/u1/
-  python u1_collect.py ls   --host 192.168.0.105
+  python u1_collect.py push --host 192.168.0.106        # 把本目录脚本推到相机 /mnt/mmc/u1/
+  python u1_collect.py pull --host 192.168.0.106        # 把 u1/out/ 全部拉回 raw8/gates/u1/
+  python u1_collect.py ls   --host 192.168.0.106
 """
 from __future__ import annotations
 
@@ -146,7 +146,7 @@ def do_pull(a):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("cmd", choices=["push", "pull", "ls"])
-    ap.add_argument("--host", default="192.168.0.105")
+    ap.add_argument("--host", default="192.168.0.106")
     a = ap.parse_args()
     return {"push": do_push, "pull": do_pull, "ls": do_ls}[a.cmd](a) or 0
 

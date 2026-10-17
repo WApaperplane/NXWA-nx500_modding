@@ -9,9 +9,9 @@ FTP 事实（本仓已确认）：
   * **单文件 >约 60KB 会 550/553** ⇒ 大文件必须分块 + md5 校验
 
 用法:
-  python u6_collect.py push --host 192.168.0.105   # 下发 U6 全部资产到 /mnt/mmc/u6/
-  python u6_collect.py pull --host 192.168.0.105   # 拉回 /u6/out/ -> raw8/gates/u6/out/
-  python u6_collect.py ls   --host 192.168.0.105
+  python u6_collect.py push --host 192.168.0.106   # 下发 U6 全部资产到 /mnt/mmc/u6/
+  python u6_collect.py pull --host 192.168.0.106   # 拉回 /u6/out/ -> raw8/gates/u6/out/
+  python u6_collect.py ls   --host 192.168.0.106
 """
 from __future__ import annotations
 
@@ -171,7 +171,7 @@ def do_pull(a):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("cmd", choices=["push", "pull", "ls"])
-    ap.add_argument("--host", default="192.168.0.105")
+    ap.add_argument("--host", default="192.168.0.106")
     a = ap.parse_args()
     return {"push": do_push, "pull": do_pull, "ls": do_ls}[a.cmd](a) or 0
 

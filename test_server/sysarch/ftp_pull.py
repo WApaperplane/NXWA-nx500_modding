@@ -3,7 +3,7 @@
 """ftp_pull.py —— 从 NX 相机批量拉取文件（带重试，应对不稳网络）
 
 用法:
-  python ftp_pull.py <outdir> <remote1> [remote2 ...] [--host=192.168.0.105]
+  python ftp_pull.py <outdir> <remote1> [remote2 ...] [--host=192.168.0.106]
   remote 为 FTP 绝对路径（如 /emmcbak/p7.bin）
 """
 import ftplib
@@ -11,7 +11,7 @@ import os
 import sys
 import time
 
-host = "192.168.0.105"
+host = "192.168.0.106"
 args = []
 for a in sys.argv[1:]:
     if a.startswith("--host="):

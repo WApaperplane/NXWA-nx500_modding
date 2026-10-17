@@ -4,7 +4,7 @@ import re
 import base64
 import struct
 
-HOST = '192.168.0.105'
+HOST = '192.168.0.106'
 PID = 252
 
 s = socket.create_connection((HOST, 23), timeout=30)

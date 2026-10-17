@@ -9,6 +9,7 @@ echo/history for this connection only. Camera target is the project's known IP.
 import argparse
 import hashlib
 import json
+import os
 from pathlib import Path
 import re
 import socket
@@ -19,7 +20,7 @@ import uuid
 from native_ui_loading import parse_probe
 
 REPO = Path(__file__).resolve().parents[1]
-HOST = "192.168.0.105"
+HOST = os.environ.get("NXHOST", "192.168.0.106")
 PROBE = REPO / "test_server/dicam/probe_native_loading.sh"
 
 

@@ -16,7 +16,7 @@ python capdtm_enum.py [IP] --one 5      # 只看槽位 5
 """
 import socket, sys, time, re
 
-HOST = "192.168.0.105"
+HOST = "192.168.0.106"
 PORT = 23
 
 

@@ -3,7 +3,7 @@
 """ftp_push.py —— 上传本地文件到 NX 相机 SD 卡（FTP 根 == SD 卡根）
 
 用法:
-  python ftp_push.py <local> <remote> [--host=192.168.0.105]
+  python ftp_push.py <local> <remote> [--host=192.168.0.106]
   remote 为 FTP 相对路径（如 /nx500.bin 或 nx500.bin）
 """
 import ftplib
@@ -11,7 +11,7 @@ import os
 import sys
 import time
 
-host = "192.168.0.105"
+host = "192.168.0.106"
 args = []
 for a in sys.argv[1:]:
     if a.startswith("--host="):

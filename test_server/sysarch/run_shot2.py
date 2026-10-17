@@ -16,7 +16,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from minitel import MiniTel
 import ftplib, hashlib
 
-HOST = '192.168.0.105'
+HOST = '192.168.0.106'
 X = '/mnt/mmc/_xfer'
 BB = '/opt/usr/nx-ks/busybox'
 HERE = os.path.dirname(os.path.abspath(__file__))

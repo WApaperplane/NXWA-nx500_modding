@@ -12,7 +12,7 @@ import time
 
 from minitel import MiniTel
 
-HOST = "192.168.0.105"
+HOST = "192.168.0.106"
 M1 = "zZbGaN"
 M2 = "zZeNdD"
 

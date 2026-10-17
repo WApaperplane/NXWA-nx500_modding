@@ -25,7 +25,7 @@ python capdtm_enum2.py <IP> --slot 5        # 只处理槽位 5
 """
 import socket, sys, time, re, json
 
-HOST_DEFAULT = "192.168.0.105"
+HOST_DEFAULT = "192.168.0.106"
 VL = re.compile(r"\[\s*(\d+)\]\s*\|?\s*(VARIABLE_\w+)\s*\|\s*(\d+)\s*\|\s*([-0-9A-Fa-fx]+)\s*\|\s*([-0-9A-Fa-fx]+)")
 UL = re.compile(r"\[\s*(\d+)\]\s*\|\s*(USERDATA_\w+)\s*\|\s*([A-Z0-9_]+)\s*\|\s*([-0-9A-Fa-fx]+)")
 VAR = re.compile(r"Variable Data is (0x[0-9a-fA-F_]+)")

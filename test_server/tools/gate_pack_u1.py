@@ -322,9 +322,9 @@ FTP 事实（本仓已确认）：
   * **单文件 >约 60KB 会 550/553** ⇒ 大文件必须 32KB 分块 + md5sum 拼合校验
 
 用法:
-  python u1_collect.py push --host 192.168.0.105        # 把本目录脚本推到相机 /mnt/mmc/u1/
-  python u1_collect.py pull --host 192.168.0.105        # 把 u1/out/ 全部拉回 raw8/gates/u1/
-  python u1_collect.py ls   --host 192.168.0.105
+  python u1_collect.py push --host 192.168.0.106        # 把本目录脚本推到相机 /mnt/mmc/u1/
+  python u1_collect.py pull --host 192.168.0.106        # 把 u1/out/ 全部拉回 raw8/gates/u1/
+  python u1_collect.py ls   --host 192.168.0.106
 """
 from __future__ import annotations
 
@@ -459,7 +459,7 @@ def do_pull(a):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("cmd", choices=["push", "pull", "ls"])
-    ap.add_argument("--host", default="192.168.0.105")
+    ap.add_argument("--host", default="192.168.0.106")
     a = ap.parse_args()
     return {"push": do_push, "pull": do_pull, "ls": do_ls}[a.cmd](a) or 0
 
@@ -496,7 +496,7 @@ def build_runbook():
     A("=" * 78)
     A("[0] PC 侧：下发脚本（先做完这一步再开 telnet）")
     A("=" * 78)
-    A("PUT: python test_server/u1/u1_collect.py push --host 192.168.0.105")
+    A("PUT: python test_server/u1/u1_collect.py push --host 192.168.0.106")
     A("     推送目标：相机 SD 卡 /mnt/mmc/u1/（FTP 根 == SD 卡根 ⇒ 相对路径 /u1/）")
     A("     ★ 清单含 epmc.arm（test_server/sysarch/epmc.arm ⇒ /u1/epmc.arm）")
     A("CHMOD: /usr/bin/setsid /opt/usr/nx-ks/busybox chmod 755 /mnt/mmc/u1/epmc.arm")
@@ -584,7 +584,7 @@ def build_runbook():
     A("=" * 78)
     A("[6] PC 侧：回收结果")
     A("=" * 78)
-    A("PULL: python test_server/u1/u1_collect.py pull --host 192.168.0.105")
+    A("PULL: python test_server/u1/u1_collect.py pull --host 192.168.0.106")
     A("      -> raw8/gates/u1/   （>60KB 自动分块，逐文件 md5）")
     A("THEN: python test_server/tools/gate_flow.py     # 看 G2 / G5 是否转绿")
     A("")

@@ -16,7 +16,7 @@ import ftplib
 import os
 import sys
 
-HOST = "192.168.0.105"
+HOST = os.environ.get("NXHOST", "192.168.0.106")
 
 
 def ensure_dir(f, path):

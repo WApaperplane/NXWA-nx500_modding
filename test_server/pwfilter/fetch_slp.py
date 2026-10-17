@@ -3,7 +3,7 @@ import time
 import re
 import struct
 
-s = socket.create_connection(('192.168.0.105', 23), timeout=20)
+s = socket.create_connection(('192.168.0.106', 23), timeout=20)
 s.settimeout(4.0)
 
 

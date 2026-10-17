@@ -19,7 +19,7 @@ import os
 import sys
 
 
-def put(local, remote_sd, host='192.168.0.105'):
+def put(local, remote_sd, host='192.168.0.106'):
     data = open(local, 'rb').read()
     f = ftplib.FTP(host, timeout=60)
     f.login('root', '')
@@ -58,5 +58,5 @@ if __name__ == '__main__':
     if len(sys.argv) < 3:
         print(__doc__)
         sys.exit(1)
-    host = sys.argv[3] if len(sys.argv) > 3 else '192.168.0.105'
+    host = sys.argv[3] if len(sys.argv) > 3 else '192.168.0.106'
     put(sys.argv[1], sys.argv[2], host)

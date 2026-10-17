@@ -69,7 +69,7 @@ def main():
 
     out = {
         "_note": "U1 §2 /dev/mem 四点对照（铁律 118：先阳性对照→再阴性对照→最后问题本体）",
-        "host": "192.168.0.105",
+        "host": "192.168.0.106",
         "method": "dd if=/dev/mem（u1_rd.sh，768 regs/段 = 3072 B，段间等待 90s）",
         "collected_at": "2026-10-12 19:10-19:16 (+08)",
         "addresses": addrs,

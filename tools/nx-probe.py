@@ -11,7 +11,7 @@
 """
 import socket, time, re, argparse, sys, ftplib, io, os
 
-HOST = "192.168.0.105"
+HOST = os.environ.get("NXHOST", "192.168.0.106")
 REMOTE = f"nxwa_probe_{os.getpid()}.txt"   # FTP 根 = /mnt/mmc = SD 卡（带 pid 防并发覆盖）
 IAC, DONT, DO, WONT, WILL, SB, SE = 255, 254, 253, 252, 251, 250, 240
 

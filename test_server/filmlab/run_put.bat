@@ -16,4 +16,4 @@ exit /b %ERRORLEVEL%
 
 :usage
 echo 用法: run_put.bat ^<ip^> ^<local-file^> ^<remote-path^>
-echo 示例: run_put.bat 192.168.0.105 out/x11probe.arm /opt/usr/nx-ks/filmlab/x11probe.arm
+echo 示例: run_put.bat 192.168.0.106 out/x11probe.arm /opt/usr/nx-ks/filmlab/x11probe.arm

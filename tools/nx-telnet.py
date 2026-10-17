@@ -8,9 +8,9 @@
 
 输出: 每条命令以 <<< CMD: xxx  分隔, 便于解析。
 """
-import socket, sys, time, argparse, re
+import os, socket, sys, time, argparse, re
 
-HOST = "192.168.0.105"
+HOST = os.environ.get("NXHOST", "192.168.0.106")
 PORT = 23
 IAC, DONT, DO, WONT, WILL, SB, SE = 255, 254, 253, 252, 251, 250, 240
 

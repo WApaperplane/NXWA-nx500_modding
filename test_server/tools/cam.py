@@ -24,7 +24,7 @@ import socket
 import sys
 import time
 
-HOST = os.environ.get("NXHOST", "192.168.0.105")
+HOST = os.environ.get("NXHOST", "192.168.0.106")
 # ★ FTP 根 = SD 卡根（/mnt/mmc）⇒ FTP 侧路径与机上路径不是一回事，别混用：
 #   历史坑：把机上路径 "/mnt/mmc/_xfer/x" 直接丢给 STOR ⇒ busybox ftpd 回 553 Error
 FTP_XFER = "/_xfer"

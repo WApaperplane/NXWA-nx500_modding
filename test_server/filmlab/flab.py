@@ -42,7 +42,7 @@ from minitel import MiniTel  # noqa: E402
 RECIPES = os.path.join(REPO, "scripts", "filmlab", "recipes.json")
 CONF_LOCAL = os.path.join(HERE, "filmlab.conf")
 FILMSIM_COPY = os.path.join(REPO, "test_server", "filmsim", "recipes", "recipes.json")
-HOST_DEFAULT = "192.168.0.105"
+HOST_DEFAULT = "192.168.0.106"
 
 FIELDS = ["label", "R_COLOR", "G_COLOR", "B_COLOR", "HUE",
           "SATURATION", "SHARPNESS", "CONTRAST"]

@@ -30,7 +30,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(HERE), "sysarch"))
 
 from minitel import MiniTel  # noqa: E402  (test_server/sysarch/minitel.py)
 
-HOST_DEFAULT = "192.168.0.105"
+HOST_DEFAULT = "192.168.0.106"
 RECIPE_LOCAL = os.path.join(HERE, "recipes", "recipes.json")
 MENU_PULLED = os.path.join(HERE, "recipes", "gui_filmlab1b.pulled.NX500")
 

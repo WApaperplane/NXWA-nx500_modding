@@ -29,7 +29,7 @@
 ==============================================================================
 [0] PC 侧：下发 U6 资产（先做完这一步再开 telnet）
 ==============================================================================
-PUT: python test_server/u6/u6_collect.py push --host 192.168.0.105
+PUT: python test_server/u6/u6_collect.py push --host 192.168.0.106
      推送：u6_lut.sh / u6_probe.sh / cmasafe.arm / cmapick2.arm / lutapi.arm /
            lutload.arm / runbook.txt / md5sums.txt / 四张表（r3_*_slot.bin + r3_*.bin）
      目标：相机 SD 卡 /mnt/mmc/u6/（FTP 根 == SD 卡根 ⇒ 相对路径 /u6/）
@@ -38,7 +38,7 @@ CHMOD: /opt/usr/nx-ks/busybox chmod 755 /mnt/mmc/u6/u6_lut.sh /mnt/mmc/u6/u6_pro
      ★ FTP 上传不保留 x 位；不 chmod 则全部脚本报 'not found / Permission denied'
 
 NOTE: ★★ 10-10 另需推送【引擎/PW 修复版】（不在上面清单；走专用通道）：
-      PC:  python test_server/pwsend/pwsend_deploy.py push --host 192.168.0.105 --with-filmlab
+      PC:  python test_server/pwsend/pwsend_deploy.py push --host 192.168.0.106 --with-filmlab
       内容：pwsend.arm（白名单扩至 0x13e，md5 003e7365）/ pwcalib.sh（含 probe3 新解实验）
             / gen_pwpush.py / filmlab.sh（v2：全 7 维 id + apply --fast 提速）
       落点：/mnt/mmc/filmlab/（PW 三件）+ /opt/usr/nx-ks/filmlab.sh（引擎主路径）
@@ -186,7 +186,7 @@ WAIT: 60
 ==============================================================================
 [10] 收尾：拉回 + 台账
 ==============================================================================
-PULL: python test_server/u6/u6_collect.py pull --host 192.168.0.105
+PULL: python test_server/u6/u6_collect.py pull --host 192.168.0.106
       → raw8/gates/u6/out/（cmapick.log / load_*.log / save_*.log / readback.bin）
       照片：SD 卡 DCIM -> raw8/gates/u6/shots/（FTP 手动拉）
 台账：写 raw8/gates/u6/u6_result.md（一条一条填，不用形容词）：
@@ -300,7 +300,7 @@ RUN: /usr/bin/setsid /bin/sh /mnt/mmc/u6/u6_lut.sh load /mnt/mmc/u6/<候选> <�
 [S3] 收尾
 RUN: /usr/bin/setsid /opt/usr/nx-ks/lutload.arm restore
 NOTE: 【人工】对焦一次 → 画面回出厂表
-PULL: python test_server/u6/u6_collect.py pull --host 192.168.0.105
+PULL: python test_server/u6/u6_collect.py pull --host 192.168.0.106
 台账：raw8/gates/u6/loop_result.md（候选 × 画面匹配结果表）
 ##############################################################################
 

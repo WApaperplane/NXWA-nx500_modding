@@ -23,7 +23,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(HERE), "sysarch"))
 
 from minitel import MiniTel  # noqa: E402
 
-HOST = "192.168.0.105"
+HOST = "192.168.0.106"
 D = "/opt/usr/nx-ks"
 
 # (本地文件, 远端名)

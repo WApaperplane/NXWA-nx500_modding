@@ -46,7 +46,7 @@ import time
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-HOST = "192.168.0.105"          # ★ 实机固定 .105，.104 是 PC 本机
+HOST = "192.168.0.106"          # ★ 实机固定 .105，.104 是 PC 本机
 SD = "/opt/storage/sdcard"
 WORK = SD + "/prefslot"
 

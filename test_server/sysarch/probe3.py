@@ -6,7 +6,7 @@ import ftplib, time, os, io, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from minitel import MiniTel
 
-HOST='192.168.0.105'; BB='/opt/usr/nx-ks/busybox'; XFER='/mnt/mmc/_xfer'
+HOST='192.168.0.106'; BB='/opt/usr/nx-ks/busybox'; XFER='/mnt/mmc/_xfer'
 OUT=os.path.join(os.path.dirname(os.path.abspath(__file__)), 'raw3')
 
 CMDS = [

@@ -13,7 +13,7 @@ FilmLab 机内 UI —— 相机端部署说明
 
 【推送命令】（telnet 串行，一次一条，≥10KB 走 FTP）
 
-  telnet 192.168.0.105
+  telnet 192.168.0.106
   mkdir -p /mnt/mmc/_xfer
   cd /mnt/mmc/_xfer            # FTP 的根就是 SD 卡
   # 用 FTP 把 nxfilmui.arm / flab_ui.sh / filmlab.sh 传到 /mnt/mmc/_xfer/

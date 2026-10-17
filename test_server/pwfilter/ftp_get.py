@@ -16,7 +16,7 @@ import ftplib
 import os
 import sys
 
-HOST = '192.168.0.105'
+HOST = '192.168.0.106'
 XFER = '/mnt/mmc/_xfer'      # 相机端中转目录
 
 

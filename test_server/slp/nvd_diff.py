@@ -28,7 +28,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 BASE = ROOT / "raw8" / "pref" / "p2_live.raw"
-HOST = "192.168.0.105"
+HOST = "192.168.0.106"
 SD = "/opt/storage/sdcard"
 
 # p2 分区的 4 个 NVD 块（已用官方 --merge seek 公式 4/4 验证）

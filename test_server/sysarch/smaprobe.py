@@ -52,7 +52,7 @@ def sample(t, off, length, label):
 
 
 def main():
-    host = sys.argv[1] if len(sys.argv) > 1 else "192.168.0.105"
+    host = sys.argv[1] if len(sys.argv) > 1 else "192.168.0.106"
     rounds = int(sys.argv[2]) if len(sys.argv) > 2 else DEFAULT_ROUNDS
     length = int(sys.argv[3]) if len(sys.argv) > 3 else DEFAULT_LEN
 

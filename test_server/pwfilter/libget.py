@@ -3,7 +3,7 @@
 """批量 FTP 拉取（相机 tcpsvd 只支持相对根的路径，用 cwd 逐层进）"""
 import ftplib, os, sys
 
-HOST = '192.168.0.105'
+HOST = '192.168.0.106'
 RPARTS = ['_fl2', 'lib']
 LOCAL = sys.argv[1] if len(sys.argv) > 1 else 'sysroot/lib'
 

@@ -14,7 +14,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(os.path.dirname(HERE), 'sysarch'))
 from minitel import MiniTel
 
-HOST = '192.168.0.105'
+HOST = '192.168.0.106'
 X = '/mnt/mmc/_xfer'
 SRC = os.path.join(os.path.dirname(HERE), 'filmsim', 'recipes', 'nx500_recipes.txt')
 

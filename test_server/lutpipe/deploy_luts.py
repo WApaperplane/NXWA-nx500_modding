@@ -7,8 +7,8 @@
 用法:
   python deploy_luts.py build                          # 扫描 .cube → build/（含 _identity + 清单）
   python deploy_luts.py build --cubes <dir>[,...]      # 追加密目录（用户自己的 .cube）
-  python deploy_luts.py push  --host 192.168.0.105     # 推送 build/ → 相机 /mnt/mmc/filmlab/
-  python deploy_luts.py build-push --host 192.168.0.105
+  python deploy_luts.py push  --host 192.168.0.106     # 推送 build/ → 相机 /mnt/mmc/filmlab/
+  python deploy_luts.py build-push --host 192.168.0.106
   python deploy_luts.py list                           # 看构建集
 
 相机端落点（FTP 根 == SD 卡）：
@@ -175,7 +175,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("cmd", choices=["build", "push", "build-push", "list"])
     ap.add_argument("--cubes", default="", help="追加 .cube 目录（逗号分隔）")
-    ap.add_argument("--host", default="192.168.0.105")
+    ap.add_argument("--host", default="192.168.0.106")
     a = ap.parse_args()
 
     dirs = list(DEFAULT_CUBES)

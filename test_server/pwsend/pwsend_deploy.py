@@ -9,8 +9,8 @@
   另推 runbook.txt 备查。
 
 用法:
-  python pwsend_deploy.py push  --host 192.168.0.105 [--with-filmlab]
-  python pwsend_deploy.py ls    --host 192.168.0.105
+  python pwsend_deploy.py push  --host 192.168.0.106 [--with-filmlab]
+  python pwsend_deploy.py ls    --host 192.168.0.106
 """
 from __future__ import annotations
 
@@ -113,7 +113,7 @@ def do_ls(a):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("cmd", choices=["push", "ls"])
-    ap.add_argument("--host", default="192.168.0.105")
+    ap.add_argument("--host", default="192.168.0.106")
     ap.add_argument("--with-filmlab", action="store_true",
                     help="同时推新版 filmlab.sh（到 _xfer，需机内 cp）")
     a = ap.parse_args()

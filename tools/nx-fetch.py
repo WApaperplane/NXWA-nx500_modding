@@ -10,7 +10,7 @@
 """
 import socket, time, sys, ftplib, os
 
-HOST = "192.168.0.105"
+HOST = os.environ.get("NXHOST", "192.168.0.106")
 IAC, DONT, DO, WONT, WILL, SB, SE = 255, 254, 253, 252, 251, 250, 240
 
 

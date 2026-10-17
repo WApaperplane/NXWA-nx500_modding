@@ -15,7 +15,7 @@ import time
 
 from minitel import MiniTel
 
-HOST = "192.168.0.105"
+HOST = "192.168.0.106"
 X = "/mnt/mmc/_xfer"
 HERE = os.path.dirname(os.path.abspath(__file__))
 

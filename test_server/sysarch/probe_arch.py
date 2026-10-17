@@ -19,7 +19,7 @@ import socket
 import sys
 import time
 
-HOST = '192.168.0.105'
+HOST = '192.168.0.106'
 BB = '/opt/usr/nx-ks/busybox'
 XFER = '/mnt/mmc/_xfer'
 LOCAL = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'raw')

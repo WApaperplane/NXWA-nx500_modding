@@ -2,7 +2,7 @@ import socket
 import time
 import re
 
-HOST = '192.168.0.105'
+HOST = '192.168.0.106'
 SH = '/opt/storage/sdcard/_pwtest/filmlab-apply.sh'
 
 # (标签, 配方)  顺序：先基线，再彩色，再黑白，最后暗角，最后还原

@@ -16,7 +16,7 @@
 ==============================================================================
 [0] PC 侧：下发脚本（先做完这一步再开 telnet）
 ==============================================================================
-PUT: python test_server/u1/u1_collect.py push --host 192.168.0.105
+PUT: python test_server/u1/u1_collect.py push --host 192.168.0.106
      推送目标：相机 SD 卡 /mnt/mmc/u1/（FTP 根 == SD 卡根 ⇒ 相对路径 /u1/）
      ★ 清单含 epmc.arm（test_server/sysarch/epmc.arm ⇒ /u1/epmc.arm）
 CHMOD: /usr/bin/setsid /opt/usr/nx-ks/busybox chmod 755 /mnt/mmc/u1/epmc.arm
@@ -122,7 +122,7 @@ NOTE: 关联表 = iqr(184 ID) x epmc(两块 21x10) => raw8/gates/u1/iqr_epmc_map
 ==============================================================================
 [6] PC 侧：回收结果
 ==============================================================================
-PULL: python test_server/u1/u1_collect.py pull --host 192.168.0.105
+PULL: python test_server/u1/u1_collect.py pull --host 192.168.0.106
       -> raw8/gates/u1/   （>60KB 自动分块，逐文件 md5）
 THEN: python test_server/tools/gate_flow.py     # 看 G2 / G5 是否转绿
 

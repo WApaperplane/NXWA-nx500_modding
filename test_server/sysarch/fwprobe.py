@@ -23,7 +23,7 @@ from pathlib import Path
 
 IAC, DONT, DO, WONT, WILL, SB, SE = 255, 254, 253, 252, 251, 250, 240
 
-HOST = os.environ.get("NXHOST", "192.168.0.105")
+HOST = os.environ.get("NXHOST", "192.168.0.106")
 BB = "/opt/usr/nx-ks/busybox"
 CMD_TIMEOUT = 6.0      # 单条命令最长等待（秒）——铁律：≤2.5s，这里放宽到6s
 POLL = 0.35

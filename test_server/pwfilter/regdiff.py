@@ -2,7 +2,7 @@ import socket
 import time
 import re
 
-s = socket.create_connection(('192.168.0.105', 23), timeout=15)
+s = socket.create_connection(('192.168.0.106', 23), timeout=15)
 s.settimeout(3.0)
 
 

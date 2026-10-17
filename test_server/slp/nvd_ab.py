@@ -24,7 +24,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 PREF = ROOT / "raw8" / "pref"
-HOST = "192.168.0.105"
+HOST = "192.168.0.106"
 SD = "/opt/storage/sdcard"
 OUT = PREF / "cur_app.bin"
 CUR = PREF / "cur_app.bin"

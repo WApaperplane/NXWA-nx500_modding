@@ -28,7 +28,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(HERE), 'sysarch'))
 from minitel import MiniTel
 import ftplib
 
-HOST = '192.168.0.105'
+HOST = '192.168.0.106'
 X = '/mnt/mmc/_xfer'
 OUT = os.path.join(HERE, 'raw9')
 ARM = os.path.join(HERE, 'nxfilmui_v3.arm')

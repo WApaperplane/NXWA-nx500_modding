@@ -8,7 +8,7 @@ import socket
 import sys
 import time
 
-HOST = sys.argv[3] if len(sys.argv) > 3 else '192.168.0.105'
+HOST = sys.argv[3] if len(sys.argv) > 3 else '192.168.0.106'
 LOCAL = sys.argv[1]
 DEST = sys.argv[2] if len(sys.argv) > 2 else '/opt/storage/sdcard/_pwtest/filmlab-apply.sh'
 
